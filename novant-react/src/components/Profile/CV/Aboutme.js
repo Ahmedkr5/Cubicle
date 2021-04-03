@@ -1,12 +1,12 @@
 import React from 'react';
 import { Cake, FindInPage, Flag, Home, HomeOutlined, Phone } from '@material-ui/icons';
-import { Divider, Icon, IconButton, Typography } from '@material-ui/core';
+import { Container, Divider, Icon, IconButton, Typography } from '@material-ui/core';
 
 
 export default function Aboutme() {
 
   return (
-    <div>
+    <Container style={{borderRadius: '10px'  ,backgroundColor:"white"}}>
     
   
       <div className="row">
@@ -68,8 +68,9 @@ export default function Aboutme() {
             </div>
           
         </div>
-        
-      </div>
+        <Divider style={{marginTop:"20px"}}></Divider>
+      </Container>
+      
 
   );
 }

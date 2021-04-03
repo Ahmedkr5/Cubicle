@@ -8,6 +8,10 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import ProfileCard from "./components/Profile/ProfileCard";
 import Feed from "./components/Posts/Feed";
 import ConnectedList from "./components/rightSideBar/ConnectedList";
+import Badges from "./Badges";
+import CV from "./components/Profile/CV/CV";
+
+
 
 
 
@@ -42,8 +46,10 @@ const [value, setValue] = React.useState(0);
       <BottomNavigationAction onClick={()=>setState("2")} label="Badges" icon={<Flag />} />
       <BottomNavigationAction onClick={()=>setState("3")} label="CV" icon={<FindInPage />} />
     </BottomNavigation>
-    {state == "0" &&  <div style={{display:'flex' ,justifyContent:'center' ,alignItems: 'center',flexDirection:'column'}}><Feed></Feed> <Divider orientation='horizontal'/><Feed></Feed> <Feed></Feed></div>}
-               
+    {state == "0" &&  <div style={{display:'flex' ,flexDirection:'column'}}><Feed></Feed> <Divider orientation='horizontal'/><Feed></Feed> <Feed></Feed></div>}
+    {state == "2" && <Badges></Badges>}
+                {state == "3" &&  <CV></CV> }
+
 
                 
                 </Container>
