@@ -1,23 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import PrimarySearchAppBar from '../AppBar';
 import TopSidebar from './TopSidebar';
 import MidSidebar from './MidSidebar';
 import BottomSidebar from './BottomSidebar';
-import { Paper } from '@material-ui/core';
-import Profile from '../../Views/Profile';
 
 const drawerWidth = 300;
 
