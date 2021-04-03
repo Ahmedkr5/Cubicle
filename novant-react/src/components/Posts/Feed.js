@@ -5,7 +5,6 @@ import Avatar from '@material-ui/core/Avatar';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
@@ -19,18 +18,18 @@ import EmojiObjectsTwoToneIcon from '@material-ui/icons/EmojiObjectsTwoTone';
 import FavoriteBorderTwoToneIcon from '@material-ui/icons/FavoriteBorderTwoTone';
 import ChatBubbleOutlineTwoToneIcon from '@material-ui/icons/ChatBubbleOutlineTwoTone';
 import Divider from '@material-ui/core/Divider';
-import { FormHelperText } from '@material-ui/core';
 import Comment from './Comment';
 import PostComment from './PostComment';
 import CodeComment from './CodeComment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 600,
+    maxWidth: 850,
     display: 'flex',
     flexDirection: 'column',
     flexBasis: '100%',
     borderRadius: '15px',
+    marginTop:'15px'
   },
   media: {
     height: 0,

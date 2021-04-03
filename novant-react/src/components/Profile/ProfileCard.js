@@ -8,7 +8,7 @@ import { Avatar, Badge } from '@material-ui/core';
 
 const useStyles = makeStyles({
   media: {
-    height: 400,
+    height: 250,
   },
 });
 
@@ -16,7 +16,7 @@ export default function ProfileCard() {
   const classes = useStyles();
 
   return (
-    <Card style={{    borderRadius: '10px' , marginBottom:"10px" }}>
+    <Card style={{    borderRadius: '10px' , marginBottom:"10px" ,marginTop:"15px"}}>
         <CardMedia
           className={classes.media}
           image="images/cover.png"

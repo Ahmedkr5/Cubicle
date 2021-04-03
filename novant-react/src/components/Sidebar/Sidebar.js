@@ -10,6 +10,9 @@ const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginLeft:'15px',
+    marginTop:'15px',
+    position:'fixed',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -45,7 +48,6 @@ export default function Sidebar() {
           paper: classes.drawerPaper,
         }}
       >
-        <Toolbar />
         
           <TopSidebar></TopSidebar>
           <MidSidebar></MidSidebar>
