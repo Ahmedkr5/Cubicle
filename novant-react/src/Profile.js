@@ -10,6 +10,7 @@ import Feed from "./components/Posts/Feed";
 import ConnectedList from "./components/rightSideBar/ConnectedList";
 import Badges from "./Badges";
 import CV from "./components/Profile/CV/CV";
+import Coins from "./Coins";
 
 
 
@@ -49,6 +50,7 @@ const [value, setValue] = React.useState(0);
     {state == "0" &&  <div style={{display:'flex' ,flexDirection:'column'}}><Feed></Feed> <Divider orientation='horizontal'/><Feed></Feed> <Feed></Feed></div>}
     {state == "2" && <Badges></Badges>}
                 {state == "3" &&  <CV></CV> }
+
 
 
                 
