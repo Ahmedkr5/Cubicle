@@ -206,8 +206,8 @@ export default function Feed() {
             Set aside off of the heat to let rest for 10 minutes, and then
             serve.
           </Typography> */}
-          {interaction == 'comment' && <PostComment></PostComment>}
-          {interaction == 'solve' && <CodeComment></CodeComment>}
+          {interaction === 'comment' && <PostComment></PostComment>}
+          {interaction === 'solve' && <CodeComment></CodeComment>}
           <Comment></Comment>
         </CardContent>
       </Collapse>

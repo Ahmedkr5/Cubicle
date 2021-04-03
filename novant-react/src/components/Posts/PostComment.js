@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import { red } from '@material-ui/core/colors';
 import InputBase from '@material-ui/core/InputBase';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import EmojiEmotionsOutlinedIcon from '@material-ui/icons/EmojiEmotionsOutlined';
 
@@ -48,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PostComment() {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
 
   return (
     <div className={classes.root}>
@@ -60,7 +58,7 @@ export default function PostComment() {
           className={classes.input}
           multiline
           placeholder='Proposez une solution...'
-          inputProps={{ 'aria-label': 'search google maps' }}
+          inputProps={{ 'aria-label': 'Proposez une solution' }}
         />
         <IconButton
           type='submit'

@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Comment() {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
 
   return (
     <div className={classes.root}>
