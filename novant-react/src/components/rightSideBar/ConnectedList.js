@@ -17,10 +17,12 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
-        position: 'relative',
+        position: 'fixed',
         overflow: 'auto',
-        maxHeight: 150,
-    },
+        marginTop :'15px',
+        borderRadius:'15px',
+        height:'50%'
+       },
     rad: {
         borderRadius: 10,
 

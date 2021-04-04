@@ -1,11 +1,11 @@
-
-import Feed from './components/Posts/Feed';
-import ChatApp from './views/ChatApp'
+import './App.css';
+import Profile from './Profile';
 
 
 function App() {
   return <div className='App'>
-  <ChatApp/>
+    <Profile></Profile>
+
   </div>;
 }
 
