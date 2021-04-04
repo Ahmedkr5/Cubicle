@@ -48,10 +48,10 @@ export default function TopSidebar() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-     <Paper style={{display: 'flex',background:'white',borderRadius:'10px',alignItems:'center',justifyContent:'center',width:'300px'}}>
-<Container >         
+     <Paper elevation={0} style={{display: 'flex',background:'white',borderRadius:'10px',alignItems:'center',justifyContent:'center',width:'300px',padding:'0px'}}>
+<Container style={{padding:'0px'}}>         
               <ListItemLink href="/profile" style={{display: 'flex',flexDirection:'row'}}>
-                <ListItemIcon style={{marginLeft:'-12px'}}>
+                <ListItemIcon style={{marginLeft:'10px'}}>
                   
                 <img alt="Bayrem Zguimi" src="images/avatar.jpg" style={{width:'50px',borderRadius:'10px'}} />
                 </ListItemIcon>

@@ -16,7 +16,7 @@ export default function ProfileCard() {
   const classes = useStyles();
 
   return (
-    <Card style={{    borderRadius: '10px' , marginBottom:"10px" ,marginTop:"15px"}}>
+    <Card elevation={0} style={{    borderRadius: '10px' , marginBottom:"10px" ,marginTop:"15px"}}>
         <CardMedia
           className={classes.media}
           image="images/cover.png"

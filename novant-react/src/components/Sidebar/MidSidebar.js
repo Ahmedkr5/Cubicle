@@ -48,66 +48,61 @@ export default function MidSidebar() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Paper style={{width :'300px',marginTop:'10px',background:'white',borderRadius:'10px'}}>
+      <Paper elevation={0} style={{width :'300px',marginTop:'10px',background:'white',borderRadius:'10px'}}>
 
-<Container >         
-          <ListItemLink href="/home" >
+<Container  style={{padding:'0px'}}>         
+         <ListItemLink style={{paddingLeft:'15%'}} href="/home" >
                 <ListItemIcon   className={classes.iconWrapper} >
                   
-                  <HomeOutlined color="primary" />
+                  <HomeOutlined color="#F0F2F5" />
                 </ListItemIcon>
                 <ListItemText>Home</ListItemText>
               </ListItemLink>
-              <Divider />
-              <ListItemLink>
+              <Divider variant="middle" />
+              <ListItemLink style={{paddingLeft:'15%'}}>
                 <ListItemIcon   className={classes.iconWrapper} >
                   
-                  <PeopleAltOutlined color="primary" />
+                  <PeopleAltOutlined color="#F0F2F5" />
                 </ListItemIcon>
                 <ListItemText>Friends</ListItemText>
               </ListItemLink>
-              <Divider />
-
-              <ListItemLink href="/chat">
+              <Divider variant="middle" />
+            <ListItemLink style={{paddingLeft:'15%'}}href="/chat">
                 <ListItemIcon   className={classes.iconWrapper} >
                   
-                  <MessageOutlined color="primary" />
+                  <MessageOutlined color="#F0F2F5" />
                 </ListItemIcon>
                 <ListItemText>Messages</ListItemText>
               </ListItemLink>
-              <Divider />
-
-              <ListItemLink>
+              <Divider variant="middle" />
+             <ListItemLink style={{paddingLeft:'15%'}}>
                 <ListItemIcon   className={classes.iconWrapper} >
                   
-                  <BusinessOutlined color="primary" />
+                  <BusinessOutlined color="#F0F2F5" />
                 </ListItemIcon>
                 <ListItemText>Business</ListItemText>
               </ListItemLink>
-              <Divider />
-
-              <ListItemLink>
+              <Divider variant="middle" />
+             <ListItemLink style={{paddingLeft:'15%'}}>
                 <ListItemIcon   className={classes.iconWrapper} >
                   
-                  <SupervisedUserCircleOutlined color="primary" />
+                  <SupervisedUserCircleOutlined color="#F0F2F5" />
                 </ListItemIcon>
                 <ListItemText>Groups</ListItemText>
               </ListItemLink>
-              <Divider />
-
-              <ListItemLink>
+              <Divider variant="middle" />
+             <ListItemLink style={{paddingLeft:'15%'}}>
                 <ListItemIcon   className={classes.iconWrapper} >
                   
-                  <MenuBook color="primary" />
+                  <MenuBook color="#F0F2F5" />
                 </ListItemIcon>
                 <ListItemText>Courses</ListItemText>
               </ListItemLink>
-              <Divider />
-
-              <ListItemLink>
+              <Divider variant="middle" />
+             <ListItemLink style={{paddingLeft:'15%'}}>
                 <ListItemIcon   className={classes.iconWrapper} >
                   
-                  <BusinessCenterOutlined color="primary" />
+                  <BusinessCenterOutlined color="#F0F2F5" />
                 </ListItemIcon>
                 <ListItemText>Offres</ListItemText>
               </ListItemLink>

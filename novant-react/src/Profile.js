@@ -7,11 +7,9 @@ import { Col, Row } from "react-bootstrap";
 import Sidebar from "./components/Sidebar/Sidebar";
 import ProfileCard from "./components/Profile/ProfileCard";
 import Feed from "./components/Posts/Feed";
-import ConnectedList from "./components/rightSideBar/ConnectedList";
 import Badges from "./Badges";
 import CV from "./components/Profile/CV/CV";
-import Coins from "./Coins";
-import FriendReq from './components/Friends/FriendReq'
+import RightSidebar from "./components/rightSideBar/RightSidebar";
 
 
 
@@ -30,7 +28,7 @@ const [value, setValue] = React.useState(0);
             </Col>
 
             <Col md={6}>
-                          <Container maxWidth="md">
+                          <Container style={{marginLeft:'0px',width:'100%'}}>
                             <ProfileCard></ProfileCard>
 
                 <BottomNavigation
@@ -47,18 +45,15 @@ const [value, setValue] = React.useState(0);
       <BottomNavigationAction onClick={()=>setState("2")} label="Badges" icon={<Flag />} />
       <BottomNavigationAction onClick={()=>setState("3")} label="CV" icon={<FindInPage />} />
     </BottomNavigation>
-    {state == "0" &&  <div style={{display:'flex' ,flexDirection:'column'}}><Feed></Feed> <Divider orientation='horizontal'/><Feed></Feed> <Feed></Feed></div>}
+
+    {state == "0" &&  <div style={{display:'flex',width:'100%' ,flexDirection:'column'}}><Feed></Feed> <Divider orientation='horizontal'/><Feed></Feed> <Feed></Feed></div>}
     {state == "2" && <Badges></Badges>}
-                {state == "3" &&  <CV></CV> }
+    {state == "3" &&  <CV></CV> }
 
-
-
-                
                 </Container>
                 </Col>
                 <Col md={3}>
-                  <FriendReq></FriendReq>
-                  <ConnectedList></ConnectedList>
+                  <RightSidebar></RightSidebar>
                 </Col>
                 </Row>
 

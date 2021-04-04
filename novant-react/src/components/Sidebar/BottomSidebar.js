@@ -66,16 +66,16 @@ export default function BottomSidebar() {
       </div>
       </div>
 
-      <Paper elevation={3} style={{marginTop:'10px',background:'white',borderRadius:'10px'}}>
+      <Paper elevation={0} style={{marginTop:'10px',background:'white',borderRadius:'10px'}}>
 
 <Container style={{width:'300px'}}>      
-          <ListItem style={{display:'flex',flexDirection:'column'}}>
-          <Card style={{width:'300px',borderStyle:'none'}}>
+          <ListItem style={{display:'flex',flexDirection:'column',paddingTop:'0px'}}>
+          <Card style={{width:'300px',borderStyle:'none',paddingTop:'0px'}}>
       
         <CardMedia
           className={classes.media}
           image="images/cover.png"
-          style={{width:'300px',height:'200px'}}
+          style={{width:'300px',height:'200px',marginTop:'0px',paddingTop:'0px'}}
           title="Group Invitation"
         />
 

@@ -35,7 +35,7 @@ export default function Experiences() {
         </div>
         <div className="row">
           
-          <Typography>
+          <Typography style={{textAlign:'left'}}>
           Designing new databases and data schemas for the mission-critical 
           progressive web application improving data integrity and execution efficiency using EF, POSTGIS and ROLAP.
           Fully automated infrastructure and environments cloud provisioning related to the business-critical progressive web
@@ -62,7 +62,7 @@ export default function Experiences() {
         </div>
         <div className="row">
           
-          <Typography>
+          <Typography style={{textAlign:'left'}}>
           Design and implementation of the 99.99% up-time REST API for the business-critical online service, that provided critical connectivity channel for distributed functionality and increase system cohesion keeping manageable code complexity.
 Fully automated infrastructure and environments cloud provisioning related to the critical external web app resulting in reduce of servers and infrastructure administration by 99%.
 Handling full stack programming tasks for the development of the business-critical single page application utilizing ETL, FCM and Haml. As a result 9 bugs-free releases have been deployed just-in-time.
