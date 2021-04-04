@@ -74,13 +74,13 @@ return(<>
       <Typography style={{color:'grey',fontSize:'12',fontWeight:'bold'}} >REQUESTS</Typography>
       </div>
         </StyledBadge>      
-        </div></MuiThemeProvider>
+        </div>
         
           
  <Req></Req>
  <Req></Req>
  
- 
+ </MuiThemeProvider>
  </div>
 
         

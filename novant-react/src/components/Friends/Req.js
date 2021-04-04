@@ -60,7 +60,7 @@ return(
           >
             
           </Avatar>
-<Typography style={{color:"primary"}} variant="h7" component="h7">
+<Typography style={{color:"primary"}} >
 <Link href="#" onClick={preventDefault} style={{fontWeight:'bold'}}>
     Ahmed Khiari
   </Link>  wants to add you to friends
