@@ -11,7 +11,7 @@ import ConnectedList from "./components/rightSideBar/ConnectedList";
 import Badges from "./Badges";
 import CV from "./components/Profile/CV/CV";
 import Coins from "./Coins";
-
+import FriendReq from './components/Friends/FriendReq'
 
 
 
@@ -57,6 +57,7 @@ const [value, setValue] = React.useState(0);
                 </Container>
                 </Col>
                 <Col md={3}>
+                  <FriendReq></FriendReq>
                   <ConnectedList></ConnectedList>
                 </Col>
                 </Row>
