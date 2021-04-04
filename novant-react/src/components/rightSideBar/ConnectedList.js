@@ -4,12 +4,13 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import { deepOrange, green } from '@material-ui/core/colors';
+import { deepOrange} from '@material-ui/core/colors';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Badge from '@material-ui/core/Badge';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -81,9 +82,7 @@ export default function ConnectedList() {
     const [searchActive, setSearchActive] = React.useState('none');
 
 
-    const handleListItemClick = (event, index) => {
-        setSelectedIndex(index);
-    };
+
     const SearchAction = () => {
         setSearchActive('');
     }
@@ -93,6 +92,7 @@ export default function ConnectedList() {
 
     return (
         <>
+            <Paper elevation={0} className={classes.root} >
             <div className={classes.root} onScroll={SearchAction}>
 
 
@@ -103,8 +103,7 @@ export default function ConnectedList() {
 
                     <ListItem
                         button
-                        selected={selectedIndex === 0}
-                        onClick={(event) => handleListItemClick(event, 0)}
+                      
                     >
                         <ListItemAvatar>
                             <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left', }} >
@@ -116,15 +115,7 @@ export default function ConnectedList() {
                             <StyledBadgeMessages badgeContent={4} color="secondary"></StyledBadgeMessages>
                         </ListItemSecondaryAction>
                     </ListItem>
-
-
-
-
-                    <ListItem
-                        button
-                        selected={selectedIndex === 0}
-                        onClick={(event) => handleListItemClick(event, 0)}
-                    >
+                    <ListItem  button >
                         <ListItemAvatar>
                             <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left' }} >
                                 <Avatar variant='rounded' src={`../assets/images/users/2.jpg`} className={classes.rad} />
@@ -135,13 +126,9 @@ export default function ConnectedList() {
                             <StyledBadgeMessages badgeContent={2} color="secondary"></StyledBadgeMessages>
                         </ListItemSecondaryAction>
                     </ListItem>
-
-
-
                     <ListItem
                         button
-                        selected={selectedIndex === 0}
-                        onClick={(event) => handleListItemClick(event, 0)}
+                        
                     >
                         <ListItemAvatar>
                             <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left' }} >
@@ -153,12 +140,10 @@ export default function ConnectedList() {
                             <StyledBadgeMessages badgeContent={6} color="secondary"></StyledBadgeMessages>
                         </ListItemSecondaryAction>
                     </ListItem>
-
-
-
                 </List>
 
             </div>
+            </Paper>
         </>
 
     );
