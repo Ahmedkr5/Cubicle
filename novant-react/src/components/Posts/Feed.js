@@ -23,11 +23,12 @@ import CodeComment from './CodeComment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 600,
+    maxWidth: 850,
     display: 'flex',
     flexDirection: 'column',
     flexBasis: '100%',
     borderRadius: '15px',
+    marginTop:'15px'
   },
   media: {
     height: 0,
