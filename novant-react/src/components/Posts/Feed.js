@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     flexBasis: '100%',
     borderRadius: '15px',
-    marginTop:'15px'
+    marginTop: '15px',
   },
   media: {
     height: 0,
@@ -65,6 +65,9 @@ const useStyles = makeStyles((theme) => ({
     padding: '0px',
     textAlign: 'left',
     cursor: 'pointer',
+  },
+  content: {
+    textAlign: 'left',
   },
 }));
 
@@ -131,7 +134,7 @@ export default function Feed() {
       /> */}
       <CardContent>
         <Typography
-          textAlign='left'
+          className={classes.content}
           fontFamily='Monospace'
           color='textSecondary'
           component='p'
