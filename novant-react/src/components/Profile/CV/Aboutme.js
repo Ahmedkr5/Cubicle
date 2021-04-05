@@ -2,10 +2,11 @@ import React from 'react';
 import { Cake, FindInPage, Flag, Home, HomeOutlined, Phone } from '@material-ui/icons';
 import { Container, Divider, Icon, IconButton, Typography } from '@material-ui/core';
 import { Col, Row } from 'react-bootstrap';
+import authService from '../../../services/auth.service';
 
 
 export default function Aboutme() {
-
+  const user = authService.getCurrentUser() ;
   return (
     <div>
     <Container style={{borderRadius: '10px'  ,backgroundColor:"white"}}>

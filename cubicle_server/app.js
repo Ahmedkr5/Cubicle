@@ -10,6 +10,19 @@ app.use(express.urlencoded({extended : false}))
 var AccessToken = require("twilio").jwt.AccessToken;  
 var VideoGrant = AccessToken.VideoGrant;  
 
+var UserController = require('./user/UserController');
+var AuthController = require('./auth/AuthController');
+
+app.use('/users', UserController);
+app.use('/api/auth', AuthController);
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+  });
+
+module.exports = app;
+
 const CONFIG={
   uri : process.env.DATABASE_URL,
   OPTIONS : {

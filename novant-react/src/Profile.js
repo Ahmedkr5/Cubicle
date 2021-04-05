@@ -10,6 +10,9 @@ import Feed from "./components/Posts/Feed";
 import Badges from "./Badges";
 import CV from "./components/Profile/CV/CV";
 import RightSidebar from "./components/rightSideBar/RightSidebar";
+import SearchAppBar from "./components/Navbar/Navbar";
+import FriendList from "./components/Friends/Friendlist";
+import authService from "./services/auth.service";
 
 
 
@@ -18,18 +21,23 @@ import RightSidebar from "./components/rightSideBar/RightSidebar";
 function Profile() {
 const [state, setState] = useState("0") 
 const [value, setValue] = React.useState(0);
+const user = authService.getCurrentUser() ;
+
  return (
    
     <div style={{backgroundColor : '#EBEDF0'}}>
-          <link rel="stylesheet" href="css/bootstrap.min.css"/>    
+          <link rel="stylesheet" href="css/bootstrap.min.css"/>   
           <Row>
+          <SearchAppBar></SearchAppBar>
+            </Row> 
+          <Row style={{marginTop:'4%'}}>
             <Col md={3}>
       <Sidebar></Sidebar>
             </Col>
 
             <Col md={6}>
                           <Container style={{marginLeft:'0px',width:'100%'}}>
-                            <ProfileCard></ProfileCard>
+                            <ProfileCard firstname={user.firstname} lastname={user.lastname}></ProfileCard>
 
                 <BottomNavigation
       value={value}
@@ -47,6 +55,7 @@ const [value, setValue] = React.useState(0);
     </BottomNavigation>
 
     {state == "0" &&  <div style={{display:'flex',width:'100%' ,flexDirection:'column'}}><Feed></Feed> <Divider orientation='horizontal'/><Feed></Feed> <Feed></Feed></div>}
+    {state == "1" && <FriendList></FriendList>}
     {state == "2" && <Badges></Badges>}
     {state == "3" &&  <CV></CV> }
 

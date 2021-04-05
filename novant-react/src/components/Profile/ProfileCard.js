@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Avatar, Badge } from '@material-ui/core';
+import AuthService from "../../services/auth.service";
 
 const useStyles = makeStyles({
   media: {
@@ -12,9 +13,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ProfileCard() {
+export default function ProfileCard(props) {
   const classes = useStyles();
-
   return (
     <Card elevation={0} style={{    borderRadius: '10px' , marginBottom:"10px" ,marginTop:"15px"}}>
         <CardMedia
@@ -26,7 +26,7 @@ export default function ProfileCard() {
         <Badge badgeContent={"Level 10"} color="primary">
         <Avatar alt="Bayrem Zguimi" src="images/avatar.jpg" style={{width:'150px',height:'150px'}} />
         </Badge>
-        <Typography variant="h4">Bayrem Zguimi</Typography>
+        <Typography variant="h4">{props.firstname} {props.lastname}</Typography>
         </CardContent>
     </Card>
   );
