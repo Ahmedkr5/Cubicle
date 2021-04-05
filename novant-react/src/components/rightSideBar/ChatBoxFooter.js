@@ -13,7 +13,7 @@ import 'emoji-mart/css/emoji-mart.css';
 
 const useStyles = makeStyles((theme) => ({
     chatfooter: {
-        paddingTop: '5px',
+    
         float: 'right',
         display: 'flex ',
         flexDirection: 'row',
@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '5px',
         marginTop: '5px',
         width: '90%',
+        
     },
     iconButton: {
         float: 'right',
@@ -64,7 +65,7 @@ export default function ChatBoxFooter() {
 
             </div>
 
-            <div className={classes.chatfooter}>
+            <div className={classes.chatfooter} >
                 <div className={classes.commentBody}>
                     <InputBase
                         className={classes.input}

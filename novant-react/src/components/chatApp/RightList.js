@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: '100%',
         width: '100%',
-        height: '600px'
+        height: '880px'
     },
     media: {
         height: 0,
@@ -97,7 +97,7 @@ export default function RecipeReviewCard() {
 
     return (
         <>
-            <div  style={{ paddingTop: '20px' }}>
+            <div  style={{ paddingTop: '10px' }}>
                 <Paper elevation={0} className={classes.root} >
                     <Card elevation={0} className={classes.root}>
                         <CardContent>

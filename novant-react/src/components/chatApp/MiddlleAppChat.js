@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: '100%',
         width: '100%',
-        height: '600px'
+        height: '880px'
     },
     rad: {
         borderRadius: 10,
@@ -102,7 +102,7 @@ export default function RecipeReviewCard() {
     const [displayEmoji, setdisplayEmoji] = useState('none');
     const [text, setText] = useState("");
     const [drop, setDrop] = useState('none');
-    const [taille, settaille] = useState("400px");
+    const [taille, settaille] = useState("680px");
     const [myDivider, setMyDivider] = useState('');
     const onEmojiClick = (emojiObject) => {
         setText(text + emojiObject.native);
@@ -120,11 +120,11 @@ export default function RecipeReviewCard() {
     const displayDropZone = () => {
         if (drop == '') {
             setDrop('none')
-            settaille('400px')
+            settaille('680px')
             setMyDivider('')
         } else {
             setDrop('')
-            settaille('300px')
+            settaille('580px')
             setMyDivider('none')
         }
     }
@@ -138,7 +138,7 @@ export default function RecipeReviewCard() {
     return (
         <>
             <link href="../assets/css/chatApp.css" rel="stylesheet" />
-            <div style={{ paddingTop: '20px' }}>
+            <div style={{ paddingTop: '10px' }}>
                 <Paper elevation={0} className={classes.root} >
                     <Card elevation={0} className={classes.root}>
                         <CardHeader
@@ -166,13 +166,13 @@ export default function RecipeReviewCard() {
                         <Divider style={{ marginTop: '-6px' }} />
                         <CardContent>
                             <Typography color="textSecondary" component="p" >
-                                <div style={{ maxHeight: taille, overflowY: 'scroll' }}>
+                                <div style={{ height: taille, overflowY: 'scroll' }}>
                                     <div className='blockMessageSecond'>
                                         <div className='authorthumb' >
                                             <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
                                         </div>
                                         <span className='chatmessageitem spanMessage'>Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks</span>
-                                        <div className="notification-daterecept">
+                                        <div className="notification-date">
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
@@ -195,7 +195,7 @@ export default function RecipeReviewCard() {
                                             <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
                                         </div>
                                         <span className='chatmessageitem spanMessage'>Hi James! Please remember to buy the food for tomorrow! </span>
-                                        <div className="notification-daterecept">
+                                        <div className="notification-date">
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
@@ -215,7 +215,51 @@ export default function RecipeReviewCard() {
                                         <span className='chatmessageitem spanMessage'><audio style={{ height: "20px" }} src={mediaBlobUrl} controls /> 
 
                                         </span>
+                                        <div className="notification-date">
+                                            <span >Yesterday at 8:10pm</span>
+                                        </div>
+                                    </div>
+                               
+                                    <div className='blockMessage'>
+                                        <div className='authorthumbrecept' >
+                                            <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
+                                        </div>
+                                        <span className='chatmessageitemrecept spanMessagerecept'>Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks</span>
+                                    </div>
+                                    <div className='blockMessageSecond'>
+                                        <div className='authorthumbrecept' >
+                                        </div>
+                                        <span className='chatmessageitemrecept spanMessagerecept'>I’m gonna be handling the gifts  </span>
                                         <div className="notification-daterecept">
+                                            <span >Yesterday at 8:10pm</span>
+                                        </div>
+                                    </div>
+                                    <div className='blockMessage'>
+                                        <div className='authorthumb' >
+                                            <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
+                                        </div>
+                                        <span className='chatmessageitem spanMessage'>Hi James! Please remember to buy the food for tomorrow! </span>
+                                        <div className="notification-date">
+                                            <span >Yesterday at 8:10pm</span>
+                                        </div>
+                                    </div>
+                                    <div className='blockMessage'>
+                                        <div className='authorthumbrecept' >
+                                            <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
+                                        </div>
+                                        <span className='chatmessageitemrecept spanMessagerecept'> Please remember to buy the food for tomorrow </span>
+                                        <div className="notification-daterecept">
+                                            <span >Yesterday at 8:10pm</span>
+                                        </div>
+                                    </div>
+                                    <div className='blockMessage'>
+                                        <div className='authorthumb' >
+                                            <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
+                                        </div>
+                                        <span className='chatmessageitem spanMessage'><audio style={{ height: "20px" }} src={mediaBlobUrl} controls /> 
+
+                                        </span>
+                                        <div className="notification-date">
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>

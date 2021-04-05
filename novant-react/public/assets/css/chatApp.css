@@ -25,11 +25,7 @@
        margin-bottom: 5px;
        font-size: 12px;
        max-width: 500px;
-       margin-left: auto;
-       margin-right: auto;
-       
-       
-
+       margin-left: 300px;
        
        }
    
@@ -52,6 +48,7 @@
        font-family: Roboto,-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
        font-size: small;
        background-color:lavender;
+
        
    }
      .blockMessage{
@@ -63,25 +60,30 @@
      ::-webkit-scrollbar{
        display: none;
      }
-     .notification-date {
-       font-size: 10px;
-       display: block;
-       float: right;
-       margin-top: 1px;
-       margin-right: 70px;
+  .notification-date {
+    font-size: 10px;
+    display: block;
+    margin-top: 5px; 
+    float: right;
+    margin-top: 1px;
+    margin-right: 10%;
+  
+    width: 100%;
+
+
    
-      
-     }
-     .notification-daterecept {
-       font-size: 10px;
-       display: block;
-       margin-top: 5px; 
-       float: left;
-       margin-top: 1px;
-       margin-left: 70px;
-   
-      
-     }
+  }
+  .notification-daterecept {
+    font-size: 10px;
+    display: block;
+    margin-top: 5px; 
+    float: left;
+    margin-top: 1px;
+    width: 100%;
+  
+
+
+  }
      .col-6{
        padding-left: 0px;
        padding-right: 0px;
@@ -89,5 +91,7 @@
      
    body{
      background-color:#F0F2F5 ;
-
    }
+
+
+  

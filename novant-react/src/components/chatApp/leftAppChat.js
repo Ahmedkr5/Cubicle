@@ -1,9 +1,7 @@
-import React from 'react';
+import React , { useState }from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
@@ -15,11 +13,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Accordion from '@material-ui/core/Accordion';
 import Badge from '@material-ui/core/Badge';
 import MonetizationOnIcon from '@material-ui/icons/AttachMoney';
+import ReactBnbGallery from 'react-bnb-gallery';
+import 'react-bnb-gallery/dist/style.css';
 const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: '100%',
         width: '100%',
-        height: '600px'
+        height: '880px'
     },
     rad: {
         borderRadius: 20,
@@ -31,6 +31,11 @@ const useStyles = makeStyles((theme) => ({
 
 
     },
+    heading: {
+        fontSize: theme.typography.pxToRem(15),
+        fontWeight: theme.typography.fontWeightRegular,
+       
+      },
     middle: {
         marginTop: '15px',
         textAlign: 'center',
@@ -52,18 +57,53 @@ const useStyles = makeStyles((theme) => ({
 
 export default function OutlinedCard() {
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
+    const [isOpen, setIsOpen] = useState(false);
+    const PHOTOS = [{
+        photo: "https://source.unsplash.com/aZjw7xI3QAA/1144x763",
+        caption: "Viñales, Pinar del Río, Cuba",
+        subcaption: "Photo by Simon Matzinger on Unsplash",
+        thumbnail: "https://source.unsplash.com/aZjw7xI3QAA/100x67",
+      }, {
+        photo: "https://source.unsplash.com/c77MgFOt7e0/1144x763",
+        caption: "La Habana, Cuba",
+        subcaption: "Photo by Gerardo Sanchez on Unsplash",
+        thumbnail: "https://source.unsplash.com/c77MgFOt7e0/100x67",
+      }, {
+        photo: "https://source.unsplash.com/aZjw7xI3QAA/1144x763",
+        caption: "Bouzid mohamed ",
+        subcaption: "Photo by Hannah Cauhepe on Unsplash",
+        thumbnail: "https://source.unsplash.com/aZjw7xI3QAA/100x67",
+      },
+      {
+        photo: "https://source.unsplash.com/aZjw7xI3QAA/1144x763",
+        caption: "Bouzid mohamed ",
+        subcaption: "Photo by Hannah Cauhepe on Unsplash",
+        thumbnail: "https://source.unsplash.com/aZjw7xI3QAA/100x67",
+      },
+      {
+        photo: "https://source.unsplash.com/aZjw7xI3QAA/1144x763",
+        caption: "Bouzid mohamed ",
+        subcaption: "Photo by Hannah Cauhepe on Unsplash",
+        thumbnail: "https://source.unsplash.com/aZjw7xI3QAA/100x67",
+      }];
+    
+
 
     return (
-        <div style={{ paddingTop: '20px',maxHeight:'600px',display:'scroll' }}>
+        <>
+        <link href="../assets/css/chatApp.css" rel="stylesheet" />
+        <ReactBnbGallery
+        show={isOpen}
+        photos={PHOTOS}
+        onClose={() => setIsOpen(false)}
+      />
+        <div style={{ paddingTop: '10px',maxHeight:'880px',display:'scroll' }}>
             <Paper elevation={0} className={classes.root} >
                 <Card elevation={0} className={classes.root} variant="outlined">
                     <CardContent>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
 
                             <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
-
-
                         </Typography>
                         <Typography variant="h5" component="h2" className={classes.middle}>
                             Bayrem Zguimi
@@ -91,11 +131,19 @@ export default function OutlinedCard() {
                                 >
                                     <Typography className={classes.heading}>Shared files</Typography>
                                 </AccordionSummary>
-                                <AccordionDetails>
-                                    <Typography>
-                                        <a href="#"><span>style.css  </span></a><br />
-                                        <a href="#"><span>index.html</span></a><br />
-                                        <a href="#"><span>rapport.pdf </span></a><br />
+                                <AccordionDetails style={{paddingBottom:'0px'}}>
+                                    <Typography >
+                                      <a href="#">index.html</a>
+                                    </Typography>
+                                </AccordionDetails>
+                                <AccordionDetails style={{paddingBottom:'0px'}} >
+                                    <Typography >
+                                      <a href="#">style.css</a>
+                                    </Typography>
+                                </AccordionDetails>
+                                <AccordionDetails >
+                                    <Typography style={{paddingBottom:'0px'}}>
+                                      <a href="#">rapport.pdf</a>
                                     </Typography>
                                 </AccordionDetails>
                             </Accordion>
@@ -111,22 +159,21 @@ export default function OutlinedCard() {
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     <Typography >
+                                        <div className='container-fluid'>
                                         <div className="row"  >
-
-
-
                                             <div className="col-4" style={{ paddingRight: '2px', paddingLeft: '2px', paddingBottom: '4px' }}>
-                                                <img src="../assets/images/users/4.jpg" className="rounded mx-auto d-block" style={{ height: '100px' }} />
+                                                <img src="../assets/images/users/4.jpg" onClick={() => setIsOpen(true)}  className="rounded mx-auto d-block" style={{ height: '100px',width:'125px' }} />
                                             </div>
                                             <div className="col-4" style={{ paddingRight: '2px', paddingLeft: '2px', paddingBottom: '4px' }}>
-                                                <img src="../assets/images/users/5.jpg" className=" rounded mx-auto d-block" style={{ height: '100px' }} />
+                                                <img src="../assets/images/users/5.jpg" className=" rounded mx-auto d-block" style={{ height: '100px',width:'125px' }} />
                                             </div>
                                             <div className="col-4" style={{ paddingRight: '2px', paddingLeft: '2px', paddingBottom: '4px' }}>
-                                                <img src="../assets/images/users/8.jpg" className="rounded mx-auto d-block" style={{ height: '100px' }} />
+                                                <img src="../assets/images/users/8.jpg" className="rounded mx-auto d-block" style={{ height: '100px',width:'125px'  }} />
                                             </div>
                                             <div className="col-4" style={{ paddingRight: '2px', paddingLeft: '2px', paddingBottom: '4px' }}>
-                                                <img src="../assets/images/users/6.jpg" className="rounded mx-auto d-block" style={{ height: '100px' }} />
+                                                <img src="../assets/images/users/6.jpg" className="rounded mx-auto d-block" style={{ height: '100px',width:'125px' }} />
                                             </div>
+                                        </div>
                                         </div>
                                     </Typography>
                                 </AccordionDetails>
@@ -137,6 +184,6 @@ export default function OutlinedCard() {
                 </Card>
             </Paper>
         </div>
-
+        </>
     );
 }

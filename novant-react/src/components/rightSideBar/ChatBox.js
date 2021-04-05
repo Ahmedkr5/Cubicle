@@ -23,22 +23,19 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 300,
         height: 350,
         maxHeight: 350,
-
+        borderTopLeftRadius:'15px',
+        borderTopRightRadius:'15px'
     },
     rad: {
         borderRadius: 8,
         width: theme.spacing(4),
         height: theme.spacing(4),
-
-
     },
     media: {
         height: 140,
         maxHeight: 50,
-
         backgroundColor: 'lavender',
     },
-
     content: {
         height: 200,
         minHeight: 200,
@@ -48,13 +45,11 @@ const useStyles = makeStyles((theme) => ({
     area: {
         display: 'inline',
     },
-
     headerIcons: {
         float: 'right',
         display: 'flex ',
         flexDirection: 'row',
         marginLeft: '70px',
-
     },
     chatfooter: {
         paddingTop: '5px',
@@ -62,13 +57,10 @@ const useStyles = makeStyles((theme) => ({
         float: 'right',
         display: 'flex ',
         flexDirection: 'row',
-
     },
     Icon: {
         padding: '6px',
     },
-
-
 }));
 const StyledBadge = withStyles((theme) => ({
     badge: {
@@ -103,7 +95,7 @@ const StyledBadge = withStyles((theme) => ({
 export default function ChatBox() {
     const classes = useStyles();
     return (
-        <div style={{ marginLeft: "150px", marginTop: '100px' }}>
+        <div style={{ marginLeft: "150px", marginTop: '100px',zIndex:'1', position : 'fixed' , bottom : '0'}}>
             <Card  className={classes.root}  >
                 <CardActionArea  className={classes.Area} >
                     <CardMedia className={classes.media}>
