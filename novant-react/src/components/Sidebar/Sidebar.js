@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import TopSidebar from './TopSidebar';
 import MidSidebar from './MidSidebar';
 import BottomSidebar from './BottomSidebar';
+import SearchAppBar from '../Navbar/Navbar';
 
 const drawerWidth = 300;
 
@@ -48,7 +49,6 @@ export default function Sidebar() {
           paper: classes.drawerPaper,
         }}
       >
-        
           <TopSidebar></TopSidebar>
           <MidSidebar></MidSidebar>
 <BottomSidebar></BottomSidebar>     

@@ -83,7 +83,7 @@ export default function SearchAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.AppBar}>
+      <AppBar position="fixed" className={classes.AppBar}>
         <Toolbar>
         <Avatar alt="Logo" src="../assets/images/randomlogo.png" />
           <Typography className={classes.title} variant="h6" noWrap>

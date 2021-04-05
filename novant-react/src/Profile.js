@@ -10,6 +10,7 @@ import Feed from "./components/Posts/Feed";
 import Badges from "./Badges";
 import CV from "./components/Profile/CV/CV";
 import RightSidebar from "./components/rightSideBar/RightSidebar";
+import SearchAppBar from "./components/Navbar/Navbar";
 
 
 
@@ -21,8 +22,11 @@ const [value, setValue] = React.useState(0);
  return (
    
     <div style={{backgroundColor : '#EBEDF0'}}>
-          <link rel="stylesheet" href="css/bootstrap.min.css"/>    
+          <link rel="stylesheet" href="css/bootstrap.min.css"/>   
           <Row>
+          <SearchAppBar></SearchAppBar>
+            </Row> 
+          <Row style={{marginTop:'4%'}}>
             <Col md={3}>
       <Sidebar></Sidebar>
             </Col>
