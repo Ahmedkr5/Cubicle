@@ -8,6 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Avatar, Container, Paper, Typography } from '@material-ui/core';
+import authService from '../../services/auth.service';
 const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +45,8 @@ function ListItemLink(props) {
 
 export default function TopSidebar() {
   const classes = useStyles();
+  const user = authService.getCurrentUser() ;
+
 
   return (
     <div className={classes.root}>
@@ -57,8 +60,7 @@ export default function TopSidebar() {
                 </ListItemIcon>
                 <br/>
                 <div style={{display: 'flex',marginLeft:'10%',flexDirection:'column'}}>
-                <ListItemText><Typography variant="h6"> Bayrem Zguimi </Typography></ListItemText>
-                <ListItemText style={{marginTop:'-8%', color:'grey'}}> @BayremZguimi </ListItemText>
+                <ListItemText><Typography variant="h6">{user['firstname']} {user['lastname']} </Typography></ListItemText>
                 </div>
               </ListItemLink>
 

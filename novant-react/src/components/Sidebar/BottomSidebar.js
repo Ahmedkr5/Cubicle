@@ -5,7 +5,9 @@ import ListItem from '@material-ui/core/ListItem';
 import { Card, CardMedia, Paper, Typography, withStyles } from '@material-ui/core';
 import { Container } from '@material-ui/core';
 import Badge from '@material-ui/core/Badge';
-import { Button } from 'react-bootstrap';
+import Button from '@material-ui/core/Button';
+import { Close } from '@material-ui/icons';
+
 const drawerWidth = 300;
 const StyledBadge = withStyles((theme) => ({
     badge: {
@@ -83,14 +85,13 @@ export default function BottomSidebar() {
         <Typography style={{marginTop:"-50px",color:"white"}} variant="h5" component="h2">
             Group Invitation
           </Typography>
-        <div style={{display:"flex",justifyContent:"space-between",flexDirection:"row", marginTop:"40px"}}>
+        <div style={{display:"flex",justifyContent:"space-between",flexDirection:"row", marginTop:"40px",flexBasis:'70%'}}>
          
-        <Button style={{margin:"10px"}}  variant="primary">
-          Accept
-        </Button>
-        
-        <Button style={{margin:"10px"}} variant="danger">
-          Decline
+        <Button variant="contained" color="primary"style={{borderRadius:'12px'}}>
+  Accept invitation
+</Button>
+<Button variant="outlined"   className={classes.margin} style={{marginLeft:'32px',borderRadius:'12px',padding:'0px'}}>
+          <Close fontSize="small"></Close>
         </Button>
       </div>
               </ListItem>

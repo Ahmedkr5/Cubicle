@@ -13,9 +13,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ProfileCard() {
+export default function ProfileCard(props) {
   const classes = useStyles();
-  const user = AuthService.getCurrentUser() ;
   return (
     <Card elevation={0} style={{    borderRadius: '10px' , marginBottom:"10px" ,marginTop:"15px"}}>
         <CardMedia
@@ -27,7 +26,7 @@ export default function ProfileCard() {
         <Badge badgeContent={"Level 10"} color="primary">
         <Avatar alt="Bayrem Zguimi" src="images/avatar.jpg" style={{width:'150px',height:'150px'}} />
         </Badge>
-        <Typography variant="h4">{user['firstname'] } {user['lastname'] }</Typography>
+        <Typography variant="h4">{props.firstname} {props.lastname}</Typography>
         </CardContent>
     </Card>
   );

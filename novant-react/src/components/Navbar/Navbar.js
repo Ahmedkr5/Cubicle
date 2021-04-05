@@ -83,10 +83,10 @@ export default function SearchAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" className={classes.AppBar}>
+      <AppBar elevation={0} position="fixed" className={classes.AppBar}>
         <Toolbar>
         <Avatar alt="Logo" src="../assets/images/randomlogo.png" />
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography style={{textAlign:'left'}} className={classes.title} variant="h6" noWrap>
             Cubicle
           </Typography>
           <div className={classes.search}>
