@@ -9,7 +9,7 @@ import Req from './Req'
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: blue[800],
+            main: '#1877F2',
         }
       },
 });
@@ -48,7 +48,7 @@ const StyledBadge = withStyles((theme) => ({
         top: '50%',
         
       border: '3px solid',
-      borderColor:'#EBEDF0',
+      borderColor:'#F8FAFB',
       padding: '0px',
       borderRadius :'15px',
       width: theme.spacing(4),
@@ -75,10 +75,11 @@ return(<>
       </div>
         </StyledBadge>      
         </div>
-        
-          
+     
+       
  <Req></Req>
  <Req></Req>
+ 
  
  </MuiThemeProvider>
  </div>

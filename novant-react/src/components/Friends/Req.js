@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 return(
     
         
-        <Paper elevation={3} style={{marginTop:'15px',background:'white',borderRadius:'10px',width:'360px',height:'150px'}}>
+        <Paper elevation={0} style={{marginTop:'15px',background:'white',borderRadius:'10px',width:'360px',height:'150px'}}>
         <Container style={{width:'360px',marginTop:'15px'}}>
         <ListItem style={{display:'flex',flexDirection:'row'}}>
 
@@ -68,10 +68,10 @@ return(
           </ListItem>
     
     <ListItem style={{display:'flex',flexDirection:'row'}}>
-    <Button variant="contained" color="primary" size='large'>
+    <Button variant="contained" color="primary" size='large'style={{borderRadius:'12px'}}>
   Accept
 </Button>
-<Button variant="outlined"  size='large' className={classes.margin} style={{marginLeft:'32px'}}>
+<Button variant="outlined"  size='large' className={classes.margin} style={{marginLeft:'32px',borderRadius:'12px'}}>
           Decline
         </Button>
 
