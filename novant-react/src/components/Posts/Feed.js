@@ -23,7 +23,6 @@ import CodeComment from './CodeComment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 850,
     display: 'flex',
     flexDirection: 'column',
     flexBasis: '100%',
@@ -103,7 +102,7 @@ export default function Feed() {
     //     </div>
     //   </Paper>
     // </div>
-    <Card className={classes.root}>
+    <Card className={classes.root} elevation={0}>
       <CardHeader
         avatar={
           <Avatar
