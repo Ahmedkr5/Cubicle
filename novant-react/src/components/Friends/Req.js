@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles();
 return(
     
-        
+
         <Paper elevation={0} style={{marginTop:'15px',background:'white',borderRadius:'10px',height:'150px'}}>
         <Container style={{marginTop:'15px'}}>
         <ListItem style={{display:'flex',flexDirection:'row'}}>
@@ -78,7 +78,6 @@ return(
 
     </ListItem></Container>
         </Paper>
-        
 );
 
 

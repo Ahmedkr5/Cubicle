@@ -60,26 +60,26 @@
      ::-webkit-scrollbar{
        display: none;
      }
-  .notification-date {
+  .Appnotification-date {
+
     font-size: 10px;
     display: block;
     margin-top: 5px; 
     float: right;
     margin-top: 1px;
-    margin-right: 10%;
-  
-    width: 100%;
+    margin-right: 50%;
+    width: 11%;
 
 
    
   }
-  .notification-daterecept {
+  .Appnotification-daterecept {
     font-size: 10px;
     display: block;
     margin-top: 5px; 
-    float: left;
+    float: right;
     margin-top: 1px;
-    width: 100%;
+    width: 25%;
   
 
 

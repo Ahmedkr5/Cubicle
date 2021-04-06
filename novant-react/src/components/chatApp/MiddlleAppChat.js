@@ -133,12 +133,12 @@ export default function RecipeReviewCard() {
         startRecording,
         stopRecording,
         mediaBlobUrl,
-    
-      } = useReactMediaRecorder({ audio: true });
+
+    } = useReactMediaRecorder({ audio: true });
     return (
         <>
             <link href="../assets/css/chatApp.css" rel="stylesheet" />
-            <div style={{ paddingTop: '10px' }}>
+            <div style={{ paddingTop: '75px' }}>
                 <Paper elevation={0} className={classes.root} >
                     <Card elevation={0} className={classes.root}>
                         <CardHeader
@@ -172,7 +172,7 @@ export default function RecipeReviewCard() {
                                             <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
                                         </div>
                                         <span className='chatmessageitem spanMessage'>Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks</span>
-                                        <div className="notification-date">
+                                        <div className="Appnotification-date">
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
@@ -186,7 +186,7 @@ export default function RecipeReviewCard() {
                                         <div className='authorthumbrecept' >
                                         </div>
                                         <span className='chatmessageitemrecept spanMessagerecept'>I’m gonna be handling the gifts  </span>
-                                        <div className="notification-daterecept">
+                                        <div className="Appnotification-daterecept">
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
@@ -195,7 +195,7 @@ export default function RecipeReviewCard() {
                                             <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
                                         </div>
                                         <span className='chatmessageitem spanMessage'>Hi James! Please remember to buy the food for tomorrow! </span>
-                                        <div className="notification-date">
+                                        <div className="Appnotification-date">
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
@@ -204,7 +204,7 @@ export default function RecipeReviewCard() {
                                             <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
                                         </div>
                                         <span className='chatmessageitemrecept spanMessagerecept'> Please remember to buy the food for tomorrow </span>
-                                        <div className="notification-daterecept">
+                                        <div className="Appnotification-daterecept">
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
@@ -212,14 +212,14 @@ export default function RecipeReviewCard() {
                                         <div className='authorthumb' >
                                             <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
                                         </div>
-                                        <span className='chatmessageitem spanMessage'><audio style={{ height: "20px" }} src={mediaBlobUrl} controls /> 
+                                        <span className='chatmessageitem spanMessage'><audio style={{ height: "20px" }} src={mediaBlobUrl} controls />
 
                                         </span>
-                                        <div className="notification-date">
+                                        <div className="Appnotification-date">
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
-                               
+
                                     <div className='blockMessage'>
                                         <div className='authorthumbrecept' >
                                             <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
@@ -230,7 +230,7 @@ export default function RecipeReviewCard() {
                                         <div className='authorthumbrecept' >
                                         </div>
                                         <span className='chatmessageitemrecept spanMessagerecept'>I’m gonna be handling the gifts  </span>
-                                        <div className="notification-daterecept">
+                                        <div className="Appnotification-daterecept">
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
@@ -239,7 +239,7 @@ export default function RecipeReviewCard() {
                                             <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
                                         </div>
                                         <span className='chatmessageitem spanMessage'>Hi James! Please remember to buy the food for tomorrow! </span>
-                                        <div className="notification-date">
+                                        <div className="Appnotification-date">
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
@@ -248,7 +248,7 @@ export default function RecipeReviewCard() {
                                             <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
                                         </div>
                                         <span className='chatmessageitemrecept spanMessagerecept'> Please remember to buy the food for tomorrow </span>
-                                        <div className="notification-daterecept">
+                                        <div className="Appnotification-daterecept">
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
@@ -256,10 +256,10 @@ export default function RecipeReviewCard() {
                                         <div className='authorthumb' >
                                             <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
                                         </div>
-                                        <span className='chatmessageitem spanMessage'><audio style={{ height: "20px" }} src={mediaBlobUrl} controls /> 
+                                        <span className='chatmessageitem spanMessage'><audio style={{ height: "20px" }} src={mediaBlobUrl} controls />
 
                                         </span>
-                                        <div className="notification-date">
+                                        <div className="Appnotification-date">
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
@@ -267,7 +267,7 @@ export default function RecipeReviewCard() {
                             </Typography>
                             <Divider style={{ display: myDivider }} />
                             <div style={{ display: displayEmoji }} >
-                                <Picker onChange={setText} cleanOnEnter onSelect={onEmojiClick} set='facebook' style={{ position: 'absolute', bottom: '12%', marginLeft: '30%', zIndex: '1' }} i18n={{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }} />
+                                <Picker onChange={setText} cleanOnEnter onSelect={onEmojiClick} set='facebook' style={{ position: 'absolute', bottom: '7%', marginLeft: '40%', zIndex: '1' }} i18n={{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }} />
                             </div>
                         </CardContent>
                         <div style={{ width: '100%', maxHeight: '100px', display: drop }}>
@@ -290,9 +290,9 @@ export default function RecipeReviewCard() {
                                     <PhotoLibraryIcon style={{ fontSize: 22 }} />
                                 </IconButton>
                                 <ClickNHold time={5} onStart={startRecording} onEnd={stopRecording} style={{ display: 'inline' }}>
-                                <IconButton type='submit' className={classes.iconButton} aria-label='emoji' color="secondary">
-                                    <MicNoneIcon style={{ fontSize: 22 }} />
-                                </IconButton>
+                                    <IconButton type='submit' className={classes.iconButton} aria-label='emoji' color="secondary">
+                                        <MicNoneIcon style={{ fontSize: 22 }} />
+                                    </IconButton>
                                 </ClickNHold>
                             </div>
                         </CardActions>

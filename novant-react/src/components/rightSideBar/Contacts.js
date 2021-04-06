@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles, Typography } from '@material-ui/core';
 import Badge from '@material-ui/core/Badge';
 import { makeStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { green} from '@material-ui/core/colors';
+import { green } from '@material-ui/core/colors';
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -16,8 +16,8 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    paddingTop:'6px' ,
-    paddingBottom:'6px'
+    paddingTop: '6px',
+    paddingBottom: '6px'
 
   },
 
@@ -66,12 +66,12 @@ export default function Contacts() {
   return (<>
     <div className={classes.root} style={{ marginTop: '10px', flexDirection: 'column' }}>
       <MuiThemeProvider theme={theme}>
-      <div style={{display:'flex', flexDirection:'row',justifyContent: 'space-between' }}>
-            <div  >
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <div  >
 
-              <Typography style={{ color: 'grey', fontSize: '12', fontWeight: 'bold' }} align='left'>CONTACTS</Typography>
-            </div>
-            <StyledBadge badgeContent={92} color="primary" style={{ marginRight:'50px'}}>
+            <Typography style={{ color: 'grey', fontSize: '12', fontWeight: 'bold' }} align='left'>CONTACTS</Typography>
+          </div>
+          <StyledBadge badgeContent={92} color="primary" style={{ marginRight: '50px' }}>
 
           </StyledBadge>
         </div>

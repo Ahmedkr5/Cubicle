@@ -5,7 +5,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Avatar, Badge } from '@material-ui/core';
-import AuthService from "../../services/auth.service";
+
+
+
 
 const useStyles = makeStyles((theme)=>({
   media: {
@@ -39,15 +41,10 @@ export default function ProfileCard(props) {
         </CardContent>
 
     </Card>
-    <div className='container'>
-            <div className='row d-flex flex-row-reverse' style={{marginRight:'25%'}}>
+    <div className='container' id='global'>
+       
               
-
-                <div className='col-3'  >
-                <div id='global'  ></div>
-
-                </div>
-            </div>
+           
         </div>
     </>
     
