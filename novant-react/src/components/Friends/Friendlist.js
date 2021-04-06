@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 const [value, setValue] = React.useState(0);
 return(<>
     <div>
-    <Container style={{borderRadius: '10px'  ,backgroundColor:'white',height:'600px'}}>
+    <Container style={{borderRadius: '10px'  ,backgroundColor:'white'}}>
      <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',height:'50px'}}>  
      <div><BottomNavigation
       value={value}

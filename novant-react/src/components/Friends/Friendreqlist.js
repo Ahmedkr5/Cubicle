@@ -15,8 +15,8 @@ return(<>
     
        
        
-       <div style={{display:'flex',justifyContent: 'space-evenly',flexFlow:'wrap'}}>
-     <Req></Req><Req></Req><Req></Req><Req></Req><Req></Req><Req></Req>
+       <div style={{display:'flex',flexDirection:'row',flexFlow:'wrap',marginLeft:'55px'}}>
+     <Req></Req><Req></Req><Req></Req><Req></Req><Req></Req>
             
     </div>
   </>

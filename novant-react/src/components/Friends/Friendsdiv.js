@@ -14,7 +14,7 @@ return(<>
     
        
        
-       <div style={{display:'flex',justifyContent: 'space-evenly',flexFlow:'wrap'}}>
+       <div style={{display:'flex',flexDirection:'row',flexFlow:'wrap'}}>
      
             <Friends></Friends><Friends></Friends><Friends></Friends><Friends></Friends><Friends></Friends><Friends></Friends>
     </div>

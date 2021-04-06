@@ -7,6 +7,7 @@ import { Container } from '@material-ui/core';
 import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 import { Close } from '@material-ui/icons';
+import GroupInvitation from '../Groups/GroupInvitation';
 
 
 const StyledBadge = withStyles((theme) => ({
@@ -54,7 +55,7 @@ export default function BottomSidebar() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root} style={{marginTop:'10px',alignItems:'center',justifyContent:'center',flexDirection:'column'}}>
+    <div className={classes.root} style={{marginTop:'10px',alignItems:'center',justifyContent:'center',flexDirection:'column',height:'100%'}}>
       <CssBaseline />
       <div className={classes.root} style={{marginTop:'10px',alignItems:'left',justifyContent:'left',flexDirection:'row'}}>
                 
@@ -67,40 +68,8 @@ export default function BottomSidebar() {
         </StyledBadge>
       </div>
       </div>
-
-      <Paper elevation={0} style={{marginTop:'10px',background:'white',borderRadius:'10px'}}>
-
-<Container style={{width:'100%'}}>      
-          <ListItem style={{display:'flex',flexDirection:'column',paddingTop:'0px'}}>
-          <Card style={{width:'100%',borderStyle:'none',paddingTop:'0px'}}>
-      
-        <CardMedia
-          className={classes.media}
-          image="images/cover.png"
-          style={{width:'100%',height:'200px',marginTop:'0px',paddingTop:'0px'}}
-          title="Group Invitation"
-        />
-
-        </Card>
-        <Typography style={{marginTop:"-50px",color:"white"}} variant="h5" component="h2">
-            Group Invitation
-          </Typography>
-        <div style={{display:"flex",justifyContent:"space-between",flexDirection:"row", marginTop:"40px",flexBasis:'70%'}}>
-         
-        <Button variant="contained" color="primary"style={{borderRadius:'12px'}}>
-  Accept invitation
-</Button>
-<Button variant="outlined"   className={classes.margin} style={{marginLeft:'32px',borderRadius:'12px',padding:'0px'}}>
-          <Close fontSize="small"></Close>
-        </Button>
-      </div>
-              </ListItem>
-
-              
-         
-          </Container>
-                
-          </Paper>
+<GroupInvitation ></GroupInvitation>
+    
     </div>
   );
 }

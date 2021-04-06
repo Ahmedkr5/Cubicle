@@ -14,17 +14,19 @@ const useStyles = makeStyles((theme) => ({
     
     marginTop:'15px',
     position:'fixed',
+    height :'100%',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
   },
   drawer: {
-
+    height:'100%',
     flexShrink: 0,
  
   },
   drawerPaper: {
     background: "transparent",
+    height:'100%',
 
   },
   drawerContainer: {
