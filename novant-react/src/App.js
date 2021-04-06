@@ -6,6 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import Profile from './Profile';
+import Coins from './Coins';
 
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
           </Route>
           <Route path="/login">
             <Login/>
+          </Route>
+          <Route path="/coins">
+            <Coins/>
           </Route>
   </Router>
   </div>;

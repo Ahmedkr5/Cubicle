@@ -1,6 +1,6 @@
 import { BottomNavigation, BottomNavigationAction, Container, Divider } from "@material-ui/core";
 import React, { useState } from "react";
-import { FindInPage, Flag } from "@material-ui/icons";
+import { FindInPage, Flag, ShoppingCart } from "@material-ui/icons";
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Col, Row } from "react-bootstrap";
@@ -13,6 +13,7 @@ import RightSidebar from "./components/rightSideBar/RightSidebar";
 import SearchAppBar from "./components/Navbar/Navbar";
 import FriendList from "./components/Friends/Friendlist";
 import authService from "./services/auth.service";
+import AchatCoins from "./components/Coins/AchatCoins";
 
 
 
@@ -54,12 +55,16 @@ const user = authService.getCurrentUser() ;
       <BottomNavigationAction onClick={()=>setState("1")} label="Friends" icon={<FavoriteIcon />} />
       <BottomNavigationAction onClick={()=>setState("2")} label="Badges" icon={<Flag />} />
       <BottomNavigationAction onClick={()=>setState("3")} label="CV" icon={<FindInPage />} />
+      <BottomNavigationAction onClick={()=>setState("4")} label="Coins" icon={<ShoppingCart style={{display:'flex',width:'100%' ,flexDirection:'column'}} />} />
+
     </BottomNavigation>
 
     {state == "0" &&  <div style={{display:'flex',width:'100%' ,flexDirection:'column'}}><Feed></Feed> <Divider orientation='horizontal'/><Feed></Feed> <Feed></Feed></div>}
     {state == "1" && <FriendList></FriendList>}
     {state == "2" && <Badges></Badges>}
-    {state == "3" &&  <CV></CV> }
+    {state == "3" &&  <CV userid={user.id}></CV> }
+    {state == "4" && <AchatCoins></AchatCoins>}
+
 
                 </Container>
                 </Col>
