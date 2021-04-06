@@ -11,18 +11,22 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-import Contacts from './Contacts'
+import Contacts from './Contacts';
+
+import ReactDOM from 'react-dom';
+import ChatBox from './ChatBox';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        maxWidth: 360,
+     
         backgroundColor: theme.palette.background.paper,
-        position: 'fixed',
+   
         overflow: 'auto',
         marginTop: '15px',
-        borderRadius: '15px',
-        height: '51%'
+        height: '68%',
+        borderTopLeftRadius:'15px',
+        borderTopRightRadius:'15px',
     },
     rad: {
         borderRadius: 10,
@@ -86,8 +90,18 @@ export default function ConnectedList() {
 
 
 
+
+
     const SearchAction = () => {
         setSearchActive('');
+    }
+    const activateChat=()=>{
+        console.log('wiiiiiiiiw')
+        const title = React.createElement(<ChatBox/>);
+
+ReactDOM.render(
+    <ChatBox/>,
+    document.getElementById('global'));
     }
 
 
@@ -95,6 +109,10 @@ export default function ConnectedList() {
 
     return (
         <>
+
+      
+       
+
             <Contacts />
             <Paper elevation={0} className={classes.root} >
                 <div className={classes.root} onScroll={SearchAction}>
@@ -106,7 +124,7 @@ export default function ConnectedList() {
                         <ListSubheader style={{ zIndex: '10', backgroundColor: 'white' }}>   <TextField id="primary" placeholder="Search" color="primary" style={{ width: '100%', display: searchActive }} /></ListSubheader>
 
                         <ListItem
-                            button
+                            button  onClick = {activateChat}
 
                         >
                             <ListItemAvatar>
@@ -212,7 +230,7 @@ export default function ConnectedList() {
                                 <Avatar variant='rounded' src={`../assets/images/users/4.jpg`} className={classes.rad} />
 
                             </ListItemAvatar>
-                            <ListItemText primary="Bouzid Mohamed" />
+                            <ListItemText primary="Bayrem Zghuimi" />
 
                         </ListItem>
 
@@ -222,6 +240,9 @@ export default function ConnectedList() {
 
                 </div>
             </Paper>
+
+            
+
         </>
 
     );

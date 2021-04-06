@@ -4,25 +4,25 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import FriendReq from '../Friends/FriendReq';
 import ConnectedList from './ConnectedList';
 
-const drawerWidth = 300;
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop:'15px',
-    marginRight:'15px',
+
     position:'fixed',
+    height:'100%'
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
   },
   drawer: {
-    width: drawerWidth,
+    width: '100%',
     flexShrink: 0,
     marginLeft : '15px'
   },
   drawerPaper: {
     background: "transparent",
-    width: drawerWidth,
+    width: '100%',
   },
   drawerContainer: {
   },
@@ -37,19 +37,11 @@ export default function RightSidebar() {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      
-      <div
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
+
         
           <FriendReq></FriendReq>  
           <ConnectedList></ConnectedList>
       </div>
-    </div>
+
   );
 }

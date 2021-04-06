@@ -23,19 +23,21 @@ const [state, setState] = useState("0")
 const [value, setValue] = React.useState(0);
 const user = authService.getCurrentUser() ;
 
- return (
+ return (   
    
-    <div style={{backgroundColor : '#EBEDF0'}}>
+    <div style={{backgroundColor : '#F0F2F5',maxWidth:'100%'}}>
           <link rel="stylesheet" href="css/bootstrap.min.css"/>   
           <Row>
+            
           <SearchAppBar></SearchAppBar>
             </Row> 
-          <Row style={{marginTop:'4%'}}>
-            <Col md={3}>
+            <Container  style={{marginTop:'4%',maxWidth:'100%'}}>
+          <Row  >
+            <Col  >
       <Sidebar></Sidebar>
             </Col>
 
-            <Col md={6}>
+            <Col xs={6} >
                           <Container style={{marginLeft:'0px',width:'100%'}}>
                             <ProfileCard firstname={user.firstname} lastname={user.lastname}></ProfileCard>
 
@@ -61,10 +63,11 @@ const user = authService.getCurrentUser() ;
 
                 </Container>
                 </Col>
-                <Col md={3}>
-                  <RightSidebar></RightSidebar>
+                <Col  style={{padding:'0px' , display: 'flex' , justifyContent: 'center'}}  >
+                  <RightSidebar style={{marginRight:'0px'}}></RightSidebar>
                 </Col>
                 </Row>
+                </Container>
 
     </div>
   );

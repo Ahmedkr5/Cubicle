@@ -10,9 +10,6 @@ import Profile from './Profile';
 
 function App() {
   return <div className='App'>
-
-    <ChatBox></ChatBox>
-
      <Router>
      <Route path="/profile">
             <Profile/>

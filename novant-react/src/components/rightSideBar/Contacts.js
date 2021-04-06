@@ -66,12 +66,13 @@ export default function Contacts() {
   return (<>
     <div className={classes.root} style={{ marginTop: '10px', flexDirection: 'column' }}>
       <MuiThemeProvider theme={theme}>
-        <div style={{ width: '360px' }}>
-          <StyledBadge badgeContent={68} color="primary">
-            <div style={{ marginLeft: '-140%' }}>
+      <div style={{display:'flex', flexDirection:'row',justifyContent: 'space-between' }}>
+            <div  >
 
-              <Typography style={{ color: 'grey', fontSize: '12', fontWeight: 'bold' }} >CONTACTS</Typography>
+              <Typography style={{ color: 'grey', fontSize: '12', fontWeight: 'bold' }} align='left'>CONTACTS</Typography>
             </div>
+            <StyledBadge badgeContent={92} color="primary" style={{ marginRight:'50px'}}>
+
           </StyledBadge>
         </div>
 
