@@ -13,10 +13,11 @@ import 'emoji-mart/css/emoji-mart.css';
 
 const useStyles = makeStyles((theme) => ({
     chatfooter: {
-    
+
         float: 'right',
         display: 'flex ',
         flexDirection: 'row',
+       
     },
     input: {
         float: 'left',
@@ -24,11 +25,11 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '5px',
         marginTop: '5px',
         width: '90%',
-        
+
     },
     iconButton: {
         float: 'right',
-        padding: '8px 2px 5px 5px ',
+        padding: '8px 10px 5px 5px ',
     },
     commentBody: {
         backgroundColor: '#F0F2F5',
@@ -61,7 +62,7 @@ export default function ChatBoxFooter() {
     return (
         <>
             <div style={{ display: displayEmoji }} >
-                <Picker onChange={setText} cleanOnEnter onSelect={onEmojiClick} set='facebook' style={{ position: 'fixed', zIndex: '1' }} i18n={{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }} />
+                <Picker onChange={setText} cleanOnEnter onSelect={onEmojiClick} set='facebook' style={{ position: 'fixed', zIndex: '1000',bottom:'60px',left:'55%'}} i18n={{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }} />
 
             </div>
 

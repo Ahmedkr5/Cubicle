@@ -18,15 +18,15 @@ import ChatBox from './ChatBox';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-    
-     
+
+
         backgroundColor: theme.palette.background.paper,
-   
+
         overflow: 'auto',
         marginTop: '15px',
         height: '68%',
-        borderTopLeftRadius:'15px',
-        borderTopRightRadius:'15px',
+        borderTopLeftRadius: '15px',
+        borderTopRightRadius: '15px',
     },
     rad: {
         borderRadius: 10,
@@ -95,13 +95,11 @@ export default function ConnectedList() {
     const SearchAction = () => {
         setSearchActive('');
     }
-    const activateChat=()=>{
-        console.log('wiiiiiiiiw')
-        const title = React.createElement(<ChatBox/>);
-
-ReactDOM.render(
-    <ChatBox/>,
-    document.getElementById('global'));
+    const activateChat1 = () => {
+        ReactDOM.render(<div className='row d-flex flex-row-reverse  '><div className='col-3'  ><ChatBox /></div>  </div>  ,  document.getElementById('global'));
+    }
+    const activateChat2 = () => {
+        ReactDOM.render(    <div className='row d-flex flex-row-reverse  '><div className='col-3'  style={{marginLeft:'95px'}}><ChatBox /></div> <div className='col-3'  ><ChatBox   /> </div></div>,  document.getElementById('global'));
     }
 
 
@@ -110,8 +108,8 @@ ReactDOM.render(
     return (
         <>
 
-      
-       
+
+
 
             <Contacts />
             <Paper elevation={0} className={classes.root} >
@@ -121,10 +119,10 @@ ReactDOM.render(
 
 
                     <List component="nav" aria-label="main mailbox folders" >
-                        <ListSubheader style={{ zIndex: '10', backgroundColor: 'white' }}>   <TextField id="primary" placeholder="Search" color="primary" style={{  display: searchActive }} /></ListSubheader>
+                        <ListSubheader style={{ zIndex: '10', backgroundColor: 'white' }}>   <TextField id="primary" placeholder="Search" color="primary" style={{ display: searchActive }} /></ListSubheader>
 
                         <ListItem
-                            button  onClick = {activateChat}
+                            button onClick={activateChat1 }
 
                         >
                             <ListItemAvatar>
@@ -138,7 +136,7 @@ ReactDOM.render(
                             </ListItemSecondaryAction>
                         </ListItem>
                         <ListItem
-                            button
+                            button onClick={activateChat2 }
 
                         >
                             <ListItemAvatar>
@@ -241,7 +239,7 @@ ReactDOM.render(
                 </div>
             </Paper>
 
-            
+
 
         </>
 
