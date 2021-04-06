@@ -4,11 +4,11 @@
 } 
 body{
   overflow-x: hidden;
+
 }
 
 .authorthumb {
  float: left; 
-
  margin-top: -10px;
 }
 .authorthumbrecept {
@@ -81,7 +81,4 @@ body{
     margin-top: 1px;
     margin-right: -10px;
   }
-
-
-  
 

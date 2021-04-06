@@ -16,13 +16,13 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
   },
   drawer: {
-    width: '100%',
+
     flexShrink: 0,
     marginLeft : '15px'
   },
   drawerPaper: {
     background: "transparent",
-    width: '100%',
+
   },
   drawerContainer: {
   },

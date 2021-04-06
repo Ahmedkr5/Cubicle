@@ -48,8 +48,8 @@ const useStyles = makeStyles((theme) => ({
 return(
     
         
-        <Paper elevation={0} style={{marginTop:'15px',background:'white',borderRadius:'10px',width:'360px',height:'150px'}}>
-        <Container style={{width:'360px',marginTop:'15px'}}>
+        <Paper elevation={0} style={{marginTop:'15px',background:'white',borderRadius:'10px',height:'150px'}}>
+        <Container style={{marginTop:'15px'}}>
         <ListItem style={{display:'flex',flexDirection:'row'}}>
 
         <Avatar style={{marginRight:'10px'}}
@@ -63,7 +63,7 @@ return(
 <Typography style={{color:"primary"}} >
 <Link href="#" onClick={preventDefault} style={{fontWeight:'bold'}}>
     Ahmed Khiari
-  </Link>  wants to add you to friends
+  </Link >  wants to add <br/>you to friends
           </Typography>
           </ListItem>
     

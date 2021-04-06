@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { Paper } from '@material-ui/core';
 import { Container } from '@material-ui/core';
 import { BusinessCenterOutlined, BusinessOutlined, HomeOutlined, MenuBook, MessageOutlined, PeopleAltOutlined, SupervisedUserCircleOutlined } from '@material-ui/icons';
-const drawerWidth = 300;
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,11 +19,11 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
   },
   drawer: {
-    width: drawerWidth,
+    width: '100%',
     flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: '100%',
     background: "red",
   },
   drawerContainer: {
@@ -49,7 +49,7 @@ export default function MidSidebar() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Paper elevation={0} style={{width :'300px',marginTop:'10px',background:'white',borderRadius:'10px'}}>
+      <Paper elevation={0} style={{width :'100%',padding:'0px',marginTop:'10px',background:'white',borderRadius:'10px'}}>
 
 <Container  style={{padding:'0px'}}>         
          <ListItemLink style={{paddingLeft:'15%'}} href="/home" >

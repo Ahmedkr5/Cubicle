@@ -8,7 +8,7 @@ import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 import { Close } from '@material-ui/icons';
 
-const drawerWidth = 300;
+
 const StyledBadge = withStyles((theme) => ({
     badge: {
         left : '150%',
@@ -30,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
   },
   drawer: {
-    width: drawerWidth,
+    width: '100%',
     flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: '100%',
     background: "red",
   },
   drawerContainer: {
@@ -70,14 +70,14 @@ export default function BottomSidebar() {
 
       <Paper elevation={0} style={{marginTop:'10px',background:'white',borderRadius:'10px'}}>
 
-<Container style={{width:'300px'}}>      
+<Container style={{width:'100%'}}>      
           <ListItem style={{display:'flex',flexDirection:'column',paddingTop:'0px'}}>
-          <Card style={{width:'300px',borderStyle:'none',paddingTop:'0px'}}>
+          <Card style={{width:'100%',borderStyle:'none',paddingTop:'0px'}}>
       
         <CardMedia
           className={classes.media}
           image="images/cover.png"
-          style={{width:'300px',height:'200px',marginTop:'0px',paddingTop:'0px'}}
+          style={{width:'100%',height:'200px',marginTop:'0px',paddingTop:'0px'}}
           title="Group Invitation"
         />
 

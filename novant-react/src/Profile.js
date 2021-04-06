@@ -25,7 +25,7 @@ const user = authService.getCurrentUser() ;
 
  return (   
    
-    <div style={{backgroundColor : '#F0F2F5',maxWidth:'100%'}}>
+    <div style={{backgroundColor : '#F0F2F5'}}>
           <link rel="stylesheet" href="css/bootstrap.min.css"/>   
           <Row>
             
@@ -33,12 +33,12 @@ const user = authService.getCurrentUser() ;
             </Row> 
             <Container  style={{marginTop:'4%',maxWidth:'100%'}}>
           <Row  >
-            <Col  >
+            <Col style={{ display: 'flex' , justifyContent: 'center'}}  >
       <Sidebar></Sidebar>
             </Col>
 
-            <Col xs={6} >
-                          <Container style={{marginLeft:'0px',width:'100%'}}>
+            <Col xs={6} style={{ display: 'flex' ,marginLeft:'0px', justifyContent: 'center'}} >
+                          <Container style={{marginLeft:'0px'}}>
                             <ProfileCard firstname={user.firstname} lastname={user.lastname}></ProfileCard>
 
                 <BottomNavigation
@@ -63,7 +63,7 @@ const user = authService.getCurrentUser() ;
 
                 </Container>
                 </Col>
-                <Col  style={{padding:'0px' , display: 'flex' , justifyContent: 'center'}}  >
+                <Col  style={{display: 'flex' , justifyContent: 'center'}}  >
                   <RightSidebar style={{marginRight:'0px'}}></RightSidebar>
                 </Col>
                 </Row>

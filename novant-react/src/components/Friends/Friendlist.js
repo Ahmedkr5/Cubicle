@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles()
 return(<>
     <div>
-    <Container style={{borderRadius: '10px'  ,backgroundColor:'white',width:'900px'}}>
+    <Container style={{borderRadius: '10px'  ,backgroundColor:'white'}}>
      <div style={{textAlign:'left',height:'60px',marginTop:'10px',display:'flex',flexDirection:'row',justifyContent:'left'}}>
      <Link href="#" style={{fontWeight:'bold',color:"#050505",fontWeight:'bold',fontSize:'16px'}}><br></br>
     Friends
@@ -84,7 +84,7 @@ return(<>
               inputProps={{ 'aria-label': 'search' }}
             /></div><div><br></br>
    <Button href="#" color="primary" size='small'>
-        Friend Requests
+        Requests
       </Button></div></div>
        
        </div> 

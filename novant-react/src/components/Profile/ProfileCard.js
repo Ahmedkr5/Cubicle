@@ -31,11 +31,11 @@ export default function ProfileCard(props) {
           image="images/cover.png"
           title="Contemplative Reptile"
         />
-        <CardContent style={{display: 'flex',flexDirection:'column', alignItems:'center' ,marginTop:'-100px'}}>
+        <CardContent style={{display: 'flex',flexDirection:'row', alignItems:'center' ,marginTop:'-100px',float:'left',marginLeft:'100px'}}>
         <Badge badgeContent={"Level 10"} color="primary">
         <Avatar alt="Bayrem Zguimi" src="images/avatar.jpg" className={classes.rad} />
         </Badge>
-        <Typography variant="h4">{props.firstname} {props.lastname}</Typography>
+        <Typography variant="h4" style={{marginTop:'85px',marginLeft:'85px'}}>{props.firstname} {props.lastname}</Typography>
         </CardContent>
 
     </Card>

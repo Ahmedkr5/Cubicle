@@ -9,7 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Avatar, Container, Paper, Typography } from '@material-ui/core';
 import authService from '../../services/auth.service';
-const drawerWidth = 300;
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,11 +19,11 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
   },
   drawer: {
-    width: drawerWidth,
+    width: '100%',
     flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: '100%',
     background: "red",
   },
   drawerContainer: {
@@ -51,7 +51,7 @@ export default function TopSidebar() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-     <Paper elevation={0} style={{display: 'flex',background:'white',borderRadius:'10px',alignItems:'center',justifyContent:'center',width:'300px',padding:'0px'}}>
+     <Paper elevation={0} style={{display: 'flex',background:'white',borderRadius:'10px',alignItems:'center',justifyContent:'center',width:'100%',padding:'0px'}}>
 <Container style={{padding:'0px'}}>         
               <ListItemLink href="/profile" style={{display: 'flex',flexDirection:'row'}}>
                 <ListItemIcon style={{marginLeft:'10px'}}>

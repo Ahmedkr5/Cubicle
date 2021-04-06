@@ -7,11 +7,11 @@ import MidSidebar from './MidSidebar';
 import BottomSidebar from './BottomSidebar';
 import SearchAppBar from '../Navbar/Navbar';
 
-const drawerWidth = 300;
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginLeft:'15px',
+    
     marginTop:'15px',
     position:'fixed',
   },
@@ -19,13 +19,13 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
   },
   drawer: {
-    width: drawerWidth,
+
     flexShrink: 0,
-    marginLeft : '15px'
+ 
   },
   drawerPaper: {
     background: "transparent",
-    width: drawerWidth,
+
   },
   drawerContainer: {
   },

@@ -18,7 +18,7 @@ import ChatBox from './ChatBox';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '100%',
+    
      
         backgroundColor: theme.palette.background.paper,
    
@@ -121,7 +121,7 @@ ReactDOM.render(
 
 
                     <List component="nav" aria-label="main mailbox folders" >
-                        <ListSubheader style={{ zIndex: '10', backgroundColor: 'white' }}>   <TextField id="primary" placeholder="Search" color="primary" style={{ width: '100%', display: searchActive }} /></ListSubheader>
+                        <ListSubheader style={{ zIndex: '10', backgroundColor: 'white' }}>   <TextField id="primary" placeholder="Search" color="primary" style={{  display: searchActive }} /></ListSubheader>
 
                         <ListItem
                             button  onClick = {activateChat}
