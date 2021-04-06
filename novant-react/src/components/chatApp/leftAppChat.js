@@ -97,7 +97,7 @@ export default function OutlinedCard() {
         photos={PHOTOS}
         onClose={() => setIsOpen(false)}
       />
-        <div style={{ paddingTop: '10px',maxHeight:'880px',display:'scroll' }}>
+        <div style={{ paddingTop: '75px',maxHeight:'880px',display:'scroll' }}>
             <Paper elevation={0} className={classes.root} >
                 <Card elevation={0} className={classes.root} variant="outlined">
                     <CardContent>

@@ -15,16 +15,14 @@ import IconButton from '@material-ui/core/IconButton';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import ChatBoxItem from './ChatBoxItem'
 import ChatBoxFooter from './ChatBoxFooter';
-
-
-
+import ReactDOM from 'react-dom';
 const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: 300,
-        height: 350,
-        maxHeight: 350,
+        height: 400,
+        maxHeight: 400,
         borderTopLeftRadius:'15px',
-        borderTopRightRadius:'15px'
+        borderTopRightRadius:'15px',
     },
     rad: {
         borderRadius: 8,
@@ -37,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'lavender',
     },
     content: {
-        height: 200,
-        minHeight: 200,
+        height: 280,
+        minHeight: 280,
         overflowY: 'scroll',
 
     },
@@ -49,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
         float: 'right',
         display: 'flex ',
         flexDirection: 'row',
-        marginLeft: '70px',
+        marginLeft: '50px',
     },
     chatfooter: {
         paddingTop: '5px',
@@ -94,10 +92,13 @@ const StyledBadge = withStyles((theme) => ({
 }))(Badge);
 export default function ChatBox() {
     const classes = useStyles();
+    const hideChatBox = () => {
+        ReactDOM.render(<div></div>,  document.getElementById('global'));
+    }
     return (
-        <div style={{ marginLeft: "150px", marginTop: '100px',zIndex:'1', position : 'fixed' , bottom : '0'}}>
+        <div style={{zIndex:'1', position : 'fixed' , bottom : '0'}}>
             <Card  className={classes.root}  >
-                <CardActionArea  className={classes.Area} >
+            
                     <CardMedia className={classes.media}>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                             <div style={{ marginRight: '5px', marginLeft: '10px', marginTop: '10px' }}>
@@ -115,20 +116,20 @@ export default function ChatBox() {
                                 <IconButton className={classes.Icon} aria-label="delete" color="secondary" >
                                     <VideocamIcon fontSize='s-small' />
                                 </IconButton>
-                                <IconButton className={classes.Icon} aria-label="delete">
+                                <IconButton className={classes.Icon} aria-label="delete" onClick={hideChatBox}>
                                     <CloseIcon fontSize='small' />
                                 </IconButton>
                             </div>
                         </div>
                     </CardMedia>
-                    <CardContent className={classes.content} >
+                    <CardContent className={classes.content}  >
 
                         <Typography variant="body2" color="textSecondary" component="p">
                             <ChatBoxItem />
                         </Typography>
                     </CardContent>
-                </CardActionArea>
-                <CardActions>
+               
+                <CardActions >
                     <ChatBoxFooter />
                 </CardActions>
             </Card>

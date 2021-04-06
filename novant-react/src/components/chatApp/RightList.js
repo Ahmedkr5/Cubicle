@@ -97,7 +97,7 @@ export default function RecipeReviewCard() {
 
     return (
         <>
-            <div  style={{ paddingTop: '10px' }}>
+            <div  style={{ paddingTop: '75px' }}>
                 <Paper elevation={0} className={classes.root} >
                     <Card elevation={0} className={classes.root}>
                         <CardContent>

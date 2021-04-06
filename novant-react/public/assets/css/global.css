@@ -1,0 +1,23 @@
+  
+video{
+  width : 100%;
+
+}
+.container{
+  height: 100%;
+  width: 100%;
+}
+
+.githubribbon {
+  position: fixed;
+  right: 0;
+  z-index: 99999999;
+  height: 149px;
+  top: 0;
+}
+.but{
+      border: 0 none ;
+      padding : 10px 12px ;
+      border-radius: 50% ;
+      background-color : red ;
+}
