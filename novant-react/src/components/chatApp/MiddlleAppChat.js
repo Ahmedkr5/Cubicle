@@ -151,7 +151,7 @@ export default function RecipeReviewCard() {
                             }
                             action={
                                 <div>
-                                    <IconButton aria-label="settings" color="primary">
+                                    <IconButton aria-label="settings" color="primary" onClick={()=>{window.open("/video")}}>
                                         <VideocamIcon fontSize='midium' />
                                     </IconButton>
                                     <IconButton aria-label="settings" color="secondary">

@@ -94,7 +94,11 @@ export default function ChatBox() {
     const classes = useStyles();
     const hideChatBox = () => {
         ReactDOM.render(<div></div>,  document.getElementById('global'));
+        
     }
+
+
+    
     return (
         <div style={{zIndex:'1', position : 'fixed' , bottom : '0'}}>
             <Card  className={classes.root}  >
@@ -113,7 +117,7 @@ export default function ChatBox() {
                                 <IconButton className={classes.Icon} color="primary" size="small" aria-label="add an alarm">
                                     <PhoneOutlinedIcon fontSize='small' />
                                 </IconButton>
-                                <IconButton className={classes.Icon} aria-label="delete" color="secondary" >
+                                <IconButton className={classes.Icon} aria-label="delete" color="secondary" onClick={()=>{window.open("/video")}}>
                                     <VideocamIcon fontSize='s-small' />
                                 </IconButton>
                                 <IconButton className={classes.Icon} aria-label="delete" onClick={hideChatBox}>
