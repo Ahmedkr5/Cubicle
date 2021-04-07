@@ -42,6 +42,8 @@ export default function ProfileCard(props) {
 
     </Card>
     <Divider variant="middle" />
+    <div className='container' id='global'>
+    </div>
 
     
     </>

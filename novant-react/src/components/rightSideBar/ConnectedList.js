@@ -136,7 +136,7 @@ export default function ConnectedList() {
                             </ListItemSecondaryAction>
                         </ListItem>
                         <ListItem
-                            button onClick={activateChat1 }
+                            button onClick={activateChat2 }
 
                         >
                             <ListItemAvatar>
@@ -150,7 +150,7 @@ export default function ConnectedList() {
                             </ListItemSecondaryAction>
                         </ListItem>
                         <ListItem
-                            button onClick={activateChat2 }
+                            button 
 
                         >
                             <ListItemAvatar>

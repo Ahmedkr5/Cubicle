@@ -96,6 +96,12 @@ export default function ChatBox() {
         ReactDOM.render(<div></div>,  document.getElementById('global'));
         
     }
+    const NewWindow=()=>{
+        var modalWindow;
+
+        const modalTitle = "Video Call";
+        modalWindow = window.open("/video", modalTitle, "width=1200,height=900,menubar=no,resizable=no,scrollbars=no,status=no,location=no , top=500, left=500");
+    }
 
 
     
@@ -117,7 +123,7 @@ export default function ChatBox() {
                                 <IconButton className={classes.Icon} color="primary" size="small" aria-label="add an alarm">
                                     <PhoneOutlinedIcon fontSize='small' />
                                 </IconButton>
-                                <IconButton className={classes.Icon} aria-label="delete" color="secondary" onClick={()=>{window.open("/video")}}>
+                                <IconButton className={classes.Icon} aria-label="delete" color="secondary" onClick={NewWindow}>
                                     <VideocamIcon fontSize='s-small' />
                                 </IconButton>
                                 <IconButton className={classes.Icon} aria-label="delete" onClick={hideChatBox}>
