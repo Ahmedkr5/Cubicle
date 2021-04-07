@@ -10,18 +10,20 @@ import Button from '@material-ui/core/Button';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import { shadows } from '@material-ui/system';
 import authService from '../../services/auth.service';
-import  { Redirect } from 'react-router-dom'
-
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-
   },
   button: {
     margin: theme.spacing(1),
-    backgroundColor: '#2A55C2',
     borderRadius: '10px',
+    backgroundColor: '#1877F2',
+    color: '#FFF',
+    '&:hover': {
+      backgroundColor: '#1877F2',
+    },
   },
   AppBar: {
     backgroundColor: '#FCFCFD',
@@ -35,8 +37,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
-    color: '#2A55C2',
-    marginLeft: '1%',
+    color: '#000',
+    marginLeft: '0%',
+    cursor: 'pointer',
   },
   search: {
     position: 'relative',
@@ -78,24 +81,34 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  logoBtn: {
+    cursor: 'pointer',
+  },
 }));
 
-const logout =()=>{
-  authService.logout() ;
+const logout = () => {
+  authService.logout();
   window.location.replace('/login');
-
-}
+};
 
 export default function SearchAppBar() {
   const classes = useStyles();
-  
 
   return (
     <div className={classes.root}>
-      <AppBar elevation={0} position="fixed" className={classes.AppBar}>
+      <AppBar elevation={0} position='fixed' className={classes.AppBar}>
         <Toolbar>
-        <Avatar alt="Logo" src="../assets/images/randomlogo.png" />
-          <Typography style={{textAlign:'left'}} className={classes.title} variant="h6" noWrap>
+          <Avatar
+            className={classes.logoBtn}
+            alt='Logo'
+            src='../assets/images/randomlogo.png'
+          />
+          <Typography
+            style={{ textAlign: 'left' }}
+            className={classes.title}
+            variant='h6'
+            noWrap
+          >
             Cubicle
           </Typography>
           <div className={classes.search}>
@@ -103,7 +116,7 @@ export default function SearchAppBar() {
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder='Search…'
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -112,16 +125,19 @@ export default function SearchAppBar() {
             />
           </div>
           <Button
-              variant="contained"
-              size="small"
-              className={classes.button}
-              startIcon={<AddBoxOutlinedIcon />}
-              onClick={logout}
-              style={{backgroundColor:'red'}}
+            variant='contained'
+            size='small'
+            className={classes.button}
+            startIcon={<AddBoxOutlinedIcon />}
+            onClick={logout}
           >
-          Logout
+            Logout
           </Button>
-          <Avatar alt="Profile Avatar" src="../assets/images/Imed.jpg" />
+          <Avatar
+            alt='Profile Avatar'
+            variant='rounded'
+            src='../assets/images/Imed.jpg'
+          />
         </Toolbar>
       </AppBar>
     </div>

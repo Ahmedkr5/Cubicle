@@ -1,49 +1,53 @@
-import React, { Component } from "react";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
+import React, { Component } from 'react';
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import CheckButton from 'react-validation/build/button';
 
-import AuthService from "../../../services/auth.service";
-import Profile from "../../../Profile";
-import { Router, Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
+import AuthService from '../../../services/auth.service';
+import Profile from '../../../Profile';
+import {
+  Router,
+  Route,
+  Switch,
+  Redirect,
+  BrowserRouter,
+} from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 export const history = createBrowserHistory();
-const required = value => {
+const required = (value) => {
   if (!value) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className='alert alert-danger' role='alert'>
         This field is required!
       </div>
     );
   }
 };
 
-
 export default class Login extends Component {
   constructor(props) {
-
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
 
     this.state = {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       loading: false,
-      message: ""
+      message: '',
     };
   }
 
   onChangeUsername(e) {
     this.setState({
-      email: e.target.value
+      email: e.target.value,
     });
   }
 
   onChangePassword(e) {
     this.setState({
-      password: e.target.value
+      password: e.target.value,
     });
   }
 
@@ -51,8 +55,8 @@ export default class Login extends Component {
     e.preventDefault();
 
     this.setState({
-      message: "",
-      loading: true
+      message: '',
+      loading: true,
     });
 
     this.form.validateAll();
@@ -60,11 +64,10 @@ export default class Login extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.email, this.state.password).then(
         () => {
-          history.push("/profile");
+          history.push('/Home');
           window.location.reload();
-
         },
-        error => {
+        (error) => {
           const resMessage =
             (error.response &&
               error.response.data &&
@@ -74,79 +77,79 @@ export default class Login extends Component {
 
           this.setState({
             loading: false,
-            message: resMessage
+            message: resMessage,
           });
         }
       );
     } else {
       this.setState({
-        loading: false
+        loading: false,
       });
     }
   }
 
   render() {
     return (
-      <div className="col-md-12">
-        <div className="card card-container">
+      <div className='col-md-12'>
+        <div className='card card-container'>
           <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
+            src='//ssl.gstatic.com/accounts/ui/avatar_2x.png'
+            alt='profile-img'
+            className='profile-img-card'
           />
 
           <Form
             onSubmit={this.handleLogin}
-            ref={c => {
+            ref={(c) => {
               this.form = c;
             }}
           >
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
+            <div className='form-group'>
+              <label htmlFor='username'>Username</label>
               <Input
-                type="email"
-                className="form-control"
-                name="username"
+                type='email'
+                className='form-control'
+                name='username'
                 value={this.state.email}
                 onChange={this.onChangeUsername}
                 validations={[required]}
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
+            <div className='form-group'>
+              <label htmlFor='password'>Password</label>
               <Input
-                type="password"
-                className="form-control"
-                name="password"
+                type='password'
+                className='form-control'
+                name='password'
                 value={this.state.password}
                 onChange={this.onChangePassword}
                 validations={[required]}
               />
             </div>
 
-            <div className="form-group">
+            <div className='form-group'>
               <button
-                className="btn btn-primary btn-block"
+                className='btn btn-primary btn-block'
                 disabled={this.state.loading}
               >
                 {this.state.loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
+                  <span className='spinner-border spinner-border-sm'></span>
                 )}
                 <span>Login</span>
               </button>
             </div>
 
             {this.state.message && (
-              <div className="form-group">
-                <div className="alert alert-danger" role="alert">
+              <div className='form-group'>
+                <div className='alert alert-danger' role='alert'>
                   {this.state.message}
                 </div>
               </div>
             )}
             <CheckButton
-              style={{ display: "none" }}
-              ref={c => {
+              style={{ display: 'none' }}
+              ref={(c) => {
                 this.checkBtn = c;
               }}
             />
