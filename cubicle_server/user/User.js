@@ -21,8 +21,11 @@ var UserSchema = new mongoose.Schema({
           description : String,
           adresse : String ,
           phone: String
-      }
+      } 
     },
+    Groups: [String],
+    Friendship: [String] 
+
 });
 mongoose.model('User2', UserSchema);
 
