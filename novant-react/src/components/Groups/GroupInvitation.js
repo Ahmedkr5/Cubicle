@@ -60,7 +60,7 @@ return(<>
         <Typography style={{marginTop:"-50px",color:"white"}} variant="h5" component="h2">
             Group Invitation
           </Typography>
-        <div style={{display:"flex",justifyContent:"space-between",flexDirection:"row", marginTop:"50px",flexBasis:'70%',paddingRight:'24px',paddingLeft:'24px'}}>
+        <div style={{display:"flex",justifyContent:"space-between",flexDirection:"row", marginTop:"65px",flexBasis:'70%',paddingRight:'24px',paddingLeft:'24px'}}>
          
         <Button variant="contained" color="primary"style={{borderRadius:'12px'}}>
   Accept invitation

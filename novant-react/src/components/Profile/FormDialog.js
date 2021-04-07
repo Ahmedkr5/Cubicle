@@ -8,7 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import SetCV from './SetCV';
 
-export default function FormDialog() {
+export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -27,7 +27,7 @@ export default function FormDialog() {
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Add new Experience</DialogTitle>
         <DialogContent>
-          <SetCV></SetCV>
+          <SetCV userid={props.userid}></SetCV>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
