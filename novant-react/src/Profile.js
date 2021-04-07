@@ -7,6 +7,7 @@ import { Col, Row } from "react-bootstrap";
 import Sidebar from "./components/Sidebar/Sidebar";
 import ProfileCard from "./components/Profile/ProfileCard";
 import Feed from "./components/Posts/Feed";
+import ProblemFeed from "./components/Posts/ProblemFeed/ProblemFeed";
 import Badges from "./Badges";
 import CV from "./components/Profile/CV/CV";
 import RightSidebar from "./components/rightSideBar/RightSidebar";
@@ -47,7 +48,6 @@ const user = authService.getCurrentUser() ;
       onChange={(event, newValue) => {
         setValue(newValue);
       }}
-      showLabels
     
      style={{marginBottom:"10px" , borderBottomRightRadius:"15px",borderBottomLeftRadius:"15px" }}
     >
@@ -59,7 +59,7 @@ const user = authService.getCurrentUser() ;
 
     </BottomNavigation>
 
-    {state == "0" &&  <div style={{display:'flex',width:'100%' ,flexDirection:'column'}}><Feed></Feed> <Divider orientation='horizontal'/><Feed></Feed> <Feed></Feed></div>}
+    {state == "0" &&  <div style={{display:'flex',width:'100%' ,flexDirection:'column'}}><ProblemFeed></ProblemFeed> <Feed></Feed> <Feed></Feed></div>}
     {state == "1" && <FriendList></FriendList>}
     {state == "2" && <Badges></Badges>}
     {state == "3" &&  <CV userid={user.id}></CV> }
