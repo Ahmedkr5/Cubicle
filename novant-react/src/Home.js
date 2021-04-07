@@ -2,31 +2,20 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   Container,
-  Divider,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useState } from 'react';
-import { FindInPage, Flag } from '@material-ui/icons';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Col, Row } from 'react-bootstrap';
 import Sidebar from './components/Sidebar/Sidebar';
-import ProfileCard from './components/Profile/ProfileCard';
 import Feed from './components/Posts/Feed';
-import Badges from './Badges';
-import CV from './components/Profile/CV/CV';
 import RightSidebar from './components/rightSideBar/RightSidebar';
 import SearchAppBar from './components/Navbar/Navbar';
-import FriendList from './components/Friends/Friendlist';
 import authService from './services/auth.service';
-import Grouplist from './components/Groups/Grouplist';
 import ProblemFeed from './components/Posts/ProblemFeed/ProblemFeed';
-import InputBase from '@material-ui/core/InputBase';
 import TagFilter from './components/Posts/TagFilter';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import EmojiPeopleOutlinedIcon from '@material-ui/icons/EmojiPeopleOutlined';
 import WorkOutlineOutlinedIcon from '@material-ui/icons/WorkOutlineOutlined';
-import NewFeed from './components/Posts/NewFeed';
 import NewProblemDialog from './components/Posts/NewProblemDialog';
 
 const useStyles = makeStyles((theme) => ({
