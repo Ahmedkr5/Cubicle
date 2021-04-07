@@ -5,6 +5,7 @@ import VideoCall from './views/VideoCall';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Profile from './Profile';
 import Groupe from './Groupe';
+import Business from './Business';
 
 function App() {
   return (
