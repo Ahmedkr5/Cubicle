@@ -152,6 +152,8 @@ function Home() {
           </Col>
         </Row>
       </Container>
+
+      <div className='container' id='global'></div>
     </div>
   );
 }

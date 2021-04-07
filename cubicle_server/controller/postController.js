@@ -1,19 +1,21 @@
-const message = require('../models/post');
+const posts = require('../models/Posts/post');
 
 class App {
   getAll = async (req, res) => {
     try {
-      const posts = await post.find();
-      res.json(posts);
+      const post = await posts.find();
+      res.json(post);
     } catch (error) {
       res.status(500).json({ message: error });
     }
   };
   createPost = async (req, res) => {
-    const postLoader = new message({
+    const postLoader = new posts({
       user: req.body.user,
-      data: req.body.data,
+      type: req.body.type,
       tags: req.body.tags,
+      description: req.body.description,
+      media: req.body.tags,
       created_at: req.body.created_at,
     });
     try {
@@ -24,5 +26,5 @@ class App {
     }
   };
 }
-const testingApp = new App();
-module.exports = testingApp;
+const PostController = new App();
+module.exports = PostController;
