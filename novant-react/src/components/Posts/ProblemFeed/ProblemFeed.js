@@ -9,7 +9,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -17,9 +16,10 @@ import EmojiObjectsTwoToneIcon from '@material-ui/icons/EmojiObjectsTwoTone';
 import FavoriteBorderTwoToneIcon from '@material-ui/icons/FavoriteBorderTwoTone';
 import ChatBubbleOutlineTwoToneIcon from '@material-ui/icons/ChatBubbleOutlineTwoTone';
 import Divider from '@material-ui/core/Divider';
-import Comment from './Comment';
-import PostComment from './PostComment';
-import CodeComment from './CodeComment';
+import Comment from '../Comment';
+import PostComment from '../PostComment';
+import CodeComment from '../CodeComment';
+import CodeCore from './CodeCore';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
 
 const preventDefault = (event) => event.preventDefault();
 
-export default function Feed() {
+export default function ProblemFeed() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [interaction, setInteraction] = React.useState('');
@@ -145,8 +145,9 @@ export default function Feed() {
         image='/static/images/cards/paella.jpg'
         title='Paella dish'
       /> */}
+      <CodeCore></CodeCore>
       <CardContent>
-        <Typography
+        {/* <Typography
           className={classes.content}
           fontFamily='Monospace'
           color='textSecondary'
@@ -155,7 +156,7 @@ export default function Feed() {
           This impressive paella is a perfect party dish and a fun meal to cook
           together with your guests. Add 1 cup of frozen peas along with the
           mussels, if you like.
-        </Typography>
+        </Typography> */}
       </CardContent>
       <Divider variant='middle' />
       <CardActions disableSpacing>

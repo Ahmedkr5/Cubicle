@@ -48,10 +48,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     width: '100%',
     backgroundColor: theme.palette.background.paper,
+    borderRadius: '10px'
   },
 }));
 
-export default function CV() {
+export default function CV(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -78,7 +79,7 @@ export default function CV() {
         <Aboutme></Aboutme>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Experiences></Experiences>
+        <Experiences userid={props.userid}></Experiences>
       </TabPanel>
 
     </div>

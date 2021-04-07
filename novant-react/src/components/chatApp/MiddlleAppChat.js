@@ -23,6 +23,7 @@ import { Picker } from 'emoji-mart';
 import Dropzone from 'react-dropzone-uploader';
 import ClickNHold from 'react-click-n-hold';
 import 'react-dropzone-uploader/dist/styles.css';
+import { NetworkWifi } from '@material-ui/icons';
 
 
 
@@ -135,6 +136,13 @@ export default function RecipeReviewCard() {
         mediaBlobUrl,
 
     } = useReactMediaRecorder({ audio: true });
+
+    const NewWindow=()=>{
+        var modalWindow;
+
+        const modalTitle = "Video Call";
+        modalWindow = window.open("/video", modalTitle, "width=1200,height=900,menubar=no,resizable=no,scrollbars=no,status=no,location=no , top=500, left=500");
+    }
     return (
         <>
             <link href="../assets/css/chatApp.css" rel="stylesheet" />
@@ -151,7 +159,7 @@ export default function RecipeReviewCard() {
                             }
                             action={
                                 <div>
-                                    <IconButton aria-label="settings" color="primary">
+                                    <IconButton aria-label="settings" color="primary" onClick={NewWindow}>
                                         <VideocamIcon fontSize='midium' />
                                     </IconButton>
                                     <IconButton aria-label="settings" color="secondary">

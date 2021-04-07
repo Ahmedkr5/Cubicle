@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
         overflow: 'auto',
         marginTop: '15px',
-        height: '68%',
+        height: '100%',
         borderTopLeftRadius: '15px',
         borderTopRightRadius: '15px',
     },
@@ -112,8 +112,8 @@ export default function ConnectedList() {
 
 
             <Contacts />
-            <Paper elevation={0} className={classes.root} >
-                <div className={classes.root} onScroll={SearchAction}>
+            <Paper elevation={0} className={classes.root} style={{maxHeight: '48%'}} >
+                <div className={classes.root} onScroll={SearchAction}  >
 
 
 
@@ -137,6 +137,20 @@ export default function ConnectedList() {
                         </ListItem>
                         <ListItem
                             button onClick={activateChat2 }
+
+                        >
+                            <ListItemAvatar>
+                                <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left', }} >
+                                    <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
+                                </StyledBadge>
+                            </ListItemAvatar>
+                            <ListItemText primary="Bouzid Mohamed" />
+                            <ListItemSecondaryAction>
+                                <StyledBadgeMessages badgeContent={4} color="secondary"></StyledBadgeMessages>
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                        <ListItem
+                            button 
 
                         >
                             <ListItemAvatar>
