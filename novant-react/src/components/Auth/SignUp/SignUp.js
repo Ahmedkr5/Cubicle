@@ -136,40 +136,7 @@ function SignUp() {
           </Typography>
 
       </div>
-      <Formik
-            initialValues={{role:"", name: "", age: 18, description: "" }}
-            validationSchema={Yup.object().shape({
-              name: Yup.string().required("Name is Required"),
-              role: Yup.string().required("Role is Required"),
-              age: Yup.number().required("Age is Required").min(18, "only +18"),
-              description: Yup.string().min(10),
-            })}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
-            }}
-          >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-              validateField,
-              /* and other goodies */
-            }) => (
-              <Form onSubmit={handleSubmit} className={classes.form}>
-                <FormSteps
-                  isSubmitting={isSubmitting}
-                  validateField={validateField}
-                  errors={errors}
-                  touched={touched}
-                >
-                  
+      
                   <div
         style={{
           display: "flex",
@@ -178,32 +145,13 @@ function SignUp() {
         }}
       >
         
-<RadioGroup aria-label="gender" name="role" id="role" value={values.role} onChange={handleChange} error={errors.name ? true : false} helperText={errors.name && errors.name} >
-    <FormControlLabel style={{ width: 100 , divStyle }} value="Entreprise" control={<Radio />} label="Entreprise" />
-    <FormControlLabel style={{ width: 100 , divStyle}} value="Particulier" control={<Radio  />} label="Particulier"/>
-      </RadioGroup>
-      
-      
-
 </div>
 
-
-  <div>
-    <Particulier></Particulier>
-  </div>
-
-
-                  <div>
-                    <Entreprise></Entreprise>
-                  </div>
 
                   <div>
     <SignIn></SignIn>
   </div>
-                </FormSteps>
-              </Form>
-            )}
-          </Formik>
+               
 
           
 

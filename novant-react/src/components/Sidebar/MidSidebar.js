@@ -84,7 +84,7 @@ export default function MidSidebar() {
                 <ListItemText>Business</ListItemText>
               </ListItemLink>
               <Divider variant="middle" />
-             <ListItemLink style={{paddingLeft:'15%'}} href="/Groupe">
+             <ListItemLink style={{paddingLeft:'15%'}} href="Business">
                 <ListItemIcon   className={classes.iconWrapper} >
                   
                   <SupervisedUserCircleOutlined color="#F0F2F5" />

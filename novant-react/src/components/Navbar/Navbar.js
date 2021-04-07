@@ -9,6 +9,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import { shadows } from '@material-ui/system';
+import authService from '../../services/auth.service';
+import  { Redirect } from 'react-router-dom'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -78,8 +80,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const logout =()=>{
+  authService.logout() ;
+  window.location.replace('/login');
+
+}
+
 export default function SearchAppBar() {
   const classes = useStyles();
+  
 
   return (
     <div className={classes.root}>
@@ -104,12 +113,13 @@ export default function SearchAppBar() {
           </div>
           <Button
               variant="contained"
-              color="primary"
               size="small"
               className={classes.button}
               startIcon={<AddBoxOutlinedIcon />}
+              onClick={logout}
+              style={{backgroundColor:'red'}}
           >
-          Create
+          Logout
           </Button>
           <Avatar alt="Profile Avatar" src="../assets/images/Imed.jpg" />
         </Toolbar>

@@ -1,26 +1,49 @@
+
 import { BottomNavigation, BottomNavigationAction, Container, Divider } from "@material-ui/core";
 import React, { useState } from "react";
+import { FindInPage, Flag } from "@material-ui/icons";
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import { Col, Row } from "react-bootstrap";
+import Sidebar from "./components/Sidebar/Sidebar";
+import ProfileCard from "./components/Profile/ProfileCard";
+import RightSidebar from "./components/rightSideBar/RightSidebar";
+import SearchAppBar from "./components/Navbar/Navbar";
+import authService from "./services/auth.service";
 import AchatCoins from "./components/Coins/AchatCoins";
 import ExchangeCoins from "./components/Coins/ExchangeCoins";
 import Transactions from "./components/Coins/Transactions";
-import { Flag } from "@material-ui/icons";
-import Sidebar from "./components/Sidebar/Sidebar";
+
+
+
+
 
 
 
 function Coins() {
 const [state, setState] = useState("0") 
 const [value, setValue] = React.useState(0);
- return (
-    <div style={{backgroundColor : '#EBEDF0'}}>
-          <link rel="stylesheet" href="css/bootstrap.min.css"/>    
+const user = authService.getCurrentUser() ;
 
-     
+ return (   
+   
+    <div style={{backgroundColor : '#F0F2F5'}}>
+          <link rel="stylesheet" href="css/bootstrap.min.css"/>   
+          <Row>
+            
+          <SearchAppBar></SearchAppBar>
+            </Row> 
+            <Container  style={{marginTop:'4%',maxWidth:'100%'}}>
+          <Row  >
+            <Col style={{ display: 'flex' , justifyContent: 'center'}}  >
+      <Sidebar></Sidebar>
+            </Col>
 
-                <Container>
-                <BottomNavigation
+            <Col xs={6} style={{ display: 'flex' ,marginLeft:'0px', justifyContent: 'center'}} >
+                          <Container style={{marginLeft:'0px'}}>
+                            <ProfileCard firstname={user.firstname} lastname={user.lastname}></ProfileCard>
+
+                            <BottomNavigation
       value={value}
       onChange={(event, newValue) => {
         setValue(newValue);
@@ -36,7 +59,15 @@ const [value, setValue] = React.useState(0);
                 {state == "0" && <AchatCoins></AchatCoins>}
                 {state == "1" &&  <ExchangeCoins></ExchangeCoins> }
                 {state == "2" &&  <Transactions></Transactions> }
+
                 </Container>
+                </Col>
+                <Col  style={{display: 'flex' , justifyContent: 'center'}}  >
+                  <RightSidebar style={{marginRight:'0px'}}></RightSidebar>
+                </Col>
+                </Row>
+                </Container>
+
     </div>
   );
 }

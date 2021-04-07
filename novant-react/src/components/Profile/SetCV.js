@@ -5,24 +5,26 @@ import { Field, Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Col, Container, Row } from "react-bootstrap";
 import { Label } from "@material-ui/icons";
+import experienceService from "../../services/experience.service";
 
-function SetCV() {
+function SetCV(props) {
+  console.log(props.userid)
   return (
-    
+
       <Card>
         <CardContent>
           <Formik
-            initialValues={{ title: "", date: '', description: "" }}
+            initialValues={{ title: "", date: '', description: "" ,userid : props.userid}}
             validationSchema={Yup.object().shape({
               title: Yup.string().required("title is Required"),
               date: Yup.string().required("date is Required"),
               description: Yup.string().min(10),
             })}
             onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
+              experienceService.add(values.title, values.description,values.date,values.userid).then(
+                () => {
+                  window.location.reload();
+                });
             }}
           >
             {({
@@ -36,6 +38,7 @@ function SetCV() {
               validateField,
               /* and other goodies */
             }) => (
+              
               <Form onSubmit={handleSubmit} isSubmitting={isSubmitting}
               validateField={validateField}
               errors={errors}

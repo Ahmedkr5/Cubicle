@@ -7,7 +7,7 @@ import { Container } from '@material-ui/core';
 import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 import { Close } from '@material-ui/icons';
-
+import Link from '@material-ui/core/Link';
 const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
@@ -35,15 +35,15 @@ const useStyles = makeStyles((theme) => ({
       height: theme.spacing(7),
     }
   }));
-
+  
  
 
 
 
-  export default function  GroupInvitation() {
+  export default function  Suggestions(props) {
     const classes = useStyles();
 return(<>
-      <Paper elevation={0} style={{marginTop:'10px',background:'white',borderRadius:'10px',height:'100%'}}>
+      <Paper elevation={0} style={{marginTop:'30px',background:'white',borderRadius:'10px',height:'100%',width:'100%'}}>
 
 <Container style={{width:'100%',paddingRight:'0px',paddingLeft:'0px'}}>      
           <ListItem style={{display:'flex',flexDirection:'column',paddingTop:'0px',paddingRight:'0px',paddingLeft:'0px'}}>
@@ -51,23 +51,22 @@ return(<>
       
         <CardMedia
           className={classes.media}
-          image="images/cover.png"
-          style={{width:'100%',height:'250px',marginTop:'0px',paddingTop:'0px',paddingRight:'0px',paddingLeft:'0px',marginRight:'0px',marginLeft:'0px'}}
-          title="Group Invitation"
+          image={props.image}
+          style={{width:'100%',height:'400px',marginTop:'0px',paddingTop:'0px',paddingRight:'0px',paddingLeft:'0px',marginRight:'0px',marginLeft:'0px'}}
+          title="Hiking and Backpacking"
         />
-
+ 
         </Card>
-        <Typography style={{marginTop:"-50px",color:"white"}} variant="h5" component="h2">
-            Group Invitation
-          </Typography>
-        <div style={{display:"flex",justifyContent:"space-between",flexDirection:"row", marginTop:"65px",flexBasis:'70%',paddingRight:'24px',paddingLeft:'24px'}}>
-         
-        <Button variant="contained" color="primary"style={{borderRadius:'12px'}}>
-  Accept invitation
+       
+        <div style={{display:"flex",justifyContent:"space-between",flexDirection:"column"}}>
+    <div>    <Typography style={{color:"black",fontWeight:'bold'}}variant="h6" component="h2" >
+    <Link href="./GroupProfile">{props.title}</Link>   
+           </Typography></div>
+        <Button variant="contained" color="primary"style={{borderRadius:'12px'}} 
+        >
+  Request to join
 </Button>
-<Button variant="outlined"   className={classes.margin} style={{marginLeft:'32px',borderRadius:'12px',padding:'0px'}}>
-          <Close fontSize="small"></Close>
-        </Button>
+
       </div>
               </ListItem>
 
