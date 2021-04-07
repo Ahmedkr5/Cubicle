@@ -4,17 +4,16 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  data: {
+  idPost: {
     type: String,
     required: true,
   },
-  tags: {
-    type: [String],
-    required: false,
-    default: null,
+  description: {
+    type: String,
+    required: true,
   },
   created_at: {
-    type: Date,
+    type: String,
     required: true,
   },
 });
