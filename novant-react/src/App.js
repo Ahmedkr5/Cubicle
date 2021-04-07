@@ -5,6 +5,7 @@ import VideoCall from './views/VideoCall';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Profile from './Profile';
 import Groupe from './Groupe';
+import Home from './Home';
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
         ></Route>
         <Route path='/Groupe'>
           <Groupe />
+        </Route>
+        <Route path='/Home'>
+          <Home />
         </Route>
       </Router>
     </div>

@@ -4,6 +4,7 @@ import Avatar from '@material-ui/core/Avatar';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
@@ -78,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 
 const preventDefault = (event) => event.preventDefault();
 
-export default function Feed() {
+export default function Feed(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [interaction, setInteraction] = React.useState('');
@@ -140,11 +141,7 @@ export default function Feed() {
         }
       />
       {/* <Divider variant='middle' /> */}
-      {/* <CardMedia
-        className={classes.media}
-        image='/static/images/cards/paella.jpg'
-        title='Paella dish'
-      /> */}
+
       <CardContent>
         <Typography
           className={classes.content}
@@ -157,6 +154,13 @@ export default function Feed() {
           mussels, if you like.
         </Typography>
       </CardContent>
+      {props.image ? (
+        <CardMedia
+          className={classes.media}
+          image={props.image}
+          title='Paella dish'
+        />
+      ) : null}
       <Divider variant='middle' />
       <CardActions disableSpacing>
         <Button
@@ -171,13 +175,6 @@ export default function Feed() {
           startIcon={<ChatBubbleOutlineTwoToneIcon />}
         >
           Comment
-        </Button>
-        <Button
-          onClick={handleSolveClick}
-          aria-label='share'
-          startIcon={<EmojiObjectsTwoToneIcon />}
-        >
-          Solve
         </Button>
         <IconButton
           className={clsx(classes.expand, {
