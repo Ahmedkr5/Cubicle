@@ -49,7 +49,7 @@ const user = authService.getCurrentUser() ;
       }}
       showLabels
     
-     style={{marginBottom:"10px" ,borderRadius: '10px'    }}
+     style={{marginBottom:"10px" , borderBottomRightRadius:"15px",borderBottomLeftRadius:"15px" }}
     >
       <BottomNavigationAction onClick={()=>setState("0")} label="Recents" icon={<RestoreIcon />} />
       <BottomNavigationAction onClick={()=>setState("1")} label="Friends" icon={<FavoriteIcon />} />

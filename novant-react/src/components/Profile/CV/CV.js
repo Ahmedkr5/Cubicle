@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     width: '100%',
     backgroundColor: theme.palette.background.paper,
+    borderRadius: '10px'
   },
 }));
 
