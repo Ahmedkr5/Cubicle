@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import { Avatar, Badge } from '@material-ui/core';
+import { Avatar, Badge, Divider } from '@material-ui/core';
 
 
 
@@ -27,7 +27,7 @@ export default function ProfileCard(props) {
   const classes = useStyles();
   return (
     <>
-    <Card elevation={0} style={{    borderRadius: '10px' , marginBottom:"10px" ,marginTop:"15px"}}>
+    <Card elevation={0} style={{    borderTopRightRadius:"15px",borderTopLeftRadius:"15px",marginTop:"15px"}}>
         <CardMedia
           className={classes.media}
           image="images/cover.png"
@@ -41,11 +41,9 @@ export default function ProfileCard(props) {
         </CardContent>
 
     </Card>
-    <div className='container' id='global'>
-       
-              
-           
-        </div>
+    <Divider variant="middle" />
+
+    
     </>
     
   );

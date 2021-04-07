@@ -9,10 +9,11 @@ import Paper from '@material-ui/core/Paper';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
-
+import SaveIcon from '@material-ui/icons/Save';
 import InputBase from '@material-ui/core/InputBase';
 import  { useState } from "react";
-
+import GroupInvitation from './GroupInvitation';
+import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
@@ -69,7 +70,7 @@ const [value, setValue] = React.useState(0);
 return(<>
     <div>
     <Container style={{borderRadius: '10px'  ,backgroundColor:'white',height:'100%'}}>
-     <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',height:'50px'}}>  
+     <div style={{display:'flex',flexDirection:'row',height:'100%',justifyContent:'space-between  '}}>  
      <div><BottomNavigation
       value={value}
       onChange={(event, newValue) => {
@@ -77,7 +78,7 @@ return(<>
       }}
       showLabels
     
-     style={{marginBottom:"10px" ,borderRadius: '10px'    }}
+     style={{marginBottom:"10px" ,borderRadius: '10px',  height:'30px'  }}
     > <BottomNavigationAction onClick={()=>setState("0")} label="Groups"  />
     <BottomNavigationAction onClick={()=>setState("1")} label="Invitations(4)"  /></BottomNavigation>
     
@@ -94,12 +95,23 @@ return(<>
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
-            /></div>  </div>
+            />
+             <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            className={classes.button}
+            startIcon={<AddBoxOutlinedIcon />}
+          >
+            Create a group
+          </Button>
+            
+            </div>  </div>
        
        
-       <div style={{display:'flex',flexDirection:'row',flexFlow:'wrap'}}>
+       <div style={{display:'flex',flexDirection:'row',flexFlow:'wrap',justifyContent:'space-between'}}>
        {state == "0" && <></>}
-    {state == "1" &&  <></> }</div>
+    {state == "1" && <>  <GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation></> }</div>
         </Container>
                
     </div>

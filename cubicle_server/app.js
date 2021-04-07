@@ -12,8 +12,10 @@ var VideoGrant = AccessToken.VideoGrant;
 
 var UserController = require('./user/UserController');
 var AuthController = require('./auth/AuthController');
+var ExperienceController = require('./experiences/ExperienceController');
 
 app.use('/users', UserController);
+app.use('/experiences', ExperienceController);
 app.use('/api/auth', AuthController);
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
