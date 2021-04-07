@@ -11,26 +11,26 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Experience() {
+export default function Experience(props) {
 
   return (
       <div>
     <div className="row">
           
           <Typography variant="h5" color="primary">
-          aa
+          {props.title} :
           </Typography>
         </div>
         <div className="row">
           
           <Typography>
-          bb
+          date :{props.date}
           </Typography>
         </div>
         <div className="row">
           
           <Typography style={{textAlign:'left'}}>
-          cc
+          {props.description}
                     </Typography>
         </div>
         </div>
