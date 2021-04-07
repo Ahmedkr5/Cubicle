@@ -8,12 +8,20 @@ import SearchIcon from '@material-ui/icons/Search';
 import Paper from '@material-ui/core/Paper';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
-import SaveIcon from '@material-ui/icons/Save';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
 import InputBase from '@material-ui/core/InputBase';
 import  { useState } from "react";
 import GroupInvitation from './GroupInvitation';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
+import Groups from './groups';
+import { FormControl } from '@material-ui/core';
+import { InputLabel } from '@material-ui/core';
+import { Input } from '@material-ui/core';
+import { FormHelperText } from '@material-ui/core';
+import CardMedia from '@material-ui/core/CardMedia';
+import Card from '@material-ui/core/Card';
 const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
@@ -55,7 +63,20 @@ const useStyles = makeStyles((theme) => ({
       
     },
   },
-  
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    height:'700px',
+    width:'900px',
+    backgroundColor: theme.palette.background.paper,
+    border: '2px  #000',
+    borderRadius:'20px',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  }
 }));
 
 
@@ -66,6 +87,16 @@ const useStyles = makeStyles((theme) => ({
   export default function  Grouplist() {
     const classes = useStyles()
     const [state, setState] = useState("0") 
+    const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 const [value, setValue] = React.useState(0);
 return(<>
     <div>
@@ -96,7 +127,7 @@ return(<>
               }}
               inputProps={{ 'aria-label': 'search' }}
             />
-             <Button
+             <Button  onClick={handleOpen}
             variant="contained"
             color="primary"
             size="small"
@@ -105,12 +136,59 @@ return(<>
           >
             Create a group
           </Button>
-            
+          <Modal
+      
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper} style={{display:'flex',flexDirection:'row'}}>
+           <div style={{width:'100%',height:'100%'}}>
+  <div style={{position:'relative',top:'25%'}}>   <div style={{textAlign:'center',marginRight:'30px'}}  ><h2>Create your group</h2></div> 
+<div style={{textAlign:'center',width:'80%'}}  >
+           <FormControl style={{width:'100%'}} >  
+  <InputLabel htmlFor="my-input" style={{fontSize:'20px'}}>Group name</InputLabel>
+  <Input id="my-input" aria-describedby="my-helper-text"   />
+  </FormControl></div><div style={{textAlign:'center',width:'80%'}} >
+  <FormControl style={{width:'100%'}} >  
+  <InputLabel htmlFor="my-input2" style={{fontSize:'20px'}}>Invite Friends</InputLabel>
+  <Input id="my-input2" aria-describedby="my-helper-text"  />
+  <FormHelperText id="my-helper-text" >Enter names or email addresses</FormHelperText>
+</FormControl>
+</div>
+<div style={{textAlign:'center'}}>
+<Button variant="contained" disabled  size='Large' >
+  Create
+</Button>
+</div></div>   
+</div><div style={{width:'100%'}}>
+<Card style={{width:'100%',height:'100%'}}>
+        <CardMedia style={{width:'100%',height:'100%'}}
+          className={classes.media}
+          image="../assets/images/groups/group.png"
+          title="create a group"
+        />
+</Card>
+
+</div>
+
+
+
+
+          </div>
+        </Fade>
+      </Modal>
             </div>  </div>
        
        
        <div style={{display:'flex',flexDirection:'row',flexFlow:'wrap',justifyContent:'space-between'}}>
-       {state == "0" && <></>}
+       {state == "0" && <><Groups></Groups><Groups></Groups><Groups></Groups><Groups></Groups><Groups></Groups><Groups></Groups>  <Groups></Groups><Groups></Groups><Groups></Groups></>}
     {state == "1" && <>  <GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation></> }</div>
         </Container>
                
