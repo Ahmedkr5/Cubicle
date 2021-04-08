@@ -16,6 +16,7 @@ export default function Experience(props) {
   return (
       <div>
     <div className="row">
+    <Divider style={{marginTop:"20px",marginBottom:"20px"}}></Divider>
           
           <Typography variant="h5" color="primary">
           {props.title} :
@@ -34,6 +35,7 @@ export default function Experience(props) {
                     </Typography>
         </div>
         </div>
+        
         
   );
 }
