@@ -24,6 +24,9 @@ import Dropzone from 'react-dropzone-uploader';
 import ClickNHold from 'react-click-n-hold';
 import 'react-dropzone-uploader/dist/styles.css';
 import { NetworkWifi } from '@material-ui/icons';
+import MessageService from '../../services/MessageService'
+import { useApi } from "../../hooks/useApi";
+import authService from '../../services/auth.service'
 
 
 
@@ -105,6 +108,10 @@ export default function RecipeReviewCard() {
     const [drop, setDrop] = useState('none');
     const [taille, settaille] = useState("680px");
     const [myDivider, setMyDivider] = useState('');
+    const [prev, setPrev] = useState('');
+    const user = authService.getCurrentUser() ;
+    const transmitter=user['id'];
+    const  receiver =user['id'] ;
     const onEmojiClick = (emojiObject) => {
         setText(text + emojiObject.native);
     };
@@ -117,6 +124,10 @@ export default function RecipeReviewCard() {
             setdisplayEmoji('');
         else
             setdisplayEmoji('none')
+    }
+    const SendMessage = ()=>{
+        MessageService.add(text) ;
+        console.log(MessageService.get('606b5971ff93a747240e8251')) ;
     }
     const displayDropZone = () => {
         if (drop == '') {
@@ -143,6 +154,7 @@ export default function RecipeReviewCard() {
         const modalTitle = "Video Call";
         modalWindow = window.open("/video", modalTitle, "width=1200,height=900,menubar=no,resizable=no,scrollbars=no,status=no,location=no , top=500, left=500");
     }
+    const [msgs, err, reload] = useApi('show/'+receiver+'/'+transmitter);
     return (
         <>
             <link href="../assets/css/chatApp.css" rel="stylesheet" />
@@ -162,7 +174,7 @@ export default function RecipeReviewCard() {
                                     <IconButton aria-label="settings" color="primary" onClick={NewWindow}>
                                         <VideocamIcon fontSize='midium' />
                                     </IconButton>
-                                    <IconButton aria-label="settings" color="secondary">
+                                    <IconButton aria-label="settings" color="secondary" onClick={SendMessage}>
                                         <PhoneOutlinedIcon fontSize='midium' />
                                     </IconButton>
                                 </div>
@@ -175,21 +187,71 @@ export default function RecipeReviewCard() {
                         <CardContent>
                             <Typography color="textSecondary" component="p" >
                                 <div style={{ height: taille, overflowY: 'scroll' }}>
-                                    <div className='blockMessageSecond'>
-                                        <div className='authorthumb' >
-                                            <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
-                                        </div>
-                                        <span className='chatmessageitem spanMessage'>Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks</span>
-                                        <div className="Appnotification-date">
-                                            <span >Yesterday at 8:10pm</span>
-                                        </div>
-                                    </div>
+                                  
+
+                                    {msgs?.map((msg, index) =>{  
+
+                                        if(index===0)
+
+                                        if(msg.transmitter = transmitter)
+   
+                                    
+                                   return(
                                     <div className='blockMessage'>
+                                    <div className='authorthumb' >
+                                        <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
+                                    </div>
+                                    <span className='chatmessageitem spanMessage'>{msg.body}</span>
+                                 
+                                
+                                    <div className="Appnotification-date">
+                                        <span >Yesterday at 8:10pm</span>
+                                    </div>
+                              
+                                </div>
+                                    ) ; else return (
+
+                                        <div className='blockMessage'>
                                         <div className='authorthumbrecept' >
                                             <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
                                         </div>
-                                        <span className='chatmessageitemrecept spanMessagerecept'>Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks</span>
+                                        <span className='chatmessageitemrecept spanMessagerecept'> {msg.body} </span>
+                                        <div className="Appnotification-daterecept">
+                                            <span >Yesterday at 8:10pm</span>
+                                        </div>
                                     </div>
+                                    ) ; else if (msgs[index-1].transmitter===msgs[index].transmitter)
+                                    return(
+
+                                        <div className='blockMessage'>
+                                        <div className='authorthumb' >
+                                            <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
+                                        </div>
+                                        <span className='chatmessageitem spanMessage'>{msg.body}</span>
+                                     
+                                    
+                                        <div className="Appnotification-date">
+                                            <span >Yesterday at 8:10pm</span>
+                                        </div>
+                                  
+                                    </div>
+
+                                    )
+
+
+
+
+
+
+                                    
+                                   
+                                    
+                                    
+                                    
+
+                                    })}
+
+
                                     <div className='blockMessageSecond'>
                                         <div className='authorthumbrecept' >
                                         </div>

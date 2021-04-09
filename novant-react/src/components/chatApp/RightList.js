@@ -14,6 +14,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Paper from '@material-ui/core/Paper';
 import Badge from '@material-ui/core/Badge';
 import TextField from '@material-ui/core/TextField';
+import { useApi } from "../../hooks/useApi";
 
 
 const StyledBadgeMessages = withStyles((theme) => ({
@@ -63,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: '100%',
         width: '100%',
-        height: '880px'
+        height: '880px',
+        overflowY: 'scroll'
     },
     media: {
         height: 0,
@@ -89,16 +91,39 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipeReviewCard() {
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
+    const [msgs, err, reload] = useApi('allUsers');
+ 
+    
+    const runMessage=()=>{
+
+
+        console.log(msgs) ;
+        console.log(process.env.REACT_APP_API_URL)
+    
+
+
+
+    }
+  
+
+
 
     return (
         <>
+
+
+
             <div  style={{ paddingTop: '75px' }}>
                 <Paper elevation={0} className={classes.root} >
+
+
+
+
+
+
+
+
                     <Card elevation={0} className={classes.root}>
                         <CardContent>
                         <TextField id="standard-basic" label="Search" style={{width:'100%'}} />
@@ -112,8 +137,12 @@ export default function RecipeReviewCard() {
 
                                     <List component="nav" aria-label="main mailbox folders" >
 
-                                        <ListItem
-                                            button
+
+                                    {msgs?.map((msg, index) => (
+                                    
+
+                                        <ListItem  message={msg} key={index}
+                                            button onClick ={runMessage}
                                         >
                                             <ListItemAvatar>
                                                 <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left', }} >
@@ -125,31 +154,11 @@ export default function RecipeReviewCard() {
                                                 <StyledBadgeMessages badgeContent={4} color="secondary"></StyledBadgeMessages>
                                             </ListItemSecondaryAction>
                                         </ListItem>
-                                        <ListItem button >
-                                            <ListItemAvatar>
-                                                <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left' }} >
-                                                    <Avatar variant='rounded' src={`../assets/images/users/2.jpg`} className={classes.rad} />
-                                                </StyledBadge>
-                                            </ListItemAvatar>
-                                            <ListItemText primary="Bouzid Mohamed" />
-                                            <ListItemSecondaryAction>
-                                                <StyledBadgeMessages badgeContent={2} color="secondary"></StyledBadgeMessages>
-                                            </ListItemSecondaryAction>
-                                        </ListItem>
-                                        <ListItem
-                                            button
+                                        ))}
 
-                                        >
-                                            <ListItemAvatar>
-                                                <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left' }} >
-                                                    <Avatar variant='rounded' className={classes.rad} src={`../assets/images/users/4.jpg`} />
-                                                </StyledBadge>
-                                            </ListItemAvatar>
-                                            <ListItemText primary="Bouzid Mohamed" />
-                                            <ListItemSecondaryAction>
-                                                <StyledBadgeMessages badgeContent={6} color="secondary"></StyledBadgeMessages>
-                                            </ListItemSecondaryAction>
-                                        </ListItem>
+                                        
+                               
+                                        
                                     </List>
 
                                 </div>

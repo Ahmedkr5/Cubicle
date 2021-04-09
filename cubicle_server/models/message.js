@@ -1,7 +1,8 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+var ObjectID = require('mongodb').ObjectID;
 const messageSchema = new mongoose.Schema({
     transmitter: {
-        type: String ,
+        type: Object,
         required: true
     },
     receiver: {

@@ -10,6 +10,7 @@ class App{
         }
     }
      createMessage =  async (req,res)=>{
+     
         const messagem = new message({
             transmitter: req.body.transmitter,
             receiver: req.body.receiver,
@@ -40,9 +41,9 @@ class App{
         }
     }
     getSingle = async (req,res)=>{
-        const trans = "121111111"
+     
         try {
-            const findMessages = await message.find({ "transmitter": trans , "receiver": req.params.receiver })
+            const findMessages = await message.find({ "transmitter": req.params.transmitter, "receiver": req.params.receiver })
             if(findMessages == null ){
                 return res.status(404).json({message: 'cant find message'})
             }
