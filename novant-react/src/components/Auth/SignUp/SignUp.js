@@ -1,15 +1,18 @@
-import { Button, FormControlLabel, Link, makeStyles, Radio, RadioGroup, Typography } from "@material-ui/core";
+import { BottomNavigation, BottomNavigationAction, Button, FormControlLabel, Link, makeStyles, Radio, RadioGroup, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Particulier from "./Particulier";
 import Entreprise from "./Entreprise";
 import SignIn from "../Login/SignIn";
+import { ContactsRounded, LockOpen } from "@material-ui/icons";
 
 const FormSteps = (props) => {
   const childrenArr = React.Children.toArray(props.children);
@@ -124,6 +127,8 @@ const useStyles = makeStyles((theme) => ({
 
 function SignUp() {
   const classes = useStyles();
+  const [state, setState] = useState("0") 
+  const [value, setValue] = React.useState(0);
 
   return (
     <Container component="main" maxWidth="xs"  >
@@ -147,10 +152,25 @@ function SignUp() {
         
 </div>
 
+<BottomNavigation
+      value={value}
+      onChange={(event, newValue) => {
+        setValue(newValue);
+      }}
+    
+     style={{marginBottom:"10px" , borderBottomRightRadius:"15px",borderBottomLeftRadius:"15px" }}
+    >
+      <BottomNavigationAction onClick={()=>setState("0")} label="Login" icon={<LockOpen />} />
+      <BottomNavigationAction onClick={()=>setState("1")} label="Register" icon={<ContactsRounded />} />
+</BottomNavigation>
 
                   <div>
-    <SignIn></SignIn>
+
+    {state == "0" &&  <SignIn></SignIn>}
+    {state == "1" && <Particulier></Particulier>}
+    
   </div>
+  
                
 
           

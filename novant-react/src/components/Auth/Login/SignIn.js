@@ -13,6 +13,8 @@ import {
   BrowserRouter,
 } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import { Button } from '@material-ui/core';
+import authService from '../../../services/auth.service';
 export const history = createBrowserHistory();
 const required = (value) => {
   if (!value) {
