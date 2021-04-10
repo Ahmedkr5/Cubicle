@@ -1,96 +1,217 @@
-import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import React, { Component } from 'react';
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import CheckButton from 'react-validation/build/button';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
-export default function Particulier() {
-  const classes = useStyles();
-
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
-          </Grid>
-          </form>
+import AuthService from '../../../services/auth.service';
+import Profile from '../../../Profile';
+import {
+  Router,
+  Route,
+  Switch,
+  Redirect,
+  BrowserRouter,
+} from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { Button } from '@material-ui/core';
+import authService from '../../../services/auth.service';
+export const history = createBrowserHistory();
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className='alert alert-danger' role='alert'>
+        This field is required!
       </div>
-      </Container>
-  );
+    );
+  }
+};
+
+export default class Particulier extends Component {
+  constructor(props) {
+    super(props);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeLastname = this.onChangeLastname.bind(this);
+    this.onChangeFirstname = this.onChangeFirstname.bind(this);
+    this.onChangeNaissance = this.onChangeNaissance.bind(this);
+
+    this.onChangePassword = this.onChangePassword.bind(this);
+
+    this.state = {
+      email: '',
+      firstname: '',
+      lastname: '',
+      password: '',
+      datenaissance:'',
+      loading: false,
+      message: '',
+    };
+  }
+
+  onChangeUsername(e) {
+    this.setState({
+      email: e.target.value,
+    });
+  }
+
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value,
+    });
+  }
+  onChangeFirstname(e) {
+    this.setState({
+      firstname: e.target.value,
+    });
+  }
+  onChangeLastname(e) {
+    this.setState({
+      lastname: e.target.value,
+    });
+  }
+  onChangeNaissance(e) {
+    this.setState({
+      datenaissance: e.target.value,
+    });
+  }
+
+  handleLogin(e) {
+    e.preventDefault();
+
+    this.setState({
+      message: '',
+      loading: true,
+    });
+
+    this.form.validateAll();
+
+    if (this.checkBtn.context._errors.length === 0) {
+      AuthService.register(this.state.firstname, this.state.lastname,this.state.email,this.state.password,this.state.datenaissance).then(
+        () => {
+          history.push('/login');
+          window.location.reload();
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          this.setState({
+            loading: false,
+            message: resMessage,
+          });
+        }
+      );
+    } else {
+      this.setState({
+        loading: false,
+      });
+    }
+  }
+
+  render() {
+    return (
+      <div className='col-md-12'>
+        <div className='card card-container'>
+          
+
+          <Form
+            onSubmit={this.handleLogin}
+            ref={(c) => {
+              this.form = c;
+            }}
+          >
+            <div className='form-group'>
+              <label htmlFor='username'>Email</label>
+              <Input
+                type='email'
+                className='form-control'
+                name='username'
+                value={this.state.email}
+                onChange={this.onChangeUsername}
+                validations={[required]}
+              />
+            </div>
+
+            <div className='form-group'>
+              <label htmlFor='username'>Firstname</label>
+              <Input
+                type='text'
+                className='form-control'
+                name='firstname'
+                value={this.state.firstname}
+                onChange={this.onChangeFirstname}
+                validations={[required]}
+              />
+            </div>
+
+            <div className='form-group'>
+              <label htmlFor='username'>Lastname</label>
+              <Input
+                type='text'
+                className='form-control'
+                name='lastname'
+                value={this.state.lastname}
+                onChange={this.onChangeLastname}
+                validations={[required]}
+              />
+            </div>
+
+            <div className='form-group'>
+              <label htmlFor='username'>Date de Naissance</label>
+              <Input
+                type='date'
+                className='form-control'
+                name='datenaissance'
+                value={this.state.datenaissance}
+                onChange={this.onChangeNaissance}
+                validations={[required]}
+              />
+            </div>
+
+            <div className='form-group'>
+              <label htmlFor='password'>Password</label>
+              <Input
+                type='password'
+                className='form-control'
+                name='password'
+                value={this.state.password}
+                onChange={this.onChangePassword}
+                validations={[required]}
+              />
+            </div>
+
+            <div className='form-group'>
+              <button
+                className='btn btn-primary btn-block'
+                disabled={this.state.loading}
+              >
+                {this.state.loading && (
+                  <span className='spinner-border spinner-border-sm'></span>
+                )}
+                <span>Register</span>
+              </button>
+            </div>
+
+            {this.state.message && (
+              <div className='form-group'>
+                <div className='alert alert-danger' role='alert'>
+                  {this.state.message}
+                </div>
+              </div>
+            )}
+            <CheckButton
+              style={{ display: 'none' }}
+              ref={(c) => {
+                this.checkBtn = c;
+              }}
+            />
+          </Form>
+        </div>
+      </div>
+    );
+  }
 }

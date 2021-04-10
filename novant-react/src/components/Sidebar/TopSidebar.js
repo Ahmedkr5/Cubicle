@@ -9,6 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Avatar, Container, Paper, Typography } from '@material-ui/core';
 import authService from '../../services/auth.service';
+import UIAvatar from 'react-ui-avatars';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +47,7 @@ function ListItemLink(props) {
 export default function TopSidebar() {
   const classes = useStyles();
   const user = authService.getCurrentUser() ;
+  const name = user.firstname + " " + user.lastname
 
 
   return (
@@ -56,7 +58,7 @@ export default function TopSidebar() {
               <ListItemLink href="/profile" style={{display: 'flex',flexDirection:'row'}}>
                 <ListItemIcon style={{marginLeft:'10px'}}>
                   
-                <img alt="Bayrem Zguimi" src="images/avatar.jpg" style={{width:'50px',borderRadius:'10px'}} />
+                <UIAvatar name={name} color='#551a8b' style={{borderRadius:'10px'}} ></UIAvatar>
                 </ListItemIcon>
                 <br/>
                 <div style={{display: 'flex',marginLeft:'10%',flexDirection:'column'}}>

@@ -8,6 +8,7 @@ import Groupe from './Groupe';
 import Home from './Home';
 import GroupProfile from './components/Groups/GroupProfile';
 import Business from './Business';
+import Particulier from './components/Auth/SignUp/Particulier';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Route path='/profile'>
           <Profile />
         </Route>
-        <Route path='/login'>
+        <Route path='/auth'>
           <Login />
         </Route>
         <Route path='/AppChat'>

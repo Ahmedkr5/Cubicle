@@ -25,12 +25,21 @@ class AuthService {
   logout() {
     localStorage.removeItem("token");
   }
+  google(){
+    return axios.get(API_URL+"google").then(response => {
 
-  register(username, email, password) {
+      return response.data;
+    });
+  }
+
+  register(firstname,lastname, email, password,profileimage,coverimage) {
     return axios.post(API_URL + "register", {
-      username,
+      firstname,
+      lastname,
       email,
-      password
+      password,
+      profileimage,
+      coverimage
     });
   }
 

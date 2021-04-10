@@ -7,21 +7,11 @@ var UserSchema = new mongoose.Schema({
   datenaissance: String,
   profileimage: String,
   coverimage: String,
-  CV:
-    { 
-      experiences:[
-        {
-          experience:{
-            title: String,
-            description: String,
-            date: String}
-          }
-        ],
-      AboutMe : {
+  AboutMe : {
           description : String,
           adresse : String ,
           phone: String
-      } 
+       
     },
     Groups: [String],
     Friendship: [String] 

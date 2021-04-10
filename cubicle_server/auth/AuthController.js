@@ -8,6 +8,7 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var config = require('../config');
 var VerifyToken = require('./VerifyToken');
+const passport = require('passport')
 
 router.post('/register', function(req, res) {
   
@@ -16,16 +17,19 @@ router.post('/register', function(req, res) {
       firstname : req.body.firstname,
       lastname : req.body.lastname,
       email : req.body.email,
+      profileimage : "default profile image",
+      coverimage : "default cover image",
+      datenaissance : req.body.datenaissance,
       password : hashedPassword,
       }
     ,
     function (err, user) {
-      if (err) return res.status(500).send("There was a problem registering the user.")
+      if (err) return res.status(500).send(err)
       // create a token
       var token = jwt.sign({ id: user._id }, config.secret, {
         expiresIn: 86400 // expires in 24 hours
       });
-      res.status(200).send({ auth: true, token: token });
+      res.status(200).send({user});
     }); 
   });
 
@@ -62,7 +66,17 @@ router.post('/register', function(req, res) {
     res.status(200).send({ auth: false, token: null });
   });
 
+  router.get('/google',
+  passport.authenticate('google', { scope: ['profile'] }),function(req, res) {
+    res.status(200)}
+  );
 
+router.get('/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
   router.use(function (user, req, res, next) {
     res.status(200).send(user);
   });
