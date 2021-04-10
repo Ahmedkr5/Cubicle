@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -23,7 +23,6 @@ import { Picker } from 'emoji-mart';
 import Dropzone from 'react-dropzone-uploader';
 import ClickNHold from 'react-click-n-hold';
 import 'react-dropzone-uploader/dist/styles.css';
-import { NetworkWifi } from '@material-ui/icons';
 import MessageService from '../../services/MessageService'
 import { useApi } from "../../hooks/useApi";
 import authService from '../../services/auth.service'
@@ -102,16 +101,17 @@ const StyledBadge = withStyles((theme) => ({
         },
     },
 }))(Badge);
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard(props) {
     const [displayEmoji, setdisplayEmoji] = useState('none');
     const [text, setText] = useState("");
     const [drop, setDrop] = useState('none');
     const [taille, settaille] = useState("680px");
     const [myDivider, setMyDivider] = useState('');
-    const [prev, setPrev] = useState('');
-    const user = authService.getCurrentUser() ;
-    const transmitter=user['id'];
-    const  receiver =user['id'] ;
+    const user = authService.getCurrentUser();
+    const transmitter = user['id'];
+
+
+
     const onEmojiClick = (emojiObject) => {
         setText(text + emojiObject.native);
     };
@@ -125,9 +125,8 @@ export default function RecipeReviewCard() {
         else
             setdisplayEmoji('none')
     }
-    const SendMessage = ()=>{
-        MessageService.add(text) ;
-        console.log(MessageService.get('606b5971ff93a747240e8251')) ;
+    const SendMessage = () => {
+        MessageService.add(text, transmitter, props.userck);
     }
     const displayDropZone = () => {
         if (drop == '') {
@@ -141,25 +140,38 @@ export default function RecipeReviewCard() {
         }
     }
     const {
-        status,
+
         startRecording,
         stopRecording,
         mediaBlobUrl,
 
     } = useReactMediaRecorder({ audio: true });
 
-    const NewWindow=()=>{
+    const NewWindow = () => {
         var modalWindow;
 
         const modalTitle = "Video Call";
         modalWindow = window.open("/video", modalTitle, "width=1200,height=900,menubar=no,resizable=no,scrollbars=no,status=no,location=no , top=500, left=500");
     }
-    const [msgs, err, reload] = useApi('show/'+receiver+'/'+transmitter);
+
+
+
+    const [messages, err, reload] = useApi('show/' + transmitter);
+    const [msgs, setMsgs] = useState(null);
+
+    useEffect(async () => {
+
+        await (setMsgs(messages?.filter(msg => (((msg.receiver) === props.userck)&&(msg.transmitter)===transmitter) || (msg.transmitter === props.userck)&&(msg.receiver)===transmitter)))
+        console.log(msgs)
+
+    }, [props.userck]);
+
     return (
         <>
             <link href="../assets/css/chatApp.css" rel="stylesheet" />
             <div style={{ paddingTop: '75px' }}>
                 <Paper elevation={0} className={classes.root} >
+
                     <Card elevation={0} className={classes.root}>
                         <CardHeader
                             avatar={
@@ -187,97 +199,65 @@ export default function RecipeReviewCard() {
                         <CardContent>
                             <Typography color="textSecondary" component="p" >
                                 <div style={{ height: taille, overflowY: 'scroll' }}>
-                                  
 
-                                    {msgs?.map((msg, index) =>{  
 
-                                        if(index===0)
+                                    {msgs?.map((msg, index) => {
 
-                                        if(msg.transmitter = transmitter)
-   
-                                    
-                                   return(
-                                    <div className='blockMessage'>
-                                    <div className='authorthumb' >
-                                        <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
-                                    </div>
-                                    <span className='chatmessageitem spanMessage'>{msg.body}</span>
-                                 
-                                
-                                    <div className="Appnotification-date">
-                                        <span >Yesterday at 8:10pm</span>
-                                    </div>
-                              
-                                </div>
-                                    ) ; else return (
 
-                                        <div className='blockMessage'>
-                                        <div className='authorthumbrecept' >
-                                            <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
-                                        </div>
-                                        <span className='chatmessageitemrecept spanMessagerecept'> {msg.body} </span>
-                                        <div className="Appnotification-daterecept">
-                                            <span >Yesterday at 8:10pm</span>
-                                        </div>
-                                    </div>
-                                    ) ; else if (msgs[index-1].transmitter===msgs[index].transmitter)
-                                    return(
-
-                                        <div className='blockMessage'>
-                                        <div className='authorthumb' >
-                                            <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
-                                        </div>
-                                        <span className='chatmessageitem spanMessage'>{msg.body}</span>
-                                     
-                                    
-                                        <div className="Appnotification-date">
-                                            <span >Yesterday at 8:10pm</span>
-                                        </div>
-                                  
-                                    </div>
-
-                                    )
+                                        if (index =! 0)
+                                            if (msg.transmitter === transmitter)
 
 
 
+                                                return (
+                                                    <div className='blockMessage' key={index}>
+                                                        <div className='authorthumb' >
+                                                            <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
+                                                        </div>
+                                                        <span className='chatmessageitem spanMessage'>{msg.body}</span>
 
 
+                                                        <div className="Appnotification-date">
+                                                            <span >Yesterday at 8:10pm</span>
+                                                        </div>
 
-                                    
+                                                    </div>
+                                                ); else return (
+
+                                                    <div className='blockMessage' key={index}>
+                                                        <div className='authorthumbrecept' >
+                                                            <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
+                                                        </div>
+                                                        <span className='chatmessageitemrecept spanMessagerecept'> {msg.body} </span>
+                                                        <div className="Appnotification-daterecept">
+                                                            <span >Yesterday at 8:10pm</span>
+                                                        </div>
+                                                    </div>
+                                                ); 
+
+                                       
                                    
-                                    
-                                    
-                                    
-
-                                    })}
+                                            
 
 
-                                    <div className='blockMessageSecond'>
-                                        <div className='authorthumbrecept' >
-                                        </div>
-                                        <span className='chatmessageitemrecept spanMessagerecept'>I’m gonna be handling the gifts  </span>
-                                        <div className="Appnotification-daterecept">
-                                            <span >Yesterday at 8:10pm</span>
-                                        </div>
-                                    </div>
-                                    <div className='blockMessage'>
-                                        <div className='authorthumb' >
-                                            <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
-                                        </div>
-                                        <span className='chatmessageitem spanMessage'>Hi James! Please remember to buy the food for tomorrow! </span>
-                                        <div className="Appnotification-date">
-                                            <span >Yesterday at 8:10pm</span>
-                                        </div>
-                                    </div>
-                                    <div className='blockMessage'>
-                                        <div className='authorthumbrecept' >
-                                            <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
-                                        </div>
-                                        <span className='chatmessageitemrecept spanMessagerecept'> Please remember to buy the food for tomorrow </span>
-                                        <div className="Appnotification-daterecept">
-                                            <span >Yesterday at 8:10pm</span>
-                                        </div>
-                                    </div>
+
+
+
+
+
+
+
+
+
+
+                                    }
+                                    )
+                                    }
+
+
+
+
+
                                     <div className='blockMessage'>
                                         <div className='authorthumb' >
                                             <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
@@ -290,49 +270,9 @@ export default function RecipeReviewCard() {
                                         </div>
                                     </div>
 
-                                    <div className='blockMessage'>
-                                        <div className='authorthumbrecept' >
-                                            <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
-                                        </div>
-                                        <span className='chatmessageitemrecept spanMessagerecept'>Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks</span>
-                                    </div>
-                                    <div className='blockMessageSecond'>
-                                        <div className='authorthumbrecept' >
-                                        </div>
-                                        <span className='chatmessageitemrecept spanMessagerecept'>I’m gonna be handling the gifts  </span>
-                                        <div className="Appnotification-daterecept">
-                                            <span >Yesterday at 8:10pm</span>
-                                        </div>
-                                    </div>
-                                    <div className='blockMessage'>
-                                        <div className='authorthumb' >
-                                            <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
-                                        </div>
-                                        <span className='chatmessageitem spanMessage'>Hi James! Please remember to buy the food for tomorrow! </span>
-                                        <div className="Appnotification-date">
-                                            <span >Yesterday at 8:10pm</span>
-                                        </div>
-                                    </div>
-                                    <div className='blockMessage'>
-                                        <div className='authorthumbrecept' >
-                                            <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
-                                        </div>
-                                        <span className='chatmessageitemrecept spanMessagerecept'> Please remember to buy the food for tomorrow </span>
-                                        <div className="Appnotification-daterecept">
-                                            <span >Yesterday at 8:10pm</span>
-                                        </div>
-                                    </div>
-                                    <div className='blockMessage'>
-                                        <div className='authorthumb' >
-                                            <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
-                                        </div>
-                                        <span className='chatmessageitem spanMessage'><audio style={{ height: "20px" }} src={mediaBlobUrl} controls />
 
-                                        </span>
-                                        <div className="Appnotification-date">
-                                            <span >Yesterday at 8:10pm</span>
-                                        </div>
-                                    </div>
+
+
                                 </div>
                             </Typography>
                             <Divider style={{ display: myDivider }} />
@@ -368,6 +308,7 @@ export default function RecipeReviewCard() {
                         </CardActions>
                     </Card>
                 </Paper>
+
             </div>
         </>
     );

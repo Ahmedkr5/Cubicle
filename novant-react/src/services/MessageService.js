@@ -15,10 +15,8 @@ class ExperienceService {
 
   
     
-  add(bodyget) {
-    const user = authService.getCurrentUser() ;
-    const transmitter=user['id'];
-    const  receiver =user['id'] ;
+  add(bodyget,transmitter,receiver) {
+   
     const  body=bodyget ;
     const  deleted_trans =1; 
     const deleted_recived = '1' ;

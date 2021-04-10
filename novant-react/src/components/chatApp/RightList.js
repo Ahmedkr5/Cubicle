@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,6 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import Badge from '@material-ui/core/Badge';
 import TextField from '@material-ui/core/TextField';
 import { useApi } from "../../hooks/useApi";
+import authService from '../../services/auth.service'
 
 
 const StyledBadgeMessages = withStyles((theme) => ({
@@ -89,25 +90,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard(props) {
     const classes = useStyles();
+    const user = authService.getCurrentUser();
+    const reciver = user['id'];
 
     const [msgs, err, reload] = useApi('allUsers');
- 
-    
-    const runMessage=()=>{
 
-
-        console.log(msgs) ;
-        console.log(process.env.REACT_APP_API_URL)
-    
-
-
-
-    }
-  
-
-
+    const [activeUser , setActiveUser ]=useState() ; 
 
     return (
         <>
@@ -139,17 +129,18 @@ export default function RecipeReviewCard() {
 
 
                                     {msgs?.map((msg, index) => (
-                                    
+                                  
 
                                         <ListItem  message={msg} key={index}
-                                            button onClick ={runMessage}
+                                            button onClick ={()=>{props.handler(msg._id)}}
                                         >
+                                         
                                             <ListItemAvatar>
                                                 <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left', }} >
                                                     <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
                                                 </StyledBadge>
                                             </ListItemAvatar>
-                                            <ListItemText primary="Bouzid Mohamed" />
+                                            <ListItemText primary={msg.firstname + ' '+ msg.lastname} />
                                             <ListItemSecondaryAction>
                                                 <StyledBadgeMessages badgeContent={4} color="secondary"></StyledBadgeMessages>
                                             </ListItemSecondaryAction>

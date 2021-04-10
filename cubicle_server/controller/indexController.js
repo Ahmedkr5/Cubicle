@@ -43,7 +43,8 @@ class App{
     getSingle = async (req,res)=>{
      
         try {
-            const findMessages = await message.find({ "transmitter": req.params.transmitter, "receiver": req.params.receiver })
+            const findMessages = await message.find( { $or: [ { "transmitter": req.params.transmitter }, { "receiver":req.params.transmitter }] })
+           
             if(findMessages == null ){
                 return res.status(404).json({message: 'cant find message'})
             }

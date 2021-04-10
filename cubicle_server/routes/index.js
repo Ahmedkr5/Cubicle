@@ -9,7 +9,7 @@ var VerifyToken = require('../auth/VerifyToken');
 router.get('/', IndexController.getAll);
 router.post('/create', IndexController.createMessage);
 router.patch('/update/:id', IndexController.updateMessage);
-router.get('/show/:receiver/:transmitter', IndexController.getSingle);
+router.get('/show/:transmitter', IndexController.getSingle);
 
 router.get('/getPosts', PostController.getAll);
 router.post('/createPost', PostController.createPost);
