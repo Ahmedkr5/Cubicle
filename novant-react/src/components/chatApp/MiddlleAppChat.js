@@ -165,6 +165,7 @@ export default function RecipeReviewCard(props) {
 
     useEffect(async () => {
 
+        
         await (setMsgs(messages?.filter(msg => (((msg.receiver) === props.userck)&&(msg.transmitter)===transmitter) || (msg.transmitter === props.userck)&&(msg.receiver)===transmitter)) )
         
         { animateScroll.scrollToBottom({
