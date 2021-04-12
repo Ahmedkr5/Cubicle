@@ -166,10 +166,10 @@ export default function RecipeReviewCard(props) {
     useEffect(async () => {
 
         await (setMsgs(messages?.filter(msg => (((msg.receiver) === props.userck)&&(msg.transmitter)===transmitter) || (msg.transmitter === props.userck)&&(msg.receiver)===transmitter)) )
-        animateScroll.scrollToBottom({
+        
+        { animateScroll.scrollToBottom({
             containerId: "ContainerElementID" ,
-            duration: 0,
-          } );
+            duration: 0,})}
  
 
     }, [props.userck]);
@@ -183,7 +183,10 @@ socket.on('push',async(msg)=>{
   //  console.log(msg)
 
   await (setMsgs(msg?.filter(msgk => (((msgk.receiver) === props.userck)&&(msgk.transmitter)===transmitter) || (msgk.transmitter === props.userck)&&(msgk.receiver)===transmitter)) )
-
+    
+  { animateScroll.scrollToBottom({
+    containerId: "ContainerElementID" ,
+    duration: 0,})}
    // setMsgs([msg])
 })
 
@@ -240,10 +243,16 @@ const SendMessage = (e) => {
                         <Divider style={{ marginTop: '-6px' }} />
                         <CardContent>
                             <Typography color="textSecondary" component="p" >
-                                <div id="ContainerElementID" style={{ height: taille, overflowY: 'scroll' }}>
+
+                               
+                                
+                                <div id="ContainerElementID" style={{ height: taille, overflowY: 'scroll' }} >
+                              
 
 
                                     {msgs?.map((msg, index) => {
+
+
 
 
                                         if (index =! 0)
