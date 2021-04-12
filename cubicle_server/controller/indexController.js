@@ -10,13 +10,15 @@ class App{
         }
     }
      createMessage =  async (req,res)=>{
+
+        const date = new Date() ;
      
         const messagem = new message({
             transmitter: req.body.transmitter,
             receiver: req.body.receiver,
             body: req.body.body,
             file: req.body.file,
-            created_at: req.body.created_at,
+            created_at: date,
             deleted_trans: req.body.deleted_trans,
             deleted_recived: req.body.deleted_recived
             
@@ -48,10 +50,10 @@ class App{
             if(findMessages == null ){
                 return res.status(404).json({message: 'cant find message'})
             }
-            res.status(201).json(findMessages)
+            return res.status(201).json(findMessages)
             
         } catch (err) {
-            res.status(400).json({message: err.message})
+            return res.status(400).json({message: err.message})
         }
     }
 }

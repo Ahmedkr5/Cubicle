@@ -4,12 +4,14 @@ const IndexController = require('../controller/indexController');
 const PostController = require('../controller/postController');
 const userController = require('../controller/userController');
 
+
+
 var VerifyToken = require('../auth/VerifyToken');
 /* GET home page. */
 router.get('/', IndexController.getAll);
 router.post('/create', IndexController.createMessage);
 router.patch('/update/:id', IndexController.updateMessage);
-router.get('/show/:transmitter', IndexController.getSingle);
+router.get('/show/:transmitter', IndexController.getSingle );
 
 router.get('/getPosts', PostController.getAll);
 router.post('/createPost', PostController.createPost);

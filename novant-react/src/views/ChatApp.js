@@ -27,10 +27,14 @@ const LeftAppChat = React.lazy(() => import('../components/chatApp/leftAppChat')
 
 export default function ChatApp(props) {
 
-    const [user,setUser] = useState('606b5971ff93a747240e8251') ;
+    const [user,setUser] = useState() ;
+    const [person,setPerson] = useState() ;
 
-   const myhandler = (val) => {
-      setUser(val)
+   const myhandler = (val,msg) => {
+      setUser(val);
+      setPerson(msg);
+      
+
       }
   
 
@@ -60,13 +64,13 @@ export default function ChatApp(props) {
                     </div>
                     <div className='col-6'>
                     <Suspense fallback={<div>Chargement...</div>}>
-                        {<MiddleAppChat userck = {user}    />}
+                        {<MiddleAppChat userck = {user} person={person}    />}
                     </Suspense>
                     </div>
                     <div className='col-3'>
                   
                     <Suspense fallback={<div>Chargement...</div>}>
-                        <LeftAppChat />
+                        <LeftAppChat  userck = {user}/>
                     </Suspense> 
                     </div>
                 </div>

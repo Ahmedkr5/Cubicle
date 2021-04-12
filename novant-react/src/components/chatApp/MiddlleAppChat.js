@@ -26,7 +26,10 @@ import 'react-dropzone-uploader/dist/styles.css';
 import MessageService from '../../services/MessageService'
 import { useApi } from "../../hooks/useApi";
 import authService from '../../services/auth.service'
-
+import Timestamp from 'react-timestamp' ;
+import socketClient from "socket.io-client";
+import * as Scroll from 'react-scroll';
+import { animateScroll } from "react-scroll";
 
 
 
@@ -125,9 +128,7 @@ export default function RecipeReviewCard(props) {
         else
             setdisplayEmoji('none')
     }
-    const SendMessage = () => {
-        MessageService.add(text, transmitter, props.userck);
-    }
+   
     const displayDropZone = () => {
         if (drop == '') {
             setDrop('none')
@@ -156,15 +157,56 @@ export default function RecipeReviewCard(props) {
 
 
 
-    const [messages, err, reload] = useApi('show/' + transmitter);
+    const [messages, err, reload] = useApi('api/' + transmitter);
+    const [userProf, err1, reload1] = useApi('showUser/'+ transmitter);
+
     const [msgs, setMsgs] = useState(null);
+    
 
     useEffect(async () => {
 
-        await (setMsgs(messages?.filter(msg => (((msg.receiver) === props.userck)&&(msg.transmitter)===transmitter) || (msg.transmitter === props.userck)&&(msg.receiver)===transmitter)))
-        console.log(msgs)
+        await (setMsgs(messages?.filter(msg => (((msg.receiver) === props.userck)&&(msg.transmitter)===transmitter) || (msg.transmitter === props.userck)&&(msg.receiver)===transmitter)) )
+        animateScroll.scrollToBottom({
+            containerId: "ContainerElementID" ,
+            duration: 0,
+          } );
+ 
 
     }, [props.userck]);
+
+    var socket = socketClient ('http://localhost:3001')
+    socket.on('connect', () => {
+        console.log(`I'm connected with the back-end`);
+});
+
+socket.on('push',async(msg)=>{
+  //  console.log(msg)
+
+  await (setMsgs(msg?.filter(msgk => (((msgk.receiver) === props.userck)&&(msgk.transmitter)===transmitter) || (msgk.transmitter === props.userck)&&(msgk.receiver)===transmitter)) )
+
+   // setMsgs([msg])
+})
+
+const SendMessage = (e) => {
+    // MessageService.add(text, transmitter , props.userck);
+    if (e.key === 'Enter') {
+     socket.emit('msg', {
+     transmitter: transmitter,
+     receiver: props.userck,
+     body:text,
+     deleted_trans : 0 ,
+     deleted_recived : 0 ,
+     file : [ "Ford", "Bouzid", "Fiat" ]  ,
+
+   });
+
+   setText('') ;
+   
+}
+
+
+   //console.log(msgs)
+ }
 
     return (
         <>
@@ -177,7 +219,7 @@ export default function RecipeReviewCard(props) {
                             avatar={
                                 <div className={classes.UserPhoto}>
                                     <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left' }} >
-                                        <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
+                                        <Avatar variant='rounded' src={`../assets/images/users/`+props?.person?.profileimage} className={classes.rad} />
                                     </StyledBadge>
                                 </div>
                             }
@@ -192,13 +234,13 @@ export default function RecipeReviewCard(props) {
                                 </div>
                             }
                             title={
-                                <h4 className={classes.nameUser}>Bouzid Mohamed</h4>
+                                <h4 className={classes.nameUser}>{props?.person?.firstname + ' ' + props?.person?.lastname}</h4>
                             }
                         />
                         <Divider style={{ marginTop: '-6px' }} />
                         <CardContent>
                             <Typography color="textSecondary" component="p" >
-                                <div style={{ height: taille, overflowY: 'scroll' }}>
+                                <div id="ContainerElementID" style={{ height: taille, overflowY: 'scroll' }}>
 
 
                                     {msgs?.map((msg, index) => {
@@ -210,28 +252,30 @@ export default function RecipeReviewCard(props) {
 
 
                                                 return (
-                                                    <div className='blockMessage' key={index}>
+                                                    <div className='blockMessage' key={msg._id}>
                                                         <div className='authorthumb' >
-                                                            <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
+                                                            <Avatar variant='rounded' src={`../assets/images/users/`+userProf[0].profileimage}   className={classes.rad} />
                                                         </div>
                                                         <span className='chatmessageitem spanMessage'>{msg.body}</span>
 
 
                                                         <div className="Appnotification-date">
-                                                            <span >Yesterday at 8:10pm</span>
+                                                        <span ><Timestamp  relativeTo={msg.created_at}   / ></span>
                                                         </div>
+                                                       
 
                                                     </div>
                                                 ); else return (
 
-                                                    <div className='blockMessage' key={index}>
+                                                    <div className='blockMessage'  key={msg._id}>
                                                         <div className='authorthumbrecept' >
-                                                            <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
+                                                            <Avatar variant='rounded' src={`../assets/images/users/`+props?.person?.profileimage} className={classes.rad} />
                                                         </div>
                                                         <span className='chatmessageitemrecept spanMessagerecept'> {msg.body} </span>
                                                         <div className="Appnotification-daterecept">
-                                                            <span >Yesterday at 8:10pm</span>
+                                                            <span ><Timestamp date={msg.created_at}  relative / ></span>
                                                         </div>
+                                                  
                                                     </div>
                                                 ); 
 
@@ -257,8 +301,7 @@ export default function RecipeReviewCard(props) {
 
 
 
-
-                                    <div className='blockMessage'>
+                                    <div className='blockMessage' style={{display:'none'}}>
                                         <div className='authorthumb' >
                                             <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
                                         </div>
@@ -269,6 +312,7 @@ export default function RecipeReviewCard(props) {
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
+                                    <div >   </div>
 
 
 
@@ -290,6 +334,7 @@ export default function RecipeReviewCard(props) {
                                     placeholder='Aa'
                                     inputProps={{ 'aria-label': 'search google maps' }}
                                     onChange={handleChange} value={text}
+                                    onKeyDown={SendMessage}
                                 />
                             </div>
                             <div className={classes.footerIcons} >

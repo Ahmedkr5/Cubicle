@@ -15,7 +15,8 @@ import Paper from '@material-ui/core/Paper';
 import Badge from '@material-ui/core/Badge';
 import TextField from '@material-ui/core/TextField';
 import { useApi } from "../../hooks/useApi";
-import authService from '../../services/auth.service'
+import authService from '../../services/auth.service' ;
+import socketClient  from "socket.io-client";
 
 
 const StyledBadgeMessages = withStyles((theme) => ({
@@ -97,7 +98,11 @@ export default function RecipeReviewCard(props) {
 
     const [msgs, err, reload] = useApi('allUsers');
 
-    const [activeUser , setActiveUser ]=useState() ; 
+    const [selectedIndex, setSelectedIndex] = React.useState(1);
+    const handleListItemClick = (event, index) => {
+        setSelectedIndex(index);
+      };
+
 
     return (
         <>
@@ -131,13 +136,17 @@ export default function RecipeReviewCard(props) {
                                     {msgs?.map((msg, index) => (
                                   
 
-                                        <ListItem  message={msg} key={index}
-                                            button onClick ={()=>{props.handler(msg._id)}}
+                                        <ListItem  message={msg} key={index}   selected={selectedIndex === index}
+                                            button onClick ={(event)=>{props.handler(msg._id,msg);
+                                                setSelectedIndex(index);
+                                            }}
+                                          
+                                         
                                         >
                                          
                                             <ListItemAvatar>
                                                 <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left', }} >
-                                                    <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
+                                                    <Avatar variant='rounded' src={`../assets/images/users/`+msg.profileimage} className={classes.rad} />
                                                 </StyledBadge>
                                             </ListItemAvatar>
                                             <ListItemText primary={msg.firstname + ' '+ msg.lastname} />

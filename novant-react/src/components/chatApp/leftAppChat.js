@@ -1,4 +1,4 @@
-import React , { useState }from 'react';
+import React , { useState,useEffect }from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,6 +15,9 @@ import Badge from '@material-ui/core/Badge';
 import MonetizationOnIcon from '@material-ui/icons/AttachMoney';
 import ReactBnbGallery from 'react-bnb-gallery';
 import 'react-bnb-gallery/dist/style.css';
+import { useApi } from "../../hooks/useApi";
+import authService from '../../services/auth.service'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: '100%',
@@ -55,9 +58,32 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function OutlinedCard() {
+export default function OutlinedCard(props) {
     const classes = useStyles();
     const [isOpen, setIsOpen] = useState(false);
+    const user = authService.getCurrentUser();
+    const transmitter = user['id'];
+    const [userProf, err1, reload1] = useApi('showUser/'+ transmitter);
+    const photo = userProf?.map((prof) =>
+    prof.profileimage 
+    );
+    const userName = userProf?.map((prof) =>
+    prof.firstname+' '+ prof.lastname
+    );
+    const [messages, err, reload] = useApi('show/' + transmitter);
+    const [msgs, setMsgs] = useState(null);
+
+    useEffect(async () => {
+
+        await (setMsgs(messages?.filter(msg => (((msg.receiver) === props.userck)&&(msg.transmitter)===transmitter) || (msg.transmitter === props.userck)&&(msg.receiver)===transmitter)) )
+      
+ 
+
+    }, [props.userck]);
+
+
+
+
     const PHOTOS = [{
         photo: "https://source.unsplash.com/aZjw7xI3QAA/1144x763",
         caption: "Viñales, Pinar del Río, Cuba",
@@ -103,10 +129,10 @@ export default function OutlinedCard() {
                     <CardContent>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
 
-                            <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
+                            <Avatar variant='rounded' src={`../assets/images/users/`+photo} className={classes.rad} />
                         </Typography>
                         <Typography variant="h5" component="h2" className={classes.middle}>
-                            Bayrem Zguimi
+                            {userName}
         </Typography>
                         <Typography className={classes.pos} color="textSecondary">
                             Accoubts Manager Amix corp

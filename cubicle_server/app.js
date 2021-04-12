@@ -6,6 +6,7 @@ const app = express();
 const indexRouter = require('./routes/index');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+var socket = require('socket.io') ;
 //for video call
 var AccessToken = require('twilio').jwt.AccessToken;
 var VideoGrant = AccessToken.VideoGrant;
@@ -116,9 +117,12 @@ app.get('/token/:identity', function (req, res) {
   });
 });
 
-app.listen(3001, function () {
+const server = app.listen(3001, function () {
   console.log('Programmable Video Chat token server listening on port 3001!');
 });
+var io = socket(server);
+const MsgIo = require('./controller/MsgIoController') ;
+MsgIo(app,io) ;
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
 

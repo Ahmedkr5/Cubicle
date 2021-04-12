@@ -20,7 +20,7 @@ class ExperienceService {
     const  body=bodyget ;
     const  deleted_trans =1; 
     const deleted_recived = '1' ;
-    const  created_at=new Date() ;
+   // const  created_at=new Date() ;
     const  file = [ "Ford", "Bouzid", "Fiat" ] ;
     return axios
       .post(API_URL, {
@@ -29,7 +29,7 @@ class ExperienceService {
         body,
         deleted_trans,
         deleted_recived,
-        created_at,
+       // created_at,
         file
       })
       .then(response => {

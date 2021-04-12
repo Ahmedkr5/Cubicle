@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 var ObjectID = require('mongodb').ObjectID;
+
 const messageSchema = new mongoose.Schema({
+    
     transmitter: {
         type: Object,
         required: true
@@ -16,11 +18,12 @@ const messageSchema = new mongoose.Schema({
     file: {
         type: [String] ,
         required: false,
-        default:null
+        default:new Date()
     },
     created_at: {
         type: Date,
-        required: true
+        required: false ,
+     
     },
     deleted_trans: {
         type: Boolean ,
