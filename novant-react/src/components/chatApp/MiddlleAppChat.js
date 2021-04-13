@@ -28,8 +28,9 @@ import { useApi } from "../../hooks/useApi";
 import authService from '../../services/auth.service'
 import Timestamp from 'react-timestamp' ;
 import socketClient from "socket.io-client";
-import * as Scroll from 'react-scroll';
 import { animateScroll } from "react-scroll";
+import ReactDOM from 'react-dom';
+
 
 
 
@@ -161,11 +162,12 @@ export default function RecipeReviewCard(props) {
     const [userProf, err1, reload1] = useApi('showUser/'+ transmitter);
 
     const [msgs, setMsgs] = useState(null);
+    const [audioplay,setAudioplay] =useState(false) ;
     
 
     useEffect(async () => {
 
-        
+
         await (setMsgs(messages?.filter(msg => (((msg.receiver) === props.userck)&&(msg.transmitter)===transmitter) || (msg.transmitter === props.userck)&&(msg.receiver)===transmitter)) )
         
         { animateScroll.scrollToBottom({
@@ -188,6 +190,12 @@ socket.on('push',async(msg)=>{
   { animateScroll.scrollToBottom({
     containerId: "ContainerElementID" ,
     duration: 0,})}
+
+    if(transmitter===props.userck){
+    var x =  document.getElementById('myaudio') ;
+    x.play() ;
+
+}
    // setMsgs([msg])
 })
 
@@ -322,8 +330,8 @@ const SendMessage = (e) => {
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
-                                    <div >   </div>
-
+                             
+                             
 
 
 
@@ -362,7 +370,7 @@ const SendMessage = (e) => {
                             </div>
                         </CardActions>
                     </Card>
-                </Paper>
+                </Paper>    <audio controls  src={`../song/notification.mp3`}  id='myaudio' style={{display:'none'}} >   </audio>           
 
             </div>
         </>
