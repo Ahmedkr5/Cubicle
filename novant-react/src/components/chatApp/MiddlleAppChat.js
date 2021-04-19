@@ -294,7 +294,6 @@ export default function RecipeReviewCard(props) {
      
        
             data.append('file', mediaBlobUrl)
-      alert(data[0])
             var randomstring = require("randomstring");
             var date = randomstring.generate();
             
@@ -644,7 +643,7 @@ export default function RecipeReviewCard(props) {
 
 
 
-                                    <div className='blockMessage' style={{ display: '' }}>
+                                    <div className='blockMessage' style={{ display: 'none' }}>
                                         <div className='authorthumb' >
                                             <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
                                         </div>
