@@ -13,16 +13,17 @@ const messageSchema = new mongoose.Schema({
     },
     body: {
         type: String ,
-        required: true
+        required: false,
+      
     },
     file: {
         type: [String] ,
         required: false,
-        default:new Date()
+        default:null
     },
     created_at: {
         type: Date,
-        required: false ,
+        default: Date.now() ,
      
     },
     deleted_trans: {

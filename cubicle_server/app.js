@@ -15,7 +15,9 @@ var UserController = require('./user/UserController');
 var AuthController = require('./auth/AuthController');
 var ExperienceController = require('./experiences/ExperienceController');
 var PostController = require('./experiences/ExperienceController');
+var path = require('path');
 
+app.use(express.static(path.resolve('./public')));
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
