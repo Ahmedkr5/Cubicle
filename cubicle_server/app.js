@@ -1,4 +1,7 @@
 const express = require('express');
+const { graphqlHTTP } = require('express-graphql');
+const schema = require('./schema/schema');
+const schemaTest = require('./schema/schemaTest');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
 require('dotenv').config(); //for video call
@@ -6,7 +9,7 @@ const app = express();
 const indexRouter = require('./routes/index');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-var socket = require('socket.io') ;
+var socket = require('socket.io');
 //for video call
 var AccessToken = require('twilio').jwt.AccessToken;
 var VideoGrant = AccessToken.VideoGrant;
@@ -40,6 +43,24 @@ app.use(function (req, res, next) {
   next();
 });
 
+// graphql use
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: schema,
+    graphiql: true,
+  })
+);
+
+app.use(
+  '/graphqlTest',
+  graphqlHTTP({
+    schema: schemaTest,
+    graphiql: true,
+  })
+);
+
+// frontend calls
 app.use('/users', UserController);
 app.use('/experiences', ExperienceController);
 app.use('/api/auth', AuthController);
@@ -90,8 +111,6 @@ app.use(function (req, res, next) {
 
 app.use('/', indexRouter);
 
-
-
 app.get('/token/:identity', function (req, res) {
   const identity = req.params.identity;
 
@@ -121,8 +140,8 @@ const server = app.listen(3001, function () {
   console.log('Programmable Video Chat token server listening on port 3001!');
 });
 var io = socket(server);
-const MsgIo = require('./controller/MsgIoController') ;
-MsgIo(app,io) ;
+const MsgIo = require('./controller/MsgIoController');
+MsgIo(app, io);
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
