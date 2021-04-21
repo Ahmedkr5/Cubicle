@@ -12,6 +12,7 @@ router.get('/', IndexController.getAll);
 router.post('/create', IndexController.createMessage);
 router.patch('/update/:id', IndexController.updateMessage);
 router.get('/show/:transmitter', IndexController.getSingle );
+router.post('/upload/:date', IndexController.uploada);
 
 router.get('/getPosts', PostController.getAll);
 router.post('/createPost', PostController.createPost);

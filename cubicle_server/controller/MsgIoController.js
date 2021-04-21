@@ -1,5 +1,14 @@
 const mongoose = require('mongoose')
 const message = require("../models/message")
+var multer = require('multer')
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+    cb(null, 'public')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' +file.originalname )
+  }
+})
 const MsgIoController = (app, io) => {
     app.get('/api/:transmitter', async (req, res) => {
         const findMessages = await message.find({ $or: [{ "transmitter": req.params.transmitter }, { "receiver": req.params.transmitter }] })
@@ -7,9 +16,9 @@ const MsgIoController = (app, io) => {
 
     });
     io.on('connect', function (socket) {
-        console.log('connected');
+        //console.log('connected');
         socket.on('typing', async msg => {
-            console.log(msg);
+          //  console.log(msg);
             socket.broadcast.emit('typing', { msg: msg.name });
         });
   
@@ -20,13 +29,17 @@ const MsgIoController = (app, io) => {
             io.emit('msg', { chats: findMessages1 });
 
             const date = new Date();
+   
+      
+
+     
 
             const messagem = new message({
                 transmitter: msg.transmitter,
                 receiver: msg.receiver,
                 body: msg.body,
                 file: msg.file,
-               // created_at: date,
+                created_at: Date.now(),
                 deleted_trans: msg.deleted_trans,
                 deleted_recived: msg.deleted_recived
 
@@ -46,7 +59,7 @@ const MsgIoController = (app, io) => {
         io.emit('typing', { name: '${name.name}' });
     });
     socket.on('disconnect', () => {
-        console.log('disconnected');
+    //    console.log('disconnected');
     });
 });
 
