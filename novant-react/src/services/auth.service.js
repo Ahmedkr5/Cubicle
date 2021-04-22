@@ -3,7 +3,6 @@ import jwt_decode from "jwt-decode";
  
 
 const API_URL = "http://localhost:3001/api/auth/";
-let firstname =""
 
 class AuthService {
   login(email, password) {
