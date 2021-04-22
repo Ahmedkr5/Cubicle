@@ -3,10 +3,14 @@ import { Cake, FindInPage, Flag, Home, HomeOutlined, Phone } from '@material-ui/
 import { Container, Divider, Icon, IconButton, Typography } from '@material-ui/core';
 import { Col, Row } from 'react-bootstrap';
 import authService from '../../../services/auth.service';
+import experienceService from '../../../services/experience.service';
+import { useApi } from '../../../hooks/useApi';
 
 
-export default function Aboutme() {
-  const user = authService.getCurrentUser() ;
+export default function Aboutme(props) {
+  const user = useApi('users/'+ props.userid); ;
+  const user1 = user['0']
+
   return (
     <div>
     <Container style={{borderRadius: '10px'  ,backgroundColor:"white"}}>

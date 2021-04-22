@@ -5,8 +5,12 @@ import { Field, Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Col, Container, Row } from "react-bootstrap";
 import { Label } from "@material-ui/icons";
+import authService from "../../services/auth.service";
+import experienceService from "../../services/experience.service";
 
 function SetAboutME() {
+  const user = authService.getCurrentUser();
+    const userid = user['id'];
   return (
     
       <Card>
@@ -26,10 +30,11 @@ function SetAboutME() {
               description: Yup.string().min(10),
             })}
             onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
+              console.log(values.birthday.toString())
+              experienceService.edit(values.firstname, values.lastname,values.profileimage,values.coverimage,values.birthday.toString(),values.password,values.email,values.adresse,values.phone,values.description,userid).then(
+                () => {
+                  window.location.reload();
+                });
             }}
           >
             {({
@@ -310,6 +315,7 @@ function SetAboutME() {
           type="submit"
           variant="contained"
           color="primary"
+         
         >
           Confirm
         </Button>

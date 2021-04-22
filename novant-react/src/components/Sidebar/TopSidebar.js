@@ -47,6 +47,7 @@ function ListItemLink(props) {
 export default function TopSidebar() {
   const classes = useStyles();
   const user = authService.getCurrentUser() ;
+  const userid = user['id'];
   const name = user.firstname + " " + user.lastname
 
 
@@ -55,7 +56,7 @@ export default function TopSidebar() {
       <CssBaseline />
      <Paper elevation={0} style={{display: 'flex',background:'white',borderRadius:'10px',alignItems:'center',justifyContent:'center',width:'100%',padding:'0px'}}>
 <Container style={{padding:'0px'}}>         
-              <ListItemLink href="/profile" style={{display: 'flex',flexDirection:'row'}}>
+              <ListItemLink  href={`/profile/${userid}`} style={{display: 'flex',flexDirection:'row'}}>
                 <ListItemIcon style={{marginLeft:'10px'}}>
                   
                 <UIAvatar name={name} color='#551a8b' style={{borderRadius:'10px'}} ></UIAvatar>
