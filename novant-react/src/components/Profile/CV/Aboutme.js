@@ -9,18 +9,13 @@ import { useApi } from '../../../hooks/useApi';
 
 export default function Aboutme(props) {
   const user = useApi('users/'+ props.userid); ;
-  const user1 = user['0']
-
   return (
     <div>
     <Container style={{borderRadius: '10px'  ,backgroundColor:"white"}}>
     <Row>
     <div className="col-md-6 " >
       <Typography>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      {user[0]?.description}
       </Typography>
     </div>
     <Divider orientation="vertical" flexItem />
@@ -36,7 +31,7 @@ export default function Aboutme(props) {
       </div>
       <div className="col-md-8 "style={{display:"flex",flexDirection:"row" , alignItems:"center"}}  >
       <Typography>
-      Rue 4180 Numéro 25 Cité ezzouhour 3 , Tunis.
+      {user[0]?.adresse}
       </Typography>
       </div>
     </div>
@@ -50,7 +45,7 @@ export default function Aboutme(props) {
       </div>
       <div className="col-md-8 " style={{display:"flex",flexDirection:"row" , alignItems:"center"}} >
       <Typography>
-      (+216) 21 955 535.
+      {user[0]?.phone}
       </Typography>
       </div>
     </div>
@@ -64,7 +59,7 @@ export default function Aboutme(props) {
       </div>
       <div className="col-md-8 " style={{display:"flex",flexDirection:"row" , alignItems:"center"}}  >
       <Typography>
-      27 Dec. 1997
+      {user[0]?.datenaissance}
       </Typography>
       </div>
     </div>

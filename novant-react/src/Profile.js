@@ -44,7 +44,7 @@ const [user2,err,reload] = useApi('users/'+userid);
 
             <Col xs={6} style={{ display: 'flex' ,marginLeft:'0px', justifyContent: 'center'}} >
                           <Container style={{marginLeft:'0px'}}>
-                            <ProfileCard firstname={user2?.firstname} lastname={user2?.lastname}></ProfileCard>
+                            <ProfileCard profileimage={user2?.profileimage} coverimage={user2?.coverimage} firstname={user2?.firstname} lastname={user2?.lastname}></ProfileCard>
 
                 <BottomNavigation
       value={value}

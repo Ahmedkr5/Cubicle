@@ -10,6 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { Avatar, Container, Paper, Typography } from '@material-ui/core';
 import authService from '../../services/auth.service';
 import UIAvatar from 'react-ui-avatars';
+import { useApi } from '../../hooks/useApi';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +49,9 @@ export default function TopSidebar() {
   const classes = useStyles();
   const user = authService.getCurrentUser() ;
   const userid = user['id'];
-  const name = user.firstname + " " + user.lastname
+  const [user2,err,reload] = useApi('users/'+userid);
+  const name = user2?.firstname + " " + user2?.lastname
+  var profileimage ="http://localhost:3001/uploads/"+user2?.profileimage
 
 
   return (
@@ -59,11 +62,14 @@ export default function TopSidebar() {
               <ListItemLink  href={`/profile/${userid}`} style={{display: 'flex',flexDirection:'row'}}>
                 <ListItemIcon style={{marginLeft:'10px'}}>
                   
-                <UIAvatar name={name} color='#551a8b' style={{borderRadius:'10px'}} ></UIAvatar>
+                {user2?.profileimage=="default profile image" && <UIAvatar name={name} style={{borderRadius:'10px'}} color='#551a8b' ></UIAvatar>}
+        {user2?.profileimage !=="default profile image" && <Avatar src={profileimage} style={{borderRadius:'10px'}} color='#551a8b' ></Avatar>}
+        
+
                 </ListItemIcon>
                 <br/>
                 <div style={{display: 'flex',marginLeft:'10%',flexDirection:'column'}}>
-                <ListItemText><Typography variant="h6">{user['firstname']} {user['lastname']} </Typography></ListItemText>
+                <ListItemText><Typography variant="h6">{user2?.firstname} {user2?.lastname} </Typography></ListItemText>
                 </div>
               </ListItemLink>
 
