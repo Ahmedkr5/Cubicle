@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     flexBasis: '100%',
     marginBottom: '10px',
+    width: 'inherit',
   },
 
   rounded: {
@@ -24,12 +25,14 @@ const useStyles = makeStyles((theme) => ({
     padding: '0px 15px',
     borderRadius: '15px',
     overflow: 'auto',
+    width: 'inherit',
   },
   commentText: {
     wordWrap: 'break-word',
     textAlign: 'left',
     marginTop: '0px',
     paddingTop: '0px',
+    width: 'inherit',
   },
   commentUserName: {
     textAlign: 'left',
