@@ -66,16 +66,12 @@ router.post('/register', function(req, res) {
     res.status(200).send({ auth: false, token: null });
   });
 
-  router.get('/google',
-  passport.authenticate('google', { scope: ['profile'] }),function(req, res) {
-    res.status(200)}
-  );
-
-router.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
+  router.get('/google', passport.authenticate('google', {
+    scope: ['profile', 'email']}));
+  
+  // Google Oauth2 callback url
+  router.get('/google/callback', passport.authenticate('google'), (req, res, next) => {
+    res.redirect("http://localhost:3001/" + req.user.id);
   });
   router.use(function (user, req, res, next) {
     res.status(200).send(user);

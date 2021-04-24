@@ -18,10 +18,36 @@ class ExperienceService {
       });
   }
 
-  get(userid) {
-    var title = {}
+  edit(firstname, lastname,profileimage,coverimage,birthday,password,emeail,adresse,phone,description,userid) {
     return axios
+      .put("http://localhost:3001/users/"+userid, {
+         firstname,
+         lastname,
+         profileimage,
+         coverimage,
+         birthday,
+         password,
+         emeail,
+         adresse,
+         phone,
+         description,
+      })
+      .then(response => {
+        return response.data;
+      });
+  }
+
+   async get(userid) {
+    return await axios
       .get(API_URL+"/"+userid, {
+      })
+      .then(function(response) {
+       return response.data
+        });
+  }
+  async get(userid) {
+    return await axios
+      .get("http://localhost:3001/users/"+userid, {
       })
       .then(function(response) {
        return response.data

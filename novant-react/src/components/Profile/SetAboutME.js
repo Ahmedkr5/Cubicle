@@ -5,8 +5,33 @@ import { Field, Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Col, Container, Row } from "react-bootstrap";
 import { Label } from "@material-ui/icons";
+import authService from "../../services/auth.service";
+import experienceService from "../../services/experience.service";
+import axios from "axios";
 
 function SetAboutME() {
+  const user = authService.getCurrentUser();
+    const userid = user['id'];
+    const [CoverImage, setCoverImage] = useState('');
+    const [selectedCoverImage, setselectedCoverImage] = useState(null);
+
+    const [ProfileImage, setProfileImage] = useState('');
+    const [selectedProfileImage, setselectedProfileImage] = useState(null);
+
+    const onChangeHandler = event => {
+      setselectedCoverImage(event.target.files[0])
+      setCoverImage((event.target.files[0].name))
+      //  event.target.files = null
+      //console.log(event.target.files)
+  }
+
+  const onChangeHandler1 = event => {
+    setselectedProfileImage(event.target.files[0])
+    setProfileImage((event.target.files[0].name))
+    //  event.target.files = null
+    //console.log(event.target.files)
+}
+
   return (
     
       <Card>
@@ -14,22 +39,34 @@ function SetAboutME() {
           <Formik
             initialValues={{ birthday :"" ,firstname :"" , lastname :"" , email :"", password :"" , profileimage :"" , coverimage :"" ,adresse: "", phone: '', description: "" }}
             validationSchema={Yup.object().shape({
-              birthday: Yup.string().required("birthday is Required"),
-              firstname: Yup.string().required("firstname is Required"),
-              lastname: Yup.string().required("lastname is Required"),
-              email: Yup.string().required("email is Required"),
-              password: Yup.string().required("password is Required"),
-              profileimage: Yup.string().required("profileimage is Required"),
-              coverimage: Yup.string().required("coverimage is Required"),
-              adresse: Yup.string().required("Adresse is Required"),
-              phone: Yup.number().required("Phone is Required").min(18, "only +18"),
-              description: Yup.string().min(10),
             })}
             onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
+              if (selectedCoverImage != null) {
+                const data = new FormData()
+                data.append('file', selectedCoverImage)
+                var randomstring = require("randomstring");
+                var date = randomstring.generate();
+                axios.post("http://localhost:3001/upload/" + date, data, {
+                })
+              }
+
+              if (selectedProfileImage != null) {
+                const data = new FormData()
+                data.append('file', selectedProfileImage)
+                var randomstring = require("randomstring");
+                var date1 = randomstring.generate();
+                axios.post("http://localhost:3001/upload/" + date1, data, {
+                })
+              }
+
+
+              experienceService.edit(values.firstname, 
+                values.lastname, date1+'-'+ProfileImage,
+                date+'-'+CoverImage,values.birthday.toString(),values.password,values.email,values.adresse,values.phone,
+                values.description,userid).then(
+                () => {
+                  window.location.reload();
+                });
             }}
           >
             {({
@@ -133,21 +170,15 @@ function SetAboutME() {
                 </Grid>      
                 
                   <Grid item xs={12} md={9}>
+                        <div style={{ width: '100%', maxHeight: '100px' }}>
+                            <div className="custom-file">
+                                <input type="file" className="custom-file-input" value={values.coverimage} id="coverimage" error={errors.coverimage ? true : false}
+                    helperText={errors.coverimage && errors.coverimage} onChange={onChangeHandler} />
+                                <label className="custom-file-label" for="coverimage">Choose file...</label>
+                                <div className="invalid-feedback">Example invalid custom file feedback</div>
+                            </div>
+                        </div>
 
-                  <Field
-                  style={{width:"100%"}}
-                    label="coverimage"
-                    type="file"
-                    name="coverimage"
-                    id="coverimage"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.coverimage}
-                    placeholder="Your coverimage"
-                    component={TextField}
-                    error={errors.coverimage ? true : false}
-                    helperText={errors.coverimage && errors.coverimage}
-                  />
                   </Grid>
 
                   <Grid item xs={12} md={12}>
@@ -156,24 +187,20 @@ function SetAboutME() {
                 
                   <Grid item xs={12} md={3}>
                 <Label/><Typography>Profile Image :</Typography>     
-                </Grid>      
-                  <Grid item xs={12} md={9}>
+                </Grid>  
 
-                  <Field
-                  style={{width:"100%"}}
-                    label="profileimage"
-                    type="file"
-                    name="profileimage"
-                    id="profileimage"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.profileimage}
-                    placeholder="Your profileimage"
-                    component={TextField}
-                    error={errors.profileimage ? true : false}
-                    helperText={errors.profileimage && errors.profileimage}
-                  />
-                  </Grid>
+                <Grid item xs={12} md={9}>
+                        <div style={{ width: '100%', maxHeight: '100px' }}>
+                            <div className="custom-file">
+                                <input type="file" className="custom-file-input" value={values.profileimage} id="profileimage" error={errors.profileimage ? true : false}
+                    helperText={errors.profileimage && errors.profileimage} onChange={onChangeHandler1} />
+                                <label className="custom-file-label" for="profileimage">Choose file...</label>
+                                <div className="invalid-feedback">Example invalid custom file feedback</div>
+                            </div>
+                        </div>
+
+                  </Grid>    
+                
 
                   <Grid item xs={12} md={12}>
                 <Divider variant='fullWidth'/>
@@ -310,6 +337,7 @@ function SetAboutME() {
           type="submit"
           variant="contained"
           color="primary"
+         
         >
           Confirm
         </Button>

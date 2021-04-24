@@ -1,6 +1,6 @@
 import { BottomNavigation, BottomNavigationAction, Container, Divider } from "@material-ui/core";
 import React, { useState } from "react";
-import { FindInPage, Flag, ShoppingCart } from "@material-ui/icons";
+import { FindInPage, Flag, Settings, ShoppingCart } from "@material-ui/icons";
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Col, Row } from "react-bootstrap";
@@ -15,16 +15,19 @@ import SearchAppBar from "./components/Navbar/Navbar";
 import FriendList from "./components/Friends/Friendlist";
 import authService from "./services/auth.service";
 import AchatCoins from "./components/Coins/AchatCoins";
+import SetAboutME from "./components/Profile/SetAboutME";
+import { useApi } from "./hooks/useApi";
 
 
 
 
 
-function Profile() {
+function Profile(props) {
 const [state, setState] = useState("0") 
 const [value, setValue] = React.useState(0);
-const user = authService.getCurrentUser() ;
-
+const currentuser = authService.getCurrentUser() ;
+const userid = props.match.params.id ;
+const [user2,err,reload] = useApi('users/'+userid);
  return (   
    
     <div style={{backgroundColor : '#F0F2F5'}}>
@@ -41,7 +44,7 @@ const user = authService.getCurrentUser() ;
 
             <Col xs={6} style={{ display: 'flex' ,marginLeft:'0px', justifyContent: 'center'}} >
                           <Container style={{marginLeft:'0px'}}>
-                            <ProfileCard firstname={user.firstname} lastname={user.lastname}></ProfileCard>
+                            <ProfileCard profileimage={user2?.profileimage} coverimage={user2?.coverimage} firstname={user2?.firstname} lastname={user2?.lastname}></ProfileCard>
 
                 <BottomNavigation
       value={value}
@@ -55,6 +58,8 @@ const user = authService.getCurrentUser() ;
       <BottomNavigationAction onClick={()=>setState("1")} label="Friends" icon={<FavoriteIcon />} />
       <BottomNavigationAction onClick={()=>setState("2")} label="Badges" icon={<Flag />} />
       <BottomNavigationAction onClick={()=>setState("3")} label="CV" icon={<FindInPage />} />
+      {currentuser['id'] == userid &&
+      <BottomNavigationAction onClick={()=>setState("5")} label="Settings" icon={<Settings />} />}
       <BottomNavigationAction onClick={()=>setState("4")} label="Coins" icon={<ShoppingCart style={{display:'flex',width:'100%' ,flexDirection:'column'}} />} />
 
     </BottomNavigation>
@@ -62,7 +67,8 @@ const user = authService.getCurrentUser() ;
     {state == "0" &&  <div style={{display:'flex',width:'100%' ,flexDirection:'column'}}><ProblemFeed></ProblemFeed> <Feed></Feed> <Feed></Feed></div>}
     {state == "1" && <FriendList></FriendList>}
     {state == "2" && <Badges></Badges>}
-    {state == "3" &&  <CV userid={user.id}></CV> }
+    {state == "3" &&  <CV userid={userid}></CV> }
+    {state == "5" &&  <SetAboutME userid={userid}></SetAboutME> }
     {state == "4" && <AchatCoins></AchatCoins>}
 
 
