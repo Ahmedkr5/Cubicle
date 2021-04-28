@@ -76,7 +76,7 @@ export default function CV(props) {
   </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <Aboutme></Aboutme>
+        <Aboutme userid={props.userid}></Aboutme>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Experiences userid={props.userid}></Experiences>

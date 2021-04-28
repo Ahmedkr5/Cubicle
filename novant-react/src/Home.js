@@ -17,6 +17,11 @@ import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import EmojiPeopleOutlinedIcon from '@material-ui/icons/EmojiPeopleOutlined';
 import WorkOutlineOutlinedIcon from '@material-ui/icons/WorkOutlineOutlined';
 import NewProblemDialog from './components/Posts/NewProblemDialog';
+import Hidden from '@material-ui/core/Hidden';
+import { useQuery, gql } from '@apollo/client';
+import PropTypes from 'prop-types';
+import SkeletonFeed from './components/Posts/skeletonFeed';
+import Editor from './components/Posts/Editor';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -30,7 +35,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const FEED_QUERY = gql`
+  {
+    posts {
+      id
+      type
+      tags
+      description
+      created_at
+      user {
+        firstname
+        lastname
+        email
+      }
+      comments {
+        id
+        type
+        description
+        user {
+          firstname
+          lastname
+          email
+        }
+      }
+    }
+  }
+`;
+
 function Home() {
+  const { data, loading, error } = useQuery(FEED_QUERY, {
+    pollInterval: 5000,
+  });
+
   const classes = useStyles();
   const [state, setState] = useState('0');
   const [value, setValue] = React.useState(0);
@@ -42,22 +78,23 @@ function Home() {
       <Row>
         <SearchAppBar></SearchAppBar>
       </Row>
-      <Container style={{ marginTop: '4%', maxWidth: '100%' }}>
+      <Container style={{ marginTop: '4em', maxWidth: '100%' }}>
         <Row>
-          <Col style={{ display: 'flex', justifyContent: 'center' }}>
-            <Sidebar></Sidebar>
-          </Col>
+          <Hidden xsDown={true}>
+            <Col style={{ display: 'flex', justifyContent: 'center' }}>
+              <Sidebar></Sidebar>
+            </Col>
+          </Hidden>
 
           <Col
-            xs={6}
             style={{
               display: 'flex',
               marginLeft: '0px',
               justifyContent: 'center',
-              height: '100%',
+              height: 'auto',
             }}
           >
-            <Container style={{ marginLeft: '0px' }}>
+            <Container style={{}}>
               <div
                 style={{
                   display: 'flex',
@@ -103,42 +140,96 @@ function Home() {
               </div>
               <TagFilter></TagFilter>
               {state == '0' && (
-                <div
-                  style={{
-                    display: 'flex',
-                    width: '100%',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <NewProblemDialog></NewProblemDialog>
-                  <Feed image='../../assets/images/users/2.jpg'></Feed>
-                  <Feed image='../../assets/images/users/3.jpg'></Feed>
-                  <Feed image='../../assets/images/users/4.jpg'></Feed>
-                  <Feed image='../../assets/images/users/5.jpg'></Feed>
-                  <Feed image='../../assets/images/users/6.jpg'></Feed>
-                  <Feed image='../../assets/images/users/7.jpg'></Feed>
-                </div>
+                <>
+                  <div
+                    style={{
+                      display: 'flex',
+                      width: 'auto',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <NewProblemDialog user={user}></NewProblemDialog>
+                    {loading && (
+                      <>
+                        <SkeletonFeed></SkeletonFeed>{' '}
+                        <SkeletonFeed></SkeletonFeed>
+                      </>
+                    )}
+                    {error && <p style={{ color: 'red' }}>{error.message}</p>}
+                    {data && (
+                      <>
+                        {data.posts
+                          .filter((post) => post.type.includes('problem'))
+                          .map(
+                            (post) => (
+                              <Feed
+                                image='../../assets/images/users/2.jpg'
+                                key={post.id}
+                                post={post}
+                                user={user}
+                              ></Feed>
+                            )
+
+                            // <Link key={link.id} link={link} />
+                          )}
+                      </>
+                    )}
+                  </div>
+                </>
               )}
               {state == '1' && (
                 <div
                   style={{
                     display: 'flex',
-                    width: '100%',
+                    width: 'auto',
                     flexDirection: 'column',
                   }}
                 >
-                  <ProblemFeed></ProblemFeed>
-                  <ProblemFeed></ProblemFeed>
-                  <ProblemFeed></ProblemFeed>
-                  <ProblemFeed></ProblemFeed>
+                  <NewProblemDialog></NewProblemDialog>
+                  {loading && (
+                    <>
+                      <SkeletonFeed></SkeletonFeed>{' '}
+                      <SkeletonFeed></SkeletonFeed>
+                    </>
+                  )}
+                  {error && <p style={{ color: 'red' }}>{error.message}</p>}
+                  {data && (
+                    <>
+                      {data.posts
+                        .filter((post) => post.type.includes('code'))
+                        .map(
+                          (post) => (
+                            <ProblemFeed
+                              key={post.id}
+                              post={post}
+                              user={user}
+                            ></ProblemFeed>
+                          )
+
+                          // <Link key={link.id} link={link} />
+                        )}
+                    </>
+                  )}
                 </div>
               )}
-              {state == '2' && <div></div>}
+              {state == '2' && (
+                <>
+                  {' '}
+                  <SkeletonFeed></SkeletonFeed> <Editor />
+                </>
+              )}
             </Container>
           </Col>
-          <Col style={{ display: 'flex', justifyContent: 'center' }}>
-            <RightSidebar style={{ marginRight: '0px' }}></RightSidebar>
-          </Col>
+          <Hidden mdDown={true}>
+            <Col
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <RightSidebar style={{ marginRight: '0px' }}></RightSidebar>
+            </Col>
+          </Hidden>
         </Row>
       </Container>
 

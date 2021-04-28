@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     flexBasis: '100%',
     marginBottom: '10px',
+    width: 'inherit',
   },
 
   rounded: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     float: 'left',
     marginRight: '0px',
     marginTop: '5px',
-    width: '90%',
+    width: 'inherit',
   },
   iconButton: {
     float: 'right',
@@ -45,7 +46,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PostComment() {
+export default function PostComment(props) {
+  const wrapper = React.createRef();
+
   const classes = useStyles();
 
   return (
@@ -59,14 +62,16 @@ export default function PostComment() {
           multiline
           placeholder='Proposez une solution...'
           inputProps={{ 'aria-label': 'Proposez une solution' }}
+          autoFocus
+          ref={wrapper}
         />
-        <IconButton
+        {/* <IconButton
           type='submit'
           className={classes.iconButton}
           aria-label='emoji'
         >
           <EmojiEmotionsOutlinedIcon />
-        </IconButton>
+        </IconButton> */}
       </div>
     </div>
   );

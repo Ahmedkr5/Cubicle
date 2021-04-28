@@ -5,31 +5,69 @@ import { Field, Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Col, Container, Row } from "react-bootstrap";
 import { Label } from "@material-ui/icons";
+import authService from "../../services/auth.service";
+import experienceService from "../../services/experience.service";
+import axios from "axios";
+import { useApi } from "../../hooks/useApi";
 
-function SetAboutME() {
+function SetAboutME(props) {
+  const user = authService.getCurrentUser();
+    const userid = user['id'];
+    const [userProf, err1, reload1] = useApi('users/'+ userid);
+    const [CoverImage, setCoverImage] = useState('');
+    const [selectedCoverImage, setselectedCoverImage] = useState(null);
+
+    const [ProfileImage, setProfileImage] = useState('');
+    const [selectedProfileImage, setselectedProfileImage] = useState(null);
+
+    const onChangeHandler = event => {
+      setselectedCoverImage(event.target.files[0])
+      setCoverImage((event.target.files[0].name))
+      //  event.target.files = null
+      //console.log(event.target.files)
+  }
+
+  const onChangeHandler1 = event => {
+    setselectedProfileImage(event.target.files[0])
+    setProfileImage((event.target.files[0].name))
+    //  event.target.files = null
+    //console.log(event.target.files)
+}
+
   return (
     
       <Card>
         <CardContent>
           <Formik
-            initialValues={{ birthday :"" ,firstname :"" , lastname :"" , email :"", password :"" , profileimage :"" , coverimage :"" ,adresse: "", phone: '', description: "" }}
+            initialValues={{ birthday :user.birthday ,firstname :user.firstname , lastname :user.lastname, email :user.email, password :userProf?.password , profileimage :userProf?.profileimage , coverimage :userProf?.coverimage ,adresse: user.adresse, phone: user.phone, description: user.description }}
             validationSchema={Yup.object().shape({
-              birthday: Yup.string().required("birthday is Required"),
-              firstname: Yup.string().required("firstname is Required"),
-              lastname: Yup.string().required("lastname is Required"),
-              email: Yup.string().required("email is Required"),
-              password: Yup.string().required("password is Required"),
-              profileimage: Yup.string().required("profileimage is Required"),
-              coverimage: Yup.string().required("coverimage is Required"),
-              adresse: Yup.string().required("Adresse is Required"),
-              phone: Yup.number().required("Phone is Required").min(18, "only +18"),
-              description: Yup.string().min(10),
             })}
             onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
+              if (selectedCoverImage != null) {
+                const data = new FormData()
+                data.append('file', selectedCoverImage)
+                var randomstring = require("randomstring");
+                var date = randomstring.generate();
+                axios.post("http://localhost:3001/upload/" + date, data, {
+                })
+              }
+
+              if (selectedProfileImage != null) {
+                const data = new FormData()
+                data.append('file', selectedProfileImage)
+                var randomstring = require("randomstring");
+                var date1 = randomstring.generate();
+                axios.post("http://localhost:3001/upload/" + date1, data, {
+                })
+              }
+
+
+              experienceService.edit(values.firstname, 
+                values.lastname,values.birthday.toString(),values.password,values.email,values.adresse,values.phone,
+                values.description,userid).then(
+                () => {
+                  window.location.reload();
+                });
             }}
           >
             {({
@@ -62,9 +100,10 @@ function SetAboutME() {
                     name="firstname"
                     id="firstname"
                     onChange={handleChange}
+                    initialValues={userProf?.lastname}
                     onBlur={handleBlur}
                     value={values.firstname}
-                    placeholder="Your Firstname"
+                    placeholder={userProf?.firstname}
                     component={TextField}
                     error={errors.firstname ? true : false}
                     helperText={errors.firstname && errors.firstname}
@@ -88,7 +127,7 @@ function SetAboutME() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.lastname}
-                    placeholder="Your Lastname"
+                    placeholder={userProf?.lastname}
                     component={TextField}
                     error={errors.lastname ? true : false}
                     helperText={errors.lastname && errors.lastname}
@@ -128,56 +167,16 @@ function SetAboutME() {
                 <Divider variant='fullWidth'/>
                 </Grid>
 
-                  <Grid item xs={12} md={3}>
-                <Label/><Typography>Cover Image :</Typography>     
-                </Grid>      
-                
-                  <Grid item xs={12} md={9}>
+                 
 
-                  <Field
-                  style={{width:"100%"}}
-                    label="coverimage"
-                    type="file"
-                    name="coverimage"
-                    id="coverimage"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.coverimage}
-                    placeholder="Your coverimage"
-                    component={TextField}
-                    error={errors.coverimage ? true : false}
-                    helperText={errors.coverimage && errors.coverimage}
-                  />
-                  </Grid>
 
-                  <Grid item xs={12} md={12}>
-                <Divider variant='fullWidth'/>
-                </Grid>
-                
-                  <Grid item xs={12} md={3}>
-                <Label/><Typography>Profile Image :</Typography>     
-                </Grid>      
-                  <Grid item xs={12} md={9}>
 
-                  <Field
-                  style={{width:"100%"}}
-                    label="profileimage"
-                    type="file"
-                    name="profileimage"
-                    id="profileimage"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.profileimage}
-                    placeholder="Your profileimage"
-                    component={TextField}
-                    error={errors.profileimage ? true : false}
-                    helperText={errors.profileimage && errors.profileimage}
-                  />
-                  </Grid>
 
-                  <Grid item xs={12} md={12}>
-                <Divider variant='fullWidth'/>
-                </Grid>
+
+
+
+
+                 
                   <Grid item xs={12} md={3}>
                 <Label/><Typography>Email :</Typography>     
                 </Grid>   
@@ -193,7 +192,7 @@ function SetAboutME() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.email}
-                    placeholder="Your email"
+                    placeholder={userProf?.email}
                     component={TextField}
                     error={errors.email ? true : false}
                     helperText={errors.email && errors.email}
@@ -221,7 +220,7 @@ function SetAboutME() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.adresse}
-                    placeholder="Your adresse"
+                    placeholder={userProf?.adresse}
                     component={TextField}
                     error={errors.adresse ? true : false}
                     helperText={errors.adresse && errors.adresse}
@@ -246,7 +245,7 @@ function SetAboutME() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.phone}
-                    placeholder="Your phone"
+                    placeholder={userProf?.phone}
                     component={TextField}
                     error={errors.phone ? true : false}
                     helperText={errors.phone && errors.phone}
@@ -272,7 +271,7 @@ function SetAboutME() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.birthday}
-                    placeholder="Your birthday"
+                    placeholder={userProf?.birthday}
                     component={TextField}
                     error={errors.birthday ? true : false}
                     helperText={errors.birthday && errors.birthday}
@@ -296,7 +295,7 @@ function SetAboutME() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.description}
-                    placeholder="Description"
+                    placeholder={userProf?.description}
                     component={TextField}
                     error={errors.description ? true : false}
                     helperText={errors.description && errors.description}
@@ -310,6 +309,7 @@ function SetAboutME() {
           type="submit"
           variant="contained"
           color="primary"
+         
         >
           Confirm
         </Button>

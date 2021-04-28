@@ -69,9 +69,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CodeComment() {
+export default function CodeComment(props) {
   const classes = useStyles();
-  const [code, setCode] = React.useState('// my code goes here');
+  const [code, setCode] = React.useState('');
 
   return (
     <div className={classes.root}>
@@ -79,7 +79,6 @@ export default function CodeComment() {
         H
       </Avatar>
       <div className={classes.commentBody}>
-        <h5 className={classes.commentUserName}>Hamza Safraou</h5>
         <CodeMirror
           className={classes.code}
           value={code}
@@ -99,11 +98,14 @@ export default function CodeComment() {
               'Ctrl-Space': 'autocomplete',
             },
             scrollbarStyle: 'null',
+            autofocus: true,
           }}
           onBeforeChange={(editor, data, value) => {
             setCode(value);
           }}
-          onChange={(editor, data, value) => {}}
+          onChange={(editor, data, value) => {
+            console.log(value);
+          }}
         />
         <Button
           className={classes.submit}

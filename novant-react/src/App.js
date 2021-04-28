@@ -16,9 +16,9 @@ function App() {
   return (
     <div className='App' style={{ backgroundColor: '#F0F2F5' }}>
       <Router>
-        <Route path='/profile'>
-          <Profile />
-        </Route>
+      <Route path='/profile/:id' render={(props) => {
+                    return ( <Profile {...props } /> )
+                }} />
         <Route path='/auth'>
           <Login />
         </Route>

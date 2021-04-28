@@ -3,7 +3,7 @@ var commentaire = require('./commentaire');
 const mongoose = require('mongoose');
 const { use } = require('../../routes');
 const postSchema = new mongoose.Schema({
-  user: {
+  userId: {
     type: String,
     required: true,
   },

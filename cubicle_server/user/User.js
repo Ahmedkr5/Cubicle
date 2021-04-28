@@ -7,14 +7,13 @@ var UserSchema = new mongoose.Schema({
   datenaissance: String,
   profileimage: String,
   coverimage: String,
-  AboutMe : {
-          description : String,
-          adresse : String ,
-          phone: String
-       
-    },
+  description : String,
+  adresse : String ,
+  phone: String,
+  Coins: String,
     Groups: [String],
     Friendship: [String] 
+
 
 });
 mongoose.model('User2', UserSchema);
