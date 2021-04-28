@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AchatCoins() {
+export default function AchatCoins(prop) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -61,14 +61,14 @@ export default function AchatCoins() {
       <AppBar position="static" color="default"      style={{marginBottom:"20px" ,borderRadius: '10px'    }}>
       <Typography>
         <Container style={{display:"flex",flexDirection:"row" , justifyContent:"space-between" , flexWrap:"wrap",    borderRadius:"100px"}}>
-          <CoinCard value="100" name="10"></CoinCard>
+          <CoinCard userid={prop.userid} value="100" name="10"></CoinCard>
           
 
-          <CoinCard value="700" name="70"></CoinCard>
+          <CoinCard userid={prop.userid} value="700" name="70"></CoinCard>
           
-          <CoinCard value="1000" name="100"></CoinCard>
+          <CoinCard userid={prop.userid} value="1000" name="100"></CoinCard>
 
-          <CoinCard value="Custom" name="Custom"></CoinCard>
+          <CoinCard userid={prop.userid} value="Custom" name="Custom"></CoinCard>
 
 
           </Container>

@@ -18,19 +18,39 @@ class ExperienceService {
       });
   }
 
-  edit(firstname, lastname,profileimage,coverimage,birthday,password,emeail,adresse,phone,description,userid) {
+  edit(firstname, lastname,birthday,password,emeail,adresse,phone,description,userid) {
     return axios
       .put("http://localhost:3001/users/"+userid, {
          firstname,
          lastname,
-         profileimage,
-         coverimage,
          birthday,
          password,
          emeail,
          adresse,
          phone,
          description,
+      })
+      .then(response => {
+        var token = response.data.token;
+            localStorage.setItem("token", token);
+        return response.data;
+      });
+  }
+
+  editprofileimage(profileimage,userid) {
+    return axios
+      .put("http://localhost:3001/users/profile/"+userid, {
+         profileimage,
+      })
+      .then(response => {
+        return response.data;
+      });
+  }
+
+  editcoverimage(coverimage,userid) {
+    return axios
+      .put("http://localhost:3001/users/cover/"+userid, {
+        coverimage,
       })
       .then(response => {
         return response.data;

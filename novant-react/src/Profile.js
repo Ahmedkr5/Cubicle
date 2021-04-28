@@ -1,5 +1,5 @@
 import { BottomNavigation, BottomNavigationAction, Container, Divider } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FindInPage, Flag, Settings, ShoppingCart } from "@material-ui/icons";
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -17,6 +17,9 @@ import authService from "./services/auth.service";
 import AchatCoins from "./components/Coins/AchatCoins";
 import SetAboutME from "./components/Profile/SetAboutME";
 import { useApi } from "./hooks/useApi";
+import axios from "axios";
+import swal from 'sweetalert';
+
 
 
 
@@ -27,11 +30,49 @@ const [state, setState] = useState("0")
 const [value, setValue] = React.useState(0);
 const currentuser = authService.getCurrentUser() ;
 const userid = props.match.params.id ;
+console.log(userid)
+useEffect(() => {
+  const payment_token = window.location.href
+  var a = payment_token.indexOf("=")
+  var b =payment_token.indexOf("&")
+  console.log(b)
+  if (b != -1){
+  
+  var tokens = payment_token.substr(0,b)
+  tokens = tokens.substr(a+1)
+  console.log(tokens)
+
+  axios.post( "http://localhost:3001/users/checkpayment",{ 
+    tokens,
+    userid
+  })
+    .then((response) => {
+      if(response.status == 201){
+        console.log(response.data)
+        swal("Error!", "Payment already exist", "error").then((value) => {
+          window.location = "http://localhost:3000/profile/"+userid
+      })}else
+       if(response.status == 202){
+        swal("Error!", "Paymee Error", "error").then((value) => {
+          window.location = "http://localhost:3000/profile/"+userid
+      })}else{
+        swal("Good job!", "You clicked the button!", "success").then((value) => {
+          window.location = "http://localhost:3000/profile/"+userid
+        });
+      }
+      
+    })
+  
+  }}, []);
+
+
 const [user2,err,reload] = useApi('users/'+userid);
  return (   
-   
+
     <div style={{backgroundColor : '#F0F2F5'}}>
-          <link rel="stylesheet" href="css/bootstrap.min.css"/>   
+      
+          <link rel="stylesheet" href="css/bootstrap.min.css"/>  
+
           <Row>
             
           <SearchAppBar></SearchAppBar>
@@ -44,7 +85,7 @@ const [user2,err,reload] = useApi('users/'+userid);
 
             <Col xs={6} style={{ display: 'flex' ,marginLeft:'0px', justifyContent: 'center'}} >
                           <Container style={{marginLeft:'0px'}}>
-                            <ProfileCard profileimage={user2?.profileimage} coverimage={user2?.coverimage} firstname={user2?.firstname} lastname={user2?.lastname}></ProfileCard>
+                            <ProfileCard userid={userid} profileimage={user2?.profileimage} coverimage={user2?.coverimage} firstname={user2?.firstname} lastname={user2?.lastname}></ProfileCard>
 
                 <BottomNavigation
       value={value}
@@ -60,7 +101,8 @@ const [user2,err,reload] = useApi('users/'+userid);
       <BottomNavigationAction onClick={()=>setState("3")} label="CV" icon={<FindInPage />} />
       {currentuser['id'] == userid &&
       <BottomNavigationAction onClick={()=>setState("5")} label="Settings" icon={<Settings />} />}
-      <BottomNavigationAction onClick={()=>setState("4")} label="Coins" icon={<ShoppingCart style={{display:'flex',width:'100%' ,flexDirection:'column'}} />} />
+       {currentuser['id'] == userid &&
+      <BottomNavigationAction onClick={()=>setState("4")} label="Coins" icon={<ShoppingCart style={{display:'flex',width:'100%' ,flexDirection:'column'}} />} />}
 
     </BottomNavigation>
 
@@ -69,7 +111,7 @@ const [user2,err,reload] = useApi('users/'+userid);
     {state == "2" && <Badges></Badges>}
     {state == "3" &&  <CV userid={userid}></CV> }
     {state == "5" &&  <SetAboutME userid={userid}></SetAboutME> }
-    {state == "4" && <AchatCoins></AchatCoins>}
+    {state == "4" && <AchatCoins userid={userid}></AchatCoins>}
 
 
                 </Container>
@@ -80,7 +122,9 @@ const [user2,err,reload] = useApi('users/'+userid);
                 </Row>
                 </Container>
 
+                
     </div>
+    
   );
 }
 
