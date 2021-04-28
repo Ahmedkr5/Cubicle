@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     flexBasis: '100%',
     borderRadius: '15px',
     marginTop: '15px',
+    maxWidth: 'auto',
   },
   media: {
     height: 0,

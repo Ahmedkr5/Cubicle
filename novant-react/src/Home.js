@@ -17,6 +17,8 @@ import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import EmojiPeopleOutlinedIcon from '@material-ui/icons/EmojiPeopleOutlined';
 import WorkOutlineOutlinedIcon from '@material-ui/icons/WorkOutlineOutlined';
 import NewProblemDialog from './components/Posts/NewProblemDialog';
+import Hidden from '@material-ui/core/Hidden';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -42,22 +44,23 @@ function Home() {
       <Row>
         <SearchAppBar></SearchAppBar>
       </Row>
-      <Container style={{ marginTop: '4%', maxWidth: '100%' }}>
+      <Container style={{ marginTop: '4em', maxWidth: '100%' }}>
         <Row>
-          <Col style={{ display: 'flex', justifyContent: 'center' }}>
-            <Sidebar></Sidebar>
-          </Col>
+          <Hidden xsDown='true'>
+            <Col style={{ display: 'flex', justifyContent: 'center' }}>
+              <Sidebar></Sidebar>
+            </Col>
+          </Hidden>
 
           <Col
-            xs={6}
             style={{
               display: 'flex',
               marginLeft: '0px',
               justifyContent: 'center',
-              height: '100%',
+              height: 'auto',
             }}
           >
-            <Container style={{ marginLeft: '0px' }}>
+            <Container style={{}}>
               <div
                 style={{
                   display: 'flex',
@@ -76,7 +79,7 @@ function Home() {
                   style={{
                     marginBottom: '10px',
                     borderRadius: '10px',
-                    width: '100%',
+                    width: 'auto',
                   }}
                 >
                   <BottomNavigationAction
@@ -106,7 +109,7 @@ function Home() {
                 <div
                   style={{
                     display: 'flex',
-                    width: '100%',
+                    width: 'auto',
                     flexDirection: 'column',
                   }}
                 >
@@ -123,10 +126,11 @@ function Home() {
                 <div
                   style={{
                     display: 'flex',
-                    width: '100%',
+                    width: 'auto',
                     flexDirection: 'column',
                   }}
                 >
+                  <NewProblemDialog></NewProblemDialog>
                   <ProblemFeed></ProblemFeed>
                   <ProblemFeed></ProblemFeed>
                   <ProblemFeed></ProblemFeed>
@@ -136,9 +140,16 @@ function Home() {
               {state == '2' && <div></div>}
             </Container>
           </Col>
-          <Col style={{ display: 'flex', justifyContent: 'center' }}>
-            <RightSidebar style={{ marginRight: '0px' }}></RightSidebar>
-          </Col>
+          <Hidden mdDown='true'>
+            <Col
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <RightSidebar style={{ marginRight: '0px' }}></RightSidebar>
+            </Col>
+          </Hidden>
         </Row>
       </Container>
 

@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     flexBasis: '100%',
     marginBottom: '10px',
+    width: 'inherit',
   },
 
   rounded: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     float: 'left',
     marginRight: '0px',
     marginTop: '5px',
-    width: '90%',
+    width: 'inherit',
   },
   iconButton: {
     float: 'right',
