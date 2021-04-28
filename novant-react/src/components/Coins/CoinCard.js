@@ -40,7 +40,7 @@ export default function CoinCard(prop) {
       </CardActionArea>
       <CardActions style={{alignItems:"center",justifyContent:"center"}}>
         
-        <CoinsDialog name={prop.name} value={prop.value}></CoinsDialog>
+        <CoinsDialog userid={prop.userid} name={prop.name} value={prop.value}></CoinsDialog>
       </CardActions>
     </Card>
   );
