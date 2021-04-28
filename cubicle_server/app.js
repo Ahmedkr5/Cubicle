@@ -6,6 +6,7 @@ const createError = require('http-errors');
 const mongoose = require('mongoose');
 require('dotenv').config(); //for video call
 const app = express();
+var cors = require('cors');
 const indexRouter = require('./routes/index');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -19,6 +20,7 @@ var AuthController = require('./auth/AuthController');
 var ExperienceController = require('./experiences/ExperienceController');
 var PostController = require('./experiences/ExperienceController');
 var path = require('path');
+app.use(cors());
 
 app.use(express.static(path.resolve('./public')));
 app.use(function (req, res, next) {

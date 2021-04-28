@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import clsx from 'clsx';
@@ -19,12 +19,9 @@ import FavoriteBorderTwoToneIcon from '@material-ui/icons/FavoriteBorderTwoTone'
 import ChatBubbleOutlineTwoToneIcon from '@material-ui/icons/ChatBubbleOutlineTwoTone';
 import Divider from '@material-ui/core/Divider';
 import Comment from './Comment';
-import SkeletonComment from './SkeletonComment';
 import PostComment from './PostComment';
 import CodeComment from './CodeComment';
-import { useLazyQuery, gql } from '@apollo/client';
 import Skeleton from '@material-ui/lab/Skeleton';
-import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,68 +65,17 @@ const useStyles = makeStyles((theme) => ({
     padding: '0px',
   },
   p: {
-    color: '#000',
-    margin: '0px',
-    padding: '0px',
-    textAlign: 'left',
-    cursor: 'pointer',
-    '&:hover': {
-      color: '#000',
-    },
+    width: '30%',
   },
   content: {
     textAlign: 'left',
   },
 }));
 
-const COMMENT_QUERY = gql`
-  {
-    comment(id: $id) {
-      type
-      description
-      created_at
-    }
-  }
-`;
-
 const preventDefault = (event) => event.preventDefault();
 
 export default function Feed(props) {
-  const [getComments, { loading, error, data }] = useLazyQuery(COMMENT_QUERY);
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-  const [noComment, setNoComment] = React.useState(false);
-  const [interaction, setInteraction] = React.useState('');
-
-  const handleExpandClick = () => {
-    if (props?.post?.comments.length > 0) {
-      setExpanded(!expanded);
-    } else {
-      if (expanded === false) {
-        setNoComment(true);
-        setTimeout(() => {
-          setNoComment(false);
-        }, 2000);
-      }
-    }
-    if (expanded === true) {
-      setExpanded(!expanded);
-    }
-  };
-
-  const handleCommentClick = () => {
-    setInteraction('comment');
-    if (!expanded) {
-      setExpanded(!expanded);
-    }
-  };
-
-  const handleSolveClick = () => {
-    setInteraction('solve');
-    if (!expanded) {
-      setExpanded(!expanded);
-    }
-  };
 
   return (
     // <div className={classes.feed}>
@@ -143,86 +89,39 @@ export default function Feed(props) {
     <Card className={classes.root} elevation={0}>
       <CardHeader
         avatar={
-          <Avatar
-            aria-label='recipe'
-            variant='rounded'
-            className={classes.rounded}
-          >
-            H
-          </Avatar>
+          <Skeleton
+            variant='rect'
+            width={40}
+            height={40}
+            style={{ borderRadius: '5px' }}
+          />
         }
-        action={
-          <IconButton aria-label='settings'>
-            <MoreHorizIcon />
-          </IconButton>
-        }
+        action={null}
         title={
           <div className={classes.UserNameDate}>
-            <a href='#' onClick={preventDefault} className={classes.p}>
-              <strong>
-                <span>
-                  {' '}
-                  {props?.post?.user?.firstname} {props?.post?.user?.lastname}{' '}
-                </span>
-              </strong>
-            </a>
-            <a href='#' onClick={preventDefault} className={classes.p}>
-              <span> {props?.post?.created_at} </span>
-            </a>
+            <Skeleton height={20} width={120} className={classes.p} />
+            <Skeleton height={20} width={100} className={classes.p} />
           </div>
         }
       />
       {/* <Divider variant='middle' /> */}
 
-      <CardContent>
-        <Typography
-          className={classes.content}
-          fontFamily='Monospace'
-          color='textSecondary'
-          component='p'
-        >
-          {props?.post?.description}
-        </Typography>
-      </CardContent>
-      {props.image ? (
-        <CardMedia className={classes.media} image={props.image} />
-      ) : null}
+      <CardContent style={{ height: '200px' }}></CardContent>
       <Divider variant='middle' />
-      <CardActions disableSpacing>
-        <Button
-          aria-label='add to favorites'
-          startIcon={<FavoriteBorderTwoToneIcon />}
-        >
-          React
-        </Button>
-        <Button
-          onClick={handleCommentClick}
-          aria-label='share'
-          startIcon={<ChatBubbleOutlineTwoToneIcon />}
-        >
-          Comment
-        </Button>
-        {noComment && (
-          <Alert
-            style={{ float: 'right', justifySelf: 'center' }}
-            variant='outlined'
-            severity='info'
-          >
-            No comment !
-          </Alert>
-        )}
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label='show more'
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+      <CardActions>
+        <Skeleton
+          height={40}
+          width={100}
+          style={{ marginRight: '0px', marginLeft: '1%' }}
+        />
+        <Skeleton height={40} width={100} />
+        <Skeleton
+          height={40}
+          width={40}
+          style={{ marginRight: '0px', marginLeft: '50%' }}
+        />
       </CardActions>
-      <Collapse in={expanded} timeout='auto' unmountOnExit>
+      <Collapse timeout='auto' unmountOnExit>
         <Divider variant='middle' />
         <CardContent>
           {/* <Typography paragraph>Method:</Typography>
@@ -252,13 +151,6 @@ export default function Feed(props) {
             Set aside off of the heat to let rest for 10 minutes, and then
             serve.
           </Typography> */}
-
-          {props?.post?.comments?.map((comment) => (
-            <Comment key={comment.id} comment={comment}></Comment>
-          ))}
-          {interaction === 'comment' && (
-            <PostComment user={props.user}></PostComment>
-          )}
         </CardContent>
       </Collapse>
     </Card>

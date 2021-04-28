@@ -12,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import CodeCore from './ProblemFeed/CodeCore';
+import Editor from './Editor';
+import AddPost from './AddPost';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -125,6 +127,7 @@ const DialogTitle = withStyles(styles)((props) => {
 const DialogContent = withStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
+    width: '500px',
   },
   dividers: {
     marginLeft: '15px',
@@ -139,13 +142,17 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-export default function NewFeed() {
+export default function NewFeed(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [state, setState] = React.useState({
     Type: '',
     name: 'hai',
   });
+
+  const handleCallback = (childData) => {
+    setOpen(childData);
+  };
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -163,18 +170,23 @@ export default function NewFeed() {
   };
 
   return (
-    <div className={classes.root}>
-      <Avatar aria-label='recipe' variant='rounded' className={classes.rounded}>
-        H
-      </Avatar>
-      <Button
-        className={classes.btn}
-        variant='outlined'
-        onClick={handleClickOpen}
-      >
-        Express yourself
-      </Button>
-      <Dialog
+    <>
+      <div className={classes.root}>
+        <Avatar
+          aria-label='recipe'
+          variant='rounded'
+          className={classes.rounded}
+        >
+          H
+        </Avatar>
+        <Button
+          className={classes.btn}
+          variant='outlined'
+          onClick={handleClickOpen}
+        >
+          Express yourself
+        </Button>
+        {/* <Dialog
         onClose={handleClose}
         aria-labelledby='customized-dialog-title'
         open={open}
@@ -221,6 +233,7 @@ export default function NewFeed() {
             </div>
             <div className={classes.contentBodyBottom}>
               <CodeCore></CodeCore>
+              <Editor />
             </div>
           </div>
           <div className={classes.contentFooter}></div>
@@ -230,7 +243,9 @@ export default function NewFeed() {
             Save changes
           </Button>
         </DialogActions>
-      </Dialog>
-    </div>
+      </Dialog> */}
+      </div>
+      {open && <AddPost user={props?.user} parentCallback={handleCallback} />}
+    </>
   );
 }
