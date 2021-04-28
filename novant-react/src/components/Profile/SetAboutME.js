@@ -8,10 +8,12 @@ import { Label } from "@material-ui/icons";
 import authService from "../../services/auth.service";
 import experienceService from "../../services/experience.service";
 import axios from "axios";
+import { useApi } from "../../hooks/useApi";
 
-function SetAboutME() {
+function SetAboutME(props) {
   const user = authService.getCurrentUser();
     const userid = user['id'];
+    const [userProf, err1, reload1] = useApi('users/'+ userid);
     const [CoverImage, setCoverImage] = useState('');
     const [selectedCoverImage, setselectedCoverImage] = useState(null);
 
@@ -37,7 +39,7 @@ function SetAboutME() {
       <Card>
         <CardContent>
           <Formik
-            initialValues={{ birthday :"" ,firstname :"" , lastname :"" , email :"", password :"" , profileimage :"" , coverimage :"" ,adresse: "", phone: '', description: "" }}
+            initialValues={{ birthday :user.birthday ,firstname :user.firstname , lastname :user.lastname, email :user.email, password :userProf?.password , profileimage :userProf?.profileimage , coverimage :userProf?.coverimage ,adresse: user.adresse, phone: user.phone, description: user.description }}
             validationSchema={Yup.object().shape({
             })}
             onSubmit={(values, { setSubmitting }) => {
@@ -61,8 +63,7 @@ function SetAboutME() {
 
 
               experienceService.edit(values.firstname, 
-                values.lastname, date1+'-'+ProfileImage,
-                date+'-'+CoverImage,values.birthday.toString(),values.password,values.email,values.adresse,values.phone,
+                values.lastname,values.birthday.toString(),values.password,values.email,values.adresse,values.phone,
                 values.description,userid).then(
                 () => {
                   window.location.reload();
@@ -99,9 +100,10 @@ function SetAboutME() {
                     name="firstname"
                     id="firstname"
                     onChange={handleChange}
+                    initialValues={userProf?.lastname}
                     onBlur={handleBlur}
                     value={values.firstname}
-                    placeholder="Your Firstname"
+                    placeholder={userProf?.firstname}
                     component={TextField}
                     error={errors.firstname ? true : false}
                     helperText={errors.firstname && errors.firstname}
@@ -125,7 +127,7 @@ function SetAboutME() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.lastname}
-                    placeholder="Your Lastname"
+                    placeholder={userProf?.lastname}
                     component={TextField}
                     error={errors.lastname ? true : false}
                     helperText={errors.lastname && errors.lastname}
@@ -165,46 +167,16 @@ function SetAboutME() {
                 <Divider variant='fullWidth'/>
                 </Grid>
 
-                  <Grid item xs={12} md={3}>
-                <Label/><Typography>Cover Image :</Typography>     
-                </Grid>      
-                
-                  <Grid item xs={12} md={9}>
-                        <div style={{ width: '100%', maxHeight: '100px' }}>
-                            <div className="custom-file">
-                                <input type="file" className="custom-file-input" value={values.coverimage} id="coverimage" error={errors.coverimage ? true : false}
-                    helperText={errors.coverimage && errors.coverimage} onChange={onChangeHandler} />
-                                <label className="custom-file-label" for="coverimage">Choose file...</label>
-                                <div className="invalid-feedback">Example invalid custom file feedback</div>
-                            </div>
-                        </div>
+                 
 
-                  </Grid>
 
-                  <Grid item xs={12} md={12}>
-                <Divider variant='fullWidth'/>
-                </Grid>
-                
-                  <Grid item xs={12} md={3}>
-                <Label/><Typography>Profile Image :</Typography>     
-                </Grid>  
 
-                <Grid item xs={12} md={9}>
-                        <div style={{ width: '100%', maxHeight: '100px' }}>
-                            <div className="custom-file">
-                                <input type="file" className="custom-file-input" value={values.profileimage} id="profileimage" error={errors.profileimage ? true : false}
-                    helperText={errors.profileimage && errors.profileimage} onChange={onChangeHandler1} />
-                                <label className="custom-file-label" for="profileimage">Choose file...</label>
-                                <div className="invalid-feedback">Example invalid custom file feedback</div>
-                            </div>
-                        </div>
 
-                  </Grid>    
-                
 
-                  <Grid item xs={12} md={12}>
-                <Divider variant='fullWidth'/>
-                </Grid>
+
+
+
+                 
                   <Grid item xs={12} md={3}>
                 <Label/><Typography>Email :</Typography>     
                 </Grid>   
@@ -220,7 +192,7 @@ function SetAboutME() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.email}
-                    placeholder="Your email"
+                    placeholder={userProf?.email}
                     component={TextField}
                     error={errors.email ? true : false}
                     helperText={errors.email && errors.email}
@@ -248,7 +220,7 @@ function SetAboutME() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.adresse}
-                    placeholder="Your adresse"
+                    placeholder={userProf?.adresse}
                     component={TextField}
                     error={errors.adresse ? true : false}
                     helperText={errors.adresse && errors.adresse}
@@ -273,7 +245,7 @@ function SetAboutME() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.phone}
-                    placeholder="Your phone"
+                    placeholder={userProf?.phone}
                     component={TextField}
                     error={errors.phone ? true : false}
                     helperText={errors.phone && errors.phone}
@@ -299,7 +271,7 @@ function SetAboutME() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.birthday}
-                    placeholder="Your birthday"
+                    placeholder={userProf?.birthday}
                     component={TextField}
                     error={errors.birthday ? true : false}
                     helperText={errors.birthday && errors.birthday}
@@ -323,7 +295,7 @@ function SetAboutME() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.description}
-                    placeholder="Description"
+                    placeholder={userProf?.description}
                     component={TextField}
                     error={errors.description ? true : false}
                     helperText={errors.description && errors.description}
