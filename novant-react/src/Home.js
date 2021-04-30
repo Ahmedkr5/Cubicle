@@ -3,7 +3,6 @@ import {
   BottomNavigationAction,
   Container,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import React, { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -20,21 +19,8 @@ import WorkOutlineOutlinedIcon from '@material-ui/icons/WorkOutlineOutlined';
 import NewProblemDialog from './components/Posts/NewProblemDialog';
 import Hidden from '@material-ui/core/Hidden';
 import { useQuery, gql } from '@apollo/client';
-import PropTypes from 'prop-types';
 import SkeletonFeed from './components/Posts/skeletonFeed';
 import Editor from './components/Posts/Editor';
-
-const useStyles = makeStyles((theme) => ({
-  input: {
-    paddingLeft: '15px',
-    marginRight: '5px',
-    marginTop: '15px',
-    marginBottom: '15px',
-    width: '40%',
-    backgroundColor: '#F0F2F5',
-    borderRadius: '15px',
-  },
-}));
 
 const FEED_QUERY = gql`
   {
@@ -68,7 +54,6 @@ function Home() {
     // pollInterval: 5000,
   });
 
-  const classes = useStyles();
   const [state, setState] = useState('0');
   const [value, setValue] = React.useState(0);
   const user = authService.getCurrentUser();
@@ -140,7 +125,7 @@ function Home() {
                 /> */}
               </div>
               <TagFilter></TagFilter>
-              {state == '0' && (
+              {state === '0' && (
                 <>
                   <div
                     style={{
@@ -193,7 +178,7 @@ function Home() {
                   </div>
                 </>
               )}
-              {state == '1' && (
+              {state === '1' && (
                 <div
                   style={{
                     display: 'flex',
@@ -228,7 +213,7 @@ function Home() {
                   )}
                 </div>
               )}
-              {state == '2' && (
+              {state === '2' && (
                 <>
                   {' '}
                   <SkeletonFeed></SkeletonFeed> <Editor />
