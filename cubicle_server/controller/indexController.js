@@ -36,7 +36,6 @@ class App{
             created_at: date,
             deleted_trans: req.body.deleted_trans,
             deleted_recived: req.body.deleted_recived
-            
         })
         try {
             const newMessage = await messagem.save()

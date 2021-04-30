@@ -56,6 +56,15 @@ class ExperienceService {
        return response.data
         });
   }
+  getUser(userid) {
+
+    return axios
+      .get(API_URL2+'/showUser/'+userid, {
+      })
+      .then(function(response) {
+       return response.data
+        });
+  }
 
 
 

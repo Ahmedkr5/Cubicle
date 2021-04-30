@@ -10,6 +10,8 @@ import GroupProfile from './components/Groups/GroupProfile';
 import Business from './Business';
 import Particulier from './components/Auth/SignUp/Particulier';
 
+
+
 function App() {
   return (
     <div className='App' style={{ backgroundColor: '#F0F2F5' }}>
@@ -24,7 +26,7 @@ function App() {
           <ChatApp />
         </Route>
         <Route
-          path='/video'
+          path='/video/:userck'
           render={(props) => <VideoCall {...props} />}
         ></Route>
         <Route path='/Groupe'>
