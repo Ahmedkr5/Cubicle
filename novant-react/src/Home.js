@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Sidebar from './components/Sidebar/Sidebar';
 import Feed from './components/Posts/Feed';
+import UpdatedFeed from './components/Posts/updatedFeed/UpdatedFeed';
 import RightSidebar from './components/rightSideBar/RightSidebar';
 import SearchAppBar from './components/Navbar/Navbar';
 import authService from './services/auth.service';
@@ -64,7 +65,7 @@ const FEED_QUERY = gql`
 
 function Home() {
   const { data, loading, error } = useQuery(FEED_QUERY, {
-    pollInterval: 5000,
+    // pollInterval: 5000,
   });
 
   const classes = useStyles();
@@ -168,6 +169,21 @@ function Home() {
                                 post={post}
                                 user={user}
                               ></Feed>
+                            )
+
+                            // <Link key={link.id} link={link} />
+                          )}
+
+                        {data.posts
+                          .filter((post) => post.type.includes('text'))
+                          .map(
+                            (post) => (
+                              <UpdatedFeed
+                                image='../../assets/images/users/2.jpg'
+                                key={post.id}
+                                post={post}
+                                user={user}
+                              ></UpdatedFeed>
                             )
 
                             // <Link key={link.id} link={link} />
