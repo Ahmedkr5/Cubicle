@@ -163,7 +163,7 @@ export default function RecipeReviewCard(props) {
           confirmButtonText: 'Answer',
           showCancelButton: true,
           cancelButtonText:'Leave' ,
-          imageUrl: '../assets/images/users/'+ msg[2], 
+          imageUrl: 'http://localhost:3001/uploads/'+ msg[2], 
           preConfirm: () => {
            var x = document.getElementById('myaudiocall');
             x.pause() ;
@@ -273,7 +273,7 @@ export default function RecipeReviewCard(props) {
                             avatar={
                                 <div className={classes.UserPhoto}>
                                     <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left' }} >
-                                        <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                        <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                     </StyledBadge>
                                 </div>
                             }
@@ -302,7 +302,7 @@ export default function RecipeReviewCard(props) {
                                                     return (
                                                         <div className='blockMessage' key={msg._id}>
                                                             <div className='authorthumb' >
-                                                                <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                             </div>
                                                             <span className='chatmessageitem spanMessage'>{msg.body}</span>
                                                             <div className="Appnotification-date">
@@ -315,7 +315,7 @@ export default function RecipeReviewCard(props) {
                                                     return (
                                                         <div className='blockMessage' key={msg._id}>
                                                             <div className='authorthumb' >
-                                                                <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                             </div>
                                                             <span className='chatmessageitem spanMessage'><img onClick={() => showL("http://localhost:3001/uploads/" + msg.file[0])} src={"http://localhost:3001/uploads/" + msg.file[0]} style={{ maxHeight: '100%', maxWidth: '100%', borderRadius: '4%', cursor: 'pointer' }} /></span>
 
@@ -331,7 +331,7 @@ export default function RecipeReviewCard(props) {
 
                                                         <div className='blockMessage' key={msg._id}>
                                                             <div className='authorthumb' >
-                                                                <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                             </div>
                                                             <span className='chatmessageitem spanMessage'><a href={"http://localhost:3001/uploads/" + msg.file[0]} target={"_blank"}>{msg.file[0].split('-').pop()} </a></span>
 
@@ -347,7 +347,7 @@ export default function RecipeReviewCard(props) {
                                                         <>
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumb' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitem spanMessage'>{msg.body}</span>
                                                                 <div className="Appnotification-date">
@@ -356,7 +356,7 @@ export default function RecipeReviewCard(props) {
                                                             </div>
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumb' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitem spanMessage'><img onClick={() => showL("http://localhost:3001/uploads/" + msg.file[0])} src={"http://localhost:3001/uploads/" + msg.file[0]} style={{ maxHeight: '100%', maxWidth: '100%', borderRadius: '4%', cursor: 'pointer' }} /></span>
                                                                 <div className="Appnotification-date">
@@ -371,7 +371,7 @@ export default function RecipeReviewCard(props) {
                                                         <>
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumb' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitem spanMessage'>{msg.body}</span>
                                                                 <div className="Appnotification-date">
@@ -380,7 +380,7 @@ export default function RecipeReviewCard(props) {
                                                             </div>
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumb' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitem spanMessage'><a href={"http://localhost:3001/uploads/" + msg.file[0]} target={"_blank"} >{msg.file[0].split('-').pop()} </a></span>
                                                                 <div className="Appnotification-date">
@@ -397,7 +397,7 @@ export default function RecipeReviewCard(props) {
                                                     return (
                                                         <div className='blockMessage' key={msg._id}>
                                                             <div className='authorthumbrecept' >
-                                                                <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                             </div>
                                                             <span className='chatmessageitemrecept spanMessagerecept'> {msg.body} </span>
                                                             <div className="Appnotification-daterecept">
@@ -410,7 +410,7 @@ export default function RecipeReviewCard(props) {
                                                     return (
                                                         <div className='blockMessage' key={msg._id}>
                                                             <div className='authorthumbrecept' >
-                                                                <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                             </div>
                                                             <span className='chatmessageitem spanMessage'><img onClick={() => showL("http://localhost:3001/uploads/" + msg.file[0])} src={"http://localhost:3001/uploads/" + msg.file[0]} style={{ maxHeight: '100%', maxWidth: '100%', borderRadius: '4%', cursor: 'pointer' }} /></span>
                                                             <div className="Appnotification-daterecept">
@@ -425,7 +425,7 @@ export default function RecipeReviewCard(props) {
                                                     return (
                                                         <div className='blockMessage' key={msg._id}>
                                                             <div className='authorthumbrecept' >
-                                                                <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                             </div>
                                                             <span className='chatmessageitem spanMessage'><a href={"http://localhost:3001/uploads/" + msg.file[0]} target={"_blank"} >{msg.file[0].split('-').pop()} </a></span>
                                                             <div className="Appnotification-daterecept">
@@ -439,7 +439,7 @@ export default function RecipeReviewCard(props) {
                                                         <>
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumbrecept' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitemrecept spanMessagerecept'> {msg.body} </span>
                                                                 <div className="Appnotification-daterecept">
@@ -448,7 +448,7 @@ export default function RecipeReviewCard(props) {
                                                             </div>
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumbrecept' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitemrecept spanMessagerecept'>
                                                                     <img onClick={() => showL("http://localhost:3001/uploads/" + msg.file[0])} src={"http://localhost:3001/uploads/" + msg.file[0]} style={{ maxHeight: '100%', maxWidth: '100%', borderRadius: '4%', cursor: 'pointer' }} />
@@ -464,7 +464,7 @@ export default function RecipeReviewCard(props) {
                                                         <>
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumbrecept' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitemrecept spanMessagerecept'> {msg.body} </span>
                                                                 <div className="Appnotification-daterecept">
@@ -473,7 +473,7 @@ export default function RecipeReviewCard(props) {
                                                             </div>
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumbrecept' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitemrecept spanMessagerecept'>
                                                                     <a href={"http://localhost:3001/uploads/" + msg.file[0]} target={"_blank"} >{msg.file[0].split('-').pop()} </a></span>
@@ -495,7 +495,7 @@ export default function RecipeReviewCard(props) {
                                     </div>
                                     <div className='blockMessage' style={{ display: 'none' }}>
                                         <div className='authorthumb' >
-                                            <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
+                                            <Avatar variant='rounded' src={`http://localhost:3001/uploads/`} className={classes.rad} />
                                         </div>
                                         <span className='chatmessageitem spanMessage'><audio style={{ height: "20px" }} src={mediaBlobUrl} controls />
                                         </span>
@@ -507,7 +507,7 @@ export default function RecipeReviewCard(props) {
                             </Typography>
                             <Divider style={{ display: myDivider }} />
                             <div style={{ display: displayEmoji }} >
-                                <Picker onChange={setText} cleanOnEnter onSelect={onEmojiClick} set='facebook' style={{ position: 'absolute', bottom: '7%', marginLeft: '40%', zIndex: '1' }} i18n={{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }} />
+                                <Picker onChange={setText} cleanOnEnter onSelect={onEmojiClick} set='facebook' style={{ position: 'absolute', bottom: '7%', marginLeft: '40%', zIndex: '100' }} i18n={{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }} />
                             </div>
                         </CardContent>
                         <div style={{ width: '100%', maxHeight: '0px', display: drop }}>
