@@ -62,6 +62,15 @@ const MsgIoController = (app, io) => {
 
             //io.emit('typingC', { msg: msgs });
         });
+        socket.on('typingMeet', message=> {
+
+            var data = message ;
+            //
+            socket.broadcast.emit('typingMeetC', data);
+          //  console.log(msg)
+
+            //io.emit('typingC', { msg: msgs });
+        });
         socket.on('disconnect', () => {
               // console.log('disconnected');
         });

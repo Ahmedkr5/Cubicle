@@ -65,6 +65,15 @@ class ExperienceService {
        return response.data
         });
   }
+  getAllUsers(userid) {
+
+    return axios
+      .get(API_URL2+'/allUsers/', {
+      })
+      .then(function(response) {
+       return response.data
+        });
+  }
 
 
 

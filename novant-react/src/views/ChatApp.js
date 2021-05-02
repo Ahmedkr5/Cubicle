@@ -9,6 +9,8 @@ import ReactDOM from 'react-dom';
 const MiddleAppChat = React.lazy(() => import('../components/chatApp/MiddlleAppChat'));
 const RightList = React.lazy(() => import('../components/chatApp/RightList'));
 const LeftAppChat = React.lazy(() => import('../components/chatApp/leftAppChat'));
+const  Room = React.lazy(() => import('../components/chatApp/RoomVideo'));
+
 export default function ChatApp(props) {
     const [user, setUser] = useState();
     const [person, setPerson] = useState();
@@ -42,6 +44,7 @@ export default function ChatApp(props) {
 
                         <Suspense fallback={<div>Chargement...</div>}>
                             <LeftAppChat userck={user} />
+                            <Room></Room>
                         </Suspense>
                     </div>
                 </div>

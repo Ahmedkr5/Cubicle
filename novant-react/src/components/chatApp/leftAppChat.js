@@ -131,7 +131,7 @@ export default function OutlinedCard(props) {
                     <CardContent>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
 
-                            <Avatar variant='rounded' src={`../assets/images/users/`+photo} className={classes.rad} />
+                            <Avatar variant='rounded' src={`http://localhost:3001/uploads/`+photo} className={classes.rad} />
                         </Typography>
                         <Typography variant="h5" component="h2" className={classes.middle}>
                             {userName}

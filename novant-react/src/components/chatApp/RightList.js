@@ -146,7 +146,7 @@ export default function RecipeReviewCard(props) {
                                          
                                             <ListItemAvatar>
                                                 <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left', }} >
-                                                    <Avatar variant='rounded' src={`../assets/images/users/`+msg.profileimage} className={classes.rad} />
+                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/`+msg.profileimage} className={classes.rad} />
                                                 </StyledBadge>
                                             </ListItemAvatar>
                                             <ListItemText primary={msg.firstname + ' '+ msg.lastname} />
