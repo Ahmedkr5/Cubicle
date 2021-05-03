@@ -5,10 +5,10 @@ var Group =require('../models/group')
 var User = require('../user/User');
 
 //create a group
-router.post('/:id/newgroup', function (req, res,next) {
+router.post('/newgroup', function (req, res,next) {
     Group.create({
         groupname : req.body.groupname,
-        Owner: req.params.id,  
+        Owner: req.body.id,  
         }, 
         function (err, Group) {
             if (err) return res.status(500).send("error group");

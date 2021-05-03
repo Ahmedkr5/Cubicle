@@ -22,6 +22,8 @@ import { Input } from '@material-ui/core';
 import { FormHelperText } from '@material-ui/core';
 import CardMedia from '@material-ui/core/CardMedia';
 import Card from '@material-ui/core/Card';
+import authService from '../../services/auth.service';
+
 const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
@@ -88,6 +90,26 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles()
     const [state, setState] = useState("0") 
     const [open, setOpen] = React.useState(false);
+    const user = authService.getCurrentUser() ;
+    const userid = user['id'];
+
+   
+   
+    
+    /*
+    state = {  
+      groupname: '',
+  };
+    
+  
+   
+  /* 
+   onChangeGroupname(e) {
+      setState({
+        groupname: e.target.value,
+      });
+    }*/
+    
 
   const handleOpen = () => {
     setOpen(true);
@@ -163,7 +185,7 @@ return(<>
 </FormControl>
 </div>
 <div style={{textAlign:'center'}}>
-<Button variant="contained" disabled  size='Large' >
+<Button variant="contained" disabled  size='Large'  >
   Create
 </Button>
 </div></div>   
