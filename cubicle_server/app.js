@@ -2,6 +2,7 @@ const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const schema = require('./schema/schema');
 const schemaTest = require('./schema/schemaTest');
+const schemaEditorUpdate = require('./schema/schemaEditorUpdate');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
 require('dotenv').config(); //for video call
@@ -14,6 +15,7 @@ var socket = require('socket.io');
 //for video call
 var AccessToken = require('twilio').jwt.AccessToken;
 var VideoGrant = AccessToken.VideoGrant;
+const fetch = require('node-fetch');
 
 var UserController = require('./user/UserController');
 var AuthController = require('./auth/AuthController');
@@ -63,6 +65,33 @@ app.use(
     graphiql: true,
   })
 );
+
+app.use(
+  '/graphqlEditor',
+  graphqlHTTP({
+    schema: schemaEditorUpdate,
+    graphiql: true,
+  })
+);
+
+app.get('/post/link/', function (req, res) {
+  // console.log(req);
+  var url = req.query.url.toString();
+  // console.log(req);
+  fetch(url)
+    .then((res) => res)
+    .then((data) => {
+      // console.log(data);
+      res.send({
+        success: 1,
+        meta: data.url,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+});
 
 // frontend calls
 app.use('/users', UserController);
@@ -114,6 +143,13 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', indexRouter);
+
+app.get('/image/:name', function (req, res) {
+  res.sendFile(
+    '/Dev/Novant-Mern/cubicle_server/public/uploads/postImages/' +
+      req.params.name
+  );
+});
 
 app.get('/token/:identity', function (req, res) {
   const identity = req.params.identity;

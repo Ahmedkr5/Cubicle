@@ -71,6 +71,10 @@ class CodeMirror {
     return Object.keys(LANGUAES);
   }
 
+  static get isReadOnlySupported() {
+    return true;
+  }
+
   get CSS() {
     return {
       baseClass: this.api.styles.block,
@@ -81,15 +85,14 @@ class CodeMirror {
     };
   }
 
-  constructor({ data, config, api }) {
+  constructor({ data, config, api, readOnly }) {
     this.api = api;
-
+    this.readOnly = readOnly;
     this.textPlaceholder =
       config.textPlaceholder || CodeMirror.DEFAULT_CODE_PLACEHOLDER;
     this.languagePlaceholder =
       config.languagePlaceholder || CodeMirror.DEFAULT_LANGUAGE_PLACEHOLDER;
     this.format = config.format || CodeMirror.DEFAULT_FORMAT_CONFIG;
-
     this.data = {
       language: data.language || 'Python',
       text: data.text || '',
@@ -97,7 +100,7 @@ class CodeMirror {
   }
 
   appendCallback() {
-    // console.log('append callback')
+    // console.log('append callback');
     codemirror = this.codemirror;
     setTimeout(async function () {
       codemirror.focus();
@@ -118,7 +121,9 @@ class CodeMirror {
     });
 
     const selectwrapper = this._make('div', this.CSS.input);
-    const language = this._make('select', this.CSS.language);
+    const language = this._make('select', this.CSS.language, {
+      disabled: this.readOnly,
+    });
 
     text.dataset.placeholder = this.textPlaceholder;
     language.dataset.placeholder = this.languagePlaceholder;
@@ -139,6 +144,13 @@ class CodeMirror {
     selectwrapper.appendChild(language);
     container.appendChild(selectwrapper);
     container.appendChild(text);
+    var test = this.readOnly;
+    var readOnlyValue;
+    if (test) {
+      readOnlyValue = 'nocursor';
+    } else {
+      readOnlyValue = test;
+    }
 
     let codemirror = CodeMirrorEditor.fromTextArea(text, {
       tabSize: 4,
@@ -165,17 +177,28 @@ class CodeMirror {
       hintOptions: {
         completeSingle: false,
       },
+      readOnly: readOnlyValue,
     });
     this.codemirror = codemirror;
-    this.codemirror.focus();
-    this.codemirror.setCursor({ line: 0, ch: 0 });
-    this.codemirror.refresh();
-
-    setTimeout(async function () {
+    if (!test) {
+      this.codemirror.focus();
+      this.codemirror.setCursor({ line: 0, ch: 0 });
+      this.codemirror.refresh();
+      setTimeout(async function () {
+        codemirror.focus();
+        codemirror.setCursor(codemirror.lineCount(), 0);
+        codemirror.refresh();
+      }, 100);
+    } else {
       codemirror.focus();
       codemirror.setCursor(codemirror.lineCount(), 0);
       codemirror.refresh();
-    }, 100);
+      setTimeout(async function () {
+        codemirror.focus();
+        codemirror.setCursor(codemirror.lineCount(), 0);
+        codemirror.refresh();
+      }, 100);
+    }
 
     language.onchange = function (e) {
       codemirror.setOption('mode', LANGUAES[e.target.value].toLowerCase());
@@ -206,7 +229,11 @@ class CodeMirror {
     };
   }
 
-  _make(tagName, classNames = null, attributes = {}) {
+  _make(
+    tagName,
+    classNames = null,
+    attributes = { contentEditable: !this.readOnly }
+  ) {
     let el = document.createElement(tagName);
 
     if (Array.isArray(classNames)) {
