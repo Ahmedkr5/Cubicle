@@ -16,7 +16,7 @@ var socket = require('socket.io');
 var AccessToken = require('twilio').jwt.AccessToken;
 var VideoGrant = AccessToken.VideoGrant;
 const fetch = require('node-fetch');
-
+var groupController = require('./controller/groupController');
 var UserController = require('./user/UserController');
 var AuthController = require('./auth/AuthController');
 var ExperienceController = require('./experiences/ExperienceController');
@@ -95,6 +95,7 @@ app.get('/post/link/', function (req, res) {
 
 // frontend calls
 app.use('/users', UserController);
+app.use('/groups', groupController);
 app.use('/experiences', ExperienceController);
 app.use('/api/auth', AuthController);
 app.use(function (req, res, next) {
