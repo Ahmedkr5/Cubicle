@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
 
 const logout = () => {
   authService.logout();
-  window.location.replace('/login');
+  window.location.replace('/auth');
 };
 
 export default function SearchAppBar() {
