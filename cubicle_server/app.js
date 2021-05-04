@@ -21,6 +21,7 @@ var groupController = require('./controller/groupController');
 var UserController = require('./user/UserController');
 var businessController = require('./controller/businessController');
 var AuthController = require('./auth/AuthController');
+var Test2Controller = require('./controller/Test2Controller');
 var ExperienceController = require('./experiences/ExperienceController');
 var PostController = require('./experiences/ExperienceController');
 var path = require('path');
@@ -107,6 +108,7 @@ app.get('/post/link/', function (req, res) {
 app.use('/users', UserController);
 app.use('/businesses', businessController);
 app.use('/groups', groupController);
+app.use('/Test', Test2Controller);
 app.use('/experiences', ExperienceController);
 app.use('/api/auth', AuthController);
 app.use(function (req, res, next) {
