@@ -2,6 +2,8 @@ import './App.css';
 import ChatApp from './views/ChatApp';
 import Login from './components/Auth/SignUp/SignUp';
 import VideoCall from './views/VideoCall';
+import Meet from './views/Meet';
+
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Profile from './Profile';
 import Groupe from './Groupe';
@@ -9,6 +11,8 @@ import Home from './Home';
 import GroupProfile from './components/Groups/GroupProfile';
 import Business from './Business';
 import Particulier from './components/Auth/SignUp/Particulier';
+
+
 
 function App() {
   return (
@@ -24,8 +28,12 @@ function App() {
           <ChatApp />
         </Route>
         <Route
-          path='/video'
+          path='/video/:userck'
           render={(props) => <VideoCall {...props} />}
+        ></Route>
+        <Route
+          path='/meet/:userck'
+          render={(props) => <Meet {...props} />}
         ></Route>
         <Route path='/Groupe'>
           <Groupe />

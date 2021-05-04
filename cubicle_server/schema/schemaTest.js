@@ -47,6 +47,7 @@ const PostType = new GraphQLObjectType({
 const CommentType = new GraphQLObjectType({
   name: 'Comment',
   fields: () => ({
+    id: { type: GraphQLID },
     userId: { type: GraphQLString },
     postId: { type: GraphQLID },
     type: { type: GraphQLString },
@@ -141,6 +142,18 @@ const RootQuery = new GraphQLObjectType({
         return Post.find({});
       }, //resolve function
     }, //car query ends here
+    comments: {
+      type: GraphQLList(CommentType),
+      //argument passed by the user while making the query
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        //Here we define how to get data from database source
+
+        //this will return the book with id passed in argument
+        //by the user
+        return Comment.find({ postId: ObjectId(args.id) });
+      },
+    },
   }, //fields end here
 });
 

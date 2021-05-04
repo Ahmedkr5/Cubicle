@@ -104,7 +104,7 @@ const [selectedProfileImage, setselectedProfileImage] = useState(null);
           image={coverimage}
           onClick={() => showL("http://localhost:3001/uploads/" + props.coverimage)}  style={{ maxHeight: '100%', maxWidth: '100%', cursor: 'pointer' }} 
         />
-        {currentuser['id'] == props.userid &&
+        {currentuser['id'] === props.userid &&
             <React.Fragment>
 <input
   accept="image/*"
@@ -146,6 +146,7 @@ const [selectedProfileImage, setselectedProfileImage] = useState(null);
         
         </Badge>
         <Typography variant="h4" style={{marginTop:'85px',marginLeft:'85px'}}>{props.firstname} {props.lastname}</Typography>
+     
         </CardContent>
        
     </Card>

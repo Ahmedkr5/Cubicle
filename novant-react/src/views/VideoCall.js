@@ -6,6 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastsContainer, ToastsStore } from 'react-toasts';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from 'react-loader-spinner';
+import MessageService from "../services/MessageService";
+import authService from '../services/auth.service' ;
+import { useParams } from "react-router-dom";
 
 
 
@@ -34,16 +37,20 @@ class VideoCall extends Component {
     this.leaveRoom = this.leaveRoom.bind(this);
     this.detachTracks = this.detachTracks.bind(this);
     this.detachParticipantTracks = this.detachParticipantTracks.bind(this);
-  }
+    const user = authService.getCurrentUser();
+    const transmitter = user['id'];
+    const m = MessageService ;
+    const userProf = m.getUser(transmitter);
+   // console.log(userProf)
 
-  getTwillioToken = () => {
-    const currentUserName = this.refs["yourname"].value;
-    if (currentUserName.length === 0) {
-      ToastsStore.error("Please enter the username!");
-      return;
-    }
-
-    axios.get('http://localhost:3001/token/' + currentUserName).then(results => { 
+    const userName1 = userProf.firstName + ' '+userProf.lastName ;
+    const currentUserName = transmitter;
+    const { match: { params } } = this.props ;
+    const receiver = params.userck ;
+    console.log(receiver)
+    this.setState({ roomName: receiver })
+   // console.log(receiver+'hhhhhhhhhhhhhhhh')
+    axios.get('http://localhost:3001/token/' + currentUserName).then(results => {
       const { identity, jwt } = results.data;
       this.setState(
         {
@@ -58,7 +65,10 @@ class VideoCall extends Component {
           }
         });
     });
+    
   }
+
+
 
   joinRoom() {
     if (!this.state.roomName.trim()) {
@@ -181,6 +191,7 @@ class VideoCall extends Component {
   leaveRoom() {
     this.state.activeRoom.disconnect();
     this.setState({ hasJoinedRoom: false, localMediaAvailable: false, peerIdentity: '' });
+
   }
 
 
@@ -190,56 +201,57 @@ class VideoCall extends Component {
     let joinOrLeaveRoomButton = this.state.hasJoinedRoom ? (
       <button className="btn btn-warning" onClick={this.leaveRoom} > Leave Room</button>
     ) : (
-        <button className="btn btn-success ml-2" onClick={this.getTwillioToken} >Join Room</button>
-      );
+      <></>
+    );
     /** */
 
     return (
       <React.Fragment>
-       <link href="../assets/css/global.css" rel="stylesheet" />
-        <div style={{backgroundColor:'#333333' , backgroundSize:'cover',height:'100vh',width:'100%'}}>
-        <div className="container">
-          {!this.state.hasJoinedRoom &&
-            <div className="row">
-              <div className="col-3 form-inline">
-                <div className="form-group mt-2">
-                  <input className="form-control " type="text" ref="yourname" />   {joinOrLeaveRoomButton}
+        <link href="../assets/css/global.css" rel="stylesheet" />
+        <div style={{ backgroundColor: '#333333', backgroundSize: 'cover', height: '100vh', width: '100%' }}>
+          <div className="container">
+            {!this.state.hasJoinedRoom &&
+              <div className="row">
+                <div className="col-3 form-inline">
+                 
                 </div>
               </div>
-            </div>
-          }
-          <div className="row mt-3">
-            <div className="col-3" >
-              <div className="card">
-                <div className="card-body">
-                  <div  ref="groupChat_localMedia"></div>
-                  <div className="text-center">
-                    {!this.state.hasJoinedRoom && <Loader type="Puff" color="#00BFFF" />}
+            }
+            <div className="row mt-3">
+              <div className="col-3" >
+                <div className="card">
+                  <div className="card-body">
+                    <div ref="groupChat_localMedia"></div>
+                    <div className="text-center">
+                      {!this.state.hasJoinedRoom && <Loader type="Puff" color="#00BFFF" />}
+                    </div>
                   </div>
+                  <div className="card-footer">{this.state.hasJoinedRoom ? <button className="btn btn-danger" onClick={this.leaveRoom} > Leave</button> : <span>&nbsp;</span>} </div>
                 </div>
-                <div className="card-footer">{this.state.hasJoinedRoom ? <button className="btn btn-danger" onClick={this.leaveRoom} > Leave</button> : <span>&nbsp;</span>}</div>
               </div>
-            </div>
-            <div className="col-9">
-              <div className="card">
-                <div className="card-body">
-                  <div ref="remoteMedia"></div>
-                  <div className="text-center">
-                    {!this.state.hasParticipantsJoinedRoom && !this.state.peerIdentity && <Loader type="Puff" color="#00BFFF" />}
+              <div className="col-9">
+                <div className="card">
+                  <div className="card-body">
+                    <div ref="remoteMedia"></div>
+                    <div className="text-center">
+                      {!this.state.hasParticipantsJoinedRoom && !this.state.peerIdentity && <Loader type="Puff" color="#00BFFF" />}
+                    </div>
                   </div>
-                </div>
-                <div className="card-footer text-center">
-                  {(!this.state.hasParticipantsJoinedRoom && !this.state.peerIdentity) ? <span>Wait for peer user to connect channel  !!!</span> : <span>Peer User Name : {`${this.state.peerIdentity}`}</span >}
+                  <div className="card-footer text-center">
+                    {(!this.state.hasParticipantsJoinedRoom && !this.state.peerIdentity) ? <span>Wait for peer user to connect channel  !!!</span> : <span>Peer User Name : {`${this.state.peerIdentity}`}</span >}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        </div>
+        
         <ToastsContainer store={ToastsStore} />
+        
+      
       </React.Fragment>
     )
   }
 }
 
-export default VideoCall ;
+export default VideoCall;

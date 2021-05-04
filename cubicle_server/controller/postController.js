@@ -1,29 +1,42 @@
-const posts = require('../models/Posts/post');
+var multer = require('multer');
 
+var d = Date.now();
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/postImages');
+  },
+
+  filename: function (req, file, cb) {
+    cb(null, req.params.userId + '-' + file.originalname + d);
+  },
+});
+var upload = multer({ storage: storage }).single('image');
 class App {
-  getAll = async (req, res) => {
-    try {
-      const post = await posts.find();
-      res.json(post);
-    } catch (error) {
-      res.status(500).json({ message: error });
-    }
-  };
-  createPost = async (req, res) => {
-    const postLoader = new posts({
-      user: req.body.user,
-      type: req.body.type,
-      tags: req.body.tags,
-      description: req.body.description,
-      media: req.body.tags,
-      created_at: req.body.created_at,
+  uploada = (req, res, err) => {
+    upload(req, res, function (err) {
+      // console.log(req.headers);
+      if (req.fileValidationError) {
+        return res.send(req.fileValidationError);
+      } else if (!req.file) {
+        return res.send('Please select an image to upload');
+      } else if (err instanceof multer.MulterError) {
+        return res.send(err);
+      } else if (err) {
+        return res.send(err);
+      }
+      return res.status(200).json({
+        success: 1,
+        file: {
+          url:
+            'http://localhost:3001/image/' +
+            req.params.userId +
+            '-' +
+            req.file.originalname +
+            d,
+          // ... and any additional fields you want to store, such as width, height, color, extension, etc
+        },
+      });
     });
-    try {
-      const newPost = await postLoader.save();
-      res.status(201).json(newPost);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
   };
 }
 const PostController = new App();

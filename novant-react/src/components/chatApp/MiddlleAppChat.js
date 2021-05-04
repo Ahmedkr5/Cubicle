@@ -32,12 +32,7 @@ import { animateScroll } from "react-scroll";
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Lightbox } from "react-modal-image";
-
-
-
-
-
-
+import Swal from 'sweetalert2'
 const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: '100%',
@@ -119,7 +114,8 @@ export default function RecipeReviewCard(props) {
     const [srcImage, setSrcImage] = useState('a');
     const user = authService.getCurrentUser();
     const transmitter = user['id'];
-
+   // const audiok = new Audio('http://localhost:3000/song/callsong.mp3') ;
+   // audiok.play() ; audiok.pause() ;
     const closeLightbox = () => {
         setOpen('none');
     };
@@ -127,8 +123,6 @@ export default function RecipeReviewCard(props) {
         setSrcImage(srci);
         setOpen('');
     }
-
-
     const onEmojiClick = (emojiObject) => {
         setText(text + emojiObject.native);
     };
@@ -142,7 +136,6 @@ export default function RecipeReviewCard(props) {
         else
             setdisplayEmoji('none')
     }
-
     const displayDropZone = () => {
         if (drop == '') {
             setDrop('none')
@@ -155,67 +148,71 @@ export default function RecipeReviewCard(props) {
         }
     }
     const {
-
         startRecording,
         stopRecording,
         mediaBlobUrl,
-
     } = useReactMediaRecorder({ audio: true });
+   const socket = socketClient('http://localhost:3001/')
+   socket.on('typingC', async (msg) => {
+    if(msg[1]==transmitter){
 
-    const NewWindow = () => {
-        var modalWindow;
+        var x = document.getElementById('myaudiocall');
+        x.play();
+        Swal.queue([{
+          title: 'Video Call from '+msg[3],
+          confirmButtonText: 'Answer',
+          showCancelButton: true,
+          cancelButtonText:'Leave' ,
+          imageUrl: 'http://localhost:3001/uploads/'+ msg[2], 
+          preConfirm: () => {
+           var x = document.getElementById('myaudiocall');
+            x.pause() ;
+            var modalWindow;
+            const modalTitle = "Video Call";
+            modalWindow = window.open("/video/" + msg[1], modalTitle, "width=1200,height=900,menubar=no,resizable=no,scrollbars=no,status=no,location=no , top=500, left=500");
+          }
 
-        const modalTitle = "Video Call";
-        modalWindow = window.open("/video", modalTitle, "width=1200,height=900,menubar=no,resizable=no,scrollbars=no,status=no,location=no , top=500, left=500");
+        }])
     }
-
-
-
+})
+    const NewWindow = () => {
+        socket.emit('typing', {
+            transmitter: transmitter,
+            receiver: props.userck,
+            image:userProf[0].profileimage,
+            nom: userProf[0].firstname + ' ' +userProf[0].lastname ,
+      
+        });
+        var modalWindow;
+        const modalTitle = "Video Call";
+        modalWindow = window.open("/video/" + props.userck, modalTitle, "width=1200,height=900,menubar=no,resizable=no,scrollbars=no,status=no,location=no , top=500, left=500");
+       
+    }
     const [messages, err, reload] = useApi('api/' + transmitter);
     const [userProf, err1, reload1] = useApi('showUser/' + transmitter);
-
     const [msgs, setMsgs] = useState(null);
     const [audioplay, setAudioplay] = useState(false);
-
-
     useEffect(async () => {
-
-
         await (setMsgs(messages?.filter(msg => (((msg.receiver) === props.userck) && (msg.transmitter) === transmitter) || (msg.transmitter === props.userck) && (msg.receiver) === transmitter)))
-
         {
             animateScroll.scrollToBottom({
                 containerId: "ContainerElementID",
                 duration: 0,
             })
         }
-
 
     }, [props.userck]);
-
-    var socket = socketClient('http://localhost:3001')
-    socket.on('connect', () => {
-        //  console.log(`I'm connected with the back-end`);
-    });
-
     socket.on('push', async (msg) => {
-        //  console.log(msg)
-
         await (setMsgs(msg?.filter(msgk => (((msgk.receiver) === props.userck) && (msgk.transmitter) === transmitter) || (msgk.transmitter === props.userck) && (msgk.receiver) === transmitter)))
-
         {
             animateScroll.scrollToBottom({
                 containerId: "ContainerElementID",
                 duration: 0,
             })
         }
-
         if (transmitter === props.userck) {
             var x = document.getElementById('myaudio');
-            x.play();
-
         }
-        // setMsgs([msg])
     })
 
     const SendMessage = (e) => {
@@ -224,15 +221,8 @@ export default function RecipeReviewCard(props) {
             data.append('file', selectedFile)
             var randomstring = require("randomstring");
             var date = randomstring.generate();
-
-
-
-            // const date= Date.now() ;
             axios.post("http://localhost:3001/upload/" + date, data, {
-
             })
-
-
             if (e.key === 'Enter') {
                 socket.emit('msg', {
                     transmitter: transmitter,
@@ -241,19 +231,11 @@ export default function RecipeReviewCard(props) {
                     deleted_trans: 0,
                     deleted_recived: 0,
                     file: date + '-' + fileName,
-
                 });
-
                 setText('');
                 setSelectedFile(null);
-
             }
-
-
-
         } else
-
-            // MessageService.add(text, transmitter , props.userck);
             if (e.key === 'Enter') {
                 socket.emit('msg', {
                     transmitter: transmitter,
@@ -261,68 +243,37 @@ export default function RecipeReviewCard(props) {
                     body: text,
                     deleted_trans: 0,
                     deleted_recived: 0,
-
-
                 });
-
                 setText('');
-
-
             }
-
-
-
-        //console.log(msgs)
     }
     const [fileName, setFileName] = useState('');
-
-
-
     const [selectedFile, setSelectedFile] = useState(null);
     const onChangeHandler = event => {
         setSelectedFile(event.target.files[0])
         setFileName((event.target.files[0].name))
-        //  event.target.files = null
-        //console.log(event.target.files)
     }
-    const displayRec =()=>{
-        
-       stopRecording() ;
-  
-       
-       const data = new FormData()
-     
-       
-            data.append('file', mediaBlobUrl)
-            var randomstring = require("randomstring");
-            var date = randomstring.generate();
-            
+    const displayRec = () => {
+        stopRecording();
+        const data = new FormData()
+        data.append('file', mediaBlobUrl)
+        var randomstring = require("randomstring");
+        var date = randomstring.generate();
 
-
- 
-            // const date= Date.now() ;
-            axios.post("http://localhost:3001/upload/" + date, data, {
-
-            })
-           
-    
+        axios.post("http://localhost:3001/upload/" + date, data, {
+        })
     }
-
-
-
-
     return (
         <>
             <link href="../assets/css/chatApp.css" rel="stylesheet" />
-            <div style={{ paddingTop: '75px' }}>
-                <Paper elevation={0} className={classes.root} >
-
-                    <Card elevation={0} className={classes.root}>
+            <div id='ffff' style={{ paddingTop: '75px' }}>
+                <Paper elevation={0} className={classes.root}  >
+                    <Card elevation={0} className={classes.root}  >
                         <CardHeader
                             avatar={
                                 <div className={classes.UserPhoto}>
                                     <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left' }} >
-                                        <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                        <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                     </StyledBadge>
                                 </div>
                             }
@@ -342,47 +293,29 @@ export default function RecipeReviewCard(props) {
                         />
                         <Divider style={{ marginTop: '-6px' }} />
                         <CardContent>
-                            <Typography color="textSecondary" component="p" >
-
-
-
+                            <Typography color="textSecondary" component="p"  >
                                 <div id="ContainerElementID" style={{ height: taille, overflowY: 'scroll' }} >
-
-
-
                                     {msgs?.map((msg, index) => {
-
-
-
-
                                         if (index = !0)
                                             if (msg.transmitter === transmitter) {
-
                                                 if (msg.file[0] == null && msg.body != '') {
-
                                                     return (
                                                         <div className='blockMessage' key={msg._id}>
                                                             <div className='authorthumb' >
-                                                                <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                             </div>
                                                             <span className='chatmessageitem spanMessage'>{msg.body}</span>
-
-
                                                             <div className="Appnotification-date">
                                                                 <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                             </div>
-
-
                                                         </div>
                                                     );
                                                 }
                                                 if (msg.file[0] != null && msg.body == '' && ((msg.file[0].split('.').pop() == ('png')) || (msg.file[0].split('.').pop() == ('jpg')) || (msg.file[0].split('.').pop() == ('gif')) || (msg.file[0].split('.').pop() == ('jpeg')))) {
-
                                                     return (
-
                                                         <div className='blockMessage' key={msg._id}>
                                                             <div className='authorthumb' >
-                                                                <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                             </div>
                                                             <span className='chatmessageitem spanMessage'><img onClick={() => showL("http://localhost:3001/uploads/" + msg.file[0])} src={"http://localhost:3001/uploads/" + msg.file[0]} style={{ maxHeight: '100%', maxWidth: '100%', borderRadius: '4%', cursor: 'pointer' }} /></span>
 
@@ -390,18 +323,15 @@ export default function RecipeReviewCard(props) {
                                                             <div className="Appnotification-date">
                                                                 <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                             </div>
-
-
                                                         </div>
                                                     )
                                                 }
                                                 if (msg.file[0] != null && msg.body == '' && ((msg.file[0].split('.').pop() != ('png')) || (msg.file[0].split('.').pop() != ('jpg')) || (msg.file[0].split('.').pop() != ('gif')) || (msg.file[0].split('.').pop() != ('jpeg')))) {
-
                                                     return (
 
                                                         <div className='blockMessage' key={msg._id}>
                                                             <div className='authorthumb' >
-                                                                <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                             </div>
                                                             <span className='chatmessageitem spanMessage'><a href={"http://localhost:3001/uploads/" + msg.file[0]} target={"_blank"}>{msg.file[0].split('-').pop()} </a></span>
 
@@ -409,117 +339,70 @@ export default function RecipeReviewCard(props) {
                                                             <div className="Appnotification-date">
                                                                 <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                             </div>
-
-
                                                         </div>
                                                     )
                                                 }
-
                                                 if (msg.file[0] != null && msg.body != '' && ((msg.file[0].split('.').pop() == ('png')) || (msg.file[0].split('.').pop() == ('jpg')) || (msg.file[0].split('.').pop() == ('gif')) || (msg.file[0].split('.').pop() == ('jpeg')))) {
-
                                                     return (
                                                         <>
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumb' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitem spanMessage'>{msg.body}</span>
-
-
                                                                 <div className="Appnotification-date">
                                                                     <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                                 </div>
-
-
                                                             </div>
-
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumb' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitem spanMessage'><img onClick={() => showL("http://localhost:3001/uploads/" + msg.file[0])} src={"http://localhost:3001/uploads/" + msg.file[0]} style={{ maxHeight: '100%', maxWidth: '100%', borderRadius: '4%', cursor: 'pointer' }} /></span>
-
-
                                                                 <div className="Appnotification-date">
                                                                     <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                                 </div>
-
-
                                                             </div>
-
-
-
-
-
-
-
-
                                                         </>
-
                                                     )
                                                 }
                                                 if (msg.file[0] != null && msg.body != '' && ((msg.file[0].split('.').pop() != ('png')) || (msg.file[0].split('.').pop() != ('jpg')) || (msg.file[0].split('.').pop() != ('gif')) || (msg.file[0].split('.').pop() != ('jpeg')))) {
-
                                                     return (
                                                         <>
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumb' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitem spanMessage'>{msg.body}</span>
-
-
                                                                 <div className="Appnotification-date">
                                                                     <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                                 </div>
-
-
                                                             </div>
-
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumb' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + userProf[0].profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + userProf[0].profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitem spanMessage'><a href={"http://localhost:3001/uploads/" + msg.file[0]} target={"_blank"} >{msg.file[0].split('-').pop()} </a></span>
-
-
                                                                 <div className="Appnotification-date">
                                                                     <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                                 </div>
-
-
                                                             </div>
-
-
-
-
-
-
-
-
                                                         </>
-
                                                     )
                                                 }
-
                                             }
-
-
-
                                             else {
 
                                                 if (msg.file[0] == null && msg.body != '') {
                                                     return (
-
                                                         <div className='blockMessage' key={msg._id}>
                                                             <div className='authorthumbrecept' >
-                                                                <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                             </div>
                                                             <span className='chatmessageitemrecept spanMessagerecept'> {msg.body} </span>
                                                             <div className="Appnotification-daterecept">
                                                                 <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                             </div>
-
                                                         </div>
                                                     );
                                                 }
@@ -527,7 +410,7 @@ export default function RecipeReviewCard(props) {
                                                     return (
                                                         <div className='blockMessage' key={msg._id}>
                                                             <div className='authorthumbrecept' >
-                                                                <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                             </div>
                                                             <span className='chatmessageitem spanMessage'><img onClick={() => showL("http://localhost:3001/uploads/" + msg.file[0])} src={"http://localhost:3001/uploads/" + msg.file[0]} style={{ maxHeight: '100%', maxWidth: '100%', borderRadius: '4%', cursor: 'pointer' }} /></span>
                                                             <div className="Appnotification-daterecept">
@@ -542,131 +425,92 @@ export default function RecipeReviewCard(props) {
                                                     return (
                                                         <div className='blockMessage' key={msg._id}>
                                                             <div className='authorthumbrecept' >
-                                                                <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                             </div>
                                                             <span className='chatmessageitem spanMessage'><a href={"http://localhost:3001/uploads/" + msg.file[0]} target={"_blank"} >{msg.file[0].split('-').pop()} </a></span>
                                                             <div className="Appnotification-daterecept">
                                                                 <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                             </div>
-
                                                         </div>
                                                     )
-
                                                 }
                                                 if (msg.file[0] != null && msg.body != '' && ((msg.file[0].split('.').pop() == ('png')) || (msg.file[0].split('.').pop() == ('jpg')) || (msg.file[0].split('.').pop() == ('gif')) || (msg.file[0].split('.').pop() == ('jpeg')))) {
                                                     return (
                                                         <>
-
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumbrecept' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitemrecept spanMessagerecept'> {msg.body} </span>
                                                                 <div className="Appnotification-daterecept">
                                                                     <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                                 </div>
-
                                                             </div>
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumbrecept' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitemrecept spanMessagerecept'>
-
                                                                     <img onClick={() => showL("http://localhost:3001/uploads/" + msg.file[0])} src={"http://localhost:3001/uploads/" + msg.file[0]} style={{ maxHeight: '100%', maxWidth: '100%', borderRadius: '4%', cursor: 'pointer' }} />
                                                                 </span>
                                                                 <div className="Appnotification-daterecept">
                                                                     <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                                 </div>
-
                                                             </div>
-
                                                         </>)
-
                                                 }
-
-
-
                                                 if (msg.file[0] != null && msg.body != '' && ((msg.file[0].split('.').pop() != ('png')) || (msg.file[0].split('.').pop() != ('jpg')) || (msg.file[0].split('.').pop() != ('gif')) || (msg.file[0].split('.').pop() != ('jpeg')))) {
                                                     return (
                                                         <>
-
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumbrecept' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitemrecept spanMessagerecept'> {msg.body} </span>
                                                                 <div className="Appnotification-daterecept">
                                                                     <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                                 </div>
-
                                                             </div>
                                                             <div className='blockMessage' key={msg._id}>
                                                                 <div className='authorthumbrecept' >
-                                                                    <Avatar variant='rounded' src={`../assets/images/users/` + props?.person?.profileimage} className={classes.rad} />
+                                                                    <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                                 </div>
                                                                 <span className='chatmessageitemrecept spanMessagerecept'>
-
                                                                     <a href={"http://localhost:3001/uploads/" + msg.file[0]} target={"_blank"} >{msg.file[0].split('-').pop()} </a></span>
-
                                                                 <div className="Appnotification-daterecept">
                                                                     <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                                 </div>
-
                                                             </div>
-
                                                         </>)
-
                                                 }
-
-
                                             }
-
-
-
-
                                     }
                                     )
                                     }
-
-
                                     <div style={{ display: open }}>
                                         <Lightbox
                                             medium={srcImage}
-                                            //  large={}
-
                                             onClose={closeLightbox}
                                         />
-
                                     </div>
-
-
-
-
                                     <div className='blockMessage' style={{ display: 'none' }}>
                                         <div className='authorthumb' >
-                                            <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
+                                            <Avatar variant='rounded' src={`http://localhost:3001/uploads/`} className={classes.rad} />
                                         </div>
                                         <span className='chatmessageitem spanMessage'><audio style={{ height: "20px" }} src={mediaBlobUrl} controls />
-
                                         </span>
                                         <div className="Appnotification-date">
                                             <span >Yesterday at 8:10pm</span>
                                         </div>
                                     </div>
-
-
-
-
-
                                 </div>
                             </Typography>
                             <Divider style={{ display: myDivider }} />
                             <div style={{ display: displayEmoji }} >
-                                <Picker onChange={setText} cleanOnEnter onSelect={onEmojiClick} set='facebook' style={{ position: 'absolute', bottom: '7%', marginLeft: '40%', zIndex: '1' }} i18n={{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }} />
+                                <Picker onChange={setText} cleanOnEnter onSelect={onEmojiClick} set='facebook' style={{ position: 'absolute', bottom: '7%', marginLeft: '40%', zIndex: '100' }} i18n={{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }} />
                             </div>
                         </CardContent>
-                        <div style={{ width: '100%', maxHeight: '100px', display: drop }}>
+                        <div style={{ width: '100%', maxHeight: '0px', display: drop }}>
                             <div className="custom-file">
                                 <input type="file" className="custom-file-input" id="validatedCustomFile" onChange={onChangeHandler} />
                                 <label className="custom-file-label" for="validatedCustomFile">Choose file...</label>
@@ -698,9 +542,9 @@ export default function RecipeReviewCard(props) {
                             </div>
                         </CardActions>
                     </Card>
-                </Paper>    <audio controls src={`../song/notification.mp3`} id='myaudio' style={{ display: 'none' }} >   </audio>
-
-
+                </Paper>
+                <audio controls src={`../song/notification.mp3`} id='myaudiomyaudio' style={{ display: 'none' }} >   </audio>
+                <audio id='myaudiocall' src={`http://localhost:3000/song/callsong.mp3`} style={{ display: 'none' }} >   </audio>
             </div>
         </>
     );

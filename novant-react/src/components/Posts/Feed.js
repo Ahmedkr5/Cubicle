@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import clsx from 'clsx';
@@ -19,8 +19,12 @@ import FavoriteBorderTwoToneIcon from '@material-ui/icons/FavoriteBorderTwoTone'
 import ChatBubbleOutlineTwoToneIcon from '@material-ui/icons/ChatBubbleOutlineTwoTone';
 import Divider from '@material-ui/core/Divider';
 import Comment from './Comment';
+import SkeletonComment from './SkeletonComment';
 import PostComment from './PostComment';
 import CodeComment from './CodeComment';
+import { useLazyQuery, gql } from '@apollo/client';
+import Skeleton from '@material-ui/lab/Skeleton';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,15 +82,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const COMMENT_QUERY = gql`
+  {
+    comment(id: $id) {
+      type
+      description
+      created_at
+    }
+  }
+`;
+
 const preventDefault = (event) => event.preventDefault();
 
 export default function Feed(props) {
+  const [getComments, { loading, error, data }] = useLazyQuery(COMMENT_QUERY);
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [noComment, setNoComment] = React.useState(false);
   const [interaction, setInteraction] = React.useState('');
 
   const handleExpandClick = () => {
-    setExpanded(!expanded);
+    if (props?.post?.comments.length > 0) {
+      setExpanded(!expanded);
+    } else {
+      if (expanded === false) {
+        setNoComment(true);
+        setTimeout(() => {
+          setNoComment(false);
+        }, 2000);
+      }
+    }
+    if (expanded === true) {
+      setExpanded(!expanded);
+    }
   };
 
   const handleCommentClick = () => {
@@ -132,11 +160,14 @@ export default function Feed(props) {
           <div className={classes.UserNameDate}>
             <a href='#' onClick={preventDefault} className={classes.p}>
               <strong>
-                <span> Hamza Safraou </span>
+                <span>
+                  {' '}
+                  {props?.post?.user?.firstname} {props?.post?.user?.lastname}{' '}
+                </span>
               </strong>
             </a>
             <a href='#' onClick={preventDefault} className={classes.p}>
-              <span> September 14, 2016 </span>
+              <span> {props?.post?.created_at} </span>
             </a>
           </div>
         }
@@ -150,17 +181,11 @@ export default function Feed(props) {
           color='textSecondary'
           component='p'
         >
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {props?.post?.description}
         </Typography>
       </CardContent>
       {props.image ? (
-        <CardMedia
-          className={classes.media}
-          image={props.image}
-          title='Paella dish'
-        />
+        <CardMedia className={classes.media} image={props.image} />
       ) : null}
       <Divider variant='middle' />
       <CardActions disableSpacing>
@@ -177,6 +202,15 @@ export default function Feed(props) {
         >
           Comment
         </Button>
+        {noComment && (
+          <Alert
+            style={{ float: 'right', justifySelf: 'center' }}
+            variant='outlined'
+            severity='info'
+          >
+            No comment !
+          </Alert>
+        )}
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -218,9 +252,13 @@ export default function Feed(props) {
             Set aside off of the heat to let rest for 10 minutes, and then
             serve.
           </Typography> */}
-          {interaction === 'comment' && <PostComment></PostComment>}
-          {interaction === 'solve' && <CodeComment></CodeComment>}
-          <Comment></Comment>
+
+          {props?.post?.comments?.map((comment) => (
+            <Comment key={comment.id} comment={comment}></Comment>
+          ))}
+          {interaction === 'comment' && (
+            <PostComment user={props.user}></PostComment>
+          )}
         </CardContent>
       </Collapse>
     </Card>

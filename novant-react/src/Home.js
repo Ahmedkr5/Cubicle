@@ -3,11 +3,11 @@ import {
   BottomNavigationAction,
   Container,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import React, { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Sidebar from './components/Sidebar/Sidebar';
 import Feed from './components/Posts/Feed';
+import UpdatedFeed from './components/Posts/updatedFeed/UpdatedFeed';
 import RightSidebar from './components/rightSideBar/RightSidebar';
 import SearchAppBar from './components/Navbar/Navbar';
 import authService from './services/auth.service';
@@ -18,24 +18,61 @@ import EmojiPeopleOutlinedIcon from '@material-ui/icons/EmojiPeopleOutlined';
 import WorkOutlineOutlinedIcon from '@material-ui/icons/WorkOutlineOutlined';
 import NewProblemDialog from './components/Posts/NewProblemDialog';
 import Hidden from '@material-ui/core/Hidden';
-import PropTypes from 'prop-types';
+import { useQuery, gql } from '@apollo/client';
+import SkeletonFeed from './components/Posts/skeletonFeed';
+import Editor from './components/Posts/Editor';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import SnackbarPost from './components/Posts/SnackbarPost';
 
-const useStyles = makeStyles((theme) => ({
-  input: {
-    paddingLeft: '15px',
-    marginRight: '5px',
-    marginTop: '15px',
-    marginBottom: '15px',
-    width: '40%',
-    backgroundColor: '#F0F2F5',
-    borderRadius: '15px',
-  },
-}));
+const FEED_QUERY = gql`
+  {
+    posts {
+      id
+      type
+      tags
+      description
+      created_at
+      user {
+        firstname
+        lastname
+        email
+      }
+      comments {
+        id
+        type
+        description
+        user {
+          firstname
+          lastname
+          email
+        }
+      }
+    }
+  }
+`;
 
 function Home() {
-  const classes = useStyles();
+  const { data, loading, error } = useQuery(FEED_QUERY, {
+    pollInterval: 5000,
+  });
   const [state, setState] = useState('0');
   const [value, setValue] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleCallback = (childData) => {
+    setOpen(childData);
+  };
+
+  const handleCallbackDialog = (childData) => {
+    setOpenDialog(childData);
+  };
+
+  const handleCallbackSnackbar = (childData) => {
+    setOpenSnackbar(childData);
+  };
+
   const user = authService.getCurrentUser();
 
   return (
@@ -46,7 +83,7 @@ function Home() {
       </Row>
       <Container style={{ marginTop: '4em', maxWidth: '100%' }}>
         <Row>
-          <Hidden xsDown='true'>
+          <Hidden xsDown={true}>
             <Col style={{ display: 'flex', justifyContent: 'center' }}>
               <Sidebar></Sidebar>
             </Col>
@@ -74,30 +111,52 @@ function Home() {
                 <BottomNavigation
                   value={value}
                   onChange={(event, newValue) => {
-                    setValue(newValue);
+                    if (open === false) {
+                      setValue(newValue);
+                    } else {
+                      setOpenSnackbar(true);
+                    }
                   }}
                   style={{
                     marginBottom: '10px',
                     borderRadius: '10px',
-                    width: 'auto',
+                    width: '100%',
                   }}
                 >
                   <BottomNavigationAction
-                    onClick={() => setState('0')}
+                    onClick={() => {
+                      if (!open) {
+                        setState('0');
+                      }
+                    }}
                     label='Feeds'
                     icon={<AddBoxOutlinedIcon />}
                   />
                   <BottomNavigationAction
-                    onClick={() => setState('1')}
+                    onClick={() => {
+                      if (!open) {
+                        setState('1');
+                      }
+                    }}
                     label='Problems'
                     icon={<EmojiPeopleOutlinedIcon />}
                   />
                   <BottomNavigationAction
-                    onClick={() => setState('2')}
+                    onClick={() => {
+                      if (open === false) {
+                        setState('2');
+                      }
+                    }}
                     label='Offers'
                     icon={<WorkOutlineOutlinedIcon />}
                   />
                 </BottomNavigation>
+                {openSnackbar && (
+                  <SnackbarPost
+                    parentCallbackSnackbar={handleCallbackSnackbar}
+                    message={'You are editing a new post ✍'}
+                  />
+                )}
                 {/* <InputBase
                   className={classes.input}
                   placeholder='Choisissez un filtre...'
@@ -105,7 +164,64 @@ function Home() {
                 /> */}
               </div>
               <TagFilter></TagFilter>
-              {state == '0' && (
+              {state === '0' && (
+                <>
+                  <div
+                    style={{
+                      display: 'flex',
+                      width: 'auto',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <NewProblemDialog
+                      parentCallback={handleCallback}
+                      parentCallbackDialog={handleCallbackDialog}
+                      user={user}
+                    ></NewProblemDialog>
+                    {loading && (
+                      <>
+                        <SkeletonFeed></SkeletonFeed>{' '}
+                        <SkeletonFeed></SkeletonFeed>
+                      </>
+                    )}
+                    {error && <p style={{ color: 'red' }}>{error.message}</p>}
+                    {data && (
+                      <>
+                        {/* {data.posts
+                          .filter((post) => post.type.includes('problem'))
+                          .map(
+                            (post) => (
+                              <Feed
+                                image='../../assets/images/users/2.jpg'
+                                key={post.id}
+                                post={post}
+                                user={user}
+                              ></Feed>
+                            )
+
+                            // <Link key={link.id} link={link} />
+                          )} */}
+
+                        {data.posts
+                          .filter((post) => post.type.includes('Feed'))
+                          .map(
+                            (post) => (
+                              <UpdatedFeed
+                                image='../../assets/images/users/2.jpg'
+                                key={post.id}
+                                post={post}
+                                user={user}
+                              ></UpdatedFeed>
+                            )
+
+                            // <Link key={link.id} link={link} />
+                          )}
+                      </>
+                    )}
+                  </div>
+                </>
+              )}
+              {state === '1' && (
                 <div
                   style={{
                     display: 'flex',
@@ -113,34 +229,75 @@ function Home() {
                     flexDirection: 'column',
                   }}
                 >
-                  <NewProblemDialog></NewProblemDialog>
-                  <Feed image='../../assets/images/users/2.jpg'></Feed>
-                  <Feed image='../../assets/images/users/3.jpg'></Feed>
-                  <Feed image='../../assets/images/users/4.jpg'></Feed>
-                  <Feed image='../../assets/images/users/5.jpg'></Feed>
-                  <Feed image='../../assets/images/users/6.jpg'></Feed>
-                  <Feed image='../../assets/images/users/7.jpg'></Feed>
+                  <NewProblemDialog
+                    parentCallback={handleCallback}
+                    parentCallbackDialog={handleCallbackDialog}
+                    user={user}
+                  ></NewProblemDialog>
+                  {loading && (
+                    <>
+                      <SkeletonFeed></SkeletonFeed>{' '}
+                      <SkeletonFeed></SkeletonFeed>
+                    </>
+                  )}
+                  {error && <p style={{ color: 'red' }}>{error.message}</p>}
+                  {data && (
+                    <>
+                      {data.posts
+                        .filter((post) => post.type.includes('Problem'))
+                        .map(
+                          (post) => (
+                            <UpdatedFeed
+                              image='../../assets/images/users/2.jpg'
+                              key={post.id}
+                              post={post}
+                              user={user}
+                            ></UpdatedFeed>
+                          )
+
+                          // <Link key={link.id} link={link} />
+                        )}
+                    </>
+                  )}
                 </div>
               )}
-              {state == '1' && (
-                <div
-                  style={{
-                    display: 'flex',
-                    width: 'auto',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <NewProblemDialog></NewProblemDialog>
-                  <ProblemFeed></ProblemFeed>
-                  <ProblemFeed></ProblemFeed>
-                  <ProblemFeed></ProblemFeed>
-                  <ProblemFeed></ProblemFeed>
-                </div>
+              {state === '2' && (
+                <>
+                  <NewProblemDialog
+                    parentCallback={handleCallback}
+                    parentCallbackDialog={handleCallbackDialog}
+                    user={user}
+                  ></NewProblemDialog>{' '}
+                  {loading && (
+                    <>
+                      <SkeletonFeed></SkeletonFeed>{' '}
+                      <SkeletonFeed></SkeletonFeed>
+                    </>
+                  )}
+                  {error && <p style={{ color: 'red' }}>{error.message}</p>}
+                  {data && (
+                    <>
+                      {data.posts
+                        .filter((post) => post.type.includes('Offer'))
+                        .map(
+                          (post) => (
+                            <UpdatedFeed
+                              image='../../assets/images/users/2.jpg'
+                              key={post.id}
+                              post={post}
+                              user={user}
+                            ></UpdatedFeed>
+                          )
+
+                          // <Link key={link.id} link={link} />
+                        )}
+                    </>
+                  )}
+                </>
               )}
-              {state == '2' && <div></div>}
             </Container>
           </Col>
-          <Hidden mdDown='true'>
+          <Hidden mdDown={true}>
             <Col
               style={{
                 display: 'flex',

@@ -20,6 +20,7 @@ import Comment from '../Comment';
 import PostComment from '../PostComment';
 import CodeComment from '../CodeComment';
 import CodeCore from './CodeCore';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,13 +79,26 @@ const useStyles = makeStyles((theme) => ({
 
 const preventDefault = (event) => event.preventDefault();
 
-export default function ProblemFeed() {
+export default function ProblemFeed(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [noComment, setNoComment] = React.useState(false);
   const [interaction, setInteraction] = React.useState('');
 
   const handleExpandClick = () => {
-    setExpanded(!expanded);
+    if (props?.post?.comments.length > 0) {
+      setExpanded(!expanded);
+    } else {
+      if (expanded === false) {
+        setNoComment(true);
+        setTimeout(() => {
+          setNoComment(false);
+        }, 2000);
+      }
+    }
+    if (expanded === true) {
+      setExpanded(!expanded);
+    }
   };
 
   const handleCommentClick = () => {
@@ -130,11 +144,14 @@ export default function ProblemFeed() {
           <div className={classes.UserNameDate}>
             <a href='#' onClick={preventDefault} className={classes.p}>
               <strong>
-                <span> Hamza Safraou </span>
+                <span>
+                  {' '}
+                  {props?.post?.user?.firstname} {props?.post?.user?.lastname}{' '}
+                </span>
               </strong>
             </a>
             <a href='#' onClick={preventDefault} className={classes.p}>
-              <span> September 14, 2016 </span>
+              <span> {props?.post?.CreatedAt} </span>
             </a>
           </div>
         }
@@ -180,6 +197,14 @@ export default function ProblemFeed() {
         >
           Solve
         </Button>
+        {noComment && (
+          <Alert
+            style={{ float: 'right', justifySelf: 'center' }}
+            severity='info'
+          >
+            No comment !
+          </Alert>
+        )}
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -221,9 +246,14 @@ export default function ProblemFeed() {
             Set aside off of the heat to let rest for 10 minutes, and then
             serve.
           </Typography> */}
+
+          {props?.post?.comments?.map((comment) => (
+            <Comment key={comment.id} comment={comment}></Comment>
+          ))}
           {interaction === 'comment' && <PostComment></PostComment>}
-          {interaction === 'solve' && <CodeComment></CodeComment>}
-          <Comment></Comment>
+          {interaction === 'solve' && (
+            <CodeComment user={props.user}></CodeComment>
+          )}
         </CardContent>
       </Collapse>
     </Card>

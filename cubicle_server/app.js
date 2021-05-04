@@ -2,10 +2,13 @@ const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const schema = require('./schema/schema');
 const schemaTest = require('./schema/schemaTest');
+const schemaEditorUpdate = require('./schema/schemaEditorUpdate');
+const schemaBusiness = require('./schema/schemaBusiness');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
 require('dotenv').config(); //for video call
 const app = express();
+var cors = require('cors');
 const indexRouter = require('./routes/index');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -13,12 +16,16 @@ var socket = require('socket.io');
 //for video call
 var AccessToken = require('twilio').jwt.AccessToken;
 var VideoGrant = AccessToken.VideoGrant;
-
+const fetch = require('node-fetch');
+var groupController = require('./controller/groupController');
 var UserController = require('./user/UserController');
+var businessController = require('./controller/businessController');
 var AuthController = require('./auth/AuthController');
+var Test2Controller = require('./controller/Test2Controller');
 var ExperienceController = require('./experiences/ExperienceController');
 var PostController = require('./experiences/ExperienceController');
 var path = require('path');
+app.use(cors());
 
 app.use(express.static(path.resolve('./public')));
 app.use(function (req, res, next) {
@@ -62,8 +69,46 @@ app.use(
   })
 );
 
+app.use(
+  '/graphqlEditor',
+  graphqlHTTP({
+    schema: schemaEditorUpdate,
+    graphiql: true,
+  })
+);
+
+app.use(
+  '/graphqlBusiness',
+  graphqlHTTP({
+    schema: schemaBusiness,
+    graphiql: true,
+  })
+);
+
+app.get('/post/link/', function (req, res) {
+  // console.log(req);
+  var url = req.query.url.toString();
+  // console.log(req);
+  fetch(url)
+    .then((res) => res)
+    .then((data) => {
+      // console.log(data);
+      res.send({
+        success: 1,
+        meta: data.url,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+});
+
 // frontend calls
 app.use('/users', UserController);
+app.use('/businesses', businessController);
+app.use('/groups', groupController);
+app.use('/Test', Test2Controller);
 app.use('/experiences', ExperienceController);
 app.use('/api/auth', AuthController);
 app.use(function (req, res, next) {
@@ -112,6 +157,13 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', indexRouter);
+
+app.get('/image/:name', function (req, res) {
+  res.sendFile(
+    '/Dev/Novant-Mern/cubicle_server/public/uploads/postImages/' +
+      req.params.name
+  );
+});
 
 app.get('/token/:identity', function (req, res) {
   const identity = req.params.identity;

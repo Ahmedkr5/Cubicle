@@ -42,9 +42,22 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '2px',
     cursor: 'pointer',
   },
+  p: {
+    color: '#000',
+    margin: '0px',
+    padding: '0px',
+    textAlign: 'left',
+    fontSize: '14px',
+    cursor: 'pointer',
+    '&:hover': {
+      color: '#000',
+    },
+  },
 }));
 
-export default function Comment() {
+const preventDefault = (event) => event.preventDefault();
+
+export default function Comment(props) {
   const classes = useStyles();
 
   return (
@@ -53,11 +66,21 @@ export default function Comment() {
         H
       </Avatar>
       <div className={classes.commentBody}>
-        <h5 className={classes.commentUserName}>Hamza Safraou</h5>
-        <p className={classes.commentText}>
-          lorem
-          hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-        </p>
+        <h5 className={classes.commentUserName}>
+          <a href='#' onClick={preventDefault} className={classes.p}>
+            <strong>
+              <span>
+                {' '}
+                {props?.comment?.user?.firstname}{' '}
+                {props?.comment?.user?.lastname}{' '}
+              </span>
+            </strong>
+          </a>
+          <a href='#' onClick={preventDefault} className={classes.p}>
+            <span> {props?.comment?.created_at} </span>
+          </a>
+        </h5>
+        <p className={classes.commentText}>{props?.comment?.description}</p>
       </div>
     </div>
   );

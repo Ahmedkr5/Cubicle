@@ -18,6 +18,7 @@ import 'codemirror/addon/fold/foldgutter';
 import 'codemirror/addon/fold/brace-fold';
 import 'codemirror/addon/fold/comment-fold';
 import 'codemirror/addon/fold/foldgutter.css';
+import { render } from 'react-dom';
 
 const useStyles = makeStyles((theme) => ({
   code: {
@@ -33,13 +34,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CodeComment() {
+export default function CodeCore() {
   const classes = useStyles();
   const [code, setCode] = React.useState(
     'public function Test(int a, int b):{ \n return a+b;\n } '
   );
 
-  return (
+  return(
     <CodeMirror
       className={classes.code}
       value={code}
@@ -68,3 +69,6 @@ export default function CodeComment() {
     />
   );
 }
+
+// customElements.define('code-core', CodeCore);
+// console.log(CodeCore);

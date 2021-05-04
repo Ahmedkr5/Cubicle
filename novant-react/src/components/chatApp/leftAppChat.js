@@ -18,6 +18,7 @@ import 'react-bnb-gallery/dist/style.css';
 import { useApi } from "../../hooks/useApi";
 import authService from '../../services/auth.service'
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: '100%',
@@ -70,14 +71,15 @@ export default function OutlinedCard(props) {
     const userName = userProf?.map((prof) =>
     prof.firstname+' '+ prof.lastname
     );
+    
     const [messages, err, reload] = useApi('show/' + transmitter);
     const [msgs, setMsgs] = useState(null);
 
     useEffect(async () => {
 
-        await (setMsgs(messages?.filter(msg => (((msg.receiver) === props.userck)&&(msg.transmitter)===transmitter) || (msg.transmitter === props.userck)&&(msg.receiver)===transmitter)) )
+        await (setMsgs(messages?.filter(msg => (((msg.receiver) === props.userck)&&(msg.transmitter)===transmitter) || (msg.transmitter === props.userck)&&(msg.receiver)===transmitter &&(msg.file) )) )
       
- 
+       console.log(msgs)
 
     }, [props.userck]);
 
@@ -129,7 +131,7 @@ export default function OutlinedCard(props) {
                     <CardContent>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
 
-                            <Avatar variant='rounded' src={`../assets/images/users/`+photo} className={classes.rad} />
+                            <Avatar variant='rounded' src={`http://localhost:3001/uploads/`+photo} className={classes.rad} />
                         </Typography>
                         <Typography variant="h5" component="h2" className={classes.middle}>
                             {userName}
@@ -157,21 +159,17 @@ export default function OutlinedCard(props) {
                                 >
                                     <Typography className={classes.heading}>Shared files</Typography>
                                 </AccordionSummary>
+                                {msgs?.map((msg, index) => {
+                                            if((msg.file[0] != null) && ((msg.file[0].split('.').pop() != ('png')) && (msg.file[0].split('.').pop() != ('jpg')) && (msg.file[0].split('.').pop() != ('gif')) && (msg.file[0].split('.').pop() != ('jpeg'))) )
+                                            return(
                                 <AccordionDetails style={{paddingBottom:'0px'}}>
                                     <Typography >
-                                      <a href="#">index.html</a>
+                                    <a href={"http://localhost:3001/uploads/" + msg.file[0]} target={"_blank"} >{msg.file[0].split('-').pop()} </a>
                                     </Typography>
                                 </AccordionDetails>
-                                <AccordionDetails style={{paddingBottom:'0px'}} >
-                                    <Typography >
-                                      <a href="#">style.css</a>
-                                    </Typography>
-                                </AccordionDetails>
-                                <AccordionDetails >
-                                    <Typography style={{paddingBottom:'0px'}}>
-                                      <a href="#">rapport.pdf</a>
-                                    </Typography>
-                                </AccordionDetails>
+                                            )})}
+                               
+                               
                             </Accordion>
                         </Typography>
                         <Typography variant="body2" component="p" style={{marginTop:'20px'}}>
@@ -187,18 +185,22 @@ export default function OutlinedCard(props) {
                                     <Typography >
                                         <div className='container-fluid'>
                                         <div className="row"  >
+                                        {msgs?.map((msg, index) => {
+                                            if((msg.file[0] != null) && ((msg.file[0].split('.').pop() == ('png')) || (msg.file[0].split('.').pop() == ('jpg')) || (msg.file[0].split('.').pop() == ('gif')) || (msg.file[0].split('.').pop() == ('jpeg'))) )
+                                            return(
                                             <div className="col-4" style={{ paddingRight: '2px', paddingLeft: '2px', paddingBottom: '4px' }}>
-                                                <img src="../assets/images/users/4.jpg" onClick={() => setIsOpen(true)}  className="rounded mx-auto d-block" style={{ height: '100px',width:'125px' }} />
+                                                <img src={"http://localhost:3001/uploads/" + msg.file[0]} onClick={() => setIsOpen(true)}  className="rounded mx-auto d-block" style={{ height: '100px',width:'125px' }} />
                                             </div>
-                                            <div className="col-4" style={{ paddingRight: '2px', paddingLeft: '2px', paddingBottom: '4px' }}>
-                                                <img src="../assets/images/users/5.jpg" className=" rounded mx-auto d-block" style={{ height: '100px',width:'125px' }} />
-                                            </div>
-                                            <div className="col-4" style={{ paddingRight: '2px', paddingLeft: '2px', paddingBottom: '4px' }}>
-                                                <img src="../assets/images/users/8.jpg" className="rounded mx-auto d-block" style={{ height: '100px',width:'125px'  }} />
-                                            </div>
-                                            <div className="col-4" style={{ paddingRight: '2px', paddingLeft: '2px', paddingBottom: '4px' }}>
-                                                <img src="../assets/images/users/6.jpg" className="rounded mx-auto d-block" style={{ height: '100px',width:'125px' }} />
-                                            </div>
+
+                                            );
+
+                                        }
+                                        )}
+
+
+
+
+                                           
                                         </div>
                                         </div>
                                     </Typography>
