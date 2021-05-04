@@ -10,10 +10,10 @@ router.post('/:id/newgroup', function (req, res,next) {
         groupname : req.body.groupname,
         Owner: req.params.id,  
         }, 
-        function (err, Group) {
+        function (err, gr) {
             if (err) return res.status(500).send("error group");
             
-            res.send(Group);
+            res.send(gr);
         
         });
       
@@ -49,7 +49,7 @@ router.put('/group/:idgr', function (req, res) {
           
         
 });
-router.put('/GroupProfile/:idgr', function (req, res) {
+router.put('/GroupCover/:idgr', function (req, res) {
     Group.findByIdAndUpdate(req.params.idgr,{
         groupimage : req.body. groupimage,}, {new: true}, function (err, group) {         
           res.status(200).send(group);
