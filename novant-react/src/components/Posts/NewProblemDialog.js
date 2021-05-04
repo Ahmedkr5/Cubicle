@@ -9,11 +9,8 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import CodeCore from './ProblemFeed/CodeCore';
-import Editor from './Editor';
 import AddPost from './AddPost';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     marginLeft: '15px',
     backgroundColor: '#F0F2F5',
-    borderRadius: '15px',
+    borderRadius: '30px',
     width: '100%',
     justifyItems: 'center',
   },
@@ -145,6 +142,7 @@ const DialogActions = withStyles((theme) => ({
 export default function NewFeed(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
   const [state, setState] = React.useState({
     Type: '',
     name: 'hai',
@@ -152,6 +150,11 @@ export default function NewFeed(props) {
 
   const handleCallback = (childData) => {
     setOpen(childData);
+    props.parentCallback(childData);
+  };
+
+  const handleCallbackDialog = (childData) => {
+    setOpenDialog(childData);
   };
 
   const handleChange = (event) => {
@@ -164,9 +167,21 @@ export default function NewFeed(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
+    props.parentCallback(true);
   };
   const handleClose = () => {
     setOpen(false);
+    props.parentCallback(false);
+  };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    props.parentCallbackDialog(false);
+  };
+  const handleCloseBoth = () => {
+    setOpenDialog(false);
+    setOpen(false);
+    props.parentCallbackDialog(false);
+    props.parentCallback(false);
   };
 
   return (
@@ -186,66 +201,49 @@ export default function NewFeed(props) {
         >
           Express yourself
         </Button>
-        {/* <Dialog
-        onClose={handleClose}
-        aria-labelledby='customized-dialog-title'
-        open={open}
-        style={{ width: '100%' }}
-      >
-        <DialogTitle id='customized-dialog-title' onClose={handleClose}>
-          Add a post
-        </DialogTitle>
-        <DialogContent dividers>
-          <div className={classes.contentContainer}>
-            <div className={classes.contentHeader}>
-              <div>
-                <Avatar
-                  aria-label='recipe'
-                  variant='rounded'
-                  className={classes.dialogAvatar}
-                >
-                  H
-                </Avatar>
-              </div>
-              <div className={classes.contentHeaderRight}>
-                <a href='#' onClick={preventDefault} className={classes.p}>
-                  <strong>
-                    <span> Hamza Safraou </span>
-                  </strong>
-                </a>
-                <FormControl className={classes.formControl}>
-                  <Select
-                    native
-                    value={state.Type}
-                    onChange={handleChange}
-                    label='Type'
-                    inputProps={{
-                      name: 'Type',
-                      id: 'PostType',
-                    }}
-                  >
-                    <option value={'Feed'}>Feed</option>
-                    <option value={'Problem'}>Problem</option>
-                    <option value={'Offer'}>Offer</option>
-                  </Select>
-                </FormControl>
-              </div>
-            </div>
-            <div className={classes.contentBodyBottom}>
-              <CodeCore></CodeCore>
-              <Editor />
-            </div>
-          </div>
-          <div className={classes.contentFooter}></div>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose} color='primary'>
-            Save changes
-          </Button>
-        </DialogActions>
-      </Dialog> */}
       </div>
-      {open && <AddPost user={props?.user} parentCallback={handleCallback} />}
+      {open && (
+        <AddPost
+          user={props?.user}
+          parentCallback={handleCallback}
+          parentCallbackDialog={handleCallbackDialog}
+        />
+      )}
+      <div>
+        <Dialog
+          open={openDialog}
+          onClose={handleClose}
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
+          style={{ borderRadius: '15px' }}
+        >
+          <DialogTitle id='alert-dialog-title'>
+            {'Cancel the post ?🤔'}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id='alert-dialog-description'>
+              Changes you made so far will not be saved
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleCloseDialog}
+              variant={'contained'}
+              color='primary'
+            >
+              Keep editing
+            </Button>
+            <Button
+              onClick={handleCloseBoth}
+              variant={'contained'}
+              color='secondary'
+              autoFocus
+            >
+              Yes, quit
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </>
   );
 }
