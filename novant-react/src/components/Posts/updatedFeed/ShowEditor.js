@@ -91,27 +91,6 @@ export default function ShowEditor(props) {
     //   ],
     // }}
     // />
-    <EditorJs
-      tools={EDITOR_JS_TOOLS}
-      data={{
-        blocks: [
-          {
-            type: 'paragraph',
-            data: {
-              text:
-                'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
-            },
-          },
-          {
-            type: 'code',
-            data: {
-              language: 'CSS',
-              text: 'inshallah tekhdem',
-            },
-          },
-        ],
-      }}
-      readOnly
-    />
+    <EditorJs tools={EDITOR_JS_TOOLS} data={y} readOnly />
   );
 }
