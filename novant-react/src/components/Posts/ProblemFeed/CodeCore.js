@@ -40,7 +40,7 @@ export default function CodeCore() {
     'public function Test(int a, int b):{ \n return a+b;\n } '
   );
 
-  return (
+  return(
     <CodeMirror
       className={classes.code}
       value={code}

@@ -11,7 +11,7 @@ import experienceService from '../../services/experience.service';
 import axios from 'axios';
 import { Form } from 'formik';
 import authService from '../../services/auth.service';
-
+import PersonAddRoundedIcon from '@material-ui/icons/PersonAddRounded';
 
 
 
@@ -97,7 +97,7 @@ const [selectedProfileImage, setselectedProfileImage] = useState(null);
           image={coverimage}
           onClick={() => showL("http://localhost:3001/uploads/" + props.coverimage)}  style={{ maxHeight: '100%', maxWidth: '100%', cursor: 'pointer' }} 
         />
-        {currentuser['id'] == props.userid &&
+        {currentuser['id'] === props.userid &&
             <React.Fragment>
 <input
   accept="image/*"
@@ -131,6 +131,17 @@ const [selectedProfileImage, setselectedProfileImage] = useState(null);
 </React.Fragment>
 
 }
+
+{/*currentuser['id'] !== props.userid &&
+   <Button  
+   variant="contained"
+   color="primary"
+   size="medium"
+   className={classes.button}
+   startIcon={< PersonAddRoundedIcon/>}
+ >
+  Add Friend  
+</Button>*/}
 <div style={{ display: open }} >
     
                                         <Lightbox
@@ -144,11 +155,12 @@ const [selectedProfileImage, setselectedProfileImage] = useState(null);
                                     </div>
     <CardContent style={{display: 'flex',flexDirection:'row', alignItems:'center' ,marginTop:'-100px',float:'left',marginLeft:'100px'}}>
         <Badge badgeContent={"Level 10"} color="primary">
-        {props.profileimage=="default profile image" && <UIAvatar name={name} className={classes.rad} color='#551a8b' ></UIAvatar>}
+        {props.profileimage ==="default profile image" && <UIAvatar name={name} className={classes.rad} color='#551a8b' ></UIAvatar>}
         {props.profileimage !=="default profile image" && <Avatar           onClick={() => showL("http://localhost:3001/uploads/" + props.profileimage)}  style={{ maxHeight: '100%', maxWidth: '100%', cursor: 'pointer' }}  src={profileimage} className={classes.rad} color='#551a8b' ></Avatar>}
         
         </Badge>
         <Typography variant="h4" style={{marginTop:'85px',marginLeft:'85px'}}>{props.firstname} {props.lastname}</Typography>
+     
         </CardContent>
        
     </Card>
