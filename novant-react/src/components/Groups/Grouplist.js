@@ -24,6 +24,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Card from '@material-ui/core/Card';
 import authService from '../../services/auth.service';
 
+import Groupcreate from './Groupcreate';
 const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
@@ -90,25 +91,7 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles()
     const [state, setState] = useState("0") 
     const [open, setOpen] = React.useState(false);
-    const user = authService.getCurrentUser() ;
-    const userid = user['id'];
-
-   
-   
     
-    /*
-    state = {  
-      groupname: '',
-  };
-    
-  
-   
-  /* 
-   onChangeGroupname(e) {
-      setState({
-        groupname: e.target.value,
-      });
-    }*/
     
 
   const handleOpen = () => {
@@ -172,22 +155,12 @@ return(<>
         <Fade in={open}>
           <div className={classes.paper} style={{display:'flex',flexDirection:'row'}}>
            <div style={{width:'100%',height:'100%'}}>
-  <div style={{position:'relative',top:'25%'}}>   <div style={{textAlign:'center',marginRight:'30px'}}  ><h2>Create your group</h2></div> 
+  <div style={{position:'relative',top:'25%'}}>   <div style={{textAlign:'center',marginRight:'80px'}}  ><h2>Create your group</h2></div> 
 <div style={{textAlign:'center',width:'80%'}}  >
-           <FormControl style={{width:'100%'}} >  
-  <InputLabel htmlFor="my-input" style={{fontSize:'20px'}}>Group name</InputLabel>
-  <Input id="my-input" aria-describedby="my-helper-text"   />
-  </FormControl></div><div style={{textAlign:'center',width:'80%'}} >
-  <FormControl style={{width:'100%'}} >  
-  <InputLabel htmlFor="my-input2" style={{fontSize:'20px'}}>Invite Friends</InputLabel>
-  <Input id="my-input2" aria-describedby="my-helper-text"  />
-  <FormHelperText id="my-helper-text" >Enter names or email addresses</FormHelperText>
-</FormControl>
+         <Groupcreate></Groupcreate>
 </div>
 <div style={{textAlign:'center'}}>
-<Button variant="contained" disabled  size='Large'  >
-  Create
-</Button>
+
 </div></div>   
 </div><div style={{width:'100%'}}>
 <Card style={{width:'100%',height:'100%'}}>
