@@ -10,7 +10,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -19,15 +18,14 @@ import FavoriteBorderTwoToneIcon from '@material-ui/icons/FavoriteBorderTwoTone'
 import ChatBubbleOutlineTwoToneIcon from '@material-ui/icons/ChatBubbleOutlineTwoTone';
 import Divider from '@material-ui/core/Divider';
 import Comment from '../Comment';
-import SkeletonComment from '../SkeletonComment';
 import PostComment from '../PostComment';
 import CodeComment from '../CodeComment';
 import { useLazyQuery, gql } from '@apollo/client';
-import Skeleton from '@material-ui/lab/Skeleton';
-import Alert from '@material-ui/lab/Alert';
 import ShowEditor from './ShowEditor';
 import { ButtonGroup, Chip } from '@material-ui/core';
 import SnackbarPost from '../SnackbarPost';
+import UpdatedComment from './UpdatedComment';
+import UpdatedPostComment from './UpdatedPostComment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -117,6 +115,9 @@ export default function UpdatedFeed(props) {
   const [noComment, setNoComment] = React.useState(false);
   const [interaction, setInteraction] = React.useState('');
   var delta = Math.round((+new Date() - props?.post?.created_at) / 1000);
+  console.log(
+    'http://localhost:3001/uploads/' + props?.post?.user?.profileimage
+  );
 
   var minute = 60,
     hour = minute * 60,
@@ -187,9 +188,10 @@ export default function UpdatedFeed(props) {
             aria-label='recipe'
             variant='rounded'
             className={classes.rounded}
-          >
-            H
-          </Avatar>
+            src={
+              'http://localhost:3001/uploads/' + props?.post?.user?.profileimage
+            }
+          ></Avatar>
         }
         action={
           <IconButton aria-label='settings'>
@@ -297,10 +299,10 @@ export default function UpdatedFeed(props) {
           </Typography> */}
 
           {props?.post?.comments?.map((comment) => (
-            <Comment key={comment.id} comment={comment}></Comment>
+            <UpdatedComment key={comment.id} comment={comment}></UpdatedComment>
           ))}
           {interaction === 'comment' && (
-            <PostComment user={props.user}></PostComment>
+            <UpdatedPostComment user={props.user}></UpdatedPostComment>
           )}
         </CardContent>
       </Collapse>

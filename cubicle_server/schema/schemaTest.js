@@ -48,7 +48,7 @@ const CommentType = new GraphQLObjectType({
   name: 'Comment',
   fields: () => ({
     id: { type: GraphQLID },
-    userId: { type: GraphQLString },
+    userId: { type: GraphQLID },
     postId: { type: GraphQLID },
     type: { type: GraphQLString },
     description: { type: GraphQLString },
@@ -181,6 +181,27 @@ const Mutation = new GraphQLObjectType({
           created_at: args.created_at,
         });
         return post.save();
+      },
+    },
+    addComment: {
+      type: PostType,
+      args: {
+        //GraphQLNonNull make these field required
+        userId: { type: new GraphQLNonNull(GraphQLID) },
+        postId: { type: new GraphQLNonNull(GraphQLID) },
+        type: { type: GraphQLString },
+        description: { type: new GraphQLNonNull(GraphQLString) },
+        created_at: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        let comment = new Comment({
+          userId: args.userId,
+          postId: args.postId,
+          type: args.type,
+          description: args.description,
+          created_at: args.created_at,
+        });
+        return comment.save();
       },
     },
     // addBook: {

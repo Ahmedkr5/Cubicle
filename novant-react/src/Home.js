@@ -23,6 +23,7 @@ import SkeletonFeed from './components/Posts/skeletonFeed';
 import Editor from './components/Posts/Editor';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import SnackbarPost from './components/Posts/SnackbarPost';
+import StillEmtySVG from './components/Posts/updatedFeed/StillEmptySVG';
 
 const FEED_QUERY = gql`
   {
@@ -36,15 +37,18 @@ const FEED_QUERY = gql`
         firstname
         lastname
         email
+        profileimage
       }
       comments {
         id
         type
         description
+        created_at
         user {
           firstname
           lastname
           email
+          profileimage
         }
       }
     }
@@ -60,6 +64,7 @@ function Home() {
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [offer, setOffer] = React.useState(0);
 
   const handleCallback = (childData) => {
     setOpen(childData);
@@ -154,7 +159,7 @@ function Home() {
                 {openSnackbar && (
                   <SnackbarPost
                     parentCallbackSnackbar={handleCallbackSnackbar}
-                    message={'You are editing a new post ✍'}
+                    message={'You are editing a new post ✍🏻'}
                   />
                 )}
                 {/* <InputBase
@@ -280,17 +285,19 @@ function Home() {
                       {data.posts
                         .filter((post) => post.type.includes('Offer'))
                         .map(
-                          (post) => (
+                          (post) => {
+                            setOffer(offer++);
                             <UpdatedFeed
                               image='../../assets/images/users/2.jpg'
                               key={post.id}
                               post={post}
                               user={user}
-                            ></UpdatedFeed>
-                          )
+                            ></UpdatedFeed>;
+                          }
 
                           // <Link key={link.id} link={link} />
                         )}
+                      {offer === 0 ? <StillEmtySVG /> : null}
                     </>
                   )}
                 </>

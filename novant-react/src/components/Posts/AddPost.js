@@ -122,7 +122,7 @@ const ADD_POST = gql`
   mutation AddTodo(
     $userId: ID!
     $type: String!
-    $tags: [String!]!
+    $tags: [String]
     $description: String!
     $created_at: String!
   ) {
@@ -177,6 +177,7 @@ export default function AddPost(props) {
     //   created_at: Date.now(),
     // });
     props.parentCallback(false);
+    window.scrollTo(0, 0);
   };
 
   const handleTags = (childData) => {
@@ -280,9 +281,9 @@ export default function AddPost(props) {
         <ButtonGroup
           className={classes.Buttons}
           style={{ width: '100%' }}
-          disableElevation
+          disableelevation
           variant='text'
-          fullWidth
+          fullwidth
         >
           <Button
             // className={classes.Button}

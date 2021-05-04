@@ -184,6 +184,8 @@ export default function NewFeed(props) {
     props.parentCallback(false);
   };
 
+  console.log(props?.userImage);
+
   return (
     <>
       <div className={classes.root}>
@@ -191,9 +193,8 @@ export default function NewFeed(props) {
           aria-label='recipe'
           variant='rounded'
           className={classes.rounded}
-        >
-          H
-        </Avatar>
+          src={props?.userImage}
+        ></Avatar>
         <Button
           className={classes.btn}
           variant='outlined'
