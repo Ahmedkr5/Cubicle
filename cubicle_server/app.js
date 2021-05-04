@@ -4,6 +4,7 @@ const schema = require('./schema/schema');
 const schemaTest = require('./schema/schemaTest');
 const schemaEditorUpdate = require('./schema/schemaEditorUpdate');
 const schemaBusiness = require('./schema/schemaBusiness');
+const schemaQuiz = require('./schema/schemaQuiz');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
 require('dotenv').config(); //for video call
@@ -80,6 +81,14 @@ app.use(
   '/graphqlBusiness',
   graphqlHTTP({
     schema: schemaBusiness,
+    graphiql: true,
+  })
+);
+
+app.use(
+  '/graphqlQuiz',
+  graphqlHTTP({
+    schema: schemaQuiz,
     graphiql: true,
   })
 );
