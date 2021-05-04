@@ -30,8 +30,10 @@ const [state, setState] = useState("0")
 const [value, setValue] = React.useState(0);
 const currentuser = authService.getCurrentUser() ;
 const userid = props.match.params.id ;
-console.log(userid)
+
+
 useEffect(() => {
+  
   const payment_token = window.location.href
   var a = payment_token.indexOf("=")
   var b =payment_token.indexOf("&")

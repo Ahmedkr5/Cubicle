@@ -11,6 +11,7 @@ import experienceService from '../../services/experience.service';
 import axios from 'axios';
 import { Form } from 'formik';
 import authService from '../../services/auth.service';
+import { useApi } from '../../hooks/useApi';
 
 
 
@@ -27,6 +28,12 @@ const useStyles = makeStyles((theme)=>({
 }));
 
 export default function ProfileCard(props) {
+  const [userProf, err1, reload1] = useApi('showUser/'+ props.userid);
+var coins = userProf?.map((prof) =>
+    prof.Coins 
+    );
+    console.log(coins)
+
   const currentuser = authService.getCurrentUser() ;
   const classes = useStyles();
   const [CoverImage, setCoverImage] = useState('');
@@ -131,19 +138,9 @@ const [selectedProfileImage, setselectedProfileImage] = useState(null);
 </React.Fragment>
 
 }
-<div style={{ display: open }} >
-    
-                                        <Lightbox
-                                            medium={srcImage}
-                                            //  large={}
-                                            onClose={closeLightbox}
-                                            >
 
-                                            </Lightbox>
-
-                                    </div>
     <CardContent style={{display: 'flex',flexDirection:'row', alignItems:'center' ,marginTop:'-100px',float:'left',marginLeft:'100px'}}>
-        <Badge badgeContent={"Level 10"} color="primary">
+        <Badge badgeContent={coins} max={10000} color="primary">
         {props.profileimage=="default profile image" && <UIAvatar name={name} className={classes.rad} color='#551a8b' ></UIAvatar>}
         {props.profileimage !=="default profile image" && <Avatar           onClick={() => showL("http://localhost:3001/uploads/" + props.profileimage)}  style={{ maxHeight: '100%', maxWidth: '100%', cursor: 'pointer' }}  src={profileimage} className={classes.rad} color='#551a8b' ></Avatar>}
         

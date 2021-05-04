@@ -43,6 +43,8 @@ class ExperienceService {
          profileimage,
       })
       .then(response => {
+        var token = response.data.token;
+            localStorage.setItem("token", token);
         return response.data;
       });
   }
