@@ -26,6 +26,8 @@ import { useLazyQuery, gql } from '@apollo/client';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Alert from '@material-ui/lab/Alert';
 import ShowEditor from './ShowEditor';
+import { ButtonGroup, Chip } from '@material-ui/core';
+import SnackbarPost from '../SnackbarPost';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
+    borderRadius: '5px',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
@@ -81,6 +84,18 @@ const useStyles = makeStyles((theme) => ({
   content: {
     textAlign: 'left',
   },
+  Buttons: {
+    alignItems: 'stretch',
+    width: '300px',
+    minWidth: '300px',
+    backgroundColor: 'transparent',
+    color: 'trasparent',
+  },
+  chip: {
+    backgroundColor: '#1877F2',
+    marginRight: '1%',
+    marginBottom: '1%',
+  },
 }));
 
 const COMMENT_QUERY = gql`
@@ -101,6 +116,30 @@ export default function UpdatedFeed(props) {
   const [expanded, setExpanded] = React.useState(false);
   const [noComment, setNoComment] = React.useState(false);
   const [interaction, setInteraction] = React.useState('');
+  var delta = Math.round((+new Date() - props?.post?.created_at) / 1000);
+
+  var minute = 60,
+    hour = minute * 60,
+    day = hour * 24,
+    week = day * 7;
+
+  var fuzzy;
+
+  if (delta < 30) {
+    fuzzy = 'just now.';
+  } else if (delta < minute) {
+    fuzzy = delta + ' seconds ago.';
+  } else if (delta < 2 * minute) {
+    fuzzy = 'a minute ago.';
+  } else if (delta < hour) {
+    fuzzy = Math.floor(delta / minute) + ' minutes ago.';
+  } else if (Math.floor(delta / hour) == 1) {
+    fuzzy = '1 hour ago.';
+  } else if (delta < day) {
+    fuzzy = Math.floor(delta / hour) + ' hours ago.';
+  } else if (delta < day * 2) {
+    fuzzy = 'yesterday';
+  }
 
   const handleExpandClick = () => {
     if (props?.post?.comments.length > 0) {
@@ -168,51 +207,63 @@ export default function UpdatedFeed(props) {
               </strong>
             </a>
             <a href='#' onClick={preventDefault} className={classes.p}>
-              <span> {props?.post?.created_at} </span>
+              <span> {fuzzy} </span>
             </a>
           </div>
         }
       />
       {/* <Divider variant='middle' /> */}
 
-      <CardContent>
+      <CardContent style={{ paddingLeft: '10%' }}>
+        <div className={classes.chips}>
+          {props?.post?.tags.map((tag, index) => (
+            <Chip
+              key={index}
+              label={tag.toUpperCase()}
+              color='primary'
+              className={classes.chip}
+            />
+          ))}
+        </div>
         <ShowEditor data={props?.post?.description}></ShowEditor>
       </CardContent>
 
       <Divider variant='middle' />
       <CardActions disableSpacing>
-        <Button
-          aria-label='add to favorites'
-          startIcon={<FavoriteBorderTwoToneIcon />}
+        <ButtonGroup
+          className={classes.Buttons}
+          style={{ width: '100%' }}
+          disableElevation
+          variant='text'
+          fullWidth
         >
-          React
-        </Button>
-        <Button
-          onClick={handleCommentClick}
-          aria-label='share'
-          startIcon={<ChatBubbleOutlineTwoToneIcon />}
-        >
-          Comment
-        </Button>
-        {noComment && (
-          <Alert
-            style={{ float: 'right', justifySelf: 'center' }}
-            variant='outlined'
-            severity='info'
+          <Button
+            style={{ border: '0px' }}
+            aria-label='add to favorites'
+            startIcon={<FavoriteBorderTwoToneIcon />}
           >
-            No comment !
-          </Alert>
-        )}
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label='show more'
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+            React
+          </Button>
+          <Button
+            style={{ border: '0px' }}
+            onClick={handleCommentClick}
+            aria-label='share'
+            startIcon={<ChatBubbleOutlineTwoToneIcon />}
+          >
+            Comment
+          </Button>
+          {noComment && <SnackbarPost message={'Still no comment 💬'} />}
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label='show more'
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </ButtonGroup>
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <Divider variant='middle' />
