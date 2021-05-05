@@ -24,6 +24,7 @@ const required = (value2) => {
       super(props);
       this.handleCreate = this.handleCreate.bind(this);
       this.onChangegrpname = this.onChangegrpname.bind(this);
+      this.onChangedescription = this.onChangedescription.bind(this);
   
       this.state = {
         groupname: '',
@@ -38,7 +39,11 @@ const required = (value2) => {
           groupname: e.target.value,
         });
       }
-     
+    onChangedescription(e) {
+        this.setState({
+          description: e.target.value,
+        });
+      }
 
     handleCreate(e) {
         e.preventDefault();
@@ -49,7 +54,7 @@ const required = (value2) => {
     if (this.checkBtn.context._errors.length === 0) {
        
       axios.post("http://localhost:3001/groups/" + userid +"/newgroup", {
-        groupname :this.state.groupname,
+        groupname :this.state.groupname,description:this.state.description,
         Owner :userid})
         .then(response => {
          var dad =response.data['_id'];
@@ -70,7 +75,7 @@ const required = (value2) => {
         }}
       > <br></br><br></br>
         <div className='form-group'>
-          
+        <label>Group name</label>
           <Input
             
             type='text'
@@ -81,7 +86,18 @@ const required = (value2) => {
             validations={[required]}
           />
         </div>
-     
+        <div className='form-group'>
+          <label>Description</label>
+          <Input
+            
+            type='text'
+            className='form-control'
+            name='Description'
+            value={this.state.description}
+            onChange={this.onChangedescription}
+            validations={[required]}
+          />
+        </div>
         <div className='form-group'>
               <button
                 className='btn btn-primary btn-block'

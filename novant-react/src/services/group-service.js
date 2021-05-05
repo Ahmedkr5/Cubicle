@@ -5,9 +5,9 @@ const API_URL = "http://localhost:3001/groups/";
 const user = authService.getCurrentUser() ;
 const userid = user['id'];
 class groupservice {
-addgroup(groupname,Owner) {
+addgroup(groupname,Owner,description) {
     return axios.post(API_URL + userid +"/newgroup", {
-    groupname,
+    groupname,description,
     Owner})
     .then(response => {
       return response;
@@ -23,6 +23,7 @@ editgroupimage(groupimage,groupid) {
       return response.data;
     });
 }
+
 
 }
   export default new groupservice();
