@@ -5,7 +5,7 @@ import { red } from '@material-ui/core/colors';
 import IconButton from '@material-ui/core/IconButton';
 import Editor from '../Editor';
 import PostAddTwoToneIcon from '@material-ui/icons/PostAddTwoTone';
-import { useMutation, gql } from '@apollo/client';
+import { useLazyQuery, useMutation, gql } from '@apollo/client';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,6 +71,16 @@ const ADD_COMMENT = gql`
   }
 `;
 
+const COMMENT_QUERY = gql`
+  {
+    comment(id: $id) {
+      type
+      description
+      created_at
+    }
+  }
+`;
+
 export default function UpdatedPostComment(props) {
   const wrapper = React.createRef();
 
@@ -87,15 +97,16 @@ export default function UpdatedPostComment(props) {
   const handleComment = () => {
     addComment({
       variables: {
-        userId: props.user.id.toString(),
-        postId: props.post.id,
+        userId: props.user.id,
+        postId: props.postId,
         description: JSON.stringify(descritption),
         created_at: Date.now().toString(),
       },
     });
+    props.callbackComment();
   };
 
-  console.log(props.user);
+  console.log(props.user.id);
 
   return (
     <div className={classes.root}>

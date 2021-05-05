@@ -34,6 +34,7 @@ const FEED_QUERY = gql`
       description
       created_at
       user {
+        id
         firstname
         lastname
         email
@@ -56,7 +57,7 @@ const FEED_QUERY = gql`
 `;
 
 function Home() {
-  const { data, loading, error } = useQuery(FEED_QUERY, {
+  const { data, loading, error, refetch } = useQuery(FEED_QUERY, {
     pollInterval: 5000,
   });
   const [state, setState] = useState('0');
@@ -76,6 +77,10 @@ function Home() {
 
   const handleCallbackSnackbar = (childData) => {
     setOpenSnackbar(childData);
+  };
+
+  const handleCallbackAddedPost = (childDatat) => {
+    refetch();
   };
 
   const user = authService.getCurrentUser();
@@ -132,6 +137,7 @@ function Home() {
                     onClick={() => {
                       if (!open) {
                         setState('0');
+                        refetch();
                       }
                     }}
                     label='Feeds'
@@ -141,6 +147,7 @@ function Home() {
                     onClick={() => {
                       if (!open) {
                         setState('1');
+                        refetch();
                       }
                     }}
                     label='Problems'
@@ -150,6 +157,7 @@ function Home() {
                     onClick={() => {
                       if (open === false) {
                         setState('2');
+                        refetch();
                       }
                     }}
                     label='Offers'
@@ -179,6 +187,7 @@ function Home() {
                     }}
                   >
                     <NewProblemDialog
+                      CallbackAddedPost={handleCallbackAddedPost}
                       parentCallback={handleCallback}
                       parentCallbackDialog={handleCallbackDialog}
                       user={user}
@@ -286,7 +295,6 @@ function Home() {
                         .filter((post) => post.type.includes('Offer'))
                         .map(
                           (post) => {
-                            setOffer(offer++);
                             <UpdatedFeed
                               image='../../assets/images/users/2.jpg'
                               key={post.id}
@@ -297,7 +305,17 @@ function Home() {
 
                           // <Link key={link.id} link={link} />
                         )}
-                      {offer === 0 ? <StillEmtySVG /> : null}
+                      {data.posts.filter((post) => post.type.includes('Offer'))
+                        .length === 0 ? (
+                        <StillEmtySVG />
+                      ) : (
+                        console.log(
+                          data.posts.filter((post) =>
+                            post.type.includes('Offer')
+                          ).length
+                        )
+                      )}
+                      <SkeletonFeed></SkeletonFeed>
                     </>
                   )}
                 </>

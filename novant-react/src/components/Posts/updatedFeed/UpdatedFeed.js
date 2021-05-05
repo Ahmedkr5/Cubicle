@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import clsx from 'clsx';
@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
 
 const COMMENT_QUERY = gql`
   {
-    comment(id: $id) {
+    comments(id: $id) {
       type
       description
       created_at
@@ -109,7 +109,15 @@ const COMMENT_QUERY = gql`
 const preventDefault = (event) => event.preventDefault();
 
 export default function UpdatedFeed(props) {
-  const [getComments, { loading, error, data }] = useLazyQuery(COMMENT_QUERY);
+  const [getComments, { loading, error, newComments }] = useLazyQuery(
+    COMMENT_QUERY,
+    {
+      variables: {
+        $id: props?.post?.id,
+      },
+      pollInterval: 100,
+    }
+  );
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [noComment, setNoComment] = React.useState(false);
@@ -172,6 +180,11 @@ export default function UpdatedFeed(props) {
     }
   };
 
+  const handleNewComment = () => {
+    getComments();
+  };
+  console.log(props?.post?.user?.id);
+
   return (
     // <div className={classes.feed}>
     //   <Paper>
@@ -200,7 +213,7 @@ export default function UpdatedFeed(props) {
         }
         title={
           <div className={classes.UserNameDate}>
-            <a href='#' onClick={preventDefault} className={classes.p}>
+            <a href={`/profile/${props?.post?.user?.id}`} className={classes.p}>
               <strong>
                 <span>
                   {' '}
@@ -301,8 +314,19 @@ export default function UpdatedFeed(props) {
           {props?.post?.comments?.map((comment) => (
             <UpdatedComment key={comment.id} comment={comment}></UpdatedComment>
           ))}
+          {newComments &&
+            newComments.map((comment) => {
+              <UpdatedComment
+                key={comment.id}
+                comment={comment}
+              ></UpdatedComment>;
+            })}
           {interaction === 'comment' && (
-            <UpdatedPostComment user={props.user}></UpdatedPostComment>
+            <UpdatedPostComment
+              postId={props?.post?.id}
+              user={props.user}
+              callbackComment={handleNewComment}
+            ></UpdatedPostComment>
           )}
         </CardContent>
       </Collapse>

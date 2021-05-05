@@ -48,7 +48,13 @@ const CommentType = new GraphQLObjectType({
   name: 'Comment',
   fields: () => ({
     id: { type: GraphQLID },
-    userId: { type: GraphQLID },
+    userId: {
+      type: UserType,
+      resolve(parent, args) {
+        // console.log(parent.userId);
+        return User.findById(parent.userId);
+      },
+    },
     postId: { type: GraphQLID },
     type: { type: GraphQLString },
     description: { type: GraphQLString },
@@ -139,7 +145,7 @@ const RootQuery = new GraphQLObjectType({
          * With the help of lodash library(_), we are trying to find car with id from 'CarsArray'
          * and returning its required data to calling tool.
          */
-        return Post.find({});
+        return Post.find({}).sort('-created_at');
       }, //resolve function
     }, //car query ends here
     comments: {

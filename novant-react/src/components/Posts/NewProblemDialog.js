@@ -184,7 +184,7 @@ export default function NewFeed(props) {
     props.parentCallback(false);
   };
 
-  console.log(props?.userImage);
+  console.log(props?.user);
 
   return (
     <>
@@ -193,7 +193,7 @@ export default function NewFeed(props) {
           aria-label='recipe'
           variant='rounded'
           className={classes.rounded}
-          src={props?.userImage}
+          src={'http://localhost:3001/uploads/' + props?.user?.profileimage}
         ></Avatar>
         <Button
           className={classes.btn}
