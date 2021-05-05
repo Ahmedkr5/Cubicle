@@ -25,6 +25,7 @@ const required = (value2) => {
       super(props);
       this.handleCreate = this.handleCreate.bind(this);
       this.onChangegrpname = this.onChangegrpname.bind(this);
+      this.onChangedescription = this.onChangedescription.bind(this);
        user = authService.getCurrentUser() ;
       userid = user['id'];
       this.state = {
@@ -55,7 +56,8 @@ const required = (value2) => {
     if (this.checkBtn.context._errors.length === 0) {
        
       axios.post("http://localhost:3001/groups/" + userid +"/newgroup", {
-        groupname :this.state.groupname,description:this.state.description,
+        groupname :this.state.groupname,
+        description:this.state.description,
         Owner :userid})
         .then(response => {
          var dad =response.data['_id'];
