@@ -48,7 +48,13 @@ const CommentType = new GraphQLObjectType({
   name: 'Comment',
   fields: () => ({
     id: { type: GraphQLID },
-    userId: { type: GraphQLString },
+    userId: {
+      type: UserType,
+      resolve(parent, args) {
+        // console.log(parent.userId);
+        return User.findById(parent.userId);
+      },
+    },
     postId: { type: GraphQLID },
     type: { type: GraphQLString },
     description: { type: GraphQLString },
@@ -139,7 +145,7 @@ const RootQuery = new GraphQLObjectType({
          * With the help of lodash library(_), we are trying to find car with id from 'CarsArray'
          * and returning its required data to calling tool.
          */
-        return Post.find({});
+        return Post.find({}).sort('-created_at');
       }, //resolve function
     }, //car query ends here
     comments: {
@@ -181,6 +187,27 @@ const Mutation = new GraphQLObjectType({
           created_at: args.created_at,
         });
         return post.save();
+      },
+    },
+    addComment: {
+      type: PostType,
+      args: {
+        //GraphQLNonNull make these field required
+        userId: { type: new GraphQLNonNull(GraphQLID) },
+        postId: { type: new GraphQLNonNull(GraphQLID) },
+        type: { type: GraphQLString },
+        description: { type: new GraphQLNonNull(GraphQLString) },
+        created_at: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        let comment = new Comment({
+          userId: args.userId,
+          postId: args.postId,
+          type: args.type,
+          description: args.description,
+          created_at: args.created_at,
+        });
+        return comment.save();
       },
     },
     // addBook: {

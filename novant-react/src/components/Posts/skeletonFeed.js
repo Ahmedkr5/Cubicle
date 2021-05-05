@@ -108,18 +108,14 @@ export default function Feed(props) {
 
       <CardContent style={{ height: '200px' }}></CardContent>
       <Divider variant='middle' />
-      <CardActions>
+      <CardActions style={{ paddingTop: '0%', paddingBottom: '1%' }}>
         <Skeleton
-          height={40}
-          width={100}
-          style={{ marginRight: '0px', marginLeft: '1%' }}
+          height={60}
+          width={250}
+          style={{ marginRight: '0px', marginLeft: '1%', marginTop: '0%' }}
         />
-        <Skeleton height={40} width={100} />
-        <Skeleton
-          height={40}
-          width={40}
-          style={{ marginRight: '0px', marginLeft: '50%' }}
-        />
+        <Skeleton height={60} width={250} />
+        <Skeleton height={60} width={40} style={{ marginRight: '0px' }} />
       </CardActions>
       <Collapse timeout='auto' unmountOnExit>
         <Divider variant='middle' />

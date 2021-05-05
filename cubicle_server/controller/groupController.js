@@ -9,7 +9,8 @@ router.post('/:id/newgroup', function (req, res,next) {
     Group.create({
         groupname : req.body.groupname,
         description: req.body.description,
-        Owner: req.params.id,  
+        Owner: req.params.id,
+        members: req.body.members, 
         }, 
         function (err, gr) {
             if (err) return res.status(500).send("error group");
@@ -83,10 +84,22 @@ router.get('/grouplist', function (req, res, next) {
 
 
 
+router.get('/grouplist/:id', async function (req, res, next) {
+     
+    try {
+        const findMembers = await Group.find( { members: req.params.id } )
+       console.log(req.params.id);
+        if(findMembers == null ){
+            return res.status(404).json({message: 'cant find group'})
+        }
+        console.log(findMembers);
+        return res.status(200).json(findMembers)
+        
+    } catch (err) {
+        return res.status(400)
 
-
-
-
+    }
+});
 
 
 

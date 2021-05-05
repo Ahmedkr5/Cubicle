@@ -7,30 +7,24 @@ import MidSidebar from './MidSidebar';
 import BottomSidebar from './BottomSidebar';
 import SearchAppBar from '../Navbar/Navbar';
 
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    
-    marginTop:'15px',
-    position:'fixed',
-    height :'100%',
+    marginTop: '15px',
+    position: 'fixed',
+    height: '100%',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
   },
   drawer: {
-    height:'100%',
+    height: '100%',
     flexShrink: 0,
- 
   },
   drawerPaper: {
-    background: "transparent",
-    height:'100%',
-
+    background: 'transparent',
+    height: '100%',
   },
-  drawerContainer: {
-  },
+  drawerContainer: {},
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -43,17 +37,17 @@ export default function Sidebar() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      
+
       <div
         className={classes.drawer}
-        variant="permanent"
+        variant='permanent'
         classes={{
           paper: classes.drawerPaper,
         }}
       >
-          <TopSidebar></TopSidebar>
-          <MidSidebar></MidSidebar>
-<BottomSidebar></BottomSidebar>     
+        <TopSidebar></TopSidebar>
+        <MidSidebar></MidSidebar>
+        <BottomSidebar></BottomSidebar>
       </div>
     </div>
   );
