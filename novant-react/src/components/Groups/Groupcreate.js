@@ -8,9 +8,10 @@ import groupservice from '../../services/group-service';
 import CheckButton from 'react-validation/build/button';
 import { createBrowserHistory } from 'history';
 export const history = createBrowserHistory();
-const user = authService.getCurrentUser() ;
-const userid = user['id'];
+var user 
+var userid 
 const required = (value2) => {
+  
   if (!value2) {
     return (
       <div className='alert alert-danger' role='alert'>
@@ -19,12 +20,13 @@ const required = (value2) => {
     );
   }};
   export default class Groupcreate extends Component {
-
+   
     constructor(props) {
       super(props);
       this.handleCreate = this.handleCreate.bind(this);
       this.onChangegrpname = this.onChangegrpname.bind(this);
-  
+       user = authService.getCurrentUser() ;
+      userid = user['id'];
       this.state = {
         groupname: '',
         
@@ -48,7 +50,7 @@ const required = (value2) => {
   
     if (this.checkBtn.context._errors.length === 0) {
        
-        groupservice.addgroup(this.state.groupname, userid ).then(
+        groupservice.addgroup(this.state.groupname, this.userid ).then(
           () => {
             history.push('/Home');
             window.location.reload();
