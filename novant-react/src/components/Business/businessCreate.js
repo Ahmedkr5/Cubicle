@@ -4,7 +4,7 @@ import setState  from "react";
 import authService from '../../services/auth.service';
 import React, { Component } from 'react';
 import Form from 'react-validation/build/form';
-import groupservice from '../../services/group-service';
+import businessservice from '../../services/business-service';
 import CheckButton from 'react-validation/build/button';
 import { createBrowserHistory } from 'history';
 export const history = createBrowserHistory();
@@ -25,7 +25,7 @@ const required = (value2) => {
     constructor(props) {
       super(props);
       this.handleCreate = this.handleCreate.bind(this);
-      this.onChangegrpname = this.onChangegrpname.bind(this);
+      this.onChangebusinessname = this.onChangebusinessname.bind(this);
   
       this.state = {
         groupname: '',
@@ -38,9 +38,9 @@ const required = (value2) => {
 
 
     
-    onChangegrpname(e) {
+    onChangebusinessname(e) {
         this.setState({
-          groupname: e.target.value,
+            businessname: e.target.value,
         });
       }
      
@@ -53,9 +53,9 @@ const required = (value2) => {
   
     if (this.checkBtn.context._errors.length === 0) {
        
-        groupservice.addgroup(this.state.groupname, userid ).then(
+        businessservice.addbusiness(this.state.businessname, userid ).then(
           () => {
-            history.push('/Home');
+            history.push('/Business');
             window.location.reload();
           },
           (error) => {
@@ -96,9 +96,9 @@ const required = (value2) => {
             
             type='text'
             className='form-control'
-            name='Groupname'
-            value={this.state.groupname}
-            onChange={this.onChangegrpname}
+            name='Businessname'
+            value={this.state.businessname}
+            onChange={this.onChangebusinessname}
             validations={[required]}
           />
         </div>

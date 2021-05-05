@@ -33,6 +33,20 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    height:'700px',
+    width:'900px',
+    backgroundColor: theme.palette.background.paper,
+    border: '2px  #000',
+    borderRadius:'20px',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
   inputRoot: {
     color: "inherit",
   },
