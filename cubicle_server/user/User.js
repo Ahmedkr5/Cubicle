@@ -15,10 +15,7 @@ var UserSchema = new mongoose.Schema({
     type:[{ name: String, id: String}],
     default:[]
   },
-    Groups: {
-      type:[{ name: String,image: String, id:String}],
-      default:[]
-    },
+    
     sentRequests:{
       type:[{ name: String, id: String}],
       default:[]

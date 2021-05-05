@@ -30,7 +30,7 @@ const required = (value2) => {
       userid = user['id'];
       this.state = {
         groupname: '',
-        
+        description:'',
         loading: false,
         message: '',
       };

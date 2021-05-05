@@ -5,6 +5,7 @@ var groupSchema = new mongoose.Schema({
     groupimage: String,
     description : String,
     Owner:String,
+    members:[String],
       
     
  });
