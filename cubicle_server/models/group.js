@@ -5,7 +5,7 @@ var groupSchema = new mongoose.Schema({
     groupimage: String,
     description : String,
     Owner:String,
-         
+      
     
  });
  module.exports = mongoose.model('groups', groupSchema);

@@ -64,7 +64,7 @@ console.log(groupProf);
 
     {state == "0" &&  <div style={{display:'flex',width:'100%' ,flexDirection:'column'}}><Feed></Feed> <Divider orientation='horizontal'/><Feed></Feed> <Feed></Feed></div>}
     {state == "1" && <div style={{backgroundColor:'white',borderRadius:'10px'}}> <Friendsdiv></Friendsdiv></div>}
-    {state == "2" &&  <About></About> }
+    {state == "2" &&  <About desc={groupProf?.description} ></About> }
 
                 </Container>
                 </Col>

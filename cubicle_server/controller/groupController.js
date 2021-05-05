@@ -8,6 +8,7 @@ var User = require('../user/User');
 router.post('/:id/newgroup', function (req, res,next) {
     Group.create({
         groupname : req.body.groupname,
+        description: req.body.description,
         Owner: req.params.id,  
         }, 
         function (err, gr) {

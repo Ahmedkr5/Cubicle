@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import { Input } from '@material-ui/core';
 import setState  from "react";
 import authService from '../../services/auth.service';
@@ -8,10 +8,10 @@ import groupservice from '../../services/group-service';
 import CheckButton from 'react-validation/build/button';
 import { createBrowserHistory } from 'history';
 export const history = createBrowserHistory();
-var user 
-var userid 
+const user = authService.getCurrentUser() ;
+const userid = user['id'];
+
 const required = (value2) => {
-  
   if (!value2) {
     return (
       <div className='alert alert-danger' role='alert'>
@@ -19,15 +19,14 @@ const required = (value2) => {
       </div>
     );
   }};
-  export default class Groupcreate extends Component {
-   
+
+  export default class Businesscreate extends Component {
+
     constructor(props) {
       super(props);
       this.handleCreate = this.handleCreate.bind(this);
       this.onChangegrpname = this.onChangegrpname.bind(this);
-      this.onChangedescription = this.onChangedescription.bind(this);
-       user = authService.getCurrentUser() ;
-      userid = user['id'];
+  
       this.state = {
         groupname: '',
         
@@ -36,16 +35,15 @@ const required = (value2) => {
       };
  
     }
+
+
+    
     onChangegrpname(e) {
         this.setState({
           groupname: e.target.value,
         });
       }
-    onChangedescription(e) {
-        this.setState({
-          description: e.target.value,
-        });
-      }
+     
 
     handleCreate(e) {
         e.preventDefault();
@@ -55,19 +53,34 @@ const required = (value2) => {
   
     if (this.checkBtn.context._errors.length === 0) {
        
-      axios.post("http://localhost:3001/groups/" + userid +"/newgroup", {
-        groupname :this.state.groupname,
-        description:this.state.description,
-        Owner :userid})
-        .then(response => {
-         var dad =response.data['_id'];
-         history.push('/GroupProfile/'+dad);
-         window.location.reload();
-        })
-          
+        groupservice.addgroup(this.state.groupname, userid ).then(
+          () => {
+            history.push('/Home');
+            window.location.reload();
+          },
+          (error) => {
+            const resMessage =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+  
+            this.setState({
+              loading: false,
+              message: resMessage,
+            });
+          }
+        );
+      } else {
+        this.setState({
+          loading: false,
+        });
+      }
     }
-    }
+  
     render() {
+        
       return ( <> 
       
 
@@ -78,7 +91,7 @@ const required = (value2) => {
         }}
       > <br></br><br></br>
         <div className='form-group'>
-        <label>Group name</label>
+          
           <Input
             
             type='text'
@@ -89,18 +102,7 @@ const required = (value2) => {
             validations={[required]}
           />
         </div>
-        <div className='form-group'>
-          <label>Description</label>
-          <Input
-            
-            type='text'
-            className='form-control'
-            name='Description'
-            value={this.state.description}
-            onChange={this.onChangedescription}
-            validations={[required]}
-          />
-        </div>
+     
         <div className='form-group'>
               <button
                 className='btn btn-primary btn-block'

@@ -4,6 +4,7 @@ const schema = require('./schema/schema');
 const schemaTest = require('./schema/schemaTest');
 const schemaEditorUpdate = require('./schema/schemaEditorUpdate');
 const schemaBusiness = require('./schema/schemaBusiness');
+const schemaQuiz = require('./schema/schemaQuiz');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
 require('dotenv').config(); //for video call
@@ -19,9 +20,8 @@ var VideoGrant = AccessToken.VideoGrant;
 const fetch = require('node-fetch');
 var groupController = require('./controller/groupController');
 var UserController = require('./user/UserController');
-var businessController = require('./controller/businessController');
 var AuthController = require('./auth/AuthController');
-var Test2Controller = require('./controller/Test2Controller');
+var businessController = require('./controller/businessController');
 var ExperienceController = require('./experiences/ExperienceController');
 var PostController = require('./experiences/ExperienceController');
 var path = require('path');
@@ -85,6 +85,14 @@ app.use(
   })
 );
 
+app.use(
+  '/graphqlQuiz',
+  graphqlHTTP({
+    schema: schemaQuiz,
+    graphiql: true,
+  })
+);
+
 app.get('/post/link/', function (req, res) {
   // console.log(req);
   var url = req.query.url.toString();
@@ -106,9 +114,8 @@ app.get('/post/link/', function (req, res) {
 
 // frontend calls
 app.use('/users', UserController);
-app.use('/businesses', businessController);
 app.use('/groups', groupController);
-app.use('/Test', Test2Controller);
+app.use('/business', businessController);
 app.use('/experiences', ExperienceController);
 app.use('/api/auth', AuthController);
 app.use(function (req, res, next) {
