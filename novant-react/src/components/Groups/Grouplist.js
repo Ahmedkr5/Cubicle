@@ -172,10 +172,6 @@ return(<>
 </Card>
 
 </div>
-
-
-
-
           </div>
         </Fade>
       </Modal>

@@ -1,78 +1,50 @@
 var express = require('express');
 var router = express.Router();
 
-var Group =require('../models/group');
-var Business =require('../models/Business/business.js');
+var Business =require('../models/Business/business')
 var User = require('../user/User');
 
 //create a group
-router.post('/newgroup', function (req, res,next) {
-    Group.create({
-        groupname : req.body.groupname,
-        Owner: req.body.id,  
+router.post('/business', function (req, res,next) {
+    Business.create({
+        name : req.body.name,
         }, 
-        function (err, Group) {
+        function (err, Business) {
             if (err) return res.status(500).send("error group");
             
-            res.send(Group);
+            res.send(Business);
         
         });
       
 });
 
-//find a group
-router.get('/group/:idgr', function (req, res, next) {
-    Group.findById(req.params.id,function(err,Group){
-        if(err) 
-        res.send("error");
-        else
-        res.send(Group);
-        
-    });
-});
-
-// update group in user
-router.put('/:id/newgroup', function (req, res) {
-
-    User.findByIdAndUpdate(req.params.id,{
-    
-          });
-          
-        
-});
-
-
-
 
 //Get group listing
 router.get('/businesslist', function (req, res, next) {
     Business.find(
-        (err, businesses) =>{
+        (err, test) =>{
         if (err) 
         res.send("err")
         else
-        res.send(businesses);
+        res.send(test);
         
     });
 });
 
+router.put('/business/:id', function (req, res) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    Business.findByIdAndUpdate(req.params.id,{
+        name : req.body.name,
+        members : req.body.members,
+    }, 
+    function (err, Business) {
+        if (err) return res.status(500).send("error updating business");
+        console.log(res);
+        res.send(Business +'business modified');
+          });
+          
+        
+});
 
 
 module.exports = router;
