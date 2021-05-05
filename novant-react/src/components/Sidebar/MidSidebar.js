@@ -79,7 +79,7 @@ export default function MidSidebar() {
             <ListItemText>Friends</ListItemText>
           </ListItemLink>
           <Divider variant='middle' />
-          <ListItemLink style={{ paddingLeft: '15%' }} href='AppChat'>
+          <ListItemLink style={{ paddingLeft: '15%' }} href='/AppChat'>
             <ListItemIcon className={classes.iconWrapper}>
               <MessageOutlined color='#F0F2F5' />
             </ListItemIcon>

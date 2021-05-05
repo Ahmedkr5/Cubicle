@@ -114,9 +114,12 @@ router.put('/:id', function (req, res) {
 router.put('/profile/:id', function (req, res) {
     User.findByIdAndUpdate(req.params.id,{
         profileimage : req.body.profileimage,}, {new: true}, function (err, user) {         
-          res.status(200).send(user);
-});
-});
+            var token = jwt.sign({ id: user._id ,profileimage:user.profileimage,firstname:user.firstname,lastname:user.lastname,email:user.email,adresse:user.adresse,phone:user.phone,birthday:user.datenaissance,description:user.description }, config.secret, {
+                expiresIn: 86400 // expires in 24 hours
+              });
+              res.status(200).send({ auth: true, token: token });
+    });
+    });
 
 router.put('/cover/:id', function (req, res) {
     User.findByIdAndUpdate(req.params.id,{
@@ -135,6 +138,12 @@ router.put('/coins/:id', function (req, res) {
           res.status(200).send(user);
 });
     });
+});
+
+router.get('/a/:name', function (req, res) {
+    User.find({firstname: new RegExp(req.params.name, 'i')}, function (err, user) {         
+          res.status(200).send(user);
+});
 });
     
 

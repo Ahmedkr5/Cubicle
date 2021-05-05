@@ -17,11 +17,17 @@ import RightSidebar from "../rightSideBar/RightSidebar";
 import FriendList from "../Friends/Friendreqlist";
 import Friendsdiv from "../Friends/Friendsdiv";
 import About from './About';
+import { useApi } from "../../hooks/useApi";
 
-function GroupProfile() {
+function GroupProfile(props) {
 const [state, setState] = useState("0") 
 const [value, setValue] = React.useState(0);
 
+const groupid = props.match.params.id ;
+const [groupProf, err1, reload1] = useApi('groups/group/'+ groupid);
+
+
+console.log(groupProf);
 
  return (   
    
@@ -39,7 +45,7 @@ const [value, setValue] = React.useState(0);
 
             <Col xs={6} style={{ display: 'flex' ,marginLeft:'0px', justifyContent: 'center'}} >
                           <Container style={{marginLeft:'0px'}}>
-                            <GroupCard ></GroupCard>
+                            <GroupCard grpid={groupProf?._id} nom={groupProf?.groupname} owner={groupProf?.Owner} groupimage={groupProf?.groupimage}></GroupCard>
 
                 <BottomNavigation
       value={value}

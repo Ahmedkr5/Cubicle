@@ -8,19 +8,21 @@ class groupservice {
 addgroup(groupname,Owner) {
     return axios.post(API_URL + userid +"/newgroup", {
     groupname,
-    Owner
+    Owner})
+    .then(response => {
+      return response;
     });
-  }
 }
 
-/*
 editgroupimage(groupimage,groupid) {
   return axios
-    .put(API_URL +"/groupProfile"+, {
-       profileimage,
+    .put(API_URL +"GroupCover/"+groupid, {
+       groupimage,
     })
     .then(response => {
       return response.data;
     });
-}*/
+}
+
+}
   export default new groupservice();
