@@ -4,7 +4,7 @@ import authService from './auth.service';
 const API_URL = "http://localhost:3001/groups/";
 
 class groupservice {
-addgroup(groupname,Owner) {
+addgroup(groupname,description,Owner) {
   const user = authService.getCurrentUser() ;
 const userid = user['id'];
     return axios.post(API_URL + userid +"/newgroup", {
