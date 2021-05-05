@@ -1,4 +1,4 @@
-
+import axios from "axios";
 import { Input } from '@material-ui/core';
 import setState  from "react";
 import authService from '../../services/auth.service';
@@ -40,7 +40,11 @@ const required = (value2) => {
           groupname: e.target.value,
         });
       }
-     
+    onChangedescription(e) {
+        this.setState({
+          description: e.target.value,
+        });
+      }
 
     handleCreate(e) {
         e.preventDefault();
@@ -50,32 +54,17 @@ const required = (value2) => {
   
     if (this.checkBtn.context._errors.length === 0) {
        
-        groupservice.addgroup(this.state.groupname, this.userid ).then(
-          () => {
-            history.push('/Home');
-            window.location.reload();
-          },
-          (error) => {
-            const resMessage =
-              (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
-  
-            this.setState({
-              loading: false,
-              message: resMessage,
-            });
-          }
-        );
-      } else {
-        this.setState({
-          loading: false,
-        });
-      }
+      axios.post("http://localhost:3001/groups/" + userid +"/newgroup", {
+        groupname :this.state.groupname,description:this.state.description,
+        Owner :userid})
+        .then(response => {
+         var dad =response.data['_id'];
+         history.push('/GroupProfile/'+dad);
+         window.location.reload();
+        })
+          
     }
-  
+    }
     render() {
       return ( <> 
       
@@ -87,7 +76,7 @@ const required = (value2) => {
         }}
       > <br></br><br></br>
         <div className='form-group'>
-          
+        <label>Group name</label>
           <Input
             
             type='text'
@@ -98,7 +87,18 @@ const required = (value2) => {
             validations={[required]}
           />
         </div>
-     
+        <div className='form-group'>
+          <label>Description</label>
+          <Input
+            
+            type='text'
+            className='form-control'
+            name='Description'
+            value={this.state.description}
+            onChange={this.onChangedescription}
+            validations={[required]}
+          />
+        </div>
         <div className='form-group'>
               <button
                 className='btn btn-primary btn-block'

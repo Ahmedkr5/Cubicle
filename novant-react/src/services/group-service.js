@@ -8,20 +8,23 @@ addgroup(groupname,Owner) {
   const user = authService.getCurrentUser() ;
 const userid = user['id'];
     return axios.post(API_URL + userid +"/newgroup", {
-    groupname,
-    Owner
+    groupname,description,
+    Owner})
+    .then(response => {
+      return response;
     });
-  }
 }
 
-/*
 editgroupimage(groupimage,groupid) {
   return axios
-    .put(API_URL +"/groupProfile"+, {
-       profileimage,
+    .put(API_URL +"GroupCover/"+groupid, {
+       groupimage,
     })
     .then(response => {
       return response.data;
     });
-}*/
+}
+
+
+}
   export default new groupservice();
