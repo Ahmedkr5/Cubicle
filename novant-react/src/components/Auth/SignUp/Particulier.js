@@ -88,7 +88,7 @@ export default class Particulier extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.register(this.state.firstname, this.state.lastname,this.state.email,this.state.password,this.state.datenaissance).then(
         () => {
-          history.push('/login');
+          history.push('/auth');
           window.location.reload();
         },
         (error) => {

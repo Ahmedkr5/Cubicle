@@ -21,6 +21,9 @@ function App() {
       <Route path='/profile/:id' render={(props) => {
                     return ( <Profile {...props } /> )
                 }} />
+        <Route path='/GroupProfile/:id' render={(props) => {
+                    return ( <GroupProfile {...props } /> )
+                }} />
         <Route path='/auth'>
           <Login />
         </Route>
@@ -41,9 +44,7 @@ function App() {
         <Route path='/Home'>
           <Home />
         </Route>
-        <Route path='/GroupProfile'>
-          <GroupProfile />
-        </Route>
+       
         <Route path='/Business'>
           <Business />
         </Route>
