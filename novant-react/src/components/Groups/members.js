@@ -1,5 +1,6 @@
+/* eslint-disable no-lone-blocks */
 import React from 'react';
-import {Typography, Container } from '@material-ui/core';
+import {Typography, Container, useScrollTrigger } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -9,10 +10,15 @@ import Paper from '@material-ui/core/Paper';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
-import  { useState } from "react";
+import  { useState,useEffect } from "react";
 import List from '@material-ui/core/List';
 import { useApi } from "../../hooks/useApi";
 import { createBrowserHistory } from 'history';
+import { useParams } from 'react-router';
+import { Filter } from '@material-ui/icons';
+import MessageService from '../../services/MessageService';
+import axios from "axios";
+import { Promise } from 'mongoose';
 export const history = createBrowserHistory();
 const preventDefault = (event) => event.preventDefault();
 const useStyles = makeStyles((theme) => ({
@@ -38,19 +44,49 @@ const useStyles = makeStyles((theme) => ({
 }));
         
 
-  export default function  Members(props) {
+  export default  function  Members(props) {
     const classes = useStyles();
-    const memb =props.member;
- console.log(memb);
-    /*
-const memb= memb.map((userid)=>
+   
+const userProf = MessageService.getAllUsers();
+   const [users , setUsers] = useState(userProf); 
+   
+
+const users2=axios
+.get('http://localhost:3001/allUsers/', {
+})
+.then(function(response) {
+  
+ return response.data
+  });
+
+
+   
+   useEffect( async () => {
+    await (setUsers(users2));
+  
+    console.log(users2);
+      
+    
+
+}, [props.member]);
 
 
 
-    const [userProf, err1, reload1] = useApi('users/'+ userid);
-);
 
-*/
+
+
+
+
+ 
+    
+
+
+
+
+    
+
+
+
   return(<>
   
 
@@ -70,7 +106,7 @@ const memb= memb.map((userid)=>
          style={{fontWeight:'bold',color:"#050505"}}>
        
   </Link> 
-  <Link href="#" onClick={preventDefault} style={{fontSize:'12px',color:'grey'}} > {memb.join(', ')}
+  <Link href="#" onClick={preventDefault} style={{fontSize:'12px',color:'grey'}} > {props.member}
   </Link>   
   </Typography>
   <div>

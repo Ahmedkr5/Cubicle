@@ -30,7 +30,7 @@ const [groupProf, err1, reload1] = useApi('groups/group/'+ groupid);
 
 
 
-console.log(groupProf?.members);
+
  return (   
    
     <div style={{backgroundColor : '#F0F2F5'}}>

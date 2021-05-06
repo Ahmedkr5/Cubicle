@@ -53,6 +53,7 @@ class ExperienceService {
       .get(API_URL2, {
       })
       .then(function(response) {
+        
        return response.data
         });
   }
@@ -65,12 +66,13 @@ class ExperienceService {
        return response.data
         });
   }
-  getAllUsers(userid) {
+  getAllUsers() {
 
     return axios
       .get(API_URL2+'/allUsers/', {
       })
       .then(function(response) {
+        console.log(response.data);
        return response.data
         });
   }
