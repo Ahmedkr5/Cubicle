@@ -10,7 +10,7 @@ router.post('/:id/newgroup', function (req, res,next) {
         groupname : req.body.groupname,
         description: req.body.description,
         Owner: req.params.id,
-        members: req.body.members, 
+        
         }, 
         function (err, gr) {
             if (err) return res.status(500).send("error group");
@@ -103,7 +103,20 @@ router.get('/grouplist/:id', async function (req, res, next) {
 
 
 
+/*
+router.post('/group/:id', authenticate, (req, res) => {
+    var member = req.body.me;
+    var todo = new Todo();
 
+    todo.content.push(content);
+
+    todo.save(function(err) {
+      if (err) throw err;
+      res.json(todo.toJSON())
+      //I am sending instead of sending the result for testing 
+    });
+
+});*/
 
 
 

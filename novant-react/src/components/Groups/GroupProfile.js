@@ -17,6 +17,7 @@ import RightSidebar from "../rightSideBar/RightSidebar";
 import FriendList from "../Friends/Friendreqlist";
 import Friendsdiv from "../Friends/Friendsdiv";
 import About from './About';
+import Members from './members';
 import { useApi } from "../../hooks/useApi";
 
 function GroupProfile(props) {
@@ -27,8 +28,9 @@ const groupid = props.match.params.id ;
 const [groupProf, err1, reload1] = useApi('groups/group/'+ groupid);
 
 
-console.log(groupProf);
 
+
+console.log(groupProf?.members);
  return (   
    
     <div style={{backgroundColor : '#F0F2F5'}}>
@@ -63,7 +65,7 @@ console.log(groupProf);
     </BottomNavigation>
 
     {state == "0" &&  <div style={{display:'flex',width:'100%' ,flexDirection:'column'}}><Feed></Feed> <Divider orientation='horizontal'/><Feed></Feed> <Feed></Feed></div>}
-    {state == "1" && <div style={{backgroundColor:'white',borderRadius:'10px'}}> <Friendsdiv></Friendsdiv></div>}
+    {state == "1" && <div style={{backgroundColor:'white',borderRadius:'10px'}}> <Members member={groupProf?.members}></Members></div>}
     {state == "2" &&  <About desc={groupProf?.description} ></About> }
 
                 </Container>
