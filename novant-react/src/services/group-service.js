@@ -30,7 +30,7 @@ getAll() {
     .get(API_URL+"/grouplist", {
     })
     .then(function(response) {
-        console.log(response.data);
+        
      return response.data
       });
 }
@@ -40,7 +40,7 @@ getGroup(groupid) {
     .get(API_URL+"/group/"+groupid, {
     })
     .then(function(response) {
-        console.log(response.data);
+        
      return response.data
       });}
 

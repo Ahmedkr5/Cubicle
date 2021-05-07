@@ -72,7 +72,7 @@ class ExperienceService {
       .get(API_URL2+'/allUsers/', {
       })
       .then(function(response) {
-        console.log(response.data);
+      
        return response.data
         });
   }

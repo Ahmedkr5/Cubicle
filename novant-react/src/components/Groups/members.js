@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles();
    
 const userProf = MessageService.getAllUsers();
-   const [users , setUsers] = useState(userProf); 
+   const [users , setUsers] = useState(null); 
    
 
 const users2=axios
@@ -59,31 +59,16 @@ const users2=axios
  return response.data
   });
 
-
-   
+console.log(users2);
+   /*
    useEffect( async () => {
-    await (setUsers(users2));
+     (setUsers(users2));
   
     console.log(users2);
       
     
 
-}, [props.member]);
-
-
-
-
-
-
-
-
- 
-    
-
-
-
-
-    
+}, [props.member]);*/
 
 
 
