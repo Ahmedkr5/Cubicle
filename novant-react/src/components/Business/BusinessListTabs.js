@@ -164,7 +164,7 @@ export default function BusinessListTabs() {
                         style={{ width: "100%", height: "100%" }}
                         className={classes.media}
                         image="../assets/images/groups/group.png"
-                        title="create a group"
+                        title="Create a business"
                       />
                     </Card>
                   </div>
