@@ -11,6 +11,9 @@ import authService from "../../services/auth.service";
 import React, { useState } from 'react';
 import groupService from "../../services/group-service";
 import SettingsIcon from '@material-ui/icons/Settings';
+import { useApi } from "../../hooks/useApi";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Groupbutton from './groupbutton';
 const useStyles = makeStyles((theme)=>({
   media: {
     height: 250,
@@ -28,14 +31,27 @@ const useStyles = makeStyles((theme)=>({
 export default function GroupCard(props) {
   const classes = useStyles();
   const currentuser = authService.getCurrentUser() ;
-  console.log(currentuser['id']);
-  console.log(props?.owner);
-  console.log(props?.grpid);
-  console.log(props?.groupimage);
+
+
   var coverimage ="http://localhost:3001/uploads/"+props.groupimage
   const [CoverImage, setCoverImage] = useState('');
+  const [userProf, reload1] = useApi('users/'+ props.owner);
   const [selectedCoverImage, setselectedCoverImage] = useState(null);
+const userid=currentuser['id'];
+  const [groupreq, setGroupreq] = useState(null);
   
+  
+ /*const handleAdd= (userid) => {
+  
+ setGroupreq(userProf?.groupRequests);
+          
+          console.log(groupreq);
+         const newmem= groupreq.concat({userid :currentuser['id']}); 
+         setGroupreq(newmem);
+        console.log(groupreq);
+//const friends =groupreq
+//setGroupreq({ ...groupreq, list: newList });
+  }*/
   const onChangeHandler = event => {
     setselectedCoverImage(event.target.files[0])
     setCoverImage((event.target.files[0].name))
@@ -58,6 +74,8 @@ export default function GroupCard(props) {
 
 
 
+if(!props?.mem) return null
+
 
 
 
@@ -75,19 +93,12 @@ export default function GroupCard(props) {
         <CardContent style={{display: 'flex',flexDirection:'row', alignItems:'center' }}>
   
         <Typography variant="h4" style={{width:'100%' ,textAlign:'center'}}>{props?.nom}</Typography>
-        {currentuser['id'] !== props?.owner &&
-        <Button  
-            variant="contained"
-            color="primary"
-            size="medium"
-            className={classes.button}
-            startIcon={< AddIcon/>}
-          >
-           send a Request 
-          </Button>
-}
-{currentuser['id'] === props?.owner &&
-   <>
+    
+<Groupbutton idgroup={props?.grpid} mem={props?.mem} owner={props?.owner} ></Groupbutton>
+
+{currentuser['id']=== props?.owner &&
+  <>
+ 
    <input
      accept="image/*"
      style={{ display: 'none'}}
@@ -100,10 +111,45 @@ export default function GroupCard(props) {
      <Button style={{backgroundColor:'black',color:'white',opacity:0.5}}         
     component="span"
     startIcon={<SettingsIcon/>} >
-       
+       Update 
      </Button>
    </label> </>
-  }
+
+
+
+
+
+   }
+      
+
+
+  
+ 
+      
+      
+        
+
+
+
+      
+      
+      
+ 
+
+
+
+  
+    
+      
+      
+
+     
+         
+      
+      
+
+
+
         </CardContent>
 
     </Card>

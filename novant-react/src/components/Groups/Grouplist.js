@@ -172,18 +172,14 @@ return(<>
 </Card>
 
 </div>
-
-
-
-
           </div>
         </Fade>
       </Modal>
             </div>  </div>
        
        
-       <div style={{display:'flex',flexDirection:'row',flexFlow:'wrap',justifyContent:'space-between'}}>
-       {state == "0" && <><Groups></Groups><Groups></Groups><Groups></Groups><Groups></Groups><Groups></Groups><Groups></Groups>  <Groups></Groups><Groups></Groups><Groups></Groups></>}
+       <div >
+       {state == "0" && <Groups style={{display :'flex',flexDirection:'row'}} ></Groups>}
     {state == "1" && <>  <GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation></> }</div>
         </Container>
                

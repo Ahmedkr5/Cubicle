@@ -34,6 +34,7 @@ import {
   MenuItem,
   Select,
 } from '@material-ui/core';
+import SnackbarPost from './SnackbarPost';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -122,7 +123,7 @@ const ADD_POST = gql`
   mutation AddTodo(
     $userId: ID!
     $type: String!
-    $tags: [String!]!
+    $tags: [String]
     $description: String!
     $created_at: String!
   ) {
@@ -154,29 +155,40 @@ export default function AddPost(props) {
   const [tags, setTags] = useState([]);
   const [descritption, setDescription] = useState({});
 
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
   const handleChange = (event) => {
     setType(event.target.value);
   };
   const [expanded, setExpanded] = React.useState(false);
 
   const handlePost = () => {
-    addPost({
-      variables: {
-        userId: props.user.id.toString(),
-        type: type,
-        tags: tags[0],
-        description: JSON.stringify(descritption),
-        created_at: Date.now().toString(),
-      },
-    });
-    // console.log({
-    //   userId: props?.user?.id,
-    //   type: type,
-    //   tags: tags,
-    //   descritption: JSON.stringify(descritption),
-    //   created_at: Date.now(),
-    // });
-    props.parentCallback(false);
+    if (
+      Object.keys(descritption).length !== 0 &&
+      descritption.blocks.length !== 0
+    ) {
+      addPost({
+        variables: {
+          userId: props.user.id.toString(),
+          type: type,
+          tags: tags[0],
+          description: JSON.stringify(descritption),
+          created_at: Date.now().toString(),
+        },
+      });
+      // console.log({
+      //   userId: props?.user?.id,
+      //   type: type,
+      //   tags: tags,
+      //   descritption: JSON.stringify(descritption),
+      //   created_at: Date.now(),
+      // });
+      props.parentCallback(false);
+      window.scrollTo(0, 0);
+    } else {
+      setOpenSnackbar(true);
+      // console.log('worked');
+    }
   };
 
   const handleTags = (childData) => {
@@ -192,6 +204,10 @@ export default function AddPost(props) {
 
   const handleDescription = (childData) => {
     setDescription(childData);
+  };
+
+  const handleCallbackSnackbar = (childData) => {
+    setOpenSnackbar(childData);
   };
 
   // const [noComment, setNoComment] = React.useState(false);
@@ -282,11 +298,12 @@ export default function AddPost(props) {
           style={{ width: '100%' }}
           disableElevation
           variant='text'
-          fullWidth
+          fullwidth
         >
           <Button
             // className={classes.Button}
             onClick={handlePost}
+            disableElevation
             className={classes.Button}
             aria-label='share'
             variant='contained'
@@ -295,6 +312,12 @@ export default function AddPost(props) {
           </Button>
         </ButtonGroup>
       </CardActions>
+      {openSnackbar && (
+        <SnackbarPost
+          parentCallbackSnackbar={handleCallbackSnackbar}
+          message={'Your post is empty 😔'}
+        />
+      )}
     </Card>
   );
 }

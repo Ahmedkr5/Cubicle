@@ -1,12 +1,10 @@
-const mongoose = require('mongoose');
-const businessSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  members: {
-    type: [String],
-    required: true,
-  },
-});
-module.exports = mongoose.model('business', businessSchema);
+var mongoose = require('mongoose');  
+var businessSchema = new mongoose.Schema({ 
+
+    name: String,
+    Owner: String,
+    members: [String],
+
+    
+ });
+ module.exports = mongoose.model('business', businessSchema);
