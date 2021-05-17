@@ -73,6 +73,7 @@ const userid=currentuser['id'];
   }
 
 
+
 if(!props?.mem) return null
 
 
@@ -93,7 +94,7 @@ if(!props?.mem) return null
   
         <Typography variant="h4" style={{width:'100%' ,textAlign:'center'}}>{props?.nom}</Typography>
     
-<Groupbutton mem={props?.mem} owner={props?.owner} ></Groupbutton>
+<Groupbutton idgroup={props?.grpid} mem={props?.mem} owner={props?.owner} ></Groupbutton>
 
 {currentuser['id']=== props?.owner &&
   <>

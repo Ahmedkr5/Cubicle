@@ -37,7 +37,7 @@ export default class grouppbutton extends Component {
         this.state = {
             requests :[],
            user:[],
-
+          members:[],
            
         };
       
@@ -54,6 +54,7 @@ export default class grouppbutton extends Component {
           }, () => {
             console.log('user:',this.state.user.groupRequests);
             console.log('owner:',this.props.owner);
+         
           }
           )
         }
@@ -106,7 +107,18 @@ return (
 variant="contained"
 color="secondary"
 size="small"
+onClick={()=>{ this.setState(state => {
+  const newmem = this.props?.mem?.filter(i => i !== currentuser['id']);
+  axios.put("http://localhost:3001/groups/groupmem/" + this.props?.idgroup, {
+              members:newmem,
 
+})
+    .then(() => {
+     window.location.reload();
+    })
+    console.log(newmem);
+});
+}}
 startIcon={< ExitToAppIcon/>}
 >
 leave group</Button>) } ) }

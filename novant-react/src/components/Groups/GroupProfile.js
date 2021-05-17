@@ -66,7 +66,7 @@ const [groupProf, err1, reload1] = useApi('groups/group/'+ groupid);
     </BottomNavigation>
 
     {state == "0" &&  <div style={{display:'flex',width:'100%' ,flexDirection:'column'}}><Feed></Feed> <Divider orientation='horizontal'/><Feed></Feed> <Feed></Feed></div>}
-    {state == "1" && <div style={{backgroundColor:'white',borderRadius:'10px'}}> <Members member={groupProf?.members} owner={groupProf?.Owner}></Members></div>}
+    {state == "1" && <div style={{backgroundColor:'white',borderRadius:'10px'}}> <Members id={groupProf?._id} member={groupProf?.members} owner={groupProf?.Owner}></Members></div>}
     {state == "2" &&  <About desc={groupProf?.description} ></About> }
     {state == "3" &&  <Config nom={groupProf?.groupname} desc={groupProf?.description} id={groupProf?._id}></Config> }
                 </Container>
