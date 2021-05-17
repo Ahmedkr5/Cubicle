@@ -13,6 +13,7 @@ import  { useState } from "react";
 import List from '@material-ui/core/List';
 import { useApi } from "../../hooks/useApi";
 import { createBrowserHistory } from 'history';
+import authService from "../../services/auth.service";
 export const history = createBrowserHistory();
 const preventDefault = (event) => event.preventDefault();
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +41,9 @@ const useStyles = makeStyles((theme) => ({
 
   export default function  Groups() {
     const classes = useStyles();
-    const [groupProf, err, reload] = useApi('groups/grouplist');
+    const currentuser = authService.getCurrentUser() ;
+    const userid=currentuser['id'];
+    const [groupProf, err, reload] = useApi('groups/grouplist/'+userid);
 
   console.log(groupProf);
   return(<>
