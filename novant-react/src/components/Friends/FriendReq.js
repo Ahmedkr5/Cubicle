@@ -2,9 +2,9 @@ import React from 'react';
 import { withStyles, Typography } from '@material-ui/core';
 import Badge from '@material-ui/core/Badge';
 import { makeStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
+import authService from "../../services/auth.service";
 import { green} from '@material-ui/core/colors';
-
+import { useApi } from "../../hooks/useApi";
 import Req from './Req'
 const theme = createMuiTheme({
   palette: {
@@ -63,6 +63,9 @@ const StyledBadge = withStyles((theme) => ({
 
 export default function FriendReq() {
   const classes = useStyles();
+  const currentuser = authService.getCurrentUser() ;
+  const [userReq, err1, reload1] = useApi('users/'+ currentuser['id']);
+ 
 
   return (<>
     <div className={classes.root} style={{ marginTop: '10px', flexDirection: 'column' }}>
@@ -78,8 +81,8 @@ export default function FriendReq() {
         </div>
 
 
-        <Req></Req>
-        <Req></Req>
+        <Req requests={currentuser['id']}></Req>
+   
 
 
       </MuiThemeProvider>

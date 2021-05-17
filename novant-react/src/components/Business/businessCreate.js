@@ -8,9 +8,9 @@ import businessservice from '../../services/business-service';
 import CheckButton from 'react-validation/build/button';
 import { createBrowserHistory } from 'history';
 export const history = createBrowserHistory();
-const user = authService.getCurrentUser() ;
-const userid = user['id'];
 
+var user 
+var userid 
 const required = (value2) => {
   if (!value2) {
     return (
@@ -23,6 +23,8 @@ const required = (value2) => {
   export default class Businesscreate extends Component {
 
     constructor(props) {
+        user = authService.getCurrentUser() ;
+        userid = user['id'];
       super(props);
       this.handleCreate = this.handleCreate.bind(this);
       this.onChangebusinessname = this.onChangebusinessname.bind(this);
@@ -53,7 +55,7 @@ const required = (value2) => {
   
     if (this.checkBtn.context._errors.length === 0) {
        
-        businessservice.addbusiness(this.state.businessname, userid ).then(
+        businessservice.addbusiness(this.state.businessname, userid,userid ).then(
           () => {
             history.push('/Business');
             window.location.reload();

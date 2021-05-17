@@ -127,7 +127,6 @@ else {
       var i = -1;
        data.then((value) => { value.forEach(element => {
         i++;
-         console.log(element)   
         document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<a class='MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button' tabindex='"+i+"' aria-disabled='false' href='http://localhost:3000/profile/"+element._id+"'><div class='MuiListItemText-root'><span class='MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock'>"+element.firstname +" "+element.lastname+"</span></div><span class='MuiTouchRipple-root'></span></a><hr class='MuiDivider-root'>"
        });
        if (i == -1) {

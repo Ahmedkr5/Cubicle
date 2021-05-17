@@ -103,8 +103,9 @@ router.put('/:id', function (req, res) {
         phone : req.body.phone,
         description : req.body.description,
         datenaissance : req.body.birthday,
+       
         password : hashedPassword,}, {new: true}, function (err, user) {
-        var token = jwt.sign({ id: user._id ,firstname:user.firstname,lastname:user.lastname,email:user.email,adresse:user.adresse,phone:user.phone,birthday:user.datenaissance,description:user.description }, config.secret, {
+        var token = jwt.sign({ id: user._id ,firstname:user.firstname,lastname:user.lastname,email:user.email,adresse:user.adresse,phone:user.phone,birthday:user.datenaissance,description:user.description, }, config.secret, {
             expiresIn: 86400 // expires in 24 hours
           });
           
@@ -146,6 +147,16 @@ router.get('/a/:name', function (req, res) {
 });
 });
     
+router.put('/grp/:id', function (req, res) {
+
+    User.findByIdAndUpdate(req.params.id,{
+        groupRequests: req.body.groupRequests,
+        }, {new: true},   function (err, User) {
+            if (err) return res.status(500).send("There was a problem update the user.");
+            res.status(200).send("User updated");
+    });
+    });
+
 
 
 module.exports = router;

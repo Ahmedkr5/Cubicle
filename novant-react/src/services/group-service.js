@@ -52,6 +52,50 @@ getGroups(userid) {
   });
 }
 
+editgrp(groupname, description,groupid) {
+  return axios
+    .put(API_URL+"/group/"+groupid, {
+       groupname,
+       description,
+    })
+    .then(response => {
+      return response.data;
+    });
+    
+}
+delete(groupid) {
+  return axios
+    .get(API_URL + "/delete/" + groupid, {})
+    .then(function (response) {
+      return response.data;
+  });
+}
+edituser(groupRequests,userid) {
+  return axios
+    .put("http://localhost:3001/users/grp/"+userid, {
+      groupRequests,
+    })
+    .then(response => {
+      var token = response.data.token;
+          localStorage.setItem("token", token);
+      return response.data;
+    });
+
+}
+
+
+
+editgp(members,groupid) {
+  return axios
+    .put(API_URL+"/groupmem/"+groupid, {
+       members,
+   
+    })
+    .then(response => {
+      return response.data;
+    });
+    
+}
 
 
 }

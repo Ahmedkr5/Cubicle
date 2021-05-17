@@ -1,4 +1,5 @@
 var express = require('express');
+const group = require('../models/group');
 var router = express.Router();
 
 var Group =require('../models/group')
@@ -69,6 +70,13 @@ router.delete('/delete/:idgr', function (req, res) {
     });
 });
 
+router.put('/deletemem/:id', function (req, res) {
+    Group.findByIdAndUpdate(req.params.id,{ $pull: {"group.members" :{}}},{safe :true}, function (err, group) {
+        if (err) return res.status(500).send("There was a problem deleting the group.");
+        res.status(200).send("group " + group.groupname + " deleted.");
+    });
+});
+
 
 //Get group listing
 router.get('/grouplist', function (req, res, next) {
@@ -88,11 +96,11 @@ router.get('/grouplist/:id', async function (req, res, next) {
      
     try {
         const findMembers = await Group.find( { members: req.params.id } )
-       console.log(req.params.id);
+       
         if(findMembers == null ){
             return res.status(404).json({message: 'cant find group'})
         }
-        console.log(findMembers);
+        
         return res.status(200).json(findMembers)
         
     } catch (err) {
@@ -101,7 +109,22 @@ router.get('/grouplist/:id', async function (req, res, next) {
     }
 });
 
+router.get('/groupowned/:id', async function (req, res, next) {
+     
+    try {
+        const findMembers = await Group.find( { Owner: req.params.id } )
+       
+        if(findMembers == null ){
+            return res.status(404).json({message: 'cant find group'})
+        }
+        
+        return res.status(200).json(findMembers)
+        
+    } catch (err) {
+        return res.status(400)
 
+    }
+});
 
 /*
 router.post('/group/:id', authenticate, (req, res) => {
@@ -120,7 +143,19 @@ router.post('/group/:id', authenticate, (req, res) => {
 
 
 
+router.put('/groupmem/:id', function (req, res) {
 
+    Group.findByIdAndUpdate(req.params.id,{
+        members:req.body.members
+    }, 
+    function (err, Group) {
+        if (err) return res.status(500).send("error updating group group");
+        
+        res.send(Group +'group modified');
+            
+    });
+});
+        
 
 
 
