@@ -30,10 +30,29 @@ getAll() {
     .get(API_URL+"/grouplist", {
     })
     .then(function(response) {
-        console.log(response.data);
+        
      return response.data
       });
 }
+getGroup(groupid) {
+
+  return axios
+    .get(API_URL+"/group/"+groupid, {
+    })
+    .then(function(response) {
+        
+     return response.data
+      });}
+
+getGroups(userid) {
+  return axios
+    .get(API_URL + "/grouplist/" + userid, {})
+    .then(function (response) {
+      return response.data;
+  });
+}
+
+
 
 }
   export default new groupservice();

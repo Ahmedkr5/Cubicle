@@ -28,10 +28,8 @@ const useStyles = makeStyles((theme)=>({
 export default function GroupCard(props) {
   const classes = useStyles();
   const currentuser = authService.getCurrentUser() ;
-  console.log(currentuser['id']);
-  console.log(props?.owner);
-  console.log(props?.grpid);
-  console.log(props?.groupimage);
+
+
   var coverimage ="http://localhost:3001/uploads/"+props.groupimage
   const [CoverImage, setCoverImage] = useState('');
   const [selectedCoverImage, setselectedCoverImage] = useState(null);
