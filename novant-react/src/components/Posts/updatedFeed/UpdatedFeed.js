@@ -130,7 +130,9 @@ export default function UpdatedFeed(props) {
   var minute = 60,
     hour = minute * 60,
     day = hour * 24,
-    week = day * 7;
+    week = day * 7,
+    month = week * 4,
+    year = month * 12;
 
   var fuzzy;
 
@@ -148,6 +150,36 @@ export default function UpdatedFeed(props) {
     fuzzy = Math.floor(delta / hour) + ' hours ago.';
   } else if (delta < day * 2) {
     fuzzy = 'yesterday';
+  } else if (delta < week) {
+    fuzzy = '1 week ago.';
+  } else if (delta < week * 2) {
+    fuzzy = '2 weeks ago.';
+  } else if (delta < week * 3) {
+    fuzzy = '3 weeks ago.';
+  } else if (delta < month) {
+    fuzzy = '1 month ago.';
+  } else if (delta < month * 2) {
+    fuzzy = '2 month ago.';
+  } else if (delta < month * 3) {
+    fuzzy = '3 month ago.';
+  } else if (delta < month * 4) {
+    fuzzy = '4 month ago.';
+  } else if (delta < month * 5) {
+    fuzzy = '5 month ago.';
+  } else if (delta < month * 6) {
+    fuzzy = '6 month ago.';
+  } else if (delta < month * 7) {
+    fuzzy = '7 month ago.';
+  } else if (delta < month * 8) {
+    fuzzy = '8 month ago.';
+  } else if (delta < month * 9) {
+    fuzzy = '9 month ago.';
+  } else if (delta < month * 10) {
+    fuzzy = '10 month ago.';
+  } else if (delta < month * 11) {
+    fuzzy = '11 month ago.';
+  } else if (delta < year) {
+    fuzzy = '1 year ago.';
   }
 
   const handleExpandClick = () => {

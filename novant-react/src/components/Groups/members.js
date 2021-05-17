@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { Typography, Container, useScrollTrigger } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
@@ -19,10 +20,10 @@ import MessageService from "../../services/MessageService";
 import authService from "../../services/auth.service";
 import axios from "axios";
 import { Promise } from "mongoose";
-import MenuFr from './MenuFr';
+
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import MenuMem from './MenuMem';
 export const history = createBrowserHistory();
 const preventDefault = (event) => event.preventDefault();
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default class Friendsdiv extends Component {
+export default class members extends Component {
  
   /*const users2 = axios
   .get("http://localhost:3001/users/", {})
@@ -55,7 +56,7 @@ export default class Friendsdiv extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      friends: []
+      members: []
     }
     
     }
@@ -64,12 +65,12 @@ export default class Friendsdiv extends Component {
     .get("http://localhost:3001/users/", {})
     .then(function(response){return response.data})
 
-    users2.then(friends => {
+    users2.then(members => {
       this.setState({
-        friends: friends
+        members: members
       }, () => {
-        console.log('users:',this.state.friends);
-        console.log('friends:',this.props.friends);
+        console.log('users:',this.state.members);
+        console.log('members:',this.props.member);
       }
       )
     }
@@ -88,18 +89,17 @@ export default class Friendsdiv extends Component {
  //useEffect(async () => {setUsers(users3?.Filter(u=>(u._id)))},[props.member]);
 
  render() {
-  const { friends } = this.state;
+  const { members } = this.state;
   const currentuser = authService.getCurrentUser() ;
-  
   return ( <>
 <div style={{height:'500px'}}>
       <List style={{ display: "flex", flexWrap: "wrap", width: "100%" }}>
-      {friends?.filter(m => this.props.friends.includes(m._id)).map((msg) => (
-        <ListItem style={{ flex: "50%",width:'100%' }}>
+      {members?.filter(m => this.props.member.includes(m._id)).map((msg) => (
+        <ListItem style={{ flex: "40%",width:'100%' }}>
           <Avatar
             style={{ marginTop: "10px", color: '#fff',
-            height: '80px',
-            width: '80px', }}
+            height: '60px',
+            width: '60px', }}
             aria-label="recipe"
             variant="rounded"
             src={"http://localhost:3001/uploads/"+msg.profileimage}
@@ -117,8 +117,8 @@ export default class Friendsdiv extends Component {
           </Typography>
           <div>
             <br></br> 
-             
-            <MenuFr id={msg?._id}></MenuFr>
+         {  currentuser['id'] === this.props?.owner &&
+            <MenuMem id={msg?._id}></MenuMem>}
           </div>
         </ListItem>
         ))}

@@ -11,24 +11,12 @@ var UserSchema = new mongoose.Schema({
   adresse : String ,
   phone: String,
   Coins: String,
-  GroupsentRequests:{
-    type:[{ name: String, id: String}],
-    default:[]
-  },
+  groupInvitations:[String], 
+  groupRequests:[String],  //ki yebda owner ta3 group
     
-    sentRequests:{
-      type:[{ name: String, id: String}],
-      default:[]
-    },
-    friendRequests: {
-      type:[{ name: String,image: String, id:String}],
-      default:[]
-    },
-    friends: {
-      type:[{ name: String,image: String, id:String}],
-      default:[]
-    },
-    totalRequest: {type: Number, default:0}
+  friendRequests: [String],
+  friends: [String],
+ 
 
 });
 mongoose.model('User2', UserSchema);

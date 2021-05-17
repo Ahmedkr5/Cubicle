@@ -2,8 +2,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import authService from "./auth.service";
 const API_URL = "http://localhost:3001/business";
-const user = authService.getCurrentUser();
-const userid = user["id"];
+
 class businessservice {
   /*addgroup(groupname,Owner) {
     return axios.post(API_URL + userid +"/newgroup", {
@@ -24,8 +23,8 @@ editgroupimage(groupimage,groupid) {
     });
 }*/
 
-  addbusiness(businessname, Owner) {
-    return axios.post(API_URL + "/" + userid + "/newbusiness", {
+  addbusiness(businessname, Owner,a) {
+    return axios.post(API_URL + "/" + a + "/newbusiness", {
       businessname,
       Owner,
     });

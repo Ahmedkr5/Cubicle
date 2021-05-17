@@ -109,7 +109,7 @@ const [user2,err,reload] = useApi('users/'+userid);
     </BottomNavigation>
 
     {state == "0" &&  <div style={{display:'flex',width:'100%' ,flexDirection:'column'}}><ProblemFeed></ProblemFeed> <Feed></Feed> <Feed></Feed></div>}
-    {state == "1" && <FriendList></FriendList>}
+    {state == "1" && <FriendList friends={user2?.friends}></FriendList>}
     {state == "2" && <Badges></Badges>}
     {state == "3" &&  <CV userid={userid}></CV> }
     {state == "5" &&  <SetAboutME userid={userid}></SetAboutME> }

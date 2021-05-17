@@ -8,8 +8,8 @@ import { Col, Row } from "react-bootstrap";
 import Sidebar from "../Sidebar/Sidebar";
 import Feed from "../Posts/Feed";
 import SearchAppBar from "../Navbar/Navbar";
-
-
+import authService from "../../services/auth.service";
+import {  Settings, ShoppingCart } from "@material-ui/icons";
 import GroupIcon from '@material-ui/icons/Group';
 import InfoIcon from '@material-ui/icons/Info';
 import GroupCard from './GroupCard';
@@ -17,17 +17,17 @@ import RightSidebar from "../rightSideBar/RightSidebar";
 import FriendList from "../Friends/Friendreqlist";
 import Friendsdiv from "../Friends/Friendsdiv";
 import About from './About';
+import Members from './members';
 import { useApi } from "../../hooks/useApi";
-
+import Config from "./config";
 function GroupProfile(props) {
 const [state, setState] = useState("0") 
 const [value, setValue] = React.useState(0);
-
+const currentuser = authService.getCurrentUser() ;
 const groupid = props.match.params.id ;
 const [groupProf, err1, reload1] = useApi('groups/group/'+ groupid);
 
 
-console.log(groupProf);
 
  return (   
    
@@ -45,7 +45,7 @@ console.log(groupProf);
 
             <Col xs={6} style={{ display: 'flex' ,marginLeft:'0px', justifyContent: 'center'}} >
                           <Container style={{marginLeft:'0px'}}>
-                            <GroupCard grpid={groupProf?._id} nom={groupProf?.groupname} owner={groupProf?.Owner} groupimage={groupProf?.groupimage}></GroupCard>
+                            <GroupCard grpid={groupProf?._id} mem={groupProf?.members} nom={groupProf?.groupname} owner={groupProf?.Owner} groupimage={groupProf?.groupimage} ></GroupCard>
 
                 <BottomNavigation
       value={value}
@@ -56,16 +56,19 @@ console.log(groupProf);
     
      style={{marginBottom:"10px" ,borderRadius: '10px'    }}
     >
-      <BottomNavigationAction onClick={()=>setState("0")} label="Recents" icon={<RestoreIcon />} />
+       {//currentuser['id'] in props?.groupProf?.members.map(m=>(m)) &&
+      <BottomNavigationAction onClick={()=>setState("0")} label="Recents" icon={<RestoreIcon />} />}
       <BottomNavigationAction onClick={()=>setState("1")} label="Members" icon={<GroupIcon />} />
       
       <BottomNavigationAction onClick={()=>setState("2")} label="About" icon={<InfoIcon />} />
+      {currentuser['id'] === groupProf?.Owner &&
+      <BottomNavigationAction onClick={()=>setState("3")} label="Settings" icon={<Settings />} />}
     </BottomNavigation>
 
     {state == "0" &&  <div style={{display:'flex',width:'100%' ,flexDirection:'column'}}><Feed></Feed> <Divider orientation='horizontal'/><Feed></Feed> <Feed></Feed></div>}
-    {state == "1" && <div style={{backgroundColor:'white',borderRadius:'10px'}}> <Friendsdiv></Friendsdiv></div>}
+    {state == "1" && <div style={{backgroundColor:'white',borderRadius:'10px'}}> <Members id={groupProf?._id} member={groupProf?.members} owner={groupProf?.Owner}></Members></div>}
     {state == "2" &&  <About desc={groupProf?.description} ></About> }
-
+    {state == "3" &&  <Config nom={groupProf?.groupname} desc={groupProf?.description} id={groupProf?._id}></Config> }
                 </Container>
                 </Col>
                 <Col  style={{display: 'flex' , justifyContent: 'center'}}  >
