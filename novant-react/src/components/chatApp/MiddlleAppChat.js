@@ -114,8 +114,8 @@ export default function RecipeReviewCard(props) {
     const [srcImage, setSrcImage] = useState('a');
     const user = authService.getCurrentUser();
     const transmitter = user['id'];
-   // const audiok = new Audio('http://localhost:3000/song/callsong.mp3') ;
-   // audiok.play() ; audiok.pause() ;
+    // const audiok = new Audio('http://localhost:3000/song/callsong.mp3') ;
+    // audiok.play() ; audiok.pause() ;
     const closeLightbox = () => {
         setOpen('none');
     };
@@ -152,41 +152,41 @@ export default function RecipeReviewCard(props) {
         stopRecording,
         mediaBlobUrl,
     } = useReactMediaRecorder({ audio: true });
-   const socket = socketClient('http://localhost:3001/')
-   socket.on('typingC', async (msg) => {
-    if(msg[1]==transmitter){
+    const socket = socketClient('http://localhost:3001/')
+    socket.on('typingC', async (msg) => {
+        if (msg[1] == transmitter) {
 
-        var x = document.getElementById('myaudiocall');
-        x.play();
-        Swal.queue([{
-          title: 'Video Call from '+msg[3],
-          confirmButtonText: 'Answer',
-          showCancelButton: true,
-          cancelButtonText:'Leave' ,
-          imageUrl: 'http://localhost:3001/uploads/'+ msg[2], 
-          preConfirm: () => {
-           var x = document.getElementById('myaudiocall');
-            x.pause() ;
-            var modalWindow;
-            const modalTitle = "Video Call";
-            modalWindow = window.open("/video/" + msg[1], modalTitle, "width=1200,height=900,menubar=no,resizable=no,scrollbars=no,status=no,location=no , top=500, left=500");
-          }
+            var x = document.getElementById('myaudiocall');
+            x.play();
+            Swal.queue([{
+                title: 'Video Call from ' + msg[3],
+                confirmButtonText: 'Answer',
+                showCancelButton: true,
+                cancelButtonText: 'Leave',
+                imageUrl: 'http://localhost:3001/uploads/' + msg[2],
+                preConfirm: () => {
+                    var x = document.getElementById('myaudiocall');
+                    x.pause();
+                    var modalWindow;
+                    const modalTitle = "Video Call";
+                    modalWindow = window.open("/video/" + msg[1], modalTitle, "width=1200,height=900,menubar=no,resizable=no,scrollbars=no,status=no,location=no , top=500, left=500");
+                }
 
-        }])
-    }
-})
+            }])
+        }
+    })
     const NewWindow = () => {
         socket.emit('typing', {
             transmitter: transmitter,
             receiver: props.userck,
-            image:userProf[0].profileimage,
-            nom: userProf[0].firstname + ' ' +userProf[0].lastname ,
-      
+            image: userProf[0].profileimage,
+            nom: userProf[0].firstname + ' ' + userProf[0].lastname,
+
         });
         var modalWindow;
         const modalTitle = "Video Call";
         modalWindow = window.open("/video/" + props.userck, modalTitle, "width=1200,height=900,menubar=no,resizable=no,scrollbars=no,status=no,location=no , top=500, left=500");
-       
+
     }
     const [messages, err, reload] = useApi('api/' + transmitter);
     const [userProf, err1, reload1] = useApi('showUser/' + transmitter);
@@ -282,7 +282,7 @@ export default function RecipeReviewCard(props) {
                                     <IconButton aria-label="settings" color="primary" onClick={NewWindow}>
                                         <VideocamIcon fontSize='midium' />
                                     </IconButton>
-                                    <IconButton aria-label="settings" color="secondary" onClick={SendMessage}>
+                                    <IconButton aria-label="settings" color="secondary" >
                                         <PhoneOutlinedIcon fontSize='midium' />
                                     </IconButton>
                                 </div>
@@ -412,7 +412,7 @@ export default function RecipeReviewCard(props) {
                                                             <div className='authorthumbrecept' >
                                                                 <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                             </div>
-                                                            <span className='chatmessageitem spanMessage'><img onClick={() => showL("http://localhost:3001/uploads/" + msg.file[0])} src={"http://localhost:3001/uploads/" + msg.file[0]} style={{ maxHeight: '100%', maxWidth: '100%', borderRadius: '4%', cursor: 'pointer' }} /></span>
+                                                            <span className='chatmessageitemrecept spanMessagerecept'><img onClick={() => showL("http://localhost:3001/uploads/" + msg.file[0])} src={"http://localhost:3001/uploads/" + msg.file[0]} style={{ maxHeight: '100%', maxWidth: '100%', borderRadius: '4%', cursor: 'pointer' }} /></span>
                                                             <div className="Appnotification-daterecept">
                                                                 <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                             </div>
@@ -427,7 +427,7 @@ export default function RecipeReviewCard(props) {
                                                             <div className='authorthumbrecept' >
                                                                 <Avatar variant='rounded' src={`http://localhost:3001/uploads/` + props?.person?.profileimage} className={classes.rad} />
                                                             </div>
-                                                            <span className='chatmessageitem spanMessage'><a href={"http://localhost:3001/uploads/" + msg.file[0]} target={"_blank"} >{msg.file[0].split('-').pop()} </a></span>
+                                                            <span className='chatmessageitemrecept spanMessagerecept'><a href={"http://localhost:3001/uploads/" + msg.file[0]} target={"_blank"} >{msg.file[0].split('-').pop()} </a></span>
                                                             <div className="Appnotification-daterecept">
                                                                 <span ><Timestamp relative date={msg.created_at} autoUpdate /></span>
                                                             </div>
