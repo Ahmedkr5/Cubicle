@@ -9,6 +9,10 @@ body {
   background-color: #f0f2f5;
 }
 
+root {
+  background-color: #f0f2f5;
+}
+
 .authorthumb {
   float: left;
   margin-top: -10px;
