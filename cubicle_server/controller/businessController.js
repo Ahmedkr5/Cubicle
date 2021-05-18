@@ -35,7 +35,18 @@ router.post('/:id/newbusiness', function (req, res,next) {
 });
 
 
-//Get group listing
+router.get('/business/:id', function (req, res, next) {
+    Business.findById(req.params.id,function(err,Business){
+        if(err) 
+        res.send("error");
+        
+        else
+        res.send(Business);
+        
+    });
+});
+
+//Get business listing
 router.get('/businesslist', function (req, res, next) {
     Business.find(
         (err, test) =>{

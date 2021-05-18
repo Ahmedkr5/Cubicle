@@ -7,6 +7,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import StarIcon from '@material-ui/icons/Star';
 import BusinessService from '../../services/business-service.js';
 import { useApi } from "../../hooks/useApi";
+import { Link } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+export const history = createBrowserHistory();
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +30,12 @@ export default function BusinessList() {
     <List component="nav" className={classes.root} aria-label="contacts">
       {business?.map((msg, index) => (
         <ListItem button>
-          <ListItemText inset primary={msg.name} />
+          <Link  onClick={()=>{ history.push('/BusinessProfile/'+msg._id);
+          
+            window.location.reload();}} style={{fontWeight:'bold',color:"#050505"}}>
+            {msg.name}
+          </Link> 
+         
         </ListItem>
       ))}
     </List>

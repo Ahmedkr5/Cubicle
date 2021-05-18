@@ -43,6 +43,27 @@ editgroupimage(groupimage,groupid) {
         return response.data;
     });
   }
+
+  getBusiness(businessId) {
+    return axios
+      .get(API_URL + "/business/" + businessId, {})
+      .then(function (response) {
+        return response.data;
+    });
+  }
+
+  edituser(businessRequests,userid) {
+    return axios
+      .put("http://localhost:3001/users/businessuser/"+userid, {
+        businessRequests,
+      })
+      .then(response => {
+        var token = response.data.token;
+            localStorage.setItem("token", token);
+        return response.data;
+      });
+  
+  }
 }
 
 export default new businessservice();

@@ -3,6 +3,7 @@ var businessSchema = new mongoose.Schema({
 
     name: String,
     Owner: String,
+    desc: String,
     members: [String],
 
     
