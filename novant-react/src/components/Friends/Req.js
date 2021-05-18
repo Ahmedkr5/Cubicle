@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Typography, Container } from '@material-ui/core';
-
-import { makeStyles } from '@material-ui/core/styles';
+import Badge from '@material-ui/core/Badge';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import { green} from '@material-ui/core/colors';
 import axios from "axios";
@@ -40,9 +40,24 @@ const useStyles = makeStyles((theme) => ({
       extendedIcon: {
         marginRight: theme.spacing(1),
       },
+
+
 }));
 
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    left: '190%',
+    top: '50%',
 
+    border: '3px solid',
+    borderColor: '#F8FAFB',
+    padding: '0px',
+    borderRadius: '15px',
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+  },
+
+}))(Badge);
 
 export default class Req extends Component {
  
@@ -91,7 +106,15 @@ export default class Req extends Component {
     const currentuser = authService.getCurrentUser() ;
     
     return ( <>
-    
+     { requests?.groupRequests?.length != '0' && <div style={{display:'flex', flexDirection:'row',justifyContent: 'space-between' }}>
+            <div  >
+
+              <Typography style={{ color: 'grey', fontSize: '12', fontWeight: 'bold' }} align='left'>REQUESTS</Typography>
+            </div>
+            <StyledBadge badgeContent={2} color="primary" style={{ marginRight:'50px'}}>
+
+          </StyledBadge>
+        </div>}
     {users?.filter(m => requests?.groupRequests?.includes(m._id)).map((msg) => (
         <Paper elevation={0} style={{marginTop:'15px',background:'white',borderRadius:'10px',height:'150px'}}>
        
