@@ -21,11 +21,11 @@ import Comment from '../Comment';
 import PostComment from '../PostComment';
 import CodeComment from '../CodeComment';
 import { useLazyQuery, gql } from '@apollo/client';
-import ShowEditor from './ShowEditor';
+import ShowEditor from '../updatedFeed/ShowEditor';
 import { ButtonGroup, Chip } from '@material-ui/core';
 import SnackbarPost from '../SnackbarPost';
-import UpdatedComment from './UpdatedComment';
-import UpdatedPostComment from './UpdatedPostComment';
+import UpdatedComment from '../updatedFeed/UpdatedComment';
+import UpdatedPostComment from '../updatedFeed/UpdatedPostComment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,7 +108,8 @@ const COMMENT_QUERY = gql`
 
 const preventDefault = (event) => event.preventDefault();
 
-export default function UpdatedFeed(props) {
+export default function UpdatedGroupHomeFeed(props) {
+  console.log(props?.post);
   const [getComments, { loading, error, newComments }] = useLazyQuery(
     COMMENT_QUERY,
     {
@@ -215,7 +216,7 @@ export default function UpdatedFeed(props) {
   const handleNewComment = () => {
     getComments();
   };
-  console.log(props?.post?.user?.id);
+  console.log(props);
 
   return (
     // <div className={classes.feed}>
@@ -245,14 +246,30 @@ export default function UpdatedFeed(props) {
         }
         title={
           <div className={classes.UserNameDate}>
-            <a href={`/profile/${props?.post?.user?.id}`} className={classes.p}>
-              <strong>
-                <span>
-                  {' '}
-                  {props?.post?.user?.firstname} {props?.post?.user?.lastname}{' '}
-                </span>
-              </strong>
-            </a>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <a
+                href={`/profile/${props?.post?.user?.id}`}
+                className={classes.p}
+                style={{ marginRight: '10px' }}
+              >
+                <strong>
+                  <span>
+                    {' '}
+                    {props?.post?.user?.firstname} {props?.post?.user?.lastname}{' '}
+                  </span>
+                </strong>
+              </a>
+              {' ▶ '}
+              <a
+                href={`/GroupProfile/${props?.group?.id}`}
+                className={classes.p}
+                style={{ marginLeft: '10px' }}
+              >
+                <strong>
+                  <span> {props?.group?.groupname}</span>
+                </strong>
+              </a>
+            </div>
             <a href='#' onClick={preventDefault} className={classes.p}>
               <span> {fuzzy} </span>
             </a>

@@ -30,7 +30,7 @@ app.use(cors());
 app.use(express.static(path.resolve('./public')));
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', '*');
 
   // Request methods you wish to allow
   res.setHeader(
@@ -141,7 +141,7 @@ let db = mongoose.connection;
 db.on('open', () => console.info('Connection to the database was successful'));
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', '*');
 
   // Request methods you wish to allow
   res.setHeader(

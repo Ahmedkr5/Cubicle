@@ -89,7 +89,7 @@ function Home() {
     <div style={{ backgroundColor: '#F0F2F5' }}>
       <link rel='stylesheet' href='css/bootstrap.min.css' />
       <Row>
-        <SearchAppBar></SearchAppBar>
+        <SearchAppBar user={user}></SearchAppBar>
       </Row>
       <Container style={{ marginTop: '4em', maxWidth: '100%' }}>
         <Row>

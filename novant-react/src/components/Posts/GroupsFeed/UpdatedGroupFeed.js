@@ -21,11 +21,11 @@ import Comment from '../Comment';
 import PostComment from '../PostComment';
 import CodeComment from '../CodeComment';
 import { useLazyQuery, gql } from '@apollo/client';
-import ShowEditor from './ShowEditor';
+import ShowEditor from '../updatedFeed/ShowEditor';
 import { ButtonGroup, Chip } from '@material-ui/core';
 import SnackbarPost from '../SnackbarPost';
-import UpdatedComment from './UpdatedComment';
-import UpdatedPostComment from './UpdatedPostComment';
+import UpdatedComment from '../updatedFeed/UpdatedComment';
+import UpdatedPostComment from '../updatedFeed/UpdatedPostComment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,7 +108,8 @@ const COMMENT_QUERY = gql`
 
 const preventDefault = (event) => event.preventDefault();
 
-export default function UpdatedFeed(props) {
+export default function UpdatedGroupFeed(props) {
+  console.log(props?.post);
   const [getComments, { loading, error, newComments }] = useLazyQuery(
     COMMENT_QUERY,
     {

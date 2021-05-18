@@ -118,7 +118,7 @@ export default class members extends Component {
           <div>
             <br></br> 
          {  currentuser['id'] === this.props?.owner &&
-            <MenuMem id={msg?._id}></MenuMem>}
+            <MenuMem id={msg?._id} member={this.props?.member} idgrp={this.props?.id}></MenuMem>}
           </div>
         </ListItem>
         ))}
