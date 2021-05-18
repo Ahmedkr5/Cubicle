@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '15px',
     position: 'fixed',
     height: '100%',
+    width:'360px'
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
