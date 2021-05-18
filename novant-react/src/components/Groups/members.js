@@ -19,7 +19,7 @@ import { Filter } from "@material-ui/icons";
 import MessageService from "../../services/MessageService";
 import authService from "../../services/auth.service";
 import axios from "axios";
-import { Promise } from "mongoose";
+//import { Promise } from "mongoose";
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -118,7 +118,7 @@ export default class members extends Component {
           <div>
             <br></br> 
          {  currentuser['id'] === this.props?.owner &&
-            <MenuMem id={msg?._id}></MenuMem>}
+            <MenuMem id={msg?._id} member={this.props?.member} idgrp={this.props?.id}></MenuMem>}
           </div>
         </ListItem>
         ))}

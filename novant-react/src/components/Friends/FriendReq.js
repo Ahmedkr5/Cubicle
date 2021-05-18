@@ -70,15 +70,7 @@ export default function FriendReq() {
   return (<>
     <div className={classes.root} style={{ marginTop: '10px', flexDirection: 'column' }}>
       <MuiThemeProvider theme={theme}>
-        <div style={{display:'flex', flexDirection:'row',justifyContent: 'space-between' }}>
-            <div  >
-
-              <Typography style={{ color: 'grey', fontSize: '12', fontWeight: 'bold' }} align='left'>REQUESTS</Typography>
-            </div>
-            <StyledBadge badgeContent={2} color="primary" style={{ marginRight:'50px'}}>
-
-          </StyledBadge>
-        </div>
+      
 
 
         <Req requests={currentuser['id']}></Req>

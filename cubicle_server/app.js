@@ -25,12 +25,13 @@ var businessController = require('./controller/businessController');
 var ExperienceController = require('./experiences/ExperienceController');
 var PostController = require('./experiences/ExperienceController');
 var path = require('path');
+var appDir = path.dirname(require.main.filename);
 app.use(cors());
 
 app.use(express.static(path.resolve('./public')));
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', '*');
 
   // Request methods you wish to allow
   res.setHeader(
@@ -141,7 +142,7 @@ let db = mongoose.connection;
 db.on('open', () => console.info('Connection to the database was successful'));
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', '*');
 
   // Request methods you wish to allow
   res.setHeader(
@@ -166,9 +167,9 @@ app.use(function (req, res, next) {
 app.use('/', indexRouter);
 
 app.get('/image/:name', function (req, res) {
+  // console.log(appDir.split(':')[1].split('bin')[0]);
   res.sendFile(
-    '/Dev/Novant-Mern/cubicle_server/public/uploads/postImages/' +
-      req.params.name
+    appDir.split('bin')[0] + 'public/uploads/postImages/' + req.params.name
   );
 });
 

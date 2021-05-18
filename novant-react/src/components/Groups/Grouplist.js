@@ -166,7 +166,7 @@ return(<>
 <Card style={{width:'100%',height:'100%'}}>
         <CardMedia style={{width:'100%',height:'100%'}}
           className={classes.media}
-          image="../assets/images/groups/group.png"
+          image="../assets/images/groups/group2.jpg"
           title="create a group"
         />
 </Card>
