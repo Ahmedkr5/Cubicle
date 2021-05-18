@@ -30,7 +30,13 @@ import { useQuery, gql } from '@apollo/client';
 import SnackbarPost from '../../components/Posts/SnackbarPost';
 import SkeletonFeed from '../../components/Posts/skeletonFeed';
 import UpdatedGroupFeed from '../Posts/GroupsFeed/UpdatedGroupFeed';
-
+import "react-jinke-music-player/assets/index.css";
+import MusicCover from  './python.png';
+import Podcast from './pythonpodcast.mp3';
+import MusicCover2 from  './JohnWick.jpg';
+import Castle_Vania from './JohnWick.mp3';
+import Geazy from './geazy.mp3';
+import ReactJKMusicPlayer from 'react-jinke-music-player';
 const FEED_QUERY = gql`
   query groupPosts($groupid: [String!]) {
     groupPosts(groupid: $groupid) {
@@ -106,9 +112,23 @@ const [mem,setMem]= useState(false);
   const handleRefetch = () => {
     refetch();
   };
-
+  const audiolist =[
+    {
+          cover: MusicCover,
+          musicSrc: Podcast,
+          name : 'Learning Python for Beginners-Podcast',
+          singer:'By Hamza Safraou',
+    },  
+    {
+      cover: MusicCover2,
+      musicSrc: Castle_Vania,
+      name : 'Le Castle Vania - John Wick Medley',
+      singer:'Shots Fired',
+}
+    ]
 
   return ( 
+    
     <div style={{ backgroundColor: '#F0F2F5' }}>
       <link rel='stylesheet' href='css/bootstrap.min.css' />
       <Row>
@@ -136,7 +156,7 @@ const [mem,setMem]= useState(false);
                 owner={groupProf?.Owner}
                 groupimage={groupProf?.groupimage}
               ></GroupCard>
-
+<ReactJKMusicPlayer audioLists={audiolist} autoPlay={false}></ReactJKMusicPlayer>
               <BottomNavigation
                 value={value}
                 onChange={(event, newValue) => {

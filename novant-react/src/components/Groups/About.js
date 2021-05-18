@@ -11,7 +11,7 @@ export default function About(props) {
 
   return (
     <div >
-    <Container style={{borderRadius: '10px'  ,backgroundColor:"white",height:'400px'}}>
+    <Container style={{borderRadius: '10px'  ,backgroundColor:"white",height:'700px'}}>
     <Row style={{height:'400px'}}>
     <div style={{marginTop:'40px'}}><h4 style={{color:'blue',fontFamily:'Times New Roman',fontWeight:'bold'}}>About this group</h4><Clipboardbutton></Clipboardbutton>
     <hr></hr>

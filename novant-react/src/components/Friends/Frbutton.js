@@ -16,6 +16,7 @@ import { useApi } from "../../hooks/useApi";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import TimerIcon from '@material-ui/icons/Timer';
 import Timer from '@material-ui/icons/Timer';
+import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 const useStyles = makeStyles((theme)=>({
   media: {
     height: 250,
@@ -127,7 +128,7 @@ axios.put("http://localhost:3001/users/fr/" + currentuser['id'], {
 
 });
 }}
-startIcon={< ExitToAppIcon/>}
+startIcon={< PersonAddDisabledIcon/>}
 >
 remove friend</Button> } 
 

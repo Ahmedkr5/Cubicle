@@ -4,6 +4,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Button from '@material-ui/core/Button';
 
 import LinkIcon from '@material-ui/icons/Link';
+
 export default class Clipboardbutton extends Component {
     constructor(props) {
         super(props);
