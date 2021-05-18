@@ -12,6 +12,7 @@ import Home from './Home';
 import GroupProfile from './components/Groups/GroupProfile';
 import Business from './Business';
 import Particulier from './components/Auth/SignUp/Particulier';
+import BusinessProfile from './components/Business/BusinessProfile';
 
 function App() {
   return (
@@ -53,6 +54,12 @@ function App() {
         <Route path='/Business'>
           <Business />
         </Route>
+        <Route
+          path='/BusinessProfile/:id'
+          render={(props) => {
+            return <BusinessProfile {...props} />;
+          }}
+        />
       </Router>
     </div>
   );

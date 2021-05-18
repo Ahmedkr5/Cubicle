@@ -16,6 +16,9 @@ var UserSchema = new mongoose.Schema({
     
   friendRequests: [String],
   friends: [String],
+
+  businessInvitations:[String],
+  businessRequests:[String],
  
 
 });
