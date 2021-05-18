@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles()
     const [state, setState] = useState("0") 
     const [open, setOpen] = React.useState(false);
-    
+    const currentuser = authService.getCurrentUser() ;
     
 
   const handleOpen = () => {
@@ -180,7 +180,7 @@ return(<>
        
        <div >
        {state == "0" && <Groups style={{display :'flex',flexDirection:'row'}} ></Groups>}
-    {state == "1" && <>  <GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation></> }</div>
+    {state == "1" &&   <GroupInvitation requests={currentuser['id']}></GroupInvitation> }</div>
         </Container>
                
     </div>

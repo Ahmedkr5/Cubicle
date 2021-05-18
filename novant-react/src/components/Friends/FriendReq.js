@@ -6,6 +6,7 @@ import authService from "../../services/auth.service";
 import { green} from '@material-ui/core/colors';
 import { useApi } from "../../hooks/useApi";
 import Req from './Req'
+import Reqfr from './Reqfr';
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -74,7 +75,7 @@ export default function FriendReq() {
 
 
         <Req requests={currentuser['id']}></Req>
-   
+        <Reqfr requests={currentuser['id']}></Reqfr>
 
 
       </MuiThemeProvider>
