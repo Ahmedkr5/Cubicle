@@ -11,7 +11,7 @@ router.post('/:id/newgroup', function (req, res,next) {
         groupname : req.body.groupname,
         description: req.body.description,
         Owner: req.params.id,
-        
+        members :req.params.id,
         }, 
         function (err, gr) {
             if (err) return res.status(500).send("error group");
