@@ -29,6 +29,7 @@ const PostType = new GraphQLObjectType({
     tags: { type: GraphQLList(GraphQLString) },
     description: { type: GraphQLString },
     media: { type: GraphQLList(GraphQLString) },
+    likes: { type: GraphQLList(GraphQLString) },
     created_at: { type: GraphQLString },
     user: {
       type: UserType,
@@ -43,6 +44,17 @@ const PostType = new GraphQLObjectType({
         return Comment.find({ postId: ObjectId(parent.id) });
       },
     },
+    likesList: {
+      type: GraphQLList(UserType),
+      resolve(parent, args) {
+        var list = [];
+        parent.likes.map((like) => {
+          list.push(ObjectId(like));
+        });
+        // console.log(parent.userId);
+        return User.find({ _id: { $in: list } });
+      },
+    },
   }),
 });
 
@@ -54,6 +66,7 @@ const GroupPostType = new GraphQLObjectType({
     tags: { type: GraphQLList(GraphQLString) },
     description: { type: GraphQLString },
     media: { type: GraphQLList(GraphQLString) },
+    likes: { type: GraphQLList(GraphQLString) },
     created_at: { type: GraphQLString },
     user: {
       type: UserType,
@@ -73,6 +86,17 @@ const GroupPostType = new GraphQLObjectType({
       resolve(parent, args) {
         // console.log(parent.userId);
         return Group.findById(ObjectId(parent.groupId));
+      },
+    },
+    likesList: {
+      type: GraphQLList(UserType),
+      resolve(parent, args) {
+        var list = [];
+        parent.likes.map((like) => {
+          list.push(ObjectId(like));
+        });
+        // console.log(parent.userId);
+        return User.find({ _id: { $in: list } });
       },
     },
   }),
@@ -264,6 +288,58 @@ const Mutation = new GraphQLObjectType({
           created_at: args.created_at,
         });
         return comment.save();
+      },
+    },
+    addLike: {
+      type: PostType,
+      args: {
+        userId: { type: new GraphQLNonNull(GraphQLID) },
+        postId: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return Post.findOneAndUpdate(
+          { _id: args.postId },
+          { $addToSet: { likes: args.userId } }
+        );
+      },
+    },
+    unLike: {
+      type: PostType,
+      args: {
+        userId: { type: new GraphQLNonNull(GraphQLID) },
+        postId: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return Post.findOneAndUpdate(
+          { _id: args.postId },
+          { $pull: { likes: args.userId } }
+        );
+      },
+    },
+    addLikeGroup: {
+      type: GroupPostType,
+      args: {
+        userId: { type: new GraphQLNonNull(GraphQLID) },
+        postId: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return GroupPost.findOneAndUpdate(
+          { _id: args.postId },
+          { $addToSet: { likes: args.userId } }
+        );
+      },
+    },
+    unLikeGroup: {
+      type: GroupPostType,
+      args: {
+        userId: { type: new GraphQLNonNull(GraphQLID) },
+        postId: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return GroupPost.findOneAndUpdate(
+          { _id: args.postId },
+          { $pull: { likes: args.userId } }
+        );
       },
     },
     addGroupPost: {

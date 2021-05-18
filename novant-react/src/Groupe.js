@@ -62,6 +62,11 @@ const FEED_QUERY = gql`
         id
         groupname
       }
+      likesList {
+        id
+        firstname
+        lastname
+      }
     }
   }
 `;

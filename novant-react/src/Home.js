@@ -52,6 +52,11 @@ const FEED_QUERY = gql`
           profileimage
         }
       }
+      likesList {
+        id
+        firstname
+        lastname
+      }
     }
   }
 `;

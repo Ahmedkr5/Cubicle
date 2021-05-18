@@ -61,6 +61,11 @@ const FEED_QUERY = gql`
         id
         groupname
       }
+      likesList {
+        id
+        firstname
+        lastname
+      }
     }
   }
 `;
@@ -69,7 +74,7 @@ function GroupProfile(props) {
   // console.log(`test ${data?.groupPosts}`);
   const groupid = props.match.params.id;
   const groupidd = [props.match.params.id];
- 
+
   const { data, loading, error, refetch } = useQuery(FEED_QUERY, {
     variables: {
       groupid: groupidd,
@@ -80,7 +85,7 @@ function GroupProfile(props) {
   const [value, setValue] = React.useState(0);
   const currentuser = authService.getCurrentUser();
   const [groupProf, err1, reload1] = useApi('groups/group/' + groupid);
-const [mem,setMem]= useState(false);
+  const [mem, setMem] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -107,8 +112,7 @@ const [mem,setMem]= useState(false);
     refetch();
   };
 
-
-  return ( 
+  return (
     <div style={{ backgroundColor: '#F0F2F5' }}>
       <link rel='stylesheet' href='css/bootstrap.min.css' />
       <Row>
@@ -148,7 +152,7 @@ const [mem,setMem]= useState(false);
                 }}
                 style={{ marginBottom: '10px', borderRadius: '10px' }}
               >
-                {  groupProf?.members?.find(m=>(m ===currentuser['id'])) ?
+                {groupProf?.members?.find((m) => m === currentuser['id']) ? (
                   //currentuser['id'] in props?.groupProf?.members.map(m=>(m)) &&
                   <BottomNavigationAction
                     onClick={() => {
@@ -160,9 +164,7 @@ const [mem,setMem]= useState(false);
                     label='Recents'
                     icon={<RestoreIcon />}
                   />
-                  :
-                 null
-                }
+                ) : null}
                 <BottomNavigationAction
                   onClick={() => {
                     if (open === false) {
@@ -199,50 +201,48 @@ const [mem,setMem]= useState(false);
                 />
               )}
 
-              {(state == '0'  && groupProf?.members?.find(m=>(m ===currentuser['id']))) && (
+              {state == '0' &&
+                groupProf?.members?.find((m) => m === currentuser['id']) && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      width: '100%',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    {' '}
+                    <BusinessGroupDialog
+                      parentRefetch={handleRefetch}
+                      CallbackAddedPost={handleCallbackAddedPost}
+                      parentCallback={handleCallback}
+                      parentCallbackDialog={handleCallbackDialog}
+                      user={user}
+                      groupid={groupid}
+                    ></BusinessGroupDialog>{' '}
+                    {loading && (
+                      <>
+                        <SkeletonFeed></SkeletonFeed>{' '}
+                        <SkeletonFeed></SkeletonFeed>
+                      </>
+                    )}
+                    {error && <p style={{ color: 'red' }}>{error.message}</p>}
+                    {data && (
+                      <>
+                        {data.groupPosts.map(
+                          (post) => (
+                            <UpdatedGroupFeed
+                              key={post.id}
+                              post={post}
+                              user={user}
+                            ></UpdatedGroupFeed>
+                          )
 
-             
-                <div
-                  style={{
-                    display: 'flex',
-                    width: '100%',
-                    flexDirection: 'column',
-                  }}
-                >
-                  
-                  {' '}
-                  <BusinessGroupDialog
-                    parentRefetch={handleRefetch}
-                    CallbackAddedPost={handleCallbackAddedPost}
-                    parentCallback={handleCallback}
-                    parentCallbackDialog={handleCallbackDialog}
-                    user={user}
-                    groupid={groupid}
-                  ></BusinessGroupDialog>{' '}
-                  {loading && (
-                    <>
-                      <SkeletonFeed></SkeletonFeed>{' '}
-                      <SkeletonFeed></SkeletonFeed>
-                    </>
-                  )}
-                  {error && <p style={{ color: 'red' }}>{error.message}</p>}
-                  {data && (
-                    <>
-                      {data.groupPosts.map(
-                        (post) => (
-                          <UpdatedGroupFeed
-                            key={post.id}
-                            post={post}
-                            user={user}
-                          ></UpdatedGroupFeed>
-                        )
-
-                        // <Link key={link.id} link={link} />
-                      )}
-                    </>
-                  )}
-                </div>
-              )}
+                          // <Link key={link.id} link={link} />
+                        )}
+                      </>
+                    )}
+                  </div>
+                )}
               {state == '1' && (
                 <div style={{ backgroundColor: 'white', borderRadius: '10px' }}>
                   {' '}

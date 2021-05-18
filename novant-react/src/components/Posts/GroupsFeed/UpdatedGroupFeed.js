@@ -15,17 +15,19 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import EmojiObjectsTwoToneIcon from '@material-ui/icons/EmojiObjectsTwoTone';
 import FavoriteBorderTwoToneIcon from '@material-ui/icons/FavoriteBorderTwoTone';
+import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
 import ChatBubbleOutlineTwoToneIcon from '@material-ui/icons/ChatBubbleOutlineTwoTone';
 import Divider from '@material-ui/core/Divider';
 import Comment from '../Comment';
 import PostComment from '../PostComment';
 import CodeComment from '../CodeComment';
-import { useLazyQuery, gql } from '@apollo/client';
+import { useLazyQuery, gql, useMutation } from '@apollo/client';
 import ShowEditor from '../updatedFeed/ShowEditor';
 import { ButtonGroup, Chip } from '@material-ui/core';
 import SnackbarPost from '../SnackbarPost';
 import UpdatedComment from '../updatedFeed/UpdatedComment';
 import UpdatedPostComment from '../updatedFeed/UpdatedPostComment';
+import Popover from '@material-ui/core/Popover';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,6 +81,17 @@ const useStyles = makeStyles((theme) => ({
       color: '#000',
     },
   },
+  a: {
+    color: '#000',
+    margin: '0px',
+    padding: '0px',
+    textAlign: 'left',
+    fontWeight: '500',
+    cursor: 'pointer',
+    '&:hover': {
+      color: '#000',
+    },
+  },
   content: {
     textAlign: 'left',
   },
@@ -106,6 +119,34 @@ const COMMENT_QUERY = gql`
   }
 `;
 
+const ADD_LIKE = gql`
+  mutation AddTodo($userId: ID!, $postId: ID!) {
+    addLikeGroup(userId: $userId, postId: $postId) {
+      id
+      description
+      user {
+        firstname
+        lastname
+        profileimage
+      }
+    }
+  }
+`;
+
+const UNLIKE = gql`
+  mutation AddTodo($userId: ID!, $postId: ID!) {
+    unLikeGroup(userId: $userId, postId: $postId) {
+      id
+      description
+      user {
+        firstname
+        lastname
+        profileimage
+      }
+    }
+  }
+`;
+
 const preventDefault = (event) => event.preventDefault();
 
 export default function UpdatedGroupFeed(props) {
@@ -119,10 +160,26 @@ export default function UpdatedGroupFeed(props) {
       pollInterval: 100,
     }
   );
+  const [addLike, { data }] = useMutation(ADD_LIKE);
+  const [unLike, { unLikeData }] = useMutation(UNLIKE);
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [noComment, setNoComment] = React.useState(false);
   const [interaction, setInteraction] = React.useState('');
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [reactList, setReactList] = React.useState();
+  const [reacted, setReacted] = React.useState(
+    props?.post?.likesList.some((like) => like.id === props?.user?.id)
+  );
+  const [reactComponent, setReactComponent] = React.useState(
+    <FavoriteBorderTwoToneIcon color='secondary' />
+  );
+  // if (reacted) {
+  //   setReactComponent(<FavoriteBorderTwoToneIcon color='secondary' />);
+  // } else {
+  //   setReactComponent(<FavoriteBorderTwoToneIcon color='secondary' />);
+  // }
+  //  console.log(reacted);
   var delta = Math.round((+new Date() - props?.post?.created_at) / 1000);
   console.log(
     'http://localhost:3001/uploads/' + props?.post?.user?.profileimage
@@ -216,8 +273,46 @@ export default function UpdatedGroupFeed(props) {
   const handleNewComment = () => {
     getComments();
   };
-  console.log(props?.post?.user?.id);
 
+  const handleReact = () => {
+    if (reacted === false) {
+      setReactComponent(<FavoriteBorderTwoToneIcon color='secondary' />);
+      addLike({
+        variables: {
+          userId: props?.user.id,
+          postId: props?.post.id,
+        },
+      });
+      setReacted(true);
+    } else {
+      setReactComponent(<FavoriteTwoToneIcon color='secondary' />);
+      unLike({
+        variables: {
+          userId: props?.user.id,
+          postId: props?.post.id,
+        },
+      });
+      setReacted(false);
+    }
+  };
+
+  // console.log(props?.post);
+  console.log(props?.post);
+  // console.log('this meeee', reactList);
+  // if (props?.post?.likesList.some((like) => like.id === props?.user?.id)) {
+  //   setReacted(true);
+  // }
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
   return (
     // <div className={classes.feed}>
     //   <Paper>
@@ -274,6 +369,170 @@ export default function UpdatedGroupFeed(props) {
           ))}
         </div>
         <ShowEditor data={props?.post?.description}></ShowEditor>
+        {reacted && props?.post?.likesList.length === 1 ? (
+          <div>
+            <FavoriteTwoToneIcon color='secondary' />
+            <a className={classes.a} href={`/profile/${props?.user.id}`}>
+              <span>
+                {' '}
+                {props?.user.firstname} {props?.user.lastname}{' '}
+              </span>
+            </a>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  margin: '10px',
+                }}
+              >
+                {props?.post?.likesList.map((like) => (
+                  <a href={`/profile/${like.id}`} className={classes.p}>
+                    {like.firstname} {like.lastname}
+                  </a>
+                ))}
+              </div>
+            </Popover>
+          </div>
+        ) : null}
+
+        {reacted && props?.post?.likesList.length > 1 ? (
+          <div>
+            <FavoriteTwoToneIcon color='secondary' />
+            <a className={classes.a}>
+              <span onClick={handleClick}>
+                {' '}
+                {'You and '} {props?.post?.likesList.length - 1}{' '}
+                {' other likes'}
+              </span>
+            </a>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  margin: '10px',
+                }}
+              >
+                {props?.post?.likesList.map((like) => (
+                  <a href={`/profile/${like.id}`} className={classes.p}>
+                    {like.firstname} {like.lastname}
+                  </a>
+                ))}
+              </div>
+            </Popover>
+          </div>
+        ) : null}
+
+        {!reacted && props?.post?.likesList.length === 1 ? (
+          <div>
+            <FavoriteTwoToneIcon color='secondary' />
+            <a className={classes.a}>
+              <span>
+                {' '}
+                {props?.post?.likesList.map((like) => (
+                  <a href={`/profile/${like.id}`} className={classes.a}>
+                    {like.firstname} {like.lastname}
+                  </a>
+                ))}
+              </span>
+            </a>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  margin: '10px',
+                }}
+              >
+                {props?.post?.likesList.map((like) => (
+                  <a href={`/profile/${like.id}`} className={classes.p}>
+                    {like.firstname} {like.lastname}
+                  </a>
+                ))}
+              </div>
+            </Popover>
+          </div>
+        ) : null}
+
+        {!reacted && props?.post?.likesList.length > 1 ? (
+          <div>
+            <FavoriteTwoToneIcon color='secondary' />
+            <a className={classes.a}>
+              <span onClick={handleClick}>
+                {' '}
+                {props?.post?.likesList.length} {' likes'}
+              </span>
+            </a>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  margin: '10px',
+                }}
+              >
+                {props?.post?.likesList.map((like) => (
+                  <a href={`/profile/${like.id}`} className={classes.p}>
+                    {like.firstname} {like.lastname}
+                  </a>
+                ))}
+              </div>
+            </Popover>
+          </div>
+        ) : null}
       </CardContent>
 
       <Divider variant='middle' />
@@ -285,13 +544,29 @@ export default function UpdatedGroupFeed(props) {
           variant='text'
           fullWidth
         >
-          <Button
-            style={{ border: '0px' }}
-            aria-label='add to favorites'
-            startIcon={<FavoriteBorderTwoToneIcon />}
-          >
-            React
-          </Button>
+          {reacted ? (
+            <Button
+              style={{ border: '0px' }}
+              aria-label='add to favorites'
+              startIcon={<FavoriteTwoToneIcon color='secondary' />}
+              onClick={() => {
+                handleReact();
+              }}
+            >
+              React
+            </Button>
+          ) : (
+            <Button
+              style={{ border: '0px' }}
+              aria-label='add to favorites'
+              startIcon={<FavoriteBorderTwoToneIcon color='secondary' />}
+              onClick={() => {
+                handleReact();
+              }}
+            >
+              React
+            </Button>
+          )}
           <Button
             style={{ border: '0px' }}
             onClick={handleCommentClick}

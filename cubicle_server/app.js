@@ -7,6 +7,7 @@ const schemaBusiness = require('./schema/schemaBusiness');
 const schemaQuiz = require('./schema/schemaQuiz');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 require('dotenv').config(); //for video call
 const app = express();
 var cors = require('cors');

@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '15px',
     position: 'fixed',
     height: '100%',
-    width:'360px'
+    width: '360px',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -48,7 +48,6 @@ export default function Sidebar() {
       >
         <TopSidebar></TopSidebar>
         <MidSidebar></MidSidebar>
-        <BottomSidebar></BottomSidebar>
       </div>
     </div>
   );
