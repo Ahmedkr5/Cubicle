@@ -22,6 +22,10 @@ import { Input } from '@material-ui/core';
 import { FormHelperText } from '@material-ui/core';
 import CardMedia from '@material-ui/core/CardMedia';
 import Card from '@material-ui/core/Card';
+import authService from '../../services/auth.service';
+import axios from "axios";
+import List from '@material-ui/core/List';
+import Groupcreate from './Groupcreate';
 const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
@@ -85,9 +89,51 @@ const useStyles = makeStyles((theme) => ({
 
 
   export default function  Grouplist() {
+    const handleKeyPress = (event) => {
+      document.getElementById('result2').innerHTML = '';
+      if (event.keyCode == 8) {
+        var a = document
+          .getElementById('search')
+          .value.substr(0, document.getElementById('search').value.length - 1);
+      } else {
+        var a = document.getElementById('search').value + event.key;
+      }
+      document.getElementById('result2').innerHTML = '';
+  
+      var data = axios
+        .get('http://localhost:3001/groups/a/' + a, {})
+        .then(function (response) {
+          return response.data;
+        });
+      var i = -1;
+      data.then((value) => {
+        value.forEach((element) => {
+          i++;
+          document.getElementById('result2').innerHTML =
+            document.getElementById('result2').innerHTML +
+            "<a class='MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button' tabindex='" +
+            i +
+            "' aria-disabled='false' href='http://localhost:3000/GroupProfile/" +
+            element._id +
+            "'><div class='MuiListItemText-root'><span class='MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock'>" +
+            element.groupname +
+            
+            "</span></div><span class='MuiTouchRipple-root'></span></a><hr class='MuiDivider-root'>";
+        });
+        if (i == -1) {
+          document.getElementById('result2').innerHTML =
+            document.getElementById('result2').innerHTML +
+            "<a class='MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button' tabindex='" +
+            0 +
+            "' aria-disabled='false' ><div class='MuiListItemText-root'><span class='MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock'>No Group Found</span></div><span class='MuiTouchRipple-root'></span></a><hr class='MuiDivider-root'>";
+        }
+      });
+    };
     const classes = useStyles()
     const [state, setState] = useState("0") 
     const [open, setOpen] = React.useState(false);
+    const currentuser = authService.getCurrentUser() ;
+    
 
   const handleOpen = () => {
     setOpen(true);
@@ -121,12 +167,30 @@ return(<>
             </div>
   <InputBase  style={{width:'auto'}}
               placeholder="Search…"
+              onKeyDown={handleKeyPress}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
             />
+<div
+              id='response'
+              style={{
+                zIndex: 0,
+                position: 'absolute',
+                borderBottomLeftRadius: '10px',
+                borderBottomRightRadius: '10px',
+              }}
+            >
+              <List
+                component='div'
+                id='result2'
+                style={{ backgroundColor: 'LightGray' }}
+              ></List>
+            </div>
+          
+
              <Button  onClick={handleOpen}
             variant="contained"
             color="primary"
@@ -150,46 +214,32 @@ return(<>
         <Fade in={open}>
           <div className={classes.paper} style={{display:'flex',flexDirection:'row'}}>
            <div style={{width:'100%',height:'100%'}}>
-  <div style={{position:'relative',top:'25%'}}>   <div style={{textAlign:'center',marginRight:'30px'}}  ><h2>Create your group</h2></div> 
+  <div style={{position:'relative',top:'25%'}}>   <div style={{textAlign:'center',marginRight:'80px'}}  ><h2>Create your group</h2></div> 
 <div style={{textAlign:'center',width:'80%'}}  >
-           <FormControl style={{width:'100%'}} >  
-  <InputLabel htmlFor="my-input" style={{fontSize:'20px'}}>Group name</InputLabel>
-  <Input id="my-input" aria-describedby="my-helper-text"   />
-  </FormControl></div><div style={{textAlign:'center',width:'80%'}} >
-  <FormControl style={{width:'100%'}} >  
-  <InputLabel htmlFor="my-input2" style={{fontSize:'20px'}}>Invite Friends</InputLabel>
-  <Input id="my-input2" aria-describedby="my-helper-text"  />
-  <FormHelperText id="my-helper-text" >Enter names or email addresses</FormHelperText>
-</FormControl>
+         <Groupcreate></Groupcreate>
 </div>
 <div style={{textAlign:'center'}}>
-<Button variant="contained" disabled  size='Large' >
-  Create
-</Button>
+
 </div></div>   
 </div><div style={{width:'100%'}}>
 <Card style={{width:'100%',height:'100%'}}>
         <CardMedia style={{width:'100%',height:'100%'}}
           className={classes.media}
-          image="../assets/images/groups/group.png"
+          image="../assets/images/groups/group2.jpg"
           title="create a group"
         />
 </Card>
 
 </div>
-
-
-
-
           </div>
         </Fade>
       </Modal>
             </div>  </div>
        
        
-       <div style={{display:'flex',flexDirection:'row',flexFlow:'wrap',justifyContent:'space-between'}}>
-       {state == "0" && <><Groups></Groups><Groups></Groups><Groups></Groups><Groups></Groups><Groups></Groups><Groups></Groups>  <Groups></Groups><Groups></Groups><Groups></Groups></>}
-    {state == "1" && <>  <GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation><GroupInvitation></GroupInvitation></> }</div>
+       <div >
+       {state == "0" && <Groups style={{display :'flex',flexDirection:'row'}} ></Groups>}
+    {state == "1" &&   <GroupInvitation requests={currentuser['id']}></GroupInvitation> }</div>
         </Container>
                
     </div>

@@ -8,7 +8,7 @@ import ConnectedList from './ConnectedList';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-
+    width:'400px',
     position:'fixed',
     height:'100%'
   },

@@ -103,8 +103,9 @@ router.put('/:id', function (req, res) {
         phone : req.body.phone,
         description : req.body.description,
         datenaissance : req.body.birthday,
+       
         password : hashedPassword,}, {new: true}, function (err, user) {
-        var token = jwt.sign({ id: user._id ,firstname:user.firstname,lastname:user.lastname,email:user.email,adresse:user.adresse,phone:user.phone,birthday:user.datenaissance,description:user.description }, config.secret, {
+        var token = jwt.sign({ id: user._id ,firstname:user.firstname,lastname:user.lastname,email:user.email,adresse:user.adresse,phone:user.phone,birthday:user.datenaissance,description:user.description, }, config.secret, {
             expiresIn: 86400 // expires in 24 hours
           });
           
@@ -114,9 +115,12 @@ router.put('/:id', function (req, res) {
 router.put('/profile/:id', function (req, res) {
     User.findByIdAndUpdate(req.params.id,{
         profileimage : req.body.profileimage,}, {new: true}, function (err, user) {         
-          res.status(200).send(user);
-});
-});
+            var token = jwt.sign({ id: user._id ,profileimage:user.profileimage,firstname:user.firstname,lastname:user.lastname,email:user.email,adresse:user.adresse,phone:user.phone,birthday:user.datenaissance,description:user.description }, config.secret, {
+                expiresIn: 86400 // expires in 24 hours
+              });
+              res.status(200).send({ auth: true, token: token });
+    });
+    });
 
 router.put('/cover/:id', function (req, res) {
     User.findByIdAndUpdate(req.params.id,{
@@ -136,7 +140,49 @@ router.put('/coins/:id', function (req, res) {
 });
     });
 });
+
+router.get('/a/:name', function (req, res) {
+    User.find({firstname: new RegExp(req.params.name, 'i')}, function (err, user) {         
+          res.status(200).send(user);
+});
+});
     
+router.put('/grp/:id', function (req, res) {
 
+    User.findByIdAndUpdate(req.params.id,{
+        groupRequests: req.body.groupRequests,
+        }, {new: true},   function (err, User) {
+            if (err) return res.status(500).send("There was a problem update the user.");
+            res.status(200).send("User updated");
+    });
+});
 
+router.put('/businessput/:id', function (req, res) {
+
+    User.findByIdAndUpdate(req.params.id,{
+        businessRequests: req.body.businessRequests,
+        }, {new: true},   function (err, User) {
+            if (err) return res.status(500).send("There was a problem updating user.");
+            res.status(200).send("User updated");
+    });
+});
+
+    router.put('/frreq/:id', function (req, res) {
+
+        User.findByIdAndUpdate(req.params.id,{
+            friendRequests: req.body.friendRequests,
+            }, {new: true},   function (err, User) {
+                if (err) return res.status(500).send("There was a problem update the user.");
+                res.status(200).send("User updated");
+        });
+        });
+        router.put('/fr/:id', function (req, res) {
+
+            User.findByIdAndUpdate(req.params.id,{
+                friends: req.body.friends,
+                }, {new: true},   function (err, User) {
+                    if (err) return res.status(500).send("There was a problem update the user.");
+                    res.status(200).send("User updated");
+            });
+            });
 module.exports = router;

@@ -10,6 +10,11 @@ import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import  { useState } from "react";
+import List from '@material-ui/core/List';
+import { useApi } from "../../hooks/useApi";
+import { createBrowserHistory } from 'history';
+import authService from "../../services/auth.service";
+export const history = createBrowserHistory();
 const preventDefault = (event) => event.preventDefault();
 const useStyles = makeStyles((theme) => ({
 
@@ -36,34 +41,45 @@ const useStyles = makeStyles((theme) => ({
 
   export default function  Groups() {
     const classes = useStyles();
-return(<>
-    <div style={{border:'1px solid #F7F7F7 ',borderRadius:'7px',width:'400px',height:'115px'}}>
- <div style={{display:'flex',flexDirection:'row'}}> <div style={{width:'350px'}}>
-<ListItem style={{display:'flex',flexDirection:'row'}}>
+    const currentuser = authService.getCurrentUser() ;
+    const userid=currentuser['id'];
+    const [groupProf, err, reload] = useApi('groups/grouplist/'+userid);
+
+  console.log(groupProf);
+  return(<>
+    
+
+   <List style={{display:'flex',flexWrap:'wrap',width:'100%'}}>
+   {groupProf?.map((msg, index) => (
+<ListItem style={{flex:'50%'}} >
 <Avatar style={{marginTop:'10px'}}
             aria-label='recipe'
             variant='rounded'
             className={classes.rounded}
-            src={`../assets/images/groups/java.png`}
+            src={"http://localhost:3001/uploads/"+msg.groupimage}
           ></Avatar>
           
      
 <Typography className={classes.margin}>
-<Link href="#" onClick={preventDefault} style={{fontWeight:'bold',color:"#050505"}}>
-    Java programming
+<Link  onClick={()=>{ history.push('/GroupProfile/'+msg._id);
+         window.location.reload();}} style={{fontWeight:'bold',color:"#050505"}}>
+        {msg.groupname}
   </Link> 
   <Link href="#" onClick={preventDefault} style={{fontSize:'12px',color:'grey'}} > last active 2 days ago
   </Link>   
   </Typography>
-  
-</ListItem></div>
-<div>
+  <div>
     <br></br>
 <IconButton aria-label='settings' >
             <MoreHorizIcon />
           </IconButton>
-</div></div>  
 </div>
+</ListItem>
+))}
+</List>
+
+  
+
   
   </>
 );

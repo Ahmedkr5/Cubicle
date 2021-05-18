@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-  export default function  FriendList() {
+  export default function  FriendList(props) {
     const classes = useStyles()
     const [state, setState] = useState("0") 
 const [value, setValue] = React.useState(0);
@@ -97,8 +97,8 @@ return(<>
             /></div>  </div>
        
        
-       <div style={{display:'flex',justifyContent: 'space-evenly',flexFlow:'wrap'}}>
-       {state == "0" && <Friendsdiv></Friendsdiv>}
+       <div style={{width:'100%'}}>
+       {state == "0" && <Friendsdiv friends={props?.friends}></Friendsdiv>}
     {state == "1" &&  <Friendreqlist></Friendreqlist> }</div>
         </Container>
                

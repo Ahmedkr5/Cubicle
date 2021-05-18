@@ -23,6 +23,9 @@ const postSchema = new mongoose.Schema({
   media: {
     type: [String],
   },
+  likes: {
+    type: [String],
+  },
   created_at: {
     type: String,
     required: true,

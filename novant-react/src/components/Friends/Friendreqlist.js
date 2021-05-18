@@ -1,7 +1,7 @@
 import React from 'react';
 import FriendReq from './FriendReq';
-import Req from './Req';
-
+import Reqfr2 from './Reqfr2';
+import authService from "../../services/auth.service";
         
 
 
@@ -10,13 +10,13 @@ import Req from './Req';
 
 
   export default function  FriendList() {
-  
+    const currentuser = authService.getCurrentUser() ;
 return(<>
     
        
        
        <div style={{display:'flex',flexDirection:'row',flexFlow:'wrap',marginLeft:'55px'}}>
-     <Req></Req><Req></Req><Req></Req><Req></Req><Req></Req>
+     <Reqfr2 requests={currentuser['id']}></Reqfr2>
             
     </div>
   </>

@@ -21,6 +21,9 @@ import Hidden from '@material-ui/core/Hidden';
 import { useQuery, gql } from '@apollo/client';
 import SkeletonFeed from './components/Posts/skeletonFeed';
 import Editor from './components/Posts/Editor';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import SnackbarPost from './components/Posts/SnackbarPost';
+import StillEmtySVG from './components/Posts/updatedFeed/StillEmptySVG';
 
 const FEED_QUERY = gql`
   {
@@ -31,38 +34,67 @@ const FEED_QUERY = gql`
       description
       created_at
       user {
+        id
         firstname
         lastname
         email
+        profileimage
       }
       comments {
         id
         type
         description
+        created_at
         user {
           firstname
           lastname
           email
+          profileimage
         }
+      }
+      likesList {
+        id
+        firstname
+        lastname
       }
     }
   }
 `;
 
 function Home() {
-  const { data, loading, error } = useQuery(FEED_QUERY, {
-    // pollInterval: 5000,
+  const { data, loading, error, refetch } = useQuery(FEED_QUERY, {
+    pollInterval: 5000,
   });
-
   const [state, setState] = useState('0');
   const [value, setValue] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [offer, setOffer] = React.useState(0);
+
+  const handleCallback = (childData) => {
+    setOpen(childData);
+  };
+
+  const handleCallbackDialog = (childData) => {
+    setOpenDialog(childData);
+  };
+
+  const handleCallbackSnackbar = (childData) => {
+    setOpenSnackbar(childData);
+  };
+
+  const handleCallbackAddedPost = (childDatat) => {
+    refetch();
+  };
+
   const user = authService.getCurrentUser();
 
   return (
     <div style={{ backgroundColor: '#F0F2F5' }}>
       <link rel='stylesheet' href='css/bootstrap.min.css' />
       <Row>
-        <SearchAppBar></SearchAppBar>
+        <SearchAppBar user={user}></SearchAppBar>
       </Row>
       <Container style={{ marginTop: '4em', maxWidth: '100%' }}>
         <Row>
@@ -94,7 +126,11 @@ function Home() {
                 <BottomNavigation
                   value={value}
                   onChange={(event, newValue) => {
-                    setValue(newValue);
+                    if (open === false) {
+                      setValue(newValue);
+                    } else {
+                      setOpenSnackbar(true);
+                    }
                   }}
                   style={{
                     marginBottom: '10px',
@@ -103,21 +139,42 @@ function Home() {
                   }}
                 >
                   <BottomNavigationAction
-                    onClick={() => setState('0')}
+                    onClick={() => {
+                      if (!open) {
+                        setState('0');
+                        refetch();
+                      }
+                    }}
                     label='Feeds'
                     icon={<AddBoxOutlinedIcon />}
                   />
                   <BottomNavigationAction
-                    onClick={() => setState('1')}
+                    onClick={() => {
+                      if (!open) {
+                        setState('1');
+                        refetch();
+                      }
+                    }}
                     label='Problems'
                     icon={<EmojiPeopleOutlinedIcon />}
                   />
                   <BottomNavigationAction
-                    onClick={() => setState('2')}
+                    onClick={() => {
+                      if (open === false) {
+                        setState('2');
+                        refetch();
+                      }
+                    }}
                     label='Offers'
                     icon={<WorkOutlineOutlinedIcon />}
                   />
                 </BottomNavigation>
+                {openSnackbar && (
+                  <SnackbarPost
+                    parentCallbackSnackbar={handleCallbackSnackbar}
+                    message={'You are editing a new post ✍🏻'}
+                  />
+                )}
                 {/* <InputBase
                   className={classes.input}
                   placeholder='Choisissez un filtre...'
@@ -134,7 +191,12 @@ function Home() {
                       flexDirection: 'column',
                     }}
                   >
-                    <NewProblemDialog user={user}></NewProblemDialog>
+                    <NewProblemDialog
+                      CallbackAddedPost={handleCallbackAddedPost}
+                      parentCallback={handleCallback}
+                      parentCallbackDialog={handleCallbackDialog}
+                      user={user}
+                    ></NewProblemDialog>
                     {loading && (
                       <>
                         <SkeletonFeed></SkeletonFeed>{' '}
@@ -144,7 +206,7 @@ function Home() {
                     {error && <p style={{ color: 'red' }}>{error.message}</p>}
                     {data && (
                       <>
-                        {data.posts
+                        {/* {data.posts
                           .filter((post) => post.type.includes('problem'))
                           .map(
                             (post) => (
@@ -157,10 +219,10 @@ function Home() {
                             )
 
                             // <Link key={link.id} link={link} />
-                          )}
+                          )} */}
 
                         {data.posts
-                          .filter((post) => post.type.includes('text'))
+                          .filter((post) => post.type.includes('Feed'))
                           .map(
                             (post) => (
                               <UpdatedFeed
@@ -186,7 +248,11 @@ function Home() {
                     flexDirection: 'column',
                   }}
                 >
-                  <NewProblemDialog></NewProblemDialog>
+                  <NewProblemDialog
+                    parentCallback={handleCallback}
+                    parentCallbackDialog={handleCallbackDialog}
+                    user={user}
+                  ></NewProblemDialog>
                   {loading && (
                     <>
                       <SkeletonFeed></SkeletonFeed>{' '}
@@ -197,14 +263,15 @@ function Home() {
                   {data && (
                     <>
                       {data.posts
-                        .filter((post) => post.type.includes('code'))
+                        .filter((post) => post.type.includes('Problem'))
                         .map(
                           (post) => (
-                            <ProblemFeed
+                            <UpdatedFeed
+                              image='../../assets/images/users/2.jpg'
                               key={post.id}
                               post={post}
                               user={user}
-                            ></ProblemFeed>
+                            ></UpdatedFeed>
                           )
 
                           // <Link key={link.id} link={link} />
@@ -215,8 +282,47 @@ function Home() {
               )}
               {state === '2' && (
                 <>
-                  {' '}
-                  <SkeletonFeed></SkeletonFeed> <Editor />
+                  <NewProblemDialog
+                    parentCallback={handleCallback}
+                    parentCallbackDialog={handleCallbackDialog}
+                    user={user}
+                  ></NewProblemDialog>{' '}
+                  {loading && (
+                    <>
+                      <SkeletonFeed></SkeletonFeed>{' '}
+                      <SkeletonFeed></SkeletonFeed>
+                    </>
+                  )}
+                  {error && <p style={{ color: 'red' }}>{error.message}</p>}
+                  {data && (
+                    <>
+                      {data.posts
+                        .filter((post) => post.type.includes('Offer'))
+                        .map(
+                          (post) => {
+                            <UpdatedFeed
+                              image='../../assets/images/users/2.jpg'
+                              key={post.id}
+                              post={post}
+                              user={user}
+                            ></UpdatedFeed>;
+                          }
+
+                          // <Link key={link.id} link={link} />
+                        )}
+                      {data.posts.filter((post) => post.type.includes('Offer'))
+                        .length === 0 ? (
+                        <StillEmtySVG />
+                      ) : (
+                        console.log(
+                          data.posts.filter((post) =>
+                            post.type.includes('Offer')
+                          ).length
+                        )
+                      )}
+                      <SkeletonFeed></SkeletonFeed>
+                    </>
+                  )}
                 </>
               )}
             </Container>

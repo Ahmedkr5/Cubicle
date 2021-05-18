@@ -11,6 +11,8 @@ import experienceService from '../../services/experience.service';
 import axios from 'axios';
 import { Form } from 'formik';
 import authService from '../../services/auth.service';
+import { useApi } from '../../hooks/useApi';
+import Frbutton from '../Friends/Frbutton';
 
 
 
@@ -28,6 +30,14 @@ const useStyles = makeStyles((theme)=>({
 
 export default function ProfileCard(props) {
   const currentuser = authService.getCurrentUser() ;
+  const [userProf, err1, reload1] = useApi('showUser/'+ props.userid);
+  const [userProf2, err2, reload2] = useApi('users/'+ currentuser['id']);
+var coins = userProf?.map((prof) =>
+    prof.Coins 
+    );
+    console.log(coins)
+
+ 
   const classes = useStyles();
   const [CoverImage, setCoverImage] = useState('');
   const [open, setOpen] = useState('none');
@@ -97,7 +107,7 @@ const [selectedProfileImage, setselectedProfileImage] = useState(null);
           image={coverimage}
           onClick={() => showL("http://localhost:3001/uploads/" + props.coverimage)}  style={{ maxHeight: '100%', maxWidth: '100%', cursor: 'pointer' }} 
         />
-        {currentuser['id'] == props.userid &&
+        {currentuser['id'] === props.userid &&
             <React.Fragment>
 <input
   accept="image/*"
@@ -131,24 +141,15 @@ const [selectedProfileImage, setselectedProfileImage] = useState(null);
 </React.Fragment>
 
 }
-<div style={{ display: open }} >
-    
-                                        <Lightbox
-                                            medium={srcImage}
-                                            //  large={}
-                                            onClose={closeLightbox}
-                                            >
 
-                                            </Lightbox>
-
-                                    </div>
     <CardContent style={{display: 'flex',flexDirection:'row', alignItems:'center' ,marginTop:'-100px',float:'left',marginLeft:'100px'}}>
-        <Badge badgeContent={"Level 10"} color="primary">
+        <Badge badgeContent={coins} max={10000} color="primary">
         {props.profileimage=="default profile image" && <UIAvatar name={name} className={classes.rad} color='#551a8b' ></UIAvatar>}
         {props.profileimage !=="default profile image" && <Avatar           onClick={() => showL("http://localhost:3001/uploads/" + props.profileimage)}  style={{ maxHeight: '100%', maxWidth: '100%', cursor: 'pointer' }}  src={profileimage} className={classes.rad} color='#551a8b' ></Avatar>}
         
         </Badge>
         <Typography variant="h4" style={{marginTop:'85px',marginLeft:'85px'}}>{props.firstname} {props.lastname}</Typography>
+     <Frbutton myfriends={userProf2?.friends} friends={props?.friends} friendRequests={props?.friendRequests} id={props?.userid}></Frbutton>
         </CardContent>
        
     </Card>

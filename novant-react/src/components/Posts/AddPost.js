@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import clsx from 'clsx';
@@ -22,11 +22,19 @@ import Comment from './Comment';
 import SkeletonComment from './SkeletonComment';
 import PostComment from './PostComment';
 import CodeComment from './CodeComment';
-import { useLazyQuery, gql } from '@apollo/client';
+import { useMutation, gql } from '@apollo/client';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Alert from '@material-ui/lab/Alert';
-
+import AddTag from './AddTag';
 import Editor from './Editor';
+import {
+  ButtonGroup,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@material-ui/core';
+import SnackbarPost from './SnackbarPost';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
   p: {
     color: '#000',
     margin: '0px',
+    marginTop: '-15%',
     padding: '0px',
     textAlign: 'left',
     cursor: 'pointer',
@@ -82,14 +91,57 @@ const useStyles = makeStyles((theme) => ({
   content: {
     textAlign: 'left',
   },
+  formControl: {
+    minWidth: 120,
+    height: 0,
+    marginLeft: '0',
+  },
+  selectEmpty: {
+    padding: '2px',
+  },
+  select: {
+    height: 20,
+    marginTop: -15,
+    padding: '0px',
+  },
+  Buttons: {
+    alignItems: 'stretch',
+    width: '300px',
+    minWidth: '300px',
+    backgroundColor: 'transparent',
+  },
+  Button: {
+    width: '100%',
+    backgroundColor: '#F0F2F5',
+    '&:hover': {
+      backgroundColor: '#F5F5F5',
+    },
+  },
 }));
 
-const COMMENT_QUERY = gql`
-  {
-    comment(id: $id) {
+const ADD_POST = gql`
+  mutation AddTodo(
+    $userId: ID!
+    $type: String!
+    $tags: [String]
+    $description: String!
+    $created_at: String!
+  ) {
+    addPost(
+      userId: $userId
+      type: $type
+      tags: $tags
+      description: $description
+      created_at: $created_at
+    ) {
+      id
       type
+      tags
       description
-      created_at
+      user {
+        firstname
+        lastname
+      }
     }
   }
 `;
@@ -97,51 +149,101 @@ const COMMENT_QUERY = gql`
 const preventDefault = (event) => event.preventDefault();
 
 export default function AddPost(props) {
-  const [getComments, { loading, error, data }] = useLazyQuery(COMMENT_QUERY);
+  const [addPost, { data }] = useMutation(ADD_POST);
   const classes = useStyles();
+  const [type, setType] = React.useState('Feed');
+  const [tags, setTags] = useState([]);
+  const [descritption, setDescription] = useState({});
+
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleChange = (event) => {
+    setType(event.target.value);
+  };
   const [expanded, setExpanded] = React.useState(false);
-  const [noComment, setNoComment] = React.useState(false);
-  const [interaction, setInteraction] = React.useState('');
 
-  const handleExpandClick = () => {
-    if (props?.post?.comments.length > 0) {
-      setExpanded(!expanded);
+  const handlePost = () => {
+    if (
+      Object.keys(descritption).length !== 0 &&
+      descritption.blocks.length !== 0
+    ) {
+      addPost({
+        variables: {
+          userId: props.user.id.toString(),
+          type: type,
+          tags: tags[0],
+          description: JSON.stringify(descritption),
+          created_at: Date.now().toString(),
+        },
+      });
+      // console.log({
+      //   userId: props?.user?.id,
+      //   type: type,
+      //   tags: tags,
+      //   descritption: JSON.stringify(descritption),
+      //   created_at: Date.now(),
+      // });
+      props.parentCallback(false);
+      window.scrollTo(0, 0);
     } else {
-      if (expanded === false) {
-        setNoComment(true);
-        setTimeout(() => {
-          setNoComment(false);
-        }, 2000);
-      }
-    }
-    if (expanded === true) {
-      setExpanded(!expanded);
+      setOpenSnackbar(true);
+      // console.log('worked');
     }
   };
 
-  const handleCommentClick = () => {
-    setInteraction('comment');
-    if (!expanded) {
-      setExpanded(!expanded);
-    }
+  const handleTags = (childData) => {
+    // console.log(`test: ${childData}`);
+    setTags((arr) => [childData]);
+    // var fTag = childData;
+    // console.log(tags);
   };
 
-  const handleSolveClick = () => {
-    setInteraction('solve');
-    if (!expanded) {
-      setExpanded(!expanded);
-    }
+  const handleType = (type) => {
+    setType(type);
   };
+
+  const handleDescription = (childData) => {
+    setDescription(childData);
+  };
+
+  const handleCallbackSnackbar = (childData) => {
+    setOpenSnackbar(childData);
+  };
+
+  // const [noComment, setNoComment] = React.useState(false);
+  // const [interaction, setInteraction] = React.useState('');
+
+  // const handleExpandClick = () => {
+  //   if (props?.post?.comments.length > 0) {
+  //     setExpanded(!expanded);
+  //   } else {
+  //     if (expanded === false) {
+  //       setNoComment(true);
+  //       setTimeout(() => {
+  //         setNoComment(false);
+  //       }, 2000);
+  //     }
+  //   }
+  //   if (expanded === true) {
+  //     setExpanded(!expanded);
+  //   }
+  // };
+
+  // const handleCommentClick = () => {
+  //   setInteraction('comment');
+  //   if (!expanded) {
+  //     setExpanded(!expanded);
+  //   }
+  // };
+
+  // const handleSolveClick = () => {
+  //   setInteraction('solve');
+  //   if (!expanded) {
+  //     setExpanded(!expanded);
+  //   }
+  // };
 
   return (
-    // <div className={classes.feed}>
-    //   <Paper>
-    //     <div>
-    //       <Avatar variant='rounded' className={classes.rounded}></Avatar>
-    //       <div></div>
-    //     </div>
-    //   </Paper>
-    // </div>
     <Card className={classes.root} elevation={0}>
       <CardHeader
         avatar={
@@ -157,7 +259,7 @@ export default function AddPost(props) {
           <IconButton
             aria-label='settings'
             onClick={() => {
-              props.parentCallback(false);
+              props.parentCallbackDialog(true);
             }}
           >
             <CloseIcon />
@@ -179,27 +281,43 @@ export default function AddPost(props) {
       {/* <Divider variant='middle' /> */}
 
       <CardContent style={{ height: '5%', marginLeft: '50px' }}>
-        <Editor style={{ marginBottom: '5px' }} user={props?.user} />
+        <AddTag
+          parentCallbackTags={handleTags}
+          parentCallbackType={handleType}
+        />
+        <Editor
+          style={{ marginBottom: '10px' }}
+          parentCallbackDescription={handleDescription}
+          user={props?.user}
+        />
       </CardContent>
       <Divider variant='middle' style={{}} />
-      <CardActions disableSpacing>
-        <Button
-          aria-label='add to favorites'
-          startIcon={<CloseIcon />}
-          onClick={() => {
-            props.parentCallback(false);
-          }}
+      <CardActions>
+        <ButtonGroup
+          className={classes.Buttons}
+          style={{ width: '100%' }}
+          disableElevation
+          variant='text'
+          fullwidth
         >
-          Annuler
-        </Button>
-        <Button
-          onClick={handleCommentClick}
-          aria-label='share'
-          startIcon={<SaveIcon />}
-        >
-          Save
-        </Button>
+          <Button
+            // className={classes.Button}
+            onClick={handlePost}
+            disableElevation
+            className={classes.Button}
+            aria-label='share'
+            variant='contained'
+          >
+            Post
+          </Button>
+        </ButtonGroup>
       </CardActions>
+      {openSnackbar && (
+        <SnackbarPost
+          parentCallbackSnackbar={handleCallbackSnackbar}
+          message={'Your post is empty 😔'}
+        />
+      )}
     </Card>
   );
 }

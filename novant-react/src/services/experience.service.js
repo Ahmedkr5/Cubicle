@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-class-members */
 import axios from "axios";
 import jwt_decode from "jwt-decode";
  
@@ -43,6 +44,8 @@ class ExperienceService {
          profileimage,
       })
       .then(response => {
+        var token = response.data.token;
+            localStorage.setItem("token", token);
         return response.data;
       });
   }

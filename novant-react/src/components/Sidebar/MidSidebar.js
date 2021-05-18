@@ -79,7 +79,7 @@ export default function MidSidebar() {
             <ListItemText>Friends</ListItemText>
           </ListItemLink>
           <Divider variant='middle' />
-          <ListItemLink style={{ paddingLeft: '15%' }} href='AppChat'>
+          <ListItemLink style={{ paddingLeft: '15%' }} href='/AppChat'>
             <ListItemIcon className={classes.iconWrapper}>
               <MessageOutlined color='#F0F2F5' />
             </ListItemIcon>
@@ -98,20 +98,6 @@ export default function MidSidebar() {
               <SupervisedUserCircleOutlined color='#F0F2F5' />
             </ListItemIcon>
             <ListItemText>Groups</ListItemText>
-          </ListItemLink>
-          <Divider variant='middle' />
-          <ListItemLink style={{ paddingLeft: '15%' }}>
-            <ListItemIcon className={classes.iconWrapper}>
-              <MenuBook color='#F0F2F5' />
-            </ListItemIcon>
-            <ListItemText>Courses</ListItemText>
-          </ListItemLink>
-          <Divider variant='middle' />
-          <ListItemLink style={{ paddingLeft: '15%' }}>
-            <ListItemIcon className={classes.iconWrapper}>
-              <BusinessCenterOutlined color='#F0F2F5' />
-            </ListItemIcon>
-            <ListItemText>Offres</ListItemText>
           </ListItemLink>
         </Container>
       </Paper>

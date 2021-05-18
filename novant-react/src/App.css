@@ -1,22 +1,26 @@
 .App {
   /* text-align: center; */
   margin-right: 0px;
-  background-color : #F0F2F5;
-} 
-body{
+  background-color: #f0f2f5;
+}
+body {
   overflow-x: hidden;
   height: 100%;
-  background-color :#F0F2F5 ;
+  background-color: #f0f2f5;
+}
+
+root {
+  background-color: #f0f2f5;
 }
 
 .authorthumb {
- float: left; 
- margin-top: -10px;
+  float: left;
+  margin-top: -10px;
 }
 .authorthumbrecept {
-  float: right; 
- margin-right: -1px;
- margin-top: -10px;
+  float: right;
+  margin-right: -1px;
+  margin-top: -10px;
 }
 .chatmessageitem {
   padding: 13px;
@@ -25,62 +29,58 @@ body{
   border-radius: 10px;
   margin-bottom: 5px;
   font-size: 12px;
-  max-width: 200px; }
-
-  .chatmessageitemrecept {
-    padding: 13px;
-    background-color:lavender;
-    margin-top: 0;
-    border-radius: 10px;
-    margin-bottom: 5px;
-    font-size: 12px;
-    max-width: 200px; }
-
-
-  .spanMessage{
-
-      font-size: 14px;
-      display: block ;
-      margin-left: 40px;
-      font-family: Roboto,-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
-      font-size: small;
-      
-  }
-
-  .spanMessagerecept{
-
-    font-size: 14px;
-    display: block ;
-    margin-right: 5px;
-    font-family: Roboto,-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
-    font-size: small;
-    
+  max-width: 200px;
 }
-  .blockMessage{
-    margin-top: 40px;
-  }
-  .blockMessageSecond{
-    margin-top: 12px;
-  }
-  ::-webkit-scrollbar{
-    display: none;
-  }
-  .notification-date {
-    font-size: 10px;
-    display: block;
-    margin-top: 5px; 
-    float: right;
-    margin-top: 1px;
-    margin-right: 10px;
 
-   
-  }
-  .notification-daterecept {
-    font-size: 10px;
-    display: block;
-    margin-top: 5px; 
-    float: left;
-    margin-top: 1px;
-    margin-right: -10px;
-  }
+.chatmessageitemrecept {
+  padding: 13px;
+  background-color: lavender;
+  margin-top: 0;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  max-width: 200px;
+}
 
+.spanMessage {
+  font-size: 14px;
+  display: block;
+  margin-left: 40px;
+  font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI',
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: small;
+}
+
+.spanMessagerecept {
+  font-size: 14px;
+  display: block;
+  margin-right: 5px;
+  font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI',
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: small;
+}
+.blockMessage {
+  margin-top: 40px;
+}
+.blockMessageSecond {
+  margin-top: 12px;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+.notification-date {
+  font-size: 10px;
+  display: block;
+  margin-top: 5px;
+  float: right;
+  margin-top: 1px;
+  margin-right: 10px;
+}
+.notification-daterecept {
+  font-size: 10px;
+  display: block;
+  margin-top: 5px;
+  float: left;
+  margin-top: 1px;
+  margin-right: -10px;
+}

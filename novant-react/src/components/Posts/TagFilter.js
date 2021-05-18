@@ -65,8 +65,8 @@ const TagsInput = (props) => {
   };
   const addTags = (event) => {
     if (event.target.value !== '') {
-      setTags([...tags, event.target.value]);
-      props.selectedTags([...tags, event.target.value]);
+      setTags([...tags, event.target.value.toUpperCase()]);
+      props.selectedTags([...tags, event.target.value.toUpperCase()]);
       event.target.value = '';
     }
   };
@@ -79,8 +79,8 @@ const TagsInput = (props) => {
           <InputBase
             className={classes.input}
             onKeyUp={(event) => (event.key === 'Enter' ? addTags(event) : null)}
-            placeholder='Press enter to add tags'
-            inputProps={{ 'aria-label': 'Press enter to add tags' }}
+            placeholder='Press enter to add tags to filter'
+            inputProps={{ 'aria-label': 'Press enter to add tags to filter' }}
           />
           {/* <input
         type='text'

@@ -3,8 +3,11 @@ const { graphqlHTTP } = require('express-graphql');
 const schema = require('./schema/schema');
 const schemaTest = require('./schema/schemaTest');
 const schemaEditorUpdate = require('./schema/schemaEditorUpdate');
+const schemaBusiness = require('./schema/schemaBusiness');
+const schemaQuiz = require('./schema/schemaQuiz');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 require('dotenv').config(); //for video call
 const app = express();
 var cors = require('cors');
@@ -16,18 +19,20 @@ var socket = require('socket.io');
 var AccessToken = require('twilio').jwt.AccessToken;
 var VideoGrant = AccessToken.VideoGrant;
 const fetch = require('node-fetch');
-
+var groupController = require('./controller/groupController');
 var UserController = require('./user/UserController');
 var AuthController = require('./auth/AuthController');
+var businessController = require('./controller/businessController');
 var ExperienceController = require('./experiences/ExperienceController');
 var PostController = require('./experiences/ExperienceController');
 var path = require('path');
+var appDir = path.dirname(require.main.filename);
 app.use(cors());
 
 app.use(express.static(path.resolve('./public')));
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', '*');
 
   // Request methods you wish to allow
   res.setHeader(
@@ -74,6 +79,22 @@ app.use(
   })
 );
 
+app.use(
+  '/graphqlBusiness',
+  graphqlHTTP({
+    schema: schemaBusiness,
+    graphiql: true,
+  })
+);
+
+app.use(
+  '/graphqlQuiz',
+  graphqlHTTP({
+    schema: schemaQuiz,
+    graphiql: true,
+  })
+);
+
 app.get('/post/link/', function (req, res) {
   // console.log(req);
   var url = req.query.url.toString();
@@ -95,6 +116,8 @@ app.get('/post/link/', function (req, res) {
 
 // frontend calls
 app.use('/users', UserController);
+app.use('/groups', groupController);
+app.use('/business', businessController);
 app.use('/experiences', ExperienceController);
 app.use('/api/auth', AuthController);
 app.use(function (req, res, next) {
@@ -120,7 +143,7 @@ let db = mongoose.connection;
 db.on('open', () => console.info('Connection to the database was successful'));
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', '*');
 
   // Request methods you wish to allow
   res.setHeader(
@@ -145,9 +168,9 @@ app.use(function (req, res, next) {
 app.use('/', indexRouter);
 
 app.get('/image/:name', function (req, res) {
+  // console.log(appDir.split(':')[1].split('bin')[0]);
   res.sendFile(
-    '/Dev/Novant-Mern/cubicle_server/public/uploads/postImages/' +
-      req.params.name
+    appDir.split('bin')[0] + 'public/uploads/postImages/' + req.params.name
   );
 });
 

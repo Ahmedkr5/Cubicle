@@ -11,9 +11,15 @@ var UserSchema = new mongoose.Schema({
   adresse : String ,
   phone: String,
   Coins: String,
-    Groups: [String],
-    Friendship: [String] 
+  groupInvitations:[String], 
+  groupRequests:[String],  //ki yebda owner ta3 group
+    
+  friendRequests: [String],
+  friends: [String],
 
+  businessInvitations:[String],
+  businessRequests:[String],
+ 
 
 });
 mongoose.model('User2', UserSchema);

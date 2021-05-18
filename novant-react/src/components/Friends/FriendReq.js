@@ -2,10 +2,11 @@ import React from 'react';
 import { withStyles, Typography } from '@material-ui/core';
 import Badge from '@material-ui/core/Badge';
 import { makeStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
+import authService from "../../services/auth.service";
 import { green} from '@material-ui/core/colors';
-
+import { useApi } from "../../hooks/useApi";
 import Req from './Req'
+import Reqfr from './Reqfr';
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -63,23 +64,18 @@ const StyledBadge = withStyles((theme) => ({
 
 export default function FriendReq() {
   const classes = useStyles();
+  const currentuser = authService.getCurrentUser() ;
+  const [userReq, err1, reload1] = useApi('users/'+ currentuser['id']);
+ 
 
   return (<>
     <div className={classes.root} style={{ marginTop: '10px', flexDirection: 'column' }}>
       <MuiThemeProvider theme={theme}>
-        <div style={{display:'flex', flexDirection:'row',justifyContent: 'space-between' }}>
-            <div  >
-
-              <Typography style={{ color: 'grey', fontSize: '12', fontWeight: 'bold' }} align='left'>REQUESTS</Typography>
-            </div>
-            <StyledBadge badgeContent={2} color="primary" style={{ marginRight:'50px'}}>
-
-          </StyledBadge>
-        </div>
+      
 
 
-        <Req></Req>
-        <Req></Req>
+        <Req requests={currentuser['id']}></Req>
+        <Reqfr requests={currentuser['id']}></Reqfr>
 
 
       </MuiThemeProvider>

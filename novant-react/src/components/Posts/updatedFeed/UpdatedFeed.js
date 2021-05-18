@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import clsx from 'clsx';
@@ -10,22 +10,24 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import EmojiObjectsTwoToneIcon from '@material-ui/icons/EmojiObjectsTwoTone';
+import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
 import FavoriteBorderTwoToneIcon from '@material-ui/icons/FavoriteBorderTwoTone';
 import ChatBubbleOutlineTwoToneIcon from '@material-ui/icons/ChatBubbleOutlineTwoTone';
 import Divider from '@material-ui/core/Divider';
 import Comment from '../Comment';
-import SkeletonComment from '../SkeletonComment';
 import PostComment from '../PostComment';
 import CodeComment from '../CodeComment';
-import { useLazyQuery, gql } from '@apollo/client';
-import Skeleton from '@material-ui/lab/Skeleton';
-import Alert from '@material-ui/lab/Alert';
+import { useLazyQuery, gql, useMutation } from '@apollo/client';
 import ShowEditor from './ShowEditor';
+import { ButtonGroup, Chip, Typography } from '@material-ui/core';
+import SnackbarPost from '../SnackbarPost';
+import UpdatedComment from './UpdatedComment';
+import UpdatedPostComment from './UpdatedPostComment';
+import Popover from '@material-ui/core/Popover';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
+    borderRadius: '5px',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
@@ -78,14 +81,37 @@ const useStyles = makeStyles((theme) => ({
       color: '#000',
     },
   },
+  a: {
+    color: '#000',
+    margin: '0px',
+    padding: '0px',
+    textAlign: 'left',
+    fontWeight: '500',
+    cursor: 'pointer',
+    '&:hover': {
+      color: '#000',
+    },
+  },
   content: {
     textAlign: 'left',
+  },
+  Buttons: {
+    alignItems: 'stretch',
+    width: '300px',
+    minWidth: '300px',
+    backgroundColor: 'transparent',
+    color: 'trasparent',
+  },
+  chip: {
+    backgroundColor: '#1877F2',
+    marginRight: '1%',
+    marginBottom: '1%',
   },
 }));
 
 const COMMENT_QUERY = gql`
   {
-    comment(id: $id) {
+    comments(id: $id) {
       type
       description
       created_at
@@ -93,14 +119,126 @@ const COMMENT_QUERY = gql`
   }
 `;
 
+const ADD_LIKE = gql`
+  mutation AddTodo($userId: ID!, $postId: ID!) {
+    addLike(userId: $userId, postId: $postId) {
+      id
+      description
+      user {
+        firstname
+        lastname
+        profileimage
+      }
+    }
+  }
+`;
+
+const UNLIKE = gql`
+  mutation AddTodo($userId: ID!, $postId: ID!) {
+    unLike(userId: $userId, postId: $postId) {
+      id
+      description
+      user {
+        firstname
+        lastname
+        profileimage
+      }
+    }
+  }
+`;
+
 const preventDefault = (event) => event.preventDefault();
 
 export default function UpdatedFeed(props) {
-  const [getComments, { loading, error, data }] = useLazyQuery(COMMENT_QUERY);
+  const [getComments, { loading, error, newComments }] = useLazyQuery(
+    COMMENT_QUERY,
+    {
+      variables: {
+        $id: props?.post?.id,
+      },
+      pollInterval: 100,
+    }
+  );
+  const [addLike, { data }] = useMutation(ADD_LIKE);
+  const [unLike, { unLikeData }] = useMutation(UNLIKE);
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [noComment, setNoComment] = React.useState(false);
   const [interaction, setInteraction] = React.useState('');
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [reactList, setReactList] = React.useState();
+  const [reacted, setReacted] = React.useState(
+    props?.post?.likesList.some((like) => like.id === props?.user?.id)
+  );
+  const [reactComponent, setReactComponent] = React.useState(
+    <FavoriteBorderTwoToneIcon color='secondary' />
+  );
+  // if (reacted) {
+  //   setReactComponent(<FavoriteBorderTwoToneIcon color='secondary' />);
+  // } else {
+  //   setReactComponent(<FavoriteBorderTwoToneIcon color='secondary' />);
+  // }
+  console.log(reacted);
+
+  var delta = Math.round((+new Date() - props?.post?.created_at) / 1000);
+  console.log(
+    'http://localhost:3001/uploads/' + props?.post?.user?.profileimage
+  );
+
+  var minute = 60,
+    hour = minute * 60,
+    day = hour * 24,
+    week = day * 7,
+    month = week * 4,
+    year = month * 12;
+
+  var fuzzy;
+
+  if (delta < 30) {
+    fuzzy = 'just now.';
+  } else if (delta < minute) {
+    fuzzy = delta + ' seconds ago.';
+  } else if (delta < 2 * minute) {
+    fuzzy = 'a minute ago.';
+  } else if (delta < hour) {
+    fuzzy = Math.floor(delta / minute) + ' minutes ago.';
+  } else if (Math.floor(delta / hour) == 1) {
+    fuzzy = '1 hour ago.';
+  } else if (delta < day) {
+    fuzzy = Math.floor(delta / hour) + ' hours ago.';
+  } else if (delta < day * 2) {
+    fuzzy = 'yesterday';
+  } else if (delta < week) {
+    fuzzy = '1 week ago.';
+  } else if (delta < week * 2) {
+    fuzzy = '2 weeks ago.';
+  } else if (delta < week * 3) {
+    fuzzy = '3 weeks ago.';
+  } else if (delta < month) {
+    fuzzy = '1 month ago.';
+  } else if (delta < month * 2) {
+    fuzzy = '2 month ago.';
+  } else if (delta < month * 3) {
+    fuzzy = '3 month ago.';
+  } else if (delta < month * 4) {
+    fuzzy = '4 month ago.';
+  } else if (delta < month * 5) {
+    fuzzy = '5 month ago.';
+  } else if (delta < month * 6) {
+    fuzzy = '6 month ago.';
+  } else if (delta < month * 7) {
+    fuzzy = '7 month ago.';
+  } else if (delta < month * 8) {
+    fuzzy = '8 month ago.';
+  } else if (delta < month * 9) {
+    fuzzy = '9 month ago.';
+  } else if (delta < month * 10) {
+    fuzzy = '10 month ago.';
+  } else if (delta < month * 11) {
+    fuzzy = '11 month ago.';
+  } else if (delta < year) {
+    fuzzy = '1 year ago.';
+  }
 
   const handleExpandClick = () => {
     if (props?.post?.comments.length > 0) {
@@ -132,6 +270,50 @@ export default function UpdatedFeed(props) {
     }
   };
 
+  const handleNewComment = () => {
+    getComments();
+  };
+
+  const handleReact = () => {
+    if (reacted === false) {
+      setReactComponent(<FavoriteBorderTwoToneIcon color='secondary' />);
+      addLike({
+        variables: {
+          userId: props?.user.id,
+          postId: props?.post.id,
+        },
+      });
+      setReacted(true);
+    } else {
+      setReactComponent(<FavoriteTwoToneIcon color='secondary' />);
+      unLike({
+        variables: {
+          userId: props?.user.id,
+          postId: props?.post.id,
+        },
+      });
+      setReacted(false);
+    }
+  };
+
+  // console.log(props?.post);
+  console.log(props?.post);
+  // console.log('this meeee', reactList);
+  // if (props?.post?.likesList.some((like) => like.id === props?.user?.id)) {
+  //   setReacted(true);
+  // }
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
   return (
     // <div className={classes.feed}>
     //   <Paper>
@@ -148,9 +330,10 @@ export default function UpdatedFeed(props) {
             aria-label='recipe'
             variant='rounded'
             className={classes.rounded}
-          >
-            H
-          </Avatar>
+            src={
+              'http://localhost:3001/uploads/' + props?.post?.user?.profileimage
+            }
+          ></Avatar>
         }
         action={
           <IconButton aria-label='settings'>
@@ -159,7 +342,7 @@ export default function UpdatedFeed(props) {
         }
         title={
           <div className={classes.UserNameDate}>
-            <a href='#' onClick={preventDefault} className={classes.p}>
+            <a href={`/profile/${props?.post?.user?.id}`} className={classes.p}>
               <strong>
                 <span>
                   {' '}
@@ -168,51 +351,244 @@ export default function UpdatedFeed(props) {
               </strong>
             </a>
             <a href='#' onClick={preventDefault} className={classes.p}>
-              <span> {props?.post?.created_at} </span>
+              <span> {fuzzy} </span>
             </a>
           </div>
         }
       />
       {/* <Divider variant='middle' /> */}
 
-      <CardContent>
+      <CardContent style={{ paddingLeft: '10%' }}>
+        <div className={classes.chips}>
+          {props?.post?.tags.map((tag, index) => (
+            <Chip
+              key={index}
+              label={tag.toUpperCase()}
+              color='primary'
+              className={classes.chip}
+            />
+          ))}
+        </div>
         <ShowEditor data={props?.post?.description}></ShowEditor>
+        {reacted && props?.post?.likesList.length === 1 ? (
+          <div>
+            <FavoriteTwoToneIcon color='secondary' />
+            <a className={classes.a} href={`/profile/${props?.user.id}`}>
+              <span>
+                {' '}
+                {props?.user.firstname} {props?.user.lastname}{' '}
+              </span>
+            </a>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  margin: '10px',
+                }}
+              >
+                {props?.post?.likesList.map((like) => (
+                  <a href={`/profile/${like.id}`} className={classes.p}>
+                    {like.firstname} {like.lastname}
+                  </a>
+                ))}
+              </div>
+            </Popover>
+          </div>
+        ) : null}
+
+        {reacted && props?.post?.likesList.length > 1 ? (
+          <div>
+            <FavoriteTwoToneIcon color='secondary' />
+            <a className={classes.a}>
+              <span onClick={handleClick}>
+                {' '}
+                {'You and '} {props?.post?.likesList.length - 1}{' '}
+                {' other likes'}
+              </span>
+            </a>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  margin: '10px',
+                }}
+              >
+                {props?.post?.likesList.map((like) => (
+                  <a href={`/profile/${like.id}`} className={classes.p}>
+                    {like.firstname} {like.lastname}
+                  </a>
+                ))}
+              </div>
+            </Popover>
+          </div>
+        ) : null}
+
+        {!reacted && props?.post?.likesList.length === 1 ? (
+          <div>
+            <FavoriteTwoToneIcon color='secondary' />
+            <a className={classes.a}>
+              <span>
+                {' '}
+                {props?.post?.likesList.map((like) => (
+                  <a href={`/profile/${like.id}`} className={classes.a}>
+                    {like.firstname} {like.lastname}
+                  </a>
+                ))}
+              </span>
+            </a>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  margin: '10px',
+                }}
+              >
+                {props?.post?.likesList.map((like) => (
+                  <a href={`/profile/${like.id}`} className={classes.p}>
+                    {like.firstname} {like.lastname}
+                  </a>
+                ))}
+              </div>
+            </Popover>
+          </div>
+        ) : null}
+
+        {!reacted && props?.post?.likesList.length > 1 ? (
+          <div>
+            <FavoriteTwoToneIcon color='secondary' />
+            <a className={classes.a}>
+              <span onClick={handleClick}>
+                {' '}
+                {props?.post?.likesList.length} {' likes'}
+              </span>
+            </a>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  margin: '10px',
+                }}
+              >
+                {props?.post?.likesList.map((like) => (
+                  <a href={`/profile/${like.id}`} className={classes.p}>
+                    {like.firstname} {like.lastname}
+                  </a>
+                ))}
+              </div>
+            </Popover>
+          </div>
+        ) : null}
       </CardContent>
 
       <Divider variant='middle' />
       <CardActions disableSpacing>
-        <Button
-          aria-label='add to favorites'
-          startIcon={<FavoriteBorderTwoToneIcon />}
+        <ButtonGroup
+          className={classes.Buttons}
+          style={{ width: '100%' }}
+          disableElevation
+          variant='text'
+          fullWidth
         >
-          React
-        </Button>
-        <Button
-          onClick={handleCommentClick}
-          aria-label='share'
-          startIcon={<ChatBubbleOutlineTwoToneIcon />}
-        >
-          Comment
-        </Button>
-        {noComment && (
-          <Alert
-            style={{ float: 'right', justifySelf: 'center' }}
-            variant='outlined'
-            severity='info'
+          {reacted ? (
+            <Button
+              style={{ border: '0px' }}
+              aria-label='add to favorites'
+              startIcon={<FavoriteTwoToneIcon color='secondary' />}
+              onClick={() => {
+                handleReact();
+              }}
+            >
+              React
+            </Button>
+          ) : (
+            <Button
+              style={{ border: '0px' }}
+              aria-label='add to favorites'
+              startIcon={<FavoriteBorderTwoToneIcon color='secondary' />}
+              onClick={() => {
+                handleReact();
+              }}
+            >
+              React
+            </Button>
+          )}
+
+          <Button
+            style={{ border: '0px' }}
+            onClick={handleCommentClick}
+            aria-label='share'
+            startIcon={<ChatBubbleOutlineTwoToneIcon />}
           >
-            No comment !
-          </Alert>
-        )}
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label='show more'
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+            Comment
+          </Button>
+          {noComment && <SnackbarPost message={'Still no comment 💬'} />}
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label='show more'
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </ButtonGroup>
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <Divider variant='middle' />
@@ -246,10 +622,21 @@ export default function UpdatedFeed(props) {
           </Typography> */}
 
           {props?.post?.comments?.map((comment) => (
-            <Comment key={comment.id} comment={comment}></Comment>
+            <UpdatedComment key={comment.id} comment={comment}></UpdatedComment>
           ))}
+          {newComments &&
+            newComments.map((comment) => {
+              <UpdatedComment
+                key={comment.id}
+                comment={comment}
+              ></UpdatedComment>;
+            })}
           {interaction === 'comment' && (
-            <PostComment user={props.user}></PostComment>
+            <UpdatedPostComment
+              postId={props?.post?.id}
+              user={props.user}
+              callbackComment={handleNewComment}
+            ></UpdatedPostComment>
           )}
         </CardContent>
       </Collapse>
