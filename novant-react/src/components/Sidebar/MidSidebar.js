@@ -99,20 +99,6 @@ export default function MidSidebar() {
             </ListItemIcon>
             <ListItemText>Groups</ListItemText>
           </ListItemLink>
-          <Divider variant='middle' />
-          <ListItemLink style={{ paddingLeft: '15%' }}>
-            <ListItemIcon className={classes.iconWrapper}>
-              <MenuBook color='#F0F2F5' />
-            </ListItemIcon>
-            <ListItemText>Courses</ListItemText>
-          </ListItemLink>
-          <Divider variant='middle' />
-          <ListItemLink style={{ paddingLeft: '15%' }}>
-            <ListItemIcon className={classes.iconWrapper}>
-              <BusinessCenterOutlined color='#F0F2F5' />
-            </ListItemIcon>
-            <ListItemText>Offres</ListItemText>
-          </ListItemLink>
         </Container>
       </Paper>
     </div>
