@@ -93,100 +93,113 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const logout = () => {
   authService.logout();
   window.location.replace('/auth');
 };
 
+function ListItemLink(props) {
+  return <ListItem button component='a' {...props} />;
+}
 
-
-  function ListItemLink(props) {
-    return <ListItem button component="a" {...props} />;
-  }
-  
-export default function SearchAppBar() {
-  
+export default function SearchAppBar(props) {
   const handleKeyPress = (event) => {
-    document.getElementById("result").innerHTML = ""
+    document.getElementById('result').innerHTML = '';
     if (event.keyCode == 8) {
-      var a = document.getElementById("search").value.substr(0,document.getElementById("search").value.length -1 )
+      var a = document
+        .getElementById('search')
+        .value.substr(0, document.getElementById('search').value.length - 1);
+    } else {
+      var a = document.getElementById('search').value + event.key;
     }
-    
-else {
-  var a = document.getElementById("search").value + event.key
-}
-  document.getElementById("result").innerHTML = ""
+    document.getElementById('result').innerHTML = '';
 
-  var data = axios
-    .get("http://localhost:3001/users/a/"+a, {
-    })
-    .then(function(response) {
-     return response.data
+    var data = axios
+      .get('http://localhost:3001/users/a/' + a, {})
+      .then(function (response) {
+        return response.data;
       });
-      var i = -1;
-       data.then((value) => { value.forEach(element => {
+    var i = -1;
+    data.then((value) => {
+      value.forEach((element) => {
         i++;
-        document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<a class='MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button' tabindex='"+i+"' aria-disabled='false' href='http://localhost:3000/profile/"+element._id+"'><div class='MuiListItemText-root'><span class='MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock'>"+element.firstname +" "+element.lastname+"</span></div><span class='MuiTouchRipple-root'></span></a><hr class='MuiDivider-root'>"
-       });
-       if (i == -1) {
-        document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<a class='MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button' tabindex='"+0+"' aria-disabled='false' ><div class='MuiListItemText-root'><span class='MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock'>No User Found</span></div><span class='MuiTouchRipple-root'></span></a><hr class='MuiDivider-root'>"
-      } 
-})
-
-
-    
-
-
-    
-}
+        document.getElementById('result').innerHTML =
+          document.getElementById('result').innerHTML +
+          "<a class='MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button' tabindex='" +
+          i +
+          "' aria-disabled='false' href='http://localhost:3000/profile/" +
+          element._id +
+          "'><div class='MuiListItemText-root'><span class='MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock'>" +
+          element.firstname +
+          ' ' +
+          element.lastname +
+          "</span></div><span class='MuiTouchRipple-root'></span></a><hr class='MuiDivider-root'>";
+      });
+      if (i == -1) {
+        document.getElementById('result').innerHTML =
+          document.getElementById('result').innerHTML +
+          "<a class='MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button' tabindex='" +
+          0 +
+          "' aria-disabled='false' ><div class='MuiListItemText-root'><span class='MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock'>No User Found</span></div><span class='MuiTouchRipple-root'></span></a><hr class='MuiDivider-root'>";
+      }
+    });
+  };
   const classes = useStyles();
- 
+  const user = authService.getCurrentUser();
+
   return (
-
     <div className={classes.root}>
-
       <AppBar elevation={0} position='fixed' className={classes.AppBar}>
-        
         <Toolbar>
           <Avatar
             className={classes.logoBtn}
             alt='Logo'
             src='../assets/images/randomlogo.png'
+            onClick={() => window.location.replace('/home')}
           />
           <Typography
             style={{ textAlign: 'left' }}
+            onClick={() => window.location.replace('/home')}
             className={classes.title}
             variant='h6'
             noWrap
           >
             Cubicle
           </Typography>
-          <div style={{ position: 'absolute',marginLeft:"70%" }}>
-          <div className={classes.search} style={{ zIndex: 1 }}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+          <div style={{ position: 'absolute', marginLeft: '70%' }}>
+            <div className={classes.search} style={{ zIndex: 1 }}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                autocomplete='off'
+                onKeyDown={handleKeyPress}
+                id='search'
+                placeholder='Search…'
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
             </div>
-            <InputBase
-            autocomplete="off"
-                        onKeyDown={handleKeyPress}
-                        id = "search"
-              placeholder='Search…'
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
+            <div
+              id='response'
+              style={{
+                zIndex: 0,
+                position: 'absolute',
+                borderBottomLeftRadius: '10px',
+                borderBottomRightRadius: '10px',
               }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-            
+            >
+              <List
+                component='nav'
+                id='result'
+                style={{ backgroundColor: 'LightGray' }}
+              ></List>
+            </div>
           </div>
-          <div id="response" style={{ zIndex: 0, position: 'absolute',borderBottomLeftRadius:'10px',borderBottomRightRadius:'10px'}}>
-          <List component="nav"  id="result" style={{backgroundColor: "LightGray"}}>
-        
-      </List>
-          </div>
-          </div>
-          
+
           <Button
             variant='contained'
             size='small'
@@ -199,12 +212,10 @@ else {
           <Avatar
             alt='Profile Avatar'
             variant='rounded'
-            src='../assets/images/Imed.jpg'
+            src={'http://localhost:3001/uploads/' + user?.profileimage}
           />
         </Toolbar>
       </AppBar>
-    
     </div>
-
   );
 }

@@ -1,5 +1,7 @@
 const graphql = require('graphql'); //use graphql package
 const Post = require('../models/Posts/post');
+const GroupPost = require('../models/Posts/groupPost');
+const Group = require('../models/group');
 const Comment = require('../models/Posts/commentaire');
 const User = require('../user/User');
 const _ = require('lodash');
@@ -33,6 +35,67 @@ const PostType = new GraphQLObjectType({
       resolve(parent, args) {
         // console.log(parent.userId);
         return User.findById(parent.userId);
+      },
+    },
+    comments: {
+      type: GraphQLList(CommentType),
+      resolve(parent, args) {
+        return Comment.find({ postId: ObjectId(parent.id) });
+      },
+    },
+  }),
+});
+
+const GroupPostType = new GraphQLObjectType({
+  name: 'GroupPost',
+  fields: () => ({
+    id: { type: GraphQLID },
+    groupId: { type: GraphQLID },
+    tags: { type: GraphQLList(GraphQLString) },
+    description: { type: GraphQLString },
+    media: { type: GraphQLList(GraphQLString) },
+    created_at: { type: GraphQLString },
+    user: {
+      type: UserType,
+      resolve(parent, args) {
+        // console.log(parent.userId);
+        return User.findById(parent.userId);
+      },
+    },
+    comments: {
+      type: GraphQLList(CommentType),
+      resolve(parent, args) {
+        return Comment.find({ postId: ObjectId(parent.id) });
+      },
+    },
+    group: {
+      type: GroupType,
+      resolve(parent, args) {
+        // console.log(parent.userId);
+        return Group.findById(ObjectId(parent.groupId));
+      },
+    },
+  }),
+});
+
+const GroupType = new GraphQLObjectType({
+  name: 'Group',
+  fields: () => ({
+    id: { type: GraphQLID },
+    groupname: { type: GraphQLString },
+    groupimage: { type: GraphQLString },
+    description: { type: GraphQLString },
+    Owner: { type: GraphQLString },
+    members: { type: GraphQLList(GraphQLString) },
+    membersList: {
+      type: GraphQLList(UserType),
+      resolve(parent, args) {
+        var list = [];
+        parent.members.map((member) => {
+          list.push(ObjectId(member));
+        });
+        // console.log(parent.userId);
+        return User.find({ _id: { $in: list } });
       },
     },
     comments: {
@@ -99,68 +162,63 @@ const AboutMeType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    // Fields here will be the query for frontends
-    //We are defining a 'car' query which can take (car ID ) to search in DB.
     post: {
       type: PostType,
-      //argument passed by the user while making the query
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        //Here we define how to get data from database source
-
-        //this will return the book with id passed in argument
-        //by the user
         return Post.findById(args.id);
+      },
+    },
+    group: {
+      type: GroupType,
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        return Group.findById(args.id);
       },
     },
     user: {
       type: UserType,
-      //argument passed by the user while making the query
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        //Here we define how to get data from database source
-
-        //this will return the book with id passed in argument
-        //by the user
         return User.findById(args.id);
       },
     },
     users: {
       type: GraphQLList(UserType),
-      //argument passed by the user while making the query
       resolve(parent, args) {
-        //Here we define how to get data from database source
-
-        //this will return the book with id passed in argument
-        //by the user
         return User.find({});
       },
     },
     posts: {
-      type: GraphQLList(PostType), //Defining model for car Query
-      //args field to extract argument came with car query, e.g : Id of the car object to extract its details.
+      type: GraphQLList(PostType),
       resolve(parent, args) {
-        //code to get value  from DB
-        /**
-         * With the help of lodash library(_), we are trying to find car with id from 'CarsArray'
-         * and returning its required data to calling tool.
-         */
         return Post.find({}).sort('-created_at');
-      }, //resolve function
-    }, //car query ends here
+      },
+    },
+    postsByUser: {
+      type: GraphQLList(PostType),
+      args: { userId: { type: GraphQLID } },
+      resolve(parent, args) {
+        return Post.find({ userId: ObjectId(args.userId) }).sort('-created_at');
+      },
+    },
     comments: {
       type: GraphQLList(CommentType),
-      //argument passed by the user while making the query
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        //Here we define how to get data from database source
-
-        //this will return the book with id passed in argument
-        //by the user
         return Comment.find({ postId: ObjectId(args.id) });
       },
     },
-  }, //fields end here
+    groupPosts: {
+      type: GraphQLList(GroupPostType),
+      args: { groupid: { type: GraphQLList(GraphQLString) } },
+      resolve(parent, args) {
+        return GroupPost.find({ groupId: { $in: args.groupid } }).sort(
+          '-created_at'
+        );
+      },
+    },
+  },
 });
 
 const Mutation = new GraphQLObjectType({
@@ -169,7 +227,6 @@ const Mutation = new GraphQLObjectType({
     addPost: {
       type: PostType,
       args: {
-        //GraphQLNonNull make these field required
         userId: { type: new GraphQLNonNull(GraphQLID) },
         type: { type: new GraphQLNonNull(GraphQLString) },
         tags: { type: new GraphQLList(GraphQLString) },
@@ -192,7 +249,6 @@ const Mutation = new GraphQLObjectType({
     addComment: {
       type: PostType,
       args: {
-        //GraphQLNonNull make these field required
         userId: { type: new GraphQLNonNull(GraphQLID) },
         postId: { type: new GraphQLNonNull(GraphQLID) },
         type: { type: GraphQLString },
@@ -210,22 +266,28 @@ const Mutation = new GraphQLObjectType({
         return comment.save();
       },
     },
-    // addBook: {
-    //   type: BookType,
-    //   args: {
-    //     name: { type: new GraphQLNonNull(GraphQLString) },
-    //     pages: { type: new GraphQLNonNull(GraphQLInt) },
-    //     authorID: { type: new GraphQLNonNull(GraphQLID) },
-    //   },
-    //   resolve(parent, args) {
-    //     let book = new Book({
-    //       name: args.name,
-    //       pages: args.pages,
-    //       authorID: args.authorID,
-    //     });
-    //     return book.save();
-    //   },
-    // },
+    addGroupPost: {
+      type: GroupPostType,
+      args: {
+        userId: { type: new GraphQLNonNull(GraphQLID) },
+        groupId: { type: new GraphQLNonNull(GraphQLID) },
+        tags: { type: new GraphQLList(GraphQLString) },
+        description: { type: new GraphQLNonNull(GraphQLString) },
+        media: { type: new GraphQLList(GraphQLString) },
+        created_at: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        let grouppost = new GroupPost({
+          userId: args.userId,
+          groupId: args.groupId,
+          tags: args.tags,
+          description: args.description,
+          media: args.media,
+          created_at: args.created_at,
+        });
+        return grouppost.save();
+      },
+    },
   },
 });
 
