@@ -69,7 +69,7 @@ function GroupProfile(props) {
   // console.log(`test ${data?.groupPosts}`);
   const groupid = props.match.params.id;
   const groupidd = [props.match.params.id];
-  console.log(groupidd);
+ 
   const { data, loading, error, refetch } = useQuery(FEED_QUERY, {
     variables: {
       groupid: groupidd,
@@ -80,7 +80,7 @@ function GroupProfile(props) {
   const [value, setValue] = React.useState(0);
   const currentuser = authService.getCurrentUser();
   const [groupProf, err1, reload1] = useApi('groups/group/' + groupid);
-
+const [mem,setMem]= useState(false);
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -107,7 +107,8 @@ function GroupProfile(props) {
     refetch();
   };
 
-  return (
+
+  return ( 
     <div style={{ backgroundColor: '#F0F2F5' }}>
       <link rel='stylesheet' href='css/bootstrap.min.css' />
       <Row>
@@ -147,7 +148,7 @@ function GroupProfile(props) {
                 }}
                 style={{ marginBottom: '10px', borderRadius: '10px' }}
               >
-                {
+                {  groupProf?.members?.find(m=>(m ===currentuser['id'])) ?
                   //currentuser['id'] in props?.groupProf?.members.map(m=>(m)) &&
                   <BottomNavigationAction
                     onClick={() => {
@@ -159,6 +160,8 @@ function GroupProfile(props) {
                     label='Recents'
                     icon={<RestoreIcon />}
                   />
+                  :
+                 null
                 }
                 <BottomNavigationAction
                   onClick={() => {
@@ -196,7 +199,9 @@ function GroupProfile(props) {
                 />
               )}
 
-              {state == '0' && (
+              {(state == '0'  && groupProf?.members?.find(m=>(m ===currentuser['id']))) && (
+
+             
                 <div
                   style={{
                     display: 'flex',
@@ -204,6 +209,7 @@ function GroupProfile(props) {
                     flexDirection: 'column',
                   }}
                 >
+                  
                   {' '}
                   <BusinessGroupDialog
                     parentRefetch={handleRefetch}

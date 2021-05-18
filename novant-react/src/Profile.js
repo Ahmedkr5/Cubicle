@@ -157,6 +157,8 @@ function Profile(props) {
                 coverimage={user2?.coverimage}
                 firstname={user2?.firstname}
                 lastname={user2?.lastname}
+                friends={user2?.friends}
+                friendRequests={user2?.friendRequests}
               ></ProfileCard>
 
               <BottomNavigation

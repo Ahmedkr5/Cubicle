@@ -59,7 +59,7 @@ const StyledBadge = withStyles((theme) => ({
 
 }))(Badge);
 
-export default class Req extends Component {
+export default class Reqfr extends Component {
  
 
   constructor(props) {
@@ -67,8 +67,8 @@ export default class Req extends Component {
     this.state = {
       users: [],
       requests:[],
-      members:[],
-      idgroup:'',
+      friends:[],
+      
     }
     
     }
@@ -93,7 +93,7 @@ export default class Req extends Component {
    let reqs =  axios
       .get("http://localhost:3001/users/"+this.props.requests, {})
       .then(function(response){return response.data}) 
-      reqs.then(requests=>{this.setState({requests:requests },()=>{console.log('statereq:',this.state.requests.groupRequests);})})
+      reqs.then(requests=>{this.setState({requests:requests },()=>{console.log('statereq:',this.state.requests.friendRequests);})})
 
      
   
@@ -106,16 +106,16 @@ export default class Req extends Component {
     const currentuser = authService.getCurrentUser() ;
     
     return ( <>
-     { requests?.groupRequests?.length != '0' && <div style={{display:'flex', flexDirection:'row',justifyContent: 'space-between' }}>
+     { requests?.friendRequests?.length != '0' && <div style={{display:'flex', flexDirection:'row',justifyContent: 'space-between' }}>
             <div  >
 
-              <Typography style={{ color: 'grey', fontSize: '12', fontWeight: 'bold' }} align='left'>GROUP REQUESTS</Typography>
+              <Typography style={{ color: 'grey', fontSize: '12', fontWeight: 'bold' }} align='left'> FRIEND REQUESTS</Typography>
             </div>
             <StyledBadge badgeContent={2} color="primary" style={{ marginRight:'50px'}}>
 
           </StyledBadge>
         </div>}
-    {users?.filter(m => requests?.groupRequests?.includes(m._id)).map((msg) => (
+    {users?.filter(m => requests?.friendRequests?.includes(m._id)).map((msg) => (
         <Paper elevation={0} style={{marginTop:'15px',background:'white',borderRadius:'10px',height:'150px'}}>
        
         <Container style={{marginTop:'15px'}}>
@@ -137,59 +137,56 @@ export default class Req extends Component {
 <Typography style={{color:"primary"}} >
 <Link href="#" onClick={preventDefault} style={{fontWeight:'bold'}}>
 {msg.firstname} {msg.lastname}
-  </Link >  wants to Join your group
+  </Link >  wants to Add you to friends
           </Typography>
           </ListItem>
     
     <ListItem style={{display:'flex',flexDirection:'row'}}>
     <Button variant="contained" color="primary" size='large'style={{borderRadius:'12px'}}
     onClick={()=>{ this.setState(state => {
-      const list = state.requests?.groupRequests?.filter(i => i !== msg._id);
-      axios.put("http://localhost:3001/users/grp/" + currentuser['id'], {
-        groupRequests:list,
+      const list = state.requests?.friendRequests?.filter(i => i !== msg._id);
+      axios.put("http://localhost:3001/users/frreq/" + currentuser['id'], {
+        friendRequests:list,
     
     })
-    let users3= axios
-    .get("http://localhost:3001/groups/groupowned/" + currentuser['id'], {})
-    .then(function(response){return response.data})
-    users3.then((members) => {
-      this.setState({
-        members: members[0].members,
-        idgroup:  members[0]._id,
-      }, () => { 
-        
-        console.log('memberid',this.state.idgroup); 
-        console.log('memberid',this.state.members); 
-      }
-      )
-    }
-    )   
+  
 
         .then(()=>{
           this.setState(state => {
-            const member = [...state.members,msg._id];   
-            axios.put("http://localhost:3001/groups/groupmem/" + this.state.idgroup, {
-              members:member,
+            const friend = [...state.requests?.friends,msg._id]; 
+            
+          
+             
+           axios.put("http://localhost:3001/users/fr/" + currentuser['id'], {
+              friends:friend,
           
           })
+          .then(()=>{
+            this.setState(state => {
+                const friend2 = [...msg?.friends,currentuser['id']];
+          axios.put("http://localhost:3001/users/fr/" +msg._id, {
+            friends:friend2,
+        
+        })  
               .then(() => {
                 window.location.reload();
                
               })
+              
           });
         })
       
       
-      })}}
+      })})})}}
   
     >
   Accept
 </Button>
 <Button variant="outlined"  size='large'  style={{marginLeft:'32px',borderRadius:'12px'}}
   onClick={()=>{ this.setState(state => {
-    const list = state.requests?.groupRequests?.filter(i => i !== msg._id);
-    axios.put("http://localhost:3001/users/grp/" + currentuser['id'], {
-      groupRequests:list,
+    const list = state.requests?.friendRequests?.filter(i => i !== msg._id);
+    axios.put("http://localhost:3001/users/frreq/" + currentuser['id'], {
+      friendRequests:list,
   
   })
       .then(() => {

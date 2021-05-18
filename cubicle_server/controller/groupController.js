@@ -158,6 +158,10 @@ router.put('/groupmem/:id', function (req, res) {
         
 
 
-
+router.get('/a/:gpname', function (req, res) {
+    Group.find({groupname: new RegExp(req.params.grpname, 'i')}, function (err, user) {         
+          res.status(200).send(user);
+});
+});
 
 module.exports = router;

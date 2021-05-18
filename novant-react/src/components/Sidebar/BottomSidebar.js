@@ -55,7 +55,7 @@ export default function BottomSidebar() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root} style={{marginTop:'10px',alignItems:'center',justifyContent:'center',flexDirection:'column',height:'100%'}}>
+    <div className={classes.root} style={{marginTop:'10px',alignItems:'center',justifyContent:'center',flexDirection:'column'}}>
       <CssBaseline />
       <div className={classes.root} style={{marginTop:'10px',alignItems:'left',justifyContent:'left',flexDirection:'row'}}>
                 
@@ -68,7 +68,7 @@ export default function BottomSidebar() {
         </StyledBadge>
       </div>
       </div>
-<GroupInvitation ></GroupInvitation>
+
     
     </div>
   );
