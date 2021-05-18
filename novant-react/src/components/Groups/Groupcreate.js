@@ -58,7 +58,9 @@ const required = (value2) => {
       axios.post("http://localhost:3001/groups/" + userid +"/newgroup", {
         groupname :this.state.groupname,
         description:this.state.description,
-        Owner :userid})
+        Owner :userid,
+        members:userid,      
+      })
         .then(response => {
          var dad =response.data['_id'];
          history.push('/GroupProfile/'+dad);
