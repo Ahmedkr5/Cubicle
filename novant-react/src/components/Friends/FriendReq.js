@@ -68,7 +68,7 @@ export default function FriendReq() {
  
 
   return (<>
-    <div className={classes.root} style={{ marginTop: '10px', flexDirection: 'column' }}>
+    <div className={classes.root} style={{ marginTop: '10px', flexDirection: 'column' ,height:'30%'}}>
       <MuiThemeProvider theme={theme}>
         <div style={{display:'flex', flexDirection:'row',justifyContent: 'space-between' }}>
             <div  >
