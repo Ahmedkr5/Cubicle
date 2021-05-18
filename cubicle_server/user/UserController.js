@@ -157,6 +157,22 @@ router.put('/grp/:id', function (req, res) {
     });
     });
 
+    router.put('/frreq/:id', function (req, res) {
 
+        User.findByIdAndUpdate(req.params.id,{
+            friendRequests: req.body.friendRequests,
+            }, {new: true},   function (err, User) {
+                if (err) return res.status(500).send("There was a problem update the user.");
+                res.status(200).send("User updated");
+        });
+        });
+        router.put('/fr/:id', function (req, res) {
 
+            User.findByIdAndUpdate(req.params.id,{
+                friends: req.body.friends,
+                }, {new: true},   function (err, User) {
+                    if (err) return res.status(500).send("There was a problem update the user.");
+                    res.status(200).send("User updated");
+            });
+            });
 module.exports = router;

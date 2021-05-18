@@ -12,6 +12,7 @@ import axios from 'axios';
 import { Form } from 'formik';
 import authService from '../../services/auth.service';
 import { useApi } from '../../hooks/useApi';
+import Frbutton from '../Friends/Frbutton';
 
 
 
@@ -28,13 +29,15 @@ const useStyles = makeStyles((theme)=>({
 }));
 
 export default function ProfileCard(props) {
+  const currentuser = authService.getCurrentUser() ;
   const [userProf, err1, reload1] = useApi('showUser/'+ props.userid);
+  const [userProf2, err2, reload2] = useApi('users/'+ currentuser['id']);
 var coins = userProf?.map((prof) =>
     prof.Coins 
     );
     console.log(coins)
 
-  const currentuser = authService.getCurrentUser() ;
+ 
   const classes = useStyles();
   const [CoverImage, setCoverImage] = useState('');
   const [open, setOpen] = useState('none');
@@ -146,7 +149,7 @@ const [selectedProfileImage, setselectedProfileImage] = useState(null);
         
         </Badge>
         <Typography variant="h4" style={{marginTop:'85px',marginLeft:'85px'}}>{props.firstname} {props.lastname}</Typography>
-     
+     <Frbutton myfriends={userProf2?.friends} friends={props?.friends} friendRequests={props?.friendRequests} id={props?.userid}></Frbutton>
         </CardContent>
        
     </Card>

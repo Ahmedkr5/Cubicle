@@ -137,7 +137,7 @@ export default class Friendsdiv extends Component {
                   <div>
                     <br></br>
 
-                    <MenuFr id={msg?._id}></MenuFr>
+                    <MenuFr id={msg?._id} friends={msg?.friends} myfriends={this.props?.friends}></MenuFr>
                   </div>
                 </ListItem>
               ))}
