@@ -109,11 +109,11 @@ function Groupe() {
           </Hidden>
 
           <Col
+            xs={6}
             style={{
               display: 'flex',
               marginLeft: '0px',
               justifyContent: 'center',
-              height: 'auto',
             }}
           >
             <Container style={{}}>
