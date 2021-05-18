@@ -10,6 +10,9 @@ import BusinessService from '../../services/business-service.js';
 import Button from '@material-ui/core/Button';
 import authService from '../../services/auth.service.js';
 import { useApi } from '../../hooks/useApi.js';
+import { Link } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+export const history = createBrowserHistory();
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +33,11 @@ export default function MyBusinessesList() {
       <List component="nav" className={classes.root} aria-label="contacts">
         {business?.map((msg, index) => (
         <ListItem button>
-          <ListItemText inset primary={msg.name} />
+          <Link  onClick={()=>{ history.push('/BusinessProfile/');
+         window.location.reload();}} style={{fontWeight:'bold',color:"#050505"}}>
+          {msg.name}
+        </Link> 
+          {/* <ListItemText inset primary={msg.name} /> */}
           <Button variant="outlined"  size='small' className={classes.margin} style={{marginLeft:'32px',borderRadius:'12px'}}>
                   Leave
           </Button>

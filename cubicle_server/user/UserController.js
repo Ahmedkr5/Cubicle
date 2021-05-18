@@ -155,7 +155,17 @@ router.put('/grp/:id', function (req, res) {
             if (err) return res.status(500).send("There was a problem update the user.");
             res.status(200).send("User updated");
     });
+});
+
+router.put('/businessput/:id', function (req, res) {
+
+    User.findByIdAndUpdate(req.params.id,{
+        businessRequests: req.body.businessRequests,
+        }, {new: true},   function (err, User) {
+            if (err) return res.status(500).send("There was a problem updating user.");
+            res.status(200).send("User updated");
     });
+});
 
 
 
