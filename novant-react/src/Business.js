@@ -15,11 +15,75 @@ import authService from './services/auth.service';
 import BusinessList from './components/Business/BusinessList';
 import BusinessListTabs from './components/Business/BusinessListTabs';
 import Admin from './components/Business/Admin';
+import UpdatedBusinessHomeFeed from './components/Posts/BusinessFeed/UpdatedBusinessHomeFeed';
+import { useApi } from './hooks/useApi';
+import { useQuery, gql } from '@apollo/client';
+import SkeletonFeed from './components/Posts/skeletonFeed';
 
+const FEED_QUERY = gql`
+  query groupPosts($businessid: [String!]) {
+    businessPosts(businessid: $businessid) {
+      id
+      tags
+      description
+      created_at
+      user {
+        id
+        firstname
+        lastname
+        email
+        profileimage
+      }
+      comments {
+        id
+        type
+        description
+        created_at
+        user {
+          firstname
+          lastname
+          email
+          profileimage
+        }
+      }
+      business {
+        id
+        name
+      }
+      likesList {
+        id
+        firstname
+        lastname
+      }
+    }
+  }
+`;
+
+var groupidd = [];
 function Business() {
   const [state, setState] = useState('0');
+  const [business, setBusiness] = useState(false);
   const [value, setValue] = React.useState(0);
   const user = authService.getCurrentUser();
+  const userid = user['id'];
+  const [groupProf, err, reload] = useApi('business/businesslist');
+  console.log(groupProf);
+  // const tab = groupProf;
+  // console.log(tab);
+  if (groupProf && business === false) {
+    setBusiness(true);
+    groupProf.map((business) => {
+      groupidd.push(business['_id']);
+    });
+    console.log('helloooo', groupidd);
+  }
+
+  const { data, loading, error, refetch } = useQuery(FEED_QUERY, {
+    variables: {
+      businessid: groupidd,
+    },
+    pollInterval: 500,
+  });
 
   return (
     <div style={{ backgroundColor: '#F0F2F5' }}>
@@ -71,8 +135,30 @@ function Business() {
                     flexDirection: 'column',
                   }}
                 >
-                  <Feed></Feed> <Divider orientation='horizontal' />
-                  <Feed></Feed> <Feed></Feed>
+                  {' '}
+                  {loading && (
+                    <>
+                      <SkeletonFeed></SkeletonFeed>{' '}
+                      <SkeletonFeed></SkeletonFeed>
+                    </>
+                  )}
+                  {error && <p style={{ color: 'red' }}>{error.message}</p>}
+                  {data && (
+                    <>
+                      {data.businessPosts.map(
+                        (post) => (
+                          <UpdatedBusinessHomeFeed
+                            key={post.id}
+                            post={post}
+                            user={user}
+                            business={post.business}
+                          ></UpdatedBusinessHomeFeed>
+                        )
+
+                        // <Link key={link.id} link={link} />
+                      )}
+                    </>
+                  )}
                 </div>
               )}
               {state == '1' && <BusinessListTabs></BusinessListTabs>}

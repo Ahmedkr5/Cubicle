@@ -124,7 +124,7 @@ const COMMENT_QUERY = gql`
 
 const ADD_LIKE = gql`
   mutation AddTodo($userId: ID!, $postId: ID!) {
-    addLikeGroup(userId: $userId, postId: $postId) {
+    addLikeBusiness(userId: $userId, postId: $postId) {
       id
       description
       user {
@@ -138,7 +138,7 @@ const ADD_LIKE = gql`
 
 const UNLIKE = gql`
   mutation AddTodo($userId: ID!, $postId: ID!) {
-    unLikeGroup(userId: $userId, postId: $postId) {
+    unLikeBusiness(userId: $userId, postId: $postId) {
       id
       description
       user {
@@ -152,7 +152,7 @@ const UNLIKE = gql`
 
 const preventDefault = (event) => event.preventDefault();
 
-export default function UpdatedGroupHomeFeed(props) {
+export default function UpdatedBusinessFeed(props) {
   console.log(props?.post);
   const [getComments, { loading, error, newComments }] = useLazyQuery(
     COMMENT_QUERY,
@@ -182,7 +182,7 @@ export default function UpdatedGroupHomeFeed(props) {
   // } else {
   //   setReactComponent(<FavoriteBorderTwoToneIcon color='secondary' />);
   // }
-  console.log(reacted);
+  //  console.log(reacted);
   var delta = Math.round((+new Date() - props?.post?.created_at) / 1000);
   console.log(
     'http://localhost:3001/uploads/' + props?.post?.user?.profileimage
@@ -316,7 +316,6 @@ export default function UpdatedGroupHomeFeed(props) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   return (
     // <div className={classes.feed}>
     //   <Paper>
@@ -345,30 +344,14 @@ export default function UpdatedGroupHomeFeed(props) {
         }
         title={
           <div className={classes.UserNameDate}>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <a
-                href={`/profile/${props?.post?.user?.id}`}
-                className={classes.p}
-                style={{ marginRight: '10px' }}
-              >
-                <strong>
-                  <span>
-                    {' '}
-                    {props?.post?.user?.firstname} {props?.post?.user?.lastname}{' '}
-                  </span>
-                </strong>
-              </a>
-              {' ▶ '}
-              <a
-                href={`/GroupProfile/${props?.group?.id}`}
-                className={classes.p}
-                style={{ marginLeft: '10px' }}
-              >
-                <strong>
-                  <span> {props?.group?.groupname}</span>
-                </strong>
-              </a>
-            </div>
+            <a href={`/profile/${props?.post?.user?.id}`} className={classes.p}>
+              <strong>
+                <span>
+                  {' '}
+                  {props?.post?.user?.firstname} {props?.post?.user?.lastname}{' '}
+                </span>
+              </strong>
+            </a>
             <a href='#' onClick={preventDefault} className={classes.p}>
               <span> {fuzzy} </span>
             </a>
@@ -420,7 +403,11 @@ export default function UpdatedGroupHomeFeed(props) {
                 }}
               >
                 {props?.post?.likesList.map((like) => (
-                  <a href={`/profile/${like.id}`} className={classes.p}>
+                  <a
+                    href={`/profile/${like.id}`}
+                    className={classes.p}
+                    key={like.id}
+                  >
                     {like.firstname} {like.lastname}
                   </a>
                 ))}
@@ -462,7 +449,11 @@ export default function UpdatedGroupHomeFeed(props) {
                 }}
               >
                 {props?.post?.likesList.map((like) => (
-                  <a href={`/profile/${like.id}`} className={classes.a}>
+                  <a
+                    href={`/profile/${like.id}`}
+                    className={classes.a}
+                    key={like.id}
+                  >
                     {like.firstname} {like.lastname}
                   </a>
                 ))}
@@ -478,7 +469,11 @@ export default function UpdatedGroupHomeFeed(props) {
               <span>
                 {' '}
                 {props?.post?.likesList.map((like) => (
-                  <a href={`/profile/${like.id}`} className={classes.a}>
+                  <a
+                    href={`/profile/${like.id}`}
+                    className={classes.a}
+                    key={like.id}
+                  >
                     {like.firstname} {like.lastname}
                   </a>
                 ))}
@@ -506,7 +501,11 @@ export default function UpdatedGroupHomeFeed(props) {
                 }}
               >
                 {props?.post?.likesList.map((like) => (
-                  <a href={`/profile/${like.id}`} className={classes.p}>
+                  <a
+                    href={`/profile/${like.id}`}
+                    className={classes.p}
+                    key={like.id}
+                  >
                     {like.firstname} {like.lastname}
                   </a>
                 ))}
@@ -547,7 +546,11 @@ export default function UpdatedGroupHomeFeed(props) {
                 }}
               >
                 {props?.post?.likesList.map((like) => (
-                  <a href={`/profile/${like.id}`} className={classes.a}>
+                  <a
+                    href={`/profile/${like.id}`}
+                    className={classes.a}
+                    key={like.id}
+                  >
                     {like.firstname} {like.lastname}
                   </a>
                 ))}

@@ -124,7 +124,7 @@ const COMMENT_QUERY = gql`
 
 const ADD_LIKE = gql`
   mutation AddTodo($userId: ID!, $postId: ID!) {
-    addLikeGroup(userId: $userId, postId: $postId) {
+    addLikeBusiness(userId: $userId, postId: $postId) {
       id
       description
       user {
@@ -138,7 +138,7 @@ const ADD_LIKE = gql`
 
 const UNLIKE = gql`
   mutation AddTodo($userId: ID!, $postId: ID!) {
-    unLikeGroup(userId: $userId, postId: $postId) {
+    unLikeBusiness(userId: $userId, postId: $postId) {
       id
       description
       user {
@@ -152,7 +152,7 @@ const UNLIKE = gql`
 
 const preventDefault = (event) => event.preventDefault();
 
-export default function UpdatedGroupHomeFeed(props) {
+export default function UpdatedBusinessHomeFeed(props) {
   console.log(props?.post);
   const [getComments, { loading, error, newComments }] = useLazyQuery(
     COMMENT_QUERY,
@@ -360,12 +360,12 @@ export default function UpdatedGroupHomeFeed(props) {
               </a>
               {' ▶ '}
               <a
-                href={`/GroupProfile/${props?.group?.id}`}
+                href={`/BusinessProfile/${props?.business?.id}`}
                 className={classes.p}
                 style={{ marginLeft: '10px' }}
               >
                 <strong>
-                  <span> {props?.group?.groupname}</span>
+                  <span> {props?.business?.name}</span>
                 </strong>
               </a>
             </div>

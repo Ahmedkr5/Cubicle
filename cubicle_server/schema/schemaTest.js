@@ -1,7 +1,9 @@
 const graphql = require('graphql'); //use graphql package
 const Post = require('../models/Posts/post');
 const GroupPost = require('../models/Posts/groupPost');
+const BusinessPost = require('../models/Posts/businessPost');
 const Group = require('../models/group');
+const Business = require('../models/Business/business');
 const Comment = require('../models/Posts/commentaire');
 const User = require('../user/User');
 const _ = require('lodash');
@@ -101,6 +103,49 @@ const GroupPostType = new GraphQLObjectType({
     },
   }),
 });
+const BusinessPostType = new GraphQLObjectType({
+  name: 'BusinessPost',
+  fields: () => ({
+    id: { type: GraphQLID },
+    businessId: { type: GraphQLID },
+    tags: { type: GraphQLList(GraphQLString) },
+    description: { type: GraphQLString },
+    media: { type: GraphQLList(GraphQLString) },
+    likes: { type: GraphQLList(GraphQLString) },
+    created_at: { type: GraphQLString },
+    user: {
+      type: UserType,
+      resolve(parent, args) {
+        // console.log(parent.userId);
+        return User.findById(parent.userId);
+      },
+    },
+    comments: {
+      type: GraphQLList(CommentType),
+      resolve(parent, args) {
+        return Comment.find({ postId: ObjectId(parent.id) });
+      },
+    },
+    business: {
+      type: BusinessType,
+      resolve(parent, args) {
+        // console.log(parent.userId);
+        return Business.findById(ObjectId(parent.businessId));
+      },
+    },
+    likesList: {
+      type: GraphQLList(UserType),
+      resolve(parent, args) {
+        var list = [];
+        parent.likes.map((like) => {
+          list.push(ObjectId(like));
+        });
+        // console.log(parent.userId);
+        return User.find({ _id: { $in: list } });
+      },
+    },
+  }),
+});
 
 const GroupType = new GraphQLObjectType({
   name: 'Group',
@@ -109,6 +154,33 @@ const GroupType = new GraphQLObjectType({
     groupname: { type: GraphQLString },
     groupimage: { type: GraphQLString },
     description: { type: GraphQLString },
+    Owner: { type: GraphQLString },
+    members: { type: GraphQLList(GraphQLString) },
+    membersList: {
+      type: GraphQLList(UserType),
+      resolve(parent, args) {
+        var list = [];
+        parent.members.map((member) => {
+          list.push(ObjectId(member));
+        });
+        // console.log(parent.userId);
+        return User.find({ _id: { $in: list } });
+      },
+    },
+    comments: {
+      type: GraphQLList(CommentType),
+      resolve(parent, args) {
+        return Comment.find({ postId: ObjectId(parent.id) });
+      },
+    },
+  }),
+});
+const BusinessType = new GraphQLObjectType({
+  name: 'Business',
+  fields: () => ({
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    desc: { type: GraphQLString },
     Owner: { type: GraphQLString },
     members: { type: GraphQLList(GraphQLString) },
     membersList: {
@@ -242,6 +314,15 @@ const RootQuery = new GraphQLObjectType({
         );
       },
     },
+    businessPosts: {
+      type: GraphQLList(BusinessPostType),
+      args: { businessid: { type: GraphQLList(GraphQLString) } },
+      resolve(parent, args) {
+        return BusinessPost.find({ businessId: { $in: args.businessid } }).sort(
+          '-created_at'
+        );
+      },
+    },
   },
 });
 
@@ -362,6 +443,54 @@ const Mutation = new GraphQLObjectType({
           created_at: args.created_at,
         });
         return grouppost.save();
+      },
+    },
+    addBusinessPost: {
+      type: BusinessPostType,
+      args: {
+        userId: { type: new GraphQLNonNull(GraphQLID) },
+        businessId: { type: new GraphQLNonNull(GraphQLID) },
+        tags: { type: new GraphQLList(GraphQLString) },
+        description: { type: new GraphQLNonNull(GraphQLString) },
+        media: { type: new GraphQLList(GraphQLString) },
+        created_at: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        let businesspost = new BusinessPost({
+          userId: args.userId,
+          businessId: args.businessId,
+          tags: args.tags,
+          description: args.description,
+          media: args.media,
+          created_at: args.created_at,
+        });
+        return businesspost.save();
+      },
+    },
+    addLikeBusiness: {
+      type: BusinessPostType,
+      args: {
+        userId: { type: new GraphQLNonNull(GraphQLID) },
+        postId: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return BusinessPost.findOneAndUpdate(
+          { _id: args.postId },
+          { $addToSet: { likes: args.userId } }
+        );
+      },
+    },
+    unLikeBusiness: {
+      type: BusinessPostType,
+      args: {
+        userId: { type: new GraphQLNonNull(GraphQLID) },
+        postId: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return BusinessPost.findOneAndUpdate(
+          { _id: args.postId },
+          { $pull: { likes: args.userId } }
+        );
       },
     },
   },
