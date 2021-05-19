@@ -157,7 +157,7 @@ return(<>
     
      style={{marginBottom:"10px" ,borderRadius: '10px',  height:'30px'  }}
     > <BottomNavigationAction onClick={()=>setState("0")} label="Groups"  />
-    <BottomNavigationAction onClick={()=>setState("1")} label="Invitations(4)"  /></BottomNavigation>
+    <BottomNavigationAction onClick={()=>setState("1")} label="Requests"  /></BottomNavigation>
     
       
     </div>

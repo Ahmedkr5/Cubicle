@@ -51,7 +51,7 @@ return(<>
       
         <CardMedia
           className={classes.media}
-          image={props.image}
+          image={"http://localhost:3001/uploads/"+props.image}
           style={{width:'100%',height:'400px',marginTop:'0px',paddingTop:'0px',paddingRight:'0px',paddingLeft:'0px',marginRight:'0px',marginLeft:'0px'}}
           title="Hiking and Backpacking"
         />
