@@ -88,8 +88,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     fontWeight: '500',
     cursor: 'pointer',
+    marginBottom: '2%',
+    marginTop: '2%',
     '&:hover': {
       color: '#000',
+      textDecoration: 'none',
     },
   },
   content: {
@@ -437,6 +440,7 @@ export default function UpdatedGroupHomeFeed(props) {
               </span>
             </a>
             <Popover
+              elevation={1}
               id={id}
               open={open}
               anchorEl={anchorEl}
@@ -458,7 +462,7 @@ export default function UpdatedGroupHomeFeed(props) {
                 }}
               >
                 {props?.post?.likesList.map((like) => (
-                  <a href={`/profile/${like.id}`} className={classes.p}>
+                  <a href={`/profile/${like.id}`} className={classes.a}>
                     {like.firstname} {like.lastname}
                   </a>
                 ))}
@@ -521,6 +525,7 @@ export default function UpdatedGroupHomeFeed(props) {
               </span>
             </a>
             <Popover
+              elevation={1}
               id={id}
               open={open}
               anchorEl={anchorEl}
@@ -542,7 +547,7 @@ export default function UpdatedGroupHomeFeed(props) {
                 }}
               >
                 {props?.post?.likesList.map((like) => (
-                  <a href={`/profile/${like.id}`} className={classes.p}>
+                  <a href={`/profile/${like.id}`} className={classes.a}>
                     {like.firstname} {like.lastname}
                   </a>
                 ))}

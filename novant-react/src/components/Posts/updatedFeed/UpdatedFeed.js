@@ -88,8 +88,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     fontWeight: '500',
     cursor: 'pointer',
+    marginBottom: '2%',
+    marginTop: '2%',
     '&:hover': {
       color: '#000',
+      textDecoration: 'none',
     },
   },
   content: {
@@ -421,6 +424,7 @@ export default function UpdatedFeed(props) {
               </span>
             </a>
             <Popover
+              elevation={1}
               id={id}
               open={open}
               anchorEl={anchorEl}
@@ -441,8 +445,18 @@ export default function UpdatedFeed(props) {
                   margin: '10px',
                 }}
               >
-                {props?.post?.likesList.map((like) => (
-                  <a href={`/profile/${like.id}`} className={classes.p}>
+                {props?.post?.likesList.map((like, index) => (
+                  <a href={`/profile/${like.id}`} className={classes.a}>
+                    {/* {index !== 0 ? (
+                      <Divider
+                        variant='fullWidth'
+                        style={{
+                          width: '100%',
+                          marginBottom: '2%',
+                          marginTop: '2%',
+                        }}
+                      ></Divider>
+                    ) : null} */}
                     {like.firstname} {like.lastname}
                   </a>
                 ))}
@@ -505,6 +519,7 @@ export default function UpdatedFeed(props) {
               </span>
             </a>
             <Popover
+              elevation={1}
               id={id}
               open={open}
               anchorEl={anchorEl}
@@ -526,7 +541,7 @@ export default function UpdatedFeed(props) {
                 }}
               >
                 {props?.post?.likesList.map((like) => (
-                  <a href={`/profile/${like.id}`} className={classes.p}>
+                  <a href={`/profile/${like.id}`} className={classes.a}>
                     {like.firstname} {like.lastname}
                   </a>
                 ))}

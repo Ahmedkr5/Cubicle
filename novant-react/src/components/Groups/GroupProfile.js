@@ -233,15 +233,16 @@ function GroupProfile(props) {
                       flexDirection: 'column',
                     }}
                   >
-                    {' '}
-                    <BusinessGroupDialog
-                      parentRefetch={handleRefetch}
-                      CallbackAddedPost={handleCallbackAddedPost}
-                      parentCallback={handleCallback}
-                      parentCallbackDialog={handleCallbackDialog}
-                      user={user}
-                      groupid={groupid}
-                    ></BusinessGroupDialog>{' '}
+                    {groupProf?.members.some((member) => member == user.id) ? (
+                      <BusinessGroupDialog
+                        parentRefetch={handleRefetch}
+                        CallbackAddedPost={handleCallbackAddedPost}
+                        parentCallback={handleCallback}
+                        parentCallbackDialog={handleCallbackDialog}
+                        user={user}
+                        groupid={groupid}
+                      ></BusinessGroupDialog>
+                    ) : null}
                     {loading && (
                       <>
                         <SkeletonFeed></SkeletonFeed>{' '}
