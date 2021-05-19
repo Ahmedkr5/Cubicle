@@ -1,5 +1,13 @@
 import React from "react";
-import { Typography, Container, Modal, Fade, Card, CardMedia, Backdrop } from "@material-ui/core";
+import {
+  Typography,
+  Container,
+  Modal,
+  Fade,
+  Card,
+  CardMedia,
+  Backdrop,
+} from "@material-ui/core";
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -13,6 +21,8 @@ import BusinessList from "./BusinessList";
 import InvitationsList from "./InvitationsList";
 import Button from "@material-ui/core/Button";
 import BusinessCreate from "./businessCreate";
+import MyBusinessList from "./MyBusinessesList";
+import authService from "../../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -34,16 +44,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   paper: {
-    height:'700px',
-    width:'900px',
+    height: "700px",
+    width: "900px",
     backgroundColor: theme.palette.background.paper,
-    border: '2px  #000',
-    borderRadius:'20px',
+    border: "2px  #000",
+    borderRadius: "20px",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -66,8 +76,7 @@ export default function BusinessListTabs() {
   const [value, setValue] = React.useState(0);
   const [create, setCreate] = useState("0");
   const [open, setOpen] = React.useState(false);
-    
-    
+  const currentuser = authService.getCurrentUser();
 
   const handleOpen = () => {
     setOpen(true);
@@ -110,23 +119,23 @@ export default function BusinessListTabs() {
                 />
                 <BottomNavigationAction
                   onClick={() => setState("1")}
-                  label="Invitations(2)"
+                  label="My Businesses"
+                />
+                <BottomNavigationAction
+                  onClick={() => setState("2")}
+                  label="Requests"
                 />
               </BottomNavigation>
             </div>
             <Button
-              variant="outlined"
+              variant="contained"
+              color="primary"
+              size="small"
+              style={{height:'50%', top: '30%'}}
               onClick={() => {
                 setOpen(true);
               }}
-              className={classes.margin}
-              style={{
-                width: "30px",
-                height: "20px",
-                fontSize: "10px",
-                marginTop: "10px",
-                borderRadius: "12px",
-              }}
+
             >
               Create
             </Button>
@@ -195,7 +204,10 @@ export default function BusinessListTabs() {
             style={{ display: "flex", flexDirection: "row", flexFlow: "wrap" }}
           >
             {state == "0" && <BusinessList></BusinessList>}
-            {state == "1" && <InvitationsList></InvitationsList>}
+            {state == "1" && <MyBusinessList></MyBusinessList>}
+            {state == "2" && (
+              <InvitationsList requests={currentuser["id"]}></InvitationsList>
+            )}
           </div>
         </Container>
       </div>

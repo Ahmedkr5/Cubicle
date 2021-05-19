@@ -90,5 +90,35 @@ router.put('/business/:id', function (req, res) {
         
 });
 
+router.put('/businessmem/:id', function (req, res) {
+
+    Business.findByIdAndUpdate(req.params.id,{
+        members:req.body.members
+    }, 
+    function (err, Business) {
+        if (err) return res.status(500).send("error updating business");
+        
+        res.send(Business +'business modified');
+            
+    });
+});
+
+router.get('/businessowned/:id', async function (req, res, next) {
+     
+    try {
+        const findMembers = await Business.find( { Owner: req.params.id } )
+       
+        if(findMembers == null ){
+            return res.status(404).json({message: 'cant find group'})
+        }
+        
+        return res.status(200).json(findMembers)
+        
+    } catch (err) {
+        return res.status(400)
+
+    }
+});
+
 
 module.exports = router;
