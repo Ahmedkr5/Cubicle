@@ -7,7 +7,9 @@ import { Container } from '@material-ui/core';
 import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 import { Close } from '@material-ui/icons';
+import { createBrowserHistory } from 'history';
 import Link from '@material-ui/core/Link';
+export const history = createBrowserHistory();
 const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
@@ -60,7 +62,8 @@ return(<>
        
         <div style={{display:"flex",justifyContent:"space-between",flexDirection:"column"}}>
     <div>    <Typography style={{color:"black",fontWeight:'bold'}}variant="h6" component="h2" >
-    <Link href="./GroupProfile">{props.title}</Link>   
+    <Link onClick={()=>{ history.push('/GroupProfile/'+props?.id);
+         window.location.reload();}}>{props?.title}</Link>   
            </Typography></div>
         <Button variant="contained" color="primary"style={{borderRadius:'12px'}} 
         >

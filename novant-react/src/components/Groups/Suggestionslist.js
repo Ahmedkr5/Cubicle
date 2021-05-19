@@ -34,7 +34,7 @@ return(<>
        
        {groupProf?.map((msg) => (
        <div style={{display:'flex',flexDirection:'row',flexFlow:'wrap',justifyContent:'space-around'}}>
-<Suggestions image={msg.groupimage} title={msg.groupname}></Suggestions>
+<Suggestions id={msg._id} image={msg.groupimage} title={msg.groupname}></Suggestions>
 
        </div>
           ))   }
