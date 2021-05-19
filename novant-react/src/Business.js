@@ -120,11 +120,7 @@ function Business() {
                 />
                 <BottomNavigationAction
                   onClick={() => setState('1')}
-                  label='Invitations'
-                />
-                <BottomNavigationAction
-                  onClick={() => setState('2')}
-                  label='Administrate'
+                  label='Businesses'
                 />
               </BottomNavigation>
               {state == '0' && (
@@ -162,7 +158,6 @@ function Business() {
                 </div>
               )}
               {state == '1' && <BusinessListTabs></BusinessListTabs>}
-              {state == '2' && <Admin></Admin>}
             </Container>
           </Col>
           <Col style={{ display: 'flex', justifyContent: 'center' }}>

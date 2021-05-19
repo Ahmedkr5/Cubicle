@@ -13,6 +13,7 @@ import groupService from "../../services/group-service";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { useApi } from "../../hooks/useApi";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import JoinButton from "./JoinButton";
 // import Groupbutton from "./groupbutton";
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -75,7 +76,7 @@ export default function BusinessCard(props) {
           marginTop: "15px",
         }}
       >
-        <CardMedia className={classes.media} image='./cover.jpg' />
+        <CardMedia className={classes.media} image="../assets/images/groups/group.png" />
 
         <CardContent
           style={{
@@ -90,6 +91,9 @@ export default function BusinessCard(props) {
           >
             {props?.business_nom}
           </Typography>
+          <JoinButton  idgroup={props?.business_id} mem={props?.business_mem} owner={props?.business_owner}>  
+           
+          </JoinButton>
 
           {/* <Groupbutton
             idgroup={props?.grpid}

@@ -111,14 +111,6 @@ export default function RecipeReviewCard(props) {
 
             <div  style={{ paddingTop: '75px' }}>
                 <Paper elevation={0} className={classes.root} >
-
-
-
-
-
-
-
-
                     <Card elevation={0} className={classes.root}>
                         <CardContent>
                         <TextField id="standard-basic" label="Search" style={{width:'100%'}} />
