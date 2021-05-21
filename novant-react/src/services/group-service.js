@@ -24,6 +24,16 @@ editgroupimage(groupimage,groupid) {
       return response.data;
     });
 }
+
+editgroupsong(Song,groupid) {
+  return axios
+    .put(API_URL +"GroupSong/"+groupid, {
+       Song,
+    })
+    .then(response => {
+      return response.data;
+    });
+}
 getAll() {
 
   return axios
