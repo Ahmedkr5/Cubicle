@@ -3,7 +3,7 @@ import {
   BottomNavigationAction,
   Container,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Sidebar from './components/Sidebar/Sidebar';
 import Feed from './components/Posts/Feed';
@@ -24,7 +24,7 @@ import Editor from './components/Posts/Editor';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import SnackbarPost from './components/Posts/SnackbarPost';
 import StillEmtySVG from './components/Posts/updatedFeed/StillEmptySVG';
-
+import axios from 'axios';
 const FEED_QUERY = gql`
   {
     posts {
@@ -71,7 +71,8 @@ function Home() {
   const [openDialog, setOpenDialog] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [offer, setOffer] = React.useState(0);
-
+  const  [friendcomp,setFriendcomp] = React.useState([]);
+  const  [Loading,setLoading] = React.useState(false);
   const handleCallback = (childData) => {
     setOpen(childData);
   };
@@ -87,8 +88,25 @@ function Home() {
   const handleCallbackAddedPost = (childDatat) => {
     refetch();
   };
-
   const user = authService.getCurrentUser();
+  useEffect(() => {
+       
+      
+    
+    axios
+      .get('http://localhost:3001/users/')
+    
+      .then((res) => {
+         setFriendcomp(res.data?.filter((m)=>user?.friends.includes(m._id)))
+       
+      });
+  
+  }, );
+
+
+
+
+
 
   return (
     <div style={{ backgroundColor: '#F0F2F5' }}>
@@ -334,7 +352,7 @@ function Home() {
                 justifyContent: 'center',
               }}
             >
-              <RightSidebar style={{ marginRight: '0px' }}></RightSidebar>
+              <RightSidebar friends={friendcomp} style={{ marginRight: '0px' }}></RightSidebar>
             </Col>
           </Hidden>
         </Row>

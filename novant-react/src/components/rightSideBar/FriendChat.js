@@ -1,6 +1,7 @@
-import React, { useState,useEffect } from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import React from 'react'
 import List from '@material-ui/core/List';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
@@ -11,11 +12,9 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-import Contacts from './Contacts';
-import FriendChat from './FriendChat';
-import ReactDOM from 'react-dom';
+import { Typography } from '@material-ui/core';
 import ChatBox from './ChatBox';
-
+import ReactDOM from 'react-dom';
 const useStyles = makeStyles((theme) => ({
     root: {
 
@@ -41,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
 
     },
 }));
-
 const StyledBadgeMessages = withStyles((theme) => ({
     badge: {
         right: 0,
@@ -82,61 +80,28 @@ const StyledBadge = withStyles((theme) => ({
         },
     },
 }))(Badge);
-
-
-
-export default function ConnectedList({friends}) {
-
-
-    const classes = useStyles();
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
-    const [searchActive, setSearchActive] = React.useState('none');
-   
-
-
-
-
-    const SearchAction = () => {
-        setSearchActive('');
-    }
-   
-
-
-
-    return (
-        <>
-
-
-
-
-            <Contacts />
-            <Paper elevation={0} className={classes.root} style={{maxHeight: '100%'}} >
-                <div className={classes.root} onScroll={SearchAction}  >
-
-
-
-
-                    <List component="nav" aria-label="main mailbox folders" >
-                        <ListSubheader style={{ zIndex: '10', backgroundColor: 'white' }}>   <TextField id="primary" placeholder="Search" color="primary" style={{ display: searchActive }} /></ListSubheader>
-
-                   
-                   
-                 
-                     {friends.map(m=>(<FriendChat img={m.profileimage} firstname={m.firstname} lastname={m.lastname}></FriendChat>))}
-                    
-               
-
-
-
-                    </List>
-
-                </div>
-            </Paper>
-
-
-
-        </>
-
-    );
-
+const activateChat1 = () => {
+    ReactDOM.render(<div className='row d-flex flex-row-reverse  '><div className='col-3'  ><ChatBox /></div>  </div>  ,  document.getElementById('global'));
 }
+
+export default function FriendChat(props) {
+    
+    const classes = useStyles();
+    return (
+        <div>
+                 <ListItem button onClick={activateChat1}>
+                            <ListItemAvatar>
+                                <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left', }} >
+                                    <Avatar variant='rounded'  src={'http://localhost:3001/uploads/' + props.img} className={classes.rad} />
+                                </StyledBadge>
+                            </ListItemAvatar>
+                            <ListItemText  primary={<Typography>{props.firstname}  {props.lastname}</Typography>} />
+                            <ListItemSecondaryAction>
+                                <StyledBadgeMessages badgeContent={4} color="secondary"></StyledBadgeMessages>
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                      
+        </div>
+    )
+}
+

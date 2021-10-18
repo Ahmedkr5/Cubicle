@@ -309,7 +309,7 @@ function Profile(props) {
             </Container>
           </Col>
           <Col style={{ display: 'flex', justifyContent: 'center' }}>
-            <RightSidebar style={{ marginRight: '0px' }}></RightSidebar>
+            <RightSidebar friends={user2?.friends} style={{ marginRight: '0px' }}></RightSidebar>
           </Col>
         </Row>
       </Container>

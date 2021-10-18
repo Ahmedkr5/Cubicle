@@ -3,40 +3,40 @@ import {
   BottomNavigationAction,
   Container,
   Divider,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import React, { useState } from 'react';
-import { FindInPage, Flag } from '@material-ui/icons';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import { Col, Row } from 'react-bootstrap';
-import Sidebar from '../Sidebar/Sidebar';
-import Feed from '../Posts/Feed';
-import SearchAppBar from '../Navbar/Navbar';
-import authService from '../../services/auth.service';
-import { Settings, ShoppingCart } from '@material-ui/icons';
-import GroupIcon from '@material-ui/icons/Group';
-import InfoIcon from '@material-ui/icons/Info';
-import GroupCard from './GroupCard';
-import RightSidebar from '../rightSideBar/RightSidebar';
-import FriendList from '../Friends/Friendreqlist';
-import Friendsdiv from '../Friends/Friendsdiv';
-import About from './About';
-import Members from './members';
-import { useApi } from '../../hooks/useApi';
-import Config from './config';
-import BusinessGroupDialog from '../Posts/BusinessGroupDialog';
-import { useQuery, gql } from '@apollo/client';
-import SnackbarPost from '../../components/Posts/SnackbarPost';
-import SkeletonFeed from '../../components/Posts/skeletonFeed';
-import UpdatedGroupFeed from '../Posts/GroupsFeed/UpdatedGroupFeed';
-import 'react-jinke-music-player/assets/index.css';
-import MusicCover from './python.png';
-import Podcast from './pythonpodcast.mp3';
-import MusicCover2 from './JohnWick.jpg';
-import Castle_Vania from './JohnWick.mp3';
-import Geazy from './geazy.mp3';
-import ReactJKMusicPlayer from 'react-jinke-music-player';
+import React, { useState } from "react";
+import { FindInPage, Flag } from "@material-ui/icons";
+import RestoreIcon from "@material-ui/icons/Restore";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import { Col, Row } from "react-bootstrap";
+import Sidebar from "../Sidebar/Sidebar";
+import Feed from "../Posts/Feed";
+import SearchAppBar from "../Navbar/Navbar";
+import authService from "../../services/auth.service";
+import { Settings, ShoppingCart } from "@material-ui/icons";
+import GroupIcon from "@material-ui/icons/Group";
+import InfoIcon from "@material-ui/icons/Info";
+import GroupCard from "./GroupCard";
+import RightSidebar from "../rightSideBar/RightSidebar";
+import FriendList from "../Friends/Friendreqlist";
+import Friendsdiv from "../Friends/Friendsdiv";
+import About from "./About";
+import Members from "./members";
+import { useApi } from "../../hooks/useApi";
+import Config from "./config";
+import BusinessGroupDialog from "../Posts/BusinessGroupDialog";
+import { useQuery, gql } from "@apollo/client";
+import SnackbarPost from "../../components/Posts/SnackbarPost";
+import SkeletonFeed from "../../components/Posts/skeletonFeed";
+import UpdatedGroupFeed from "../Posts/GroupsFeed/UpdatedGroupFeed";
+import "react-jinke-music-player/assets/index.css";
+import MusicCover from "./python.png";
+import Podcast from "./pythonpodcast.mp3";
+import MusicCover2 from "./JohnWick.jpg";
+import Castle_Vania from "./JohnWick.mp3";
+import Geazy from "./geazy.mp3";
+import ReactJKMusicPlayer from "react-jinke-music-player";
 const FEED_QUERY = gql`
   query groupPosts($groupid: [String!]) {
     groupPosts(groupid: $groupid) {
@@ -87,10 +87,10 @@ function GroupProfile(props) {
     },
     pollInterval: 5000,
   });
-  const [state, setState] = useState('0');
+  const [state, setState] = useState("0");
   const [value, setValue] = React.useState(0);
   const currentuser = authService.getCurrentUser();
-  const [groupProf, err1, reload1] = useApi('groups/group/' + groupid);
+  const [groupProf, err1, reload1] = useApi("groups/group/" + groupid);
   const [mem, setMem] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -121,38 +121,38 @@ function GroupProfile(props) {
     {
       cover: MusicCover,
       musicSrc: Podcast,
-      name: 'Learning Python for Beginners-Podcast',
-      singer: 'By Hamza Safraou',
+      name: "Learning Python for Beginners-Podcast",
+      singer: "By Hamza Safraou",
     },
     {
       cover: MusicCover2,
       musicSrc: Castle_Vania,
-      name: 'Le Castle Vania - John Wick Medley',
-      singer: 'Shots Fired',
+      name: "Le Castle Vania - John Wick Medley",
+      singer: "Shots Fired",
     },
   ];
 
   return (
-    <div style={{ backgroundColor: '#F0F2F5' }}>
-      <link rel='stylesheet' href='css/bootstrap.min.css' />
+    <div style={{ backgroundColor: "#F0F2F5" }}>
+      <link rel="stylesheet" href="css/bootstrap.min.css" />
       <Row>
         <SearchAppBar></SearchAppBar>
       </Row>
-      <Container style={{ marginTop: '4%', maxWidth: '100%' }}>
+      <Container style={{ marginTop: "4%", maxWidth: "100%" }}>
         <Row>
-          <Col style={{ display: 'flex', justifyContent: 'center' }}>
+          <Col style={{ display: "flex", justifyContent: "center" }}>
             <Sidebar></Sidebar>
           </Col>
 
           <Col
             xs={6}
             style={{
-              display: 'flex',
-              marginLeft: '0px',
-              justifyContent: 'center',
+              display: "flex",
+              marginLeft: "0px",
+              justifyContent: "center",
             }}
           >
-            <Container style={{ marginLeft: '0px' }}>
+            <Container style={{ marginLeft: "0px" }}>
               <GroupCard
                 grpid={groupProf?._id}
                 mem={groupProf?.members}
@@ -173,46 +173,46 @@ function GroupProfile(props) {
                     setOpenSnackbar(true);
                   }
                 }}
-                style={{ marginBottom: '10px', borderRadius: '10px' }}
+                style={{ marginBottom: "10px", borderRadius: "10px" }}
               >
-                {groupProf?.members?.find((m) => m === currentuser['id']) ? (
+                {groupProf?.members?.find((m) => m === currentuser["id"]) ? (
                   //currentuser['id'] in props?.groupProf?.members.map(m=>(m)) &&
                   <BottomNavigationAction
                     onClick={() => {
                       if (open === false) {
-                        setState('0');
+                        setState("0");
                         refetch();
                       }
                     }}
-                    label='Recents'
+                    label="Recents"
                     icon={<RestoreIcon />}
                   />
                 ) : null}
                 <BottomNavigationAction
                   onClick={() => {
                     if (open === false) {
-                      setState('1');
+                      setState("1");
                       refetch();
                     }
                   }}
-                  label='Members'
+                  label="Members"
                   icon={<GroupIcon />}
                 />
 
                 <BottomNavigationAction
                   onClick={() => {
                     if (open === false) {
-                      setState('2');
+                      setState("2");
                       refetch();
                     }
                   }}
-                  label='About'
+                  label="About"
                   icon={<InfoIcon />}
                 />
-                {currentuser['id'] === groupProf?.Owner && (
+                {currentuser["id"] === groupProf?.Owner && (
                   <BottomNavigationAction
-                    onClick={() => setState('3')}
-                    label='Settings'
+                    onClick={() => setState("3")}
+                    label="Settings"
                     icon={<Settings />}
                   />
                 )}
@@ -220,17 +220,17 @@ function GroupProfile(props) {
               {openSnackbar && (
                 <SnackbarPost
                   parentCallbackSnackbar={handleCallbackSnackbar}
-                  message={'You are editing a new post ✍🏻'}
+                  message={"You are editing a new post ✍🏻"}
                 />
               )}
 
-              {state == '0' &&
-                groupProf?.members?.find((m) => m === currentuser['id']) && (
+              {state == "0" &&
+                groupProf?.members?.find((m) => m === currentuser["id"]) && (
                   <div
                     style={{
-                      display: 'flex',
-                      width: '100%',
-                      flexDirection: 'column',
+                      display: "flex",
+                      width: "100%",
+                      flexDirection: "column",
                     }}
                   >
                     {groupProf?.members.some((member) => member == user.id) ? (
@@ -245,11 +245,11 @@ function GroupProfile(props) {
                     ) : null}
                     {loading && (
                       <>
-                        <SkeletonFeed></SkeletonFeed>{' '}
+                        <SkeletonFeed></SkeletonFeed>{" "}
                         <SkeletonFeed></SkeletonFeed>
                       </>
                     )}
-                    {error && <p style={{ color: 'red' }}>{error.message}</p>}
+                    {error && <p style={{ color: "red" }}>{error.message}</p>}
                     {data && (
                       <>
                         {data.groupPosts.map(
@@ -267,9 +267,9 @@ function GroupProfile(props) {
                     )}
                   </div>
                 )}
-              {state == '1' && (
-                <div style={{ backgroundColor: 'white', borderRadius: '10px' }}>
-                  {' '}
+              {state == "1" && (
+                <div style={{ backgroundColor: "white", borderRadius: "10px" }}>
+                  {" "}
                   <Members
                     id={groupProf?._id}
                     member={groupProf?.members}
@@ -277,8 +277,8 @@ function GroupProfile(props) {
                   ></Members>
                 </div>
               )}
-              {state == '2' && <About desc={groupProf?.description}></About>}
-              {state == '3' && (
+              {state == "2" && <About desc={groupProf?.description}></About>}
+              {state == "3" && (
                 <Config
                   nom={groupProf?.groupname}
                   desc={groupProf?.description}
@@ -287,8 +287,8 @@ function GroupProfile(props) {
               )}
             </Container>
           </Col>
-          <Col style={{ display: 'flex', justifyContent: 'center' }}>
-            <RightSidebar style={{ marginRight: '0px' }}></RightSidebar>
+          <Col style={{ display: "flex", justifyContent: "center" }}>
+            <RightSidebar style={{ marginRight: "0px" }}></RightSidebar>
           </Col>
         </Row>
       </Container>
