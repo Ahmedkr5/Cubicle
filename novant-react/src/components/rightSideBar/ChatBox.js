@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: 400,
         borderTopLeftRadius:'15px',
         borderTopRightRadius:'15px',
+        
     },
     rad: {
         borderRadius: 8,
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
         float: 'right',
         display: 'flex ',
         flexDirection: 'row',
-        marginLeft: '50px',
+       
     },
     chatfooter: {
         paddingTop: '5px',
@@ -90,7 +91,7 @@ const StyledBadge = withStyles((theme) => ({
         },
     },
 }))(Badge);
-export default function ChatBox() {
+export default function ChatBox(props) {
     const classes = useStyles();
     const hideChatBox = () => {
         ReactDOM.render(<div></div>,  document.getElementById('global'));
@@ -106,18 +107,18 @@ export default function ChatBox() {
 
     
     return (
-        <div style={{zIndex:'1', position : 'fixed' , bottom : '0'}}>
+        <div style={{zIndex:'1', position : 'fixed' , bottom : '0',right:'550px'}}>
             <Card  className={classes.root}  >
             
                     <CardMedia className={classes.media}>
-                        <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <div style={{ display: 'flex', flexDirection: 'row',justifyContent:'space-around' }}>
                             <div style={{ marginRight: '5px', marginLeft: '10px', marginTop: '10px' }}>
                                 <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left' }} >
-                                    <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
+                                    <Avatar variant='rounded' src={'http://localhost:3001/uploads/' + props.img} className={classes.rad} />
                                 </StyledBadge>
                             </div>
-                            <div style={{ marginTop: '17px', marginLeft: '10px' }}>
-                                <span>Mohamed </span>
+                            <div style={{ marginTop: '8px', marginLeft: '10px',width:'40%'}} >
+                            <span>{props.firstname}   </span><span>{props.lastname}</span>
                             </div>
                             <div className={classes.headerIcons} >
                                 <IconButton className={classes.Icon} color="primary" size="small" aria-label="add an alarm">

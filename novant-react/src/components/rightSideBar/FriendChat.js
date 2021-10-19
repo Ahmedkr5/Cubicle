@@ -80,16 +80,15 @@ const StyledBadge = withStyles((theme) => ({
         },
     },
 }))(Badge);
-const activateChat1 = () => {
-    ReactDOM.render(<div className='row d-flex flex-row-reverse  '><div className='col-3'  ><ChatBox /></div>  </div>  ,  document.getElementById('global'));
-}
 
 export default function FriendChat(props) {
     
     const classes = useStyles();
     return (
         <div>
-                 <ListItem button onClick={activateChat1}>
+                 <ListItem button onClick={() => {
+    ReactDOM.render(<div className='row d-flex flex-row-reverse  '><div className='col-3'  ><ChatBox firstname={props.firstname} lastname={props.lastname} img={props.img}/></div>  </div>  ,  document.getElementById('global'));
+}}>
                             <ListItemAvatar>
                                 <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left', }} >
                                     <Avatar variant='rounded'  src={'http://localhost:3001/uploads/' + props.img} className={classes.rad} />

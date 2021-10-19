@@ -80,7 +80,8 @@ function Profile(props) {
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
-
+  const  [friendcomp,setFriendcomp] = React.useState([]);
+  const  [Loading,setLoading] = React.useState(false);
   const handleCallback = (childData) => {
     setOpen(childData);
   };
@@ -133,6 +134,20 @@ function Profile(props) {
     }
   }, []);
 
+ 
+  useEffect(() => {
+       
+      
+    
+    axios
+      .get('http://localhost:3001/users/')
+    
+      .then((res) => {
+         setFriendcomp(res.data?.filter((m)=>currentuser?.friends.includes(m._id)))
+       
+      });
+  
+  }, );
   const [user2, err, reload] = useApi('users/' + userid);
   return (
     <div style={{ backgroundColor: '#F0F2F5' }}>
@@ -309,7 +324,7 @@ function Profile(props) {
             </Container>
           </Col>
           <Col style={{ display: 'flex', justifyContent: 'center' }}>
-            <RightSidebar friends={user2?.friends} style={{ marginRight: '0px' }}></RightSidebar>
+            <RightSidebar friends={friendcomp} style={{ marginRight: '0px' }}></RightSidebar>
           </Col>
         </Row>
       </Container>
