@@ -136,7 +136,7 @@ export default function ChatBox(props) {
                     <CardContent className={classes.content}  >
 
                         <Typography variant="body2" color="textSecondary" component="p">
-                            <ChatBoxItem />
+                            <ChatBoxItem img={props.img}/>
                         </Typography>
                     </CardContent>
                
