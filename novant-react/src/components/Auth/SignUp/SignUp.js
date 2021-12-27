@@ -15,7 +15,7 @@ import SignIn from "../Login/SignIn";
 import { ContactsRounded, LockOpen } from "@material-ui/icons";
 import { height } from "@mui/system";
 import { FadeTransform } from 'react-animation-components';
-import Loading from '../../LoadingComponent';
+
 const FormSteps = (props) => {
   const childrenArr = React.Children.toArray(props.children);
   const [step, setStep] = useState(4);
