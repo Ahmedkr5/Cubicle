@@ -16,7 +16,7 @@ import BusinessProfile from './components/Business/BusinessProfile';
 
 function App() {
   return (
-    <div className='App' style={{ backgroundColor: '#F0F2F5' }}>
+    <div className='App' style={{ backgroundColor: '#F0F2F5',height:'1000px' }}>
       <Router>
         <Route
           path='/profile/:id'

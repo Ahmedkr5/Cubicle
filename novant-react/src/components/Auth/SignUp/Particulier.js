@@ -115,7 +115,7 @@ export default class Particulier extends Component {
   render() {
     return (
       <div className='col-md-12'>
-        <div className='card card-container'>
+        
           
 
           <Form
@@ -211,7 +211,7 @@ export default class Particulier extends Component {
             />
           </Form>
         </div>
-      </div>
+      
     );
   }
 }

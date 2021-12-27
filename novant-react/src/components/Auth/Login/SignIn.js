@@ -15,6 +15,7 @@ import {
 import { createBrowserHistory } from 'history';
 import { Button } from '@material-ui/core';
 import authService from '../../../services/auth.service';
+import Card from '@material-ui/core/Card';
 export const history = createBrowserHistory();
 const required = (value) => {
   if (!value) {
@@ -93,7 +94,8 @@ export default class Login extends Component {
   render() {
     return (
       <div className='col-md-12'>
-        <div className='card card-container'>
+  
+       
           
 
           <Form
@@ -152,7 +154,8 @@ export default class Login extends Component {
               }}
             />
           </Form>
-        </div>
+       
+      
       </div>
     );
   }

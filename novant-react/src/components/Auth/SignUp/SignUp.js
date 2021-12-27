@@ -1,19 +1,21 @@
 import { BottomNavigation, BottomNavigationAction, Button, FormControlLabel, Link, makeStyles, Radio, RadioGroup, Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-
+import Paper from '@material-ui/core/Paper';
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Particulier from "./Particulier";
 import Entreprise from "./Entreprise";
 import SignIn from "../Login/SignIn";
 import { ContactsRounded, LockOpen } from "@material-ui/icons";
-
+import { height } from "@mui/system";
+import { FadeTransform } from 'react-animation-components';
+import Loading from '../../LoadingComponent';
 const FormSteps = (props) => {
   const childrenArr = React.Children.toArray(props.children);
   const [step, setStep] = useState(4);
@@ -130,8 +132,19 @@ function SignUp() {
   const [state, setState] = useState("0") 
   const [value, setValue] = React.useState(0);
 
+
   return (
-    <Container component="main" maxWidth="xs"  >
+    <div style={{ 
+      backgroundImage: `url("http://localhost:3001/uploads/loginimg.jpg")` ,
+      height:'100%'
+    }}>
+    <div style={{justifyContent:'center',alignItems: 'center',display:'flex'}}>
+    <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
+    <Paper component="main"  style={{backgroundColor:'white',width:'450px',marginTop:'75px'}} >
       <CssBaseline />
       <div className={classes.paper}>
         
@@ -153,11 +166,11 @@ function SignUp() {
 </div>
 
 <BottomNavigation
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
-    
+   value={value}
+   onChange={(event, newValue) => {
+     setValue(newValue);
+   }}
+   showLabels
      style={{marginBottom:"10px" , borderBottomRightRadius:"15px",borderBottomLeftRadius:"15px" }}
     >
       <BottomNavigationAction onClick={()=>setState("0")} label="Login" icon={<LockOpen />} />
@@ -179,7 +192,7 @@ function SignUp() {
       <Box mt={5}>
         <Copyright />
       </Box>
-    </Container>
+    </Paper></FadeTransform></div></div>
   );
 
 }
