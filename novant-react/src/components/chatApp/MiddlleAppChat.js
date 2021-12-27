@@ -113,7 +113,7 @@ export default function RecipeReviewCard(props) {
   const [srcImage, setSrcImage] = useState('a');
   const user = authService.getCurrentUser();
   const transmitter = user['id'];
-  // const audiok = new Audio('http://localhost:3000/song/callsong.mp3') ;
+  // const audiok = new Audio('https://mycubicle.herokuapp.com/song/callsong.mp3') ;
   // audiok.play() ; audiok.pause() ;
   const closeLightbox = () => {
     setOpen('none');

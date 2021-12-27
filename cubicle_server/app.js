@@ -138,7 +138,7 @@ const CONFIG = {
   },
 };
 mongoose.connect(
-  'mongodb+srv://mohamed:nextnext@cluster0.jt0yp.mongodb.net/Cubicle?retryWrites=true&w=majority',
+  'mongodb+srv://ahmed:ahmed@cluster0.jt0yp.mongodb.net/Cubicle?retryWrites=true&w=majority',
   CONFIG.OPTIONS
 );
 let db = mongoose.connection;

@@ -79,18 +79,19 @@ export default function MidSidebar() {
             <ListItemText>Messages</ListItemText>
           </ListItemLink>
           <Divider variant='middle' />
-          <ListItemLink style={{ paddingLeft: '15%' }} href='/Business'>
-            <ListItemIcon className={classes.iconWrapper}>
-              <BusinessOutlined color='#F0F2F5' />
-            </ListItemIcon>
-            <ListItemText>Business</ListItemText>
-          </ListItemLink>
-          <Divider variant='middle' />
+       
+          
           <ListItemLink style={{ paddingLeft: '15%' }} href='/Groupe'>
             <ListItemIcon className={classes.iconWrapper}>
               <SupervisedUserCircleOutlined color='#F0F2F5' />
             </ListItemIcon>
             <ListItemText>Groups</ListItemText>
+          </ListItemLink><Divider variant='middle' />
+          <ListItemLink style={{ paddingLeft: '15%' }} href='/Business'>
+            <ListItemIcon className={classes.iconWrapper}>
+              <BusinessOutlined color='#F0F2F5' />
+            </ListItemIcon>
+            <ListItemText>Business</ListItemText>
           </ListItemLink>
         </Container>
       </Paper>

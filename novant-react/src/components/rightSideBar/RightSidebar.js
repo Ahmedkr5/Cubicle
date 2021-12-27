@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RightSidebar() {
+export default function RightSidebar({friends}) {
   const classes = useStyles();
 
   return (
@@ -40,7 +40,7 @@ export default function RightSidebar() {
 
         
           <FriendReq></FriendReq>  
-          <ConnectedList></ConnectedList>
+          <ConnectedList friends={friends}></ConnectedList>
       </div>
 
   );

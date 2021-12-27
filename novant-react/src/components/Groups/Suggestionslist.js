@@ -17,6 +17,8 @@ import GroupInvitation from './GroupInvitation';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import Groups from './groups';
 import Suggestions from './Suggestions';
+import groupService from '../../services/group-service';
+import { useApi } from '../../hooks/useApi';
 
 
 
@@ -25,16 +27,17 @@ import Suggestions from './Suggestions';
 
 
   export default function  Suggestionslist() {
-   
+    const [groupProf, err, reload] = useApi('groups/grouplist/');
+    console.log(groupProf)
 return(<>
     
        
-       
+       {groupProf?.map((msg) => (
        <div style={{display:'flex',flexDirection:'row',flexFlow:'wrap',justifyContent:'space-around'}}>
-<Suggestions image="../assets/images/groups/hiking.jpg" title="Hiking & Backpacking"></Suggestions><Suggestions image="../assets/images/groups/red crescent.jpg" title="Red Crecent Tunisia" ></Suggestions><Suggestions image="../assets/images/groups/python.png" title="Python Programming"></Suggestions><Suggestions image="../assets/images/groups/cars.jpg" title="Car problems:Fix and Help"></Suggestions>
+<Suggestions id={msg._id} image={msg.groupimage} title={msg.groupname}></Suggestions>
 
        </div>
-      
+          ))   }
                
    
   </>

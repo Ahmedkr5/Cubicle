@@ -1,29 +1,39 @@
-import { BottomNavigation, BottomNavigationAction, Button, FormControlLabel, Link, makeStyles, Radio, RadioGroup, Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Button,
+  FormControlLabel,
+  Link,
+  makeStyles,
+  Radio,
+  RadioGroup,
+  Typography,
+} from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import Particulier from "./Particulier";
-import Entreprise from "./Entreprise";
-import SignIn from "../Login/SignIn";
-import { ContactsRounded, LockOpen } from "@material-ui/icons";
+import Paper from '@material-ui/core/Paper';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import Particulier from './Particulier';
+import Entreprise from './Entreprise';
+import SignIn from '../Login/SignIn';
+import { ContactsRounded, LockOpen } from '@material-ui/icons';
+import { height } from '@mui/system';
+import { FadeTransform } from 'react-animation-components';
 
 const FormSteps = (props) => {
   const childrenArr = React.Children.toArray(props.children);
   const [step, setStep] = useState(4);
 
-
-
   const goEntreprise = () => {
-    if(childrenArr[0].props.children.props.value ==="Entreprise") {
+    if (childrenArr[0].props.children.props.value === 'Entreprise') {
       setStep(3);
-    }else{
+    } else {
       setStep(2);
     }
   };
@@ -39,7 +49,7 @@ const FormSteps = (props) => {
       {step === 1 && (
         <Button
           disabled={props.isSubmitting}
-          variant="contained"
+          variant='contained'
           onClick={goEntreprise}
         >
           Continue
@@ -48,8 +58,8 @@ const FormSteps = (props) => {
       {step > 1 && step < 4 && (
         <Button
           disabled={props.isSubmitting}
-          variant="contained"
-          color="secondary"
+          variant='contained'
+          color='secondary'
           onClick={goReset}
         >
           Back
@@ -57,43 +67,41 @@ const FormSteps = (props) => {
       )}
       {step > 1 && step < 4 && (
         <Button
-          type="submit"
+          type='submit'
           disabled={props.isSubmitting}
-          variant="contained"
-          color="primary"
+          variant='contained'
+          color='primary'
         >
           Submit
         </Button>
       )}
       {step < 4 && (
         <Grid container>
-            <Grid item>
-              <Link onClick={goLogin} variant="body2">
-                {"Have an account? Sign In"}
-              </Link>
-            </Grid>
+          <Grid item>
+            <Link onClick={goLogin} variant='body2'>
+              {'Have an account? Sign In'}
+            </Link>
           </Grid>
-      )
-      } 
+        </Grid>
+      )}
       {step === 4 && (
         <Grid container>
-            <Grid item>
-              <Link onClick={goReset} variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
+          <Grid item>
+            <Link onClick={goReset} variant='body2'>
+              {"Don't have an account? Sign Up"}
+            </Link>
           </Grid>
-      )
-      }
+        </Grid>
+      )}
     </>
   );
 };
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant='body2' color='textSecondary' align='center'>
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color='inherit' href='https://material-ui.com/'>
         Cubicle
       </Link>{' '}
       {new Date().getFullYear()}
@@ -102,7 +110,7 @@ function Copyright() {
   );
 }
 var divStyle = {
-  marginRight: "500px"
+  marginRight: '500px',
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -127,62 +135,93 @@ const useStyles = makeStyles((theme) => ({
 
 function SignUp() {
   const classes = useStyles();
-  const [state, setState] = useState("0") 
+  const [state, setState] = useState('0');
   const [value, setValue] = React.useState(0);
 
   return (
-    <Container component="main" maxWidth="xs"  >
-      <CssBaseline />
-      <div className={classes.paper}>
-        
-        <img src="https://img.icons8.com/officel/80/000000/sugar-cube.png" alt="Cubicle"/>
-        <Typography component="h1" variant="h5">
-              Cubicle
-          </Typography>
-
-      </div>
-      
-                  <div
+    <div
+      style={{
+        backgroundImage: `url("https://mycubicle.herokuapp.com/uploads/loginimg.jpg")`,
+        height: '100%',
+      }}
+    >
+      <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
+          justifyContent: 'center',
+          alignItems: 'center',
+          display: 'flex',
         }}
       >
-        
-</div>
+        <FadeTransform
+          in
+          transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)',
+          }}
+        >
+          <Paper
+            component='main'
+            style={{
+              backgroundColor: 'white',
+              width: '450px',
+              marginTop: '75px',
+            }}
+          >
+            <CssBaseline />
+            <div className={classes.paper}>
+              <img
+                src='https://img.icons8.com/officel/80/000000/sugar-cube.png'
+                alt='Cubicle'
+              />
+              <Typography component='h1' variant='h5'>
+                Cubicle
+              </Typography>
+            </div>
 
-<BottomNavigation
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
-    
-     style={{marginBottom:"10px" , borderBottomRightRadius:"15px",borderBottomLeftRadius:"15px" }}
-    >
-      <BottomNavigationAction onClick={()=>setState("0")} label="Login" icon={<LockOpen />} />
-      <BottomNavigationAction onClick={()=>setState("1")} label="Register" icon={<ContactsRounded />} />
-</BottomNavigation>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            ></div>
 
-                  <div>
+            <BottomNavigation
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+              showLabels
+              style={{
+                marginBottom: '10px',
+                borderBottomRightRadius: '15px',
+                borderBottomLeftRadius: '15px',
+              }}
+            >
+              <BottomNavigationAction
+                onClick={() => setState('0')}
+                label='Login'
+                icon={<LockOpen />}
+              />
+              <BottomNavigationAction
+                onClick={() => setState('1')}
+                label='Register'
+                icon={<ContactsRounded />}
+              />
+            </BottomNavigation>
 
-    {state == "0" &&  <SignIn></SignIn>}
-    {state == "1" && <Particulier></Particulier>}
-    
-  </div>
-  
-               
+            <div>
+              {state == '0' && <SignIn></SignIn>}
+              {state == '1' && <Particulier></Particulier>}
+            </div>
 
-          
-
-
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
+            <Box mt={5}>
+              <Copyright />
+            </Box>
+          </Paper>
+        </FadeTransform>
+      </div>
+    </div>
   );
-
 }
-
 
 export default SignUp;

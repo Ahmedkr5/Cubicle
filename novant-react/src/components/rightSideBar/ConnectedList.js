@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,7 +12,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Contacts from './Contacts';
-
+import FriendChat from './FriendChat';
 import ReactDOM from 'react-dom';
 import ChatBox from './ChatBox';
 
@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
     },
 }));
+
 const StyledBadgeMessages = withStyles((theme) => ({
     badge: {
         right: 0,
@@ -81,13 +82,16 @@ const StyledBadge = withStyles((theme) => ({
         },
     },
 }))(Badge);
-export default function ConnectedList() {
+
+
+
+export default function ConnectedList({friends}) {
 
 
     const classes = useStyles();
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const [searchActive, setSearchActive] = React.useState('none');
-
+   
 
 
 
@@ -95,13 +99,7 @@ export default function ConnectedList() {
     const SearchAction = () => {
         setSearchActive('');
     }
-    const activateChat1 = () => {
-        ReactDOM.render(<div className='row d-flex flex-row-reverse  '><div className='col-3'  ><ChatBox /></div>  </div>  ,  document.getElementById('global'));
-    }
-    const activateChat2 = () => {
-        ReactDOM.render(    <div className='row d-flex flex-row-reverse  '><div className='col-3'  style={{marginLeft:'95px'}}><ChatBox /></div> <div className='col-3'  ><ChatBox   /> </div></div>,  document.getElementById('global'));
-    }
-
+   
 
 
 
@@ -112,7 +110,7 @@ export default function ConnectedList() {
 
 
             <Contacts />
-            <Paper elevation={0} className={classes.root} style={{maxHeight: '48%'}} >
+            <Paper elevation={0} className={classes.root} style={{maxHeight: '100%'}} >
                 <div className={classes.root} onScroll={SearchAction}  >
 
 
@@ -121,130 +119,12 @@ export default function ConnectedList() {
                     <List component="nav" aria-label="main mailbox folders" >
                         <ListSubheader style={{ zIndex: '10', backgroundColor: 'white' }}>   <TextField id="primary" placeholder="Search" color="primary" style={{ display: searchActive }} /></ListSubheader>
 
-                        <ListItem
-                            button onClick={activateChat1 }
-
-                        >
-                            <ListItemAvatar>
-                                <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left', }} >
-                                    <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
-                                </StyledBadge>
-                            </ListItemAvatar>
-                            <ListItemText primary="Bouzid Mohamed" />
-                            <ListItemSecondaryAction>
-                                <StyledBadgeMessages badgeContent={4} color="secondary"></StyledBadgeMessages>
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                        <ListItem
-                            button onClick={activateChat2 }
-
-                        >
-                            <ListItemAvatar>
-                                <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left', }} >
-                                    <Avatar variant='rounded' src={`../assets/images/users/1.jpg`} className={classes.rad} />
-                                </StyledBadge>
-                            </ListItemAvatar>
-                            <ListItemText primary="Bouzid Mohamed" />
-                            <ListItemSecondaryAction>
-                                <StyledBadgeMessages badgeContent={4} color="secondary"></StyledBadgeMessages>
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                        <ListItem
-                            button 
-
-                        >
-                            <ListItemAvatar>
-                                <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left', }} >
-                                    <Avatar variant='rounded' src={`../assets/images/users/8.jpg`} className={classes.rad} />
-                                </StyledBadge>
-                            </ListItemAvatar>
-                            <ListItemText primary="Bouzid Mohamed" />
-                            <ListItemSecondaryAction>
-                                <StyledBadgeMessages badgeContent={4} color="secondary"></StyledBadgeMessages>
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                        <ListItem
-                            button
-
-                        >
-                            <ListItemAvatar>
-                                <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left', }} >
-                                    <Avatar variant='rounded' src={`../assets/images/users/7.jpg`} className={classes.rad} />
-                                </StyledBadge>
-                            </ListItemAvatar>
-                            <ListItemText primary="Bouzid Mohamed" />
-                            <ListItemSecondaryAction>
-                                <StyledBadgeMessages badgeContent={4} color="secondary"></StyledBadgeMessages>
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                        <ListItem
-                            button
-
-                        >
-                            <ListItemAvatar>
-                                <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left', }} >
-                                    <Avatar variant='rounded' src={`../assets/images/users/6.jpg`} className={classes.rad} />
-                                </StyledBadge>
-                            </ListItemAvatar>
-                            <ListItemText primary="Bouzid Mohamed" />
-                            <ListItemSecondaryAction>
-                                <StyledBadgeMessages badgeContent={4} color="secondary"></StyledBadgeMessages>
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                        <ListItem button >
-                            <ListItemAvatar>
-                                <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left' }} >
-                                    <Avatar variant='rounded' src={`../assets/images/users/2.jpg`} className={classes.rad} />
-                                </StyledBadge>
-                            </ListItemAvatar>
-                            <ListItemText primary="Bouzid Mohamed" />
-
-                        </ListItem>
-                        <ListItem
-                            button
-
-                        >
-                            <ListItemAvatar>
-                                <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" anchorOrigin={{ vertical: 'top', horizontal: 'left' }} >
-                                    <Avatar variant='rounded' className={classes.rad} src={`../assets/images/users/4.jpg`} />
-                                </StyledBadge>
-                            </ListItemAvatar>
-                            <ListItemText primary="Bouzid Mohamed" />
-
-                        </ListItem>
-                        <ListItem
-                            button
-
-                        >
-                            <ListItemAvatar>
-                                <Avatar variant='rounded' src={`../assets/images/users/5.jpg`} className={classes.rad} />
-
-                            </ListItemAvatar>
-                            <ListItemText primary="Bouzid Mohamed" />
-
-                        </ListItem>
-                        <ListItem
-                            button
-
-                        >
-                            <ListItemAvatar>
-                                <Avatar variant='rounded' src={`../assets/images/users/4.jpg`} className={classes.rad} />
-
-                            </ListItemAvatar>
-                            <ListItemText primary="Bouzid Mohamed" />
-
-                        </ListItem>
-                        <ListItem
-                            button
-
-                        >
-                            <ListItemAvatar>
-                                <Avatar variant='rounded' src={`../assets/images/users/4.jpg`} className={classes.rad} />
-
-                            </ListItemAvatar>
-                            <ListItemText primary="Bayrem Zghuimi" />
-
-                        </ListItem>
+                   
+                   
+                 
+                     {friends.map(m=>(<FriendChat img={m.profileimage} firstname={m.firstname} lastname={m.lastname}></FriendChat>))}
+                    
+               
 
 
 

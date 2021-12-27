@@ -58,7 +58,12 @@ router.put('/GroupCover/:idgr', function (req, res) {
           res.status(200).send(group);
 });
 });
-
+router.put('/GroupSong/:idgr', function (req, res) {
+    Group.findByIdAndUpdate(req.params.idgr,{
+        Song : req.body.Song,}, {new: true}, function (err, group) {         
+          res.status(200).send(group);
+});
+});
 
 
 

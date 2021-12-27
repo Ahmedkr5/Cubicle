@@ -170,7 +170,7 @@ export default function Grouplist() {
                 />
                 <BottomNavigationAction
                   onClick={() => setState('1')}
-                  label='Invitations(4)'
+                  label='Requests'
                 />
               </BottomNavigation>
             </div>
@@ -181,96 +181,104 @@ export default function Grouplist() {
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
-              <InputBase
-                style={{ width: 'auto' }}
-                placeholder='Search…'
-                onKeyDown={handleKeyPress}
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              />
               <div
-                id='response'
-                style={{
-                  zIndex: 0,
-                  position: 'absolute',
-                  borderBottomLeftRadius: '10px',
-                  borderBottomRightRadius: '10px',
-                }}
+                className={classes.search}
+                style={{ display: 'flex', flexDirection: 'row' }}
               >
-                <List
-                  component='div'
-                  id='result2'
-                  style={{ backgroundColor: 'LightGray' }}
-                ></List>
-              </div>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  style={{ width: 'auto' }}
+                  placeholder='Search…'
+                  onKeyDown={handleKeyPress}
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+                <div
+                  id='response'
+                  style={{
+                    zIndex: 0,
+                    position: 'absolute',
+                    borderBottomLeftRadius: '10px',
+                    borderBottomRightRadius: '10px',
+                  }}
+                >
+                  <List
+                    component='div'
+                    id='result2'
+                    style={{ backgroundColor: 'LightGray' }}
+                  ></List>
+                </div>
 
-              <Button
-                onClick={handleOpen}
-                variant='contained'
-                color='primary'
-                size='small'
-                className={classes.button}
-                startIcon={<AddBoxOutlinedIcon />}
-              >
-                Create a group
-              </Button>
-              <Modal
-                className={classes.modal}
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                  timeout: 500,
-                }}
-              >
-                <Fade in={open}>
-                  <div
-                    className={classes.paper}
-                    style={{ display: 'flex', flexDirection: 'row' }}
-                  >
-                    <div style={{ width: '100%', height: '100%' }}>
-                      <div style={{ position: 'relative', top: '25%' }}>
-                        {' '}
-                        <div
-                          style={{ textAlign: 'center', marginRight: '80px' }}
-                        >
-                          <h2>Create your group</h2>
+                <Button
+                  onClick={handleOpen}
+                  variant='contained'
+                  color='primary'
+                  size='small'
+                  className={classes.button}
+                  startIcon={<AddBoxOutlinedIcon />}
+                >
+                  Create a group
+                </Button>
+                <Modal
+                  className={classes.modal}
+                  open={open}
+                  onClose={handleClose}
+                  closeAfterTransition
+                  BackdropComponent={Backdrop}
+                  BackdropProps={{
+                    timeout: 500,
+                  }}
+                >
+                  <Fade in={open}>
+                    <div
+                      className={classes.paper}
+                      style={{ display: 'flex', flexDirection: 'row' }}
+                    >
+                      <div style={{ width: '100%', height: '100%' }}>
+                        <div style={{ position: 'relative', top: '25%' }}>
+                          {' '}
+                          <div
+                            style={{ textAlign: 'center', marginRight: '80px' }}
+                          >
+                            <h2>Create your group</h2>
+                          </div>
+                          <div style={{ textAlign: 'center', width: '80%' }}>
+                            <Groupcreate></Groupcreate>
+                          </div>
+                          <div style={{ textAlign: 'center' }}></div>
                         </div>
-                        <div style={{ textAlign: 'center', width: '80%' }}>
-                          <Groupcreate></Groupcreate>
-                        </div>
-                        <div style={{ textAlign: 'center' }}></div>
+                      </div>
+                      <div style={{ width: '100%' }}>
+                        <Card style={{ width: '100%', height: '100%' }}>
+                          <CardMedia
+                            style={{ width: '100%', height: '100%' }}
+                            className={classes.media}
+                            image='../assets/images/groups/group2.jpg'
+                            title='create a group'
+                          />
+                        </Card>
                       </div>
                     </div>
-                    <div style={{ width: '100%' }}>
-                      <Card style={{ width: '100%', height: '100%' }}>
-                        <CardMedia
-                          style={{ width: '100%', height: '100%' }}
-                          className={classes.media}
-                          image='../assets/images/groups/group2.jpg'
-                          title='create a group'
-                        />
-                      </Card>
-                    </div>
-                  </div>
-                </Fade>
-              </Modal>
-            </div>{' '}
-          </div>
+                  </Fade>
+                </Modal>
+              </div>{' '}
+            </div>
 
-          <div>
-            {state == '0' && (
-              <Groups
-                style={{ display: 'flex', flexDirection: 'row' }}
-              ></Groups>
-            )}
-            {state == '1' && (
-              <GroupInvitation requests={currentuser['id']}></GroupInvitation>
-            )}
+            <div>
+              {state == '0' && (
+                <Groups
+                  style={{ display: 'flex', flexDirection: 'row' }}
+                ></Groups>
+              )}
+              {state == '1' && (
+                <GroupInvitation requests={currentuser['id']}></GroupInvitation>
+              )}
+            </div>
           </div>
         </Container>
       </div>
