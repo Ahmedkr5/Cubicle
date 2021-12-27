@@ -126,7 +126,8 @@ export default function UpdatedComment(props) {
         variant='rounded'
         className={classes.rounded}
         src={
-          'http://localhost:3001/uploads/' + props?.comment?.user?.profileimage
+          'https://mycubicle.herokuapp.com/uploads/' +
+          props?.comment?.user?.profileimage
         }
       ></Avatar>
       <div className={classes.commentBody}>

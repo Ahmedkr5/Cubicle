@@ -65,18 +65,11 @@ export default function MidSidebar() {
         }}
       >
         <Container style={{ padding: '0px' }}>
-          <ListItemLink style={{ paddingLeft: '15%' }} href='/home'>
+          <ListItemLink style={{ paddingLeft: '15%' }} href='/'>
             <ListItemIcon className={classes.iconWrapper}>
               <HomeOutlined color='#F0F2F5' />
             </ListItemIcon>
             <ListItemText>Home</ListItemText>
-          </ListItemLink>
-          <Divider variant='middle' />
-          <ListItemLink style={{ paddingLeft: '15%' }} href='/Friendlist'>
-            <ListItemIcon className={classes.iconWrapper}>
-              <PeopleAltOutlined color='#F0F2F5' />
-            </ListItemIcon>
-            <ListItemText>Friends</ListItemText>
           </ListItemLink>
           <Divider variant='middle' />
           <ListItemLink style={{ paddingLeft: '15%' }} href='/AppChat'>

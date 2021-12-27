@@ -91,6 +91,11 @@ const useStyles = makeStyles((theme) => ({
   logoBtn: {
     cursor: 'pointer',
   },
+  avatar: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
 }));
 
 const logout = () => {
@@ -115,7 +120,7 @@ export default function SearchAppBar(props) {
     document.getElementById('result').innerHTML = '';
 
     var data = axios
-      .get('http://localhost:3001/users/a/' + a, {})
+      .get('https://mycubicle.herokuapp.com/users/a/' + a, {})
       .then(function (response) {
         return response.data;
       });
@@ -127,7 +132,7 @@ export default function SearchAppBar(props) {
           document.getElementById('result').innerHTML +
           "<a class='MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button' tabindex='" +
           i +
-          "' aria-disabled='false' href='http://localhost:3000/profile/" +
+          "' aria-disabled='false' href='https://ourcubicle.netlify.app/profile/" +
           element._id +
           "'><div class='MuiListItemText-root'><span class='MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock'>" +
           element.firstname +
@@ -146,6 +151,7 @@ export default function SearchAppBar(props) {
   };
   const classes = useStyles();
   const user = authService.getCurrentUser();
+  const name = user?.firstname + ' ' + user?.lastname;
 
   return (
     <div className={classes.root}>
@@ -155,11 +161,11 @@ export default function SearchAppBar(props) {
             className={classes.logoBtn}
             alt='Logo'
             src='../assets/images/randomlogo.png'
-            onClick={() => window.location.replace('/home')}
+            onClick={() => window.location.replace('/')}
           />
           <Typography
             style={{ textAlign: 'left' }}
-            onClick={() => window.location.replace('/home')}
+            onClick={() => window.location.replace('/')}
             className={classes.title}
             variant='h6'
             noWrap
@@ -210,9 +216,14 @@ export default function SearchAppBar(props) {
             Logout
           </Button>
           <Avatar
-            alt='Profile Avatar'
+            className={classes.avatar}
+            name={name}
+            alt={name}
             variant='rounded'
-            src={'http://localhost:3001/uploads/' + user?.profileimage}
+            src={
+              'https://mycubicle.herokuapp.com/uploads/' + user?.profileimage
+            }
+            onClick={() => window.location.replace(`/profile/${user?.id}`)}
           />
         </Toolbar>
       </AppBar>

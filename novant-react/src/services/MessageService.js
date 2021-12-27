@@ -1,27 +1,18 @@
-import axios from "axios";
-import jwt_decode from "jwt-decode";
-import authService from './auth.service'
- 
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+import authService from './auth.service';
 
-const API_URL = "http://localhost:3001/create";
-const API_URL1 = "http://localhost:3001/show/";
-const API_URL2 = "http://localhost:3001";
-
-
+const API_URL = 'https://mycubicle.herokuapp.com/create';
+const API_URL1 = 'https://mycubicle.herokuapp.com/show/';
+const API_URL2 = 'https://mycubicle.herokuapp.com';
 
 class ExperienceService {
-
-
-
-  
-    
-  add(bodyget,transmitter,receiver) {
-   
-    const  body=bodyget ;
-    const  deleted_trans =1; 
-    const deleted_recived = '1' ;
-   // const  created_at=new Date() ;
-    const  file = [ "Ford", "Bouzid", "Fiat" ] ;
+  add(bodyget, transmitter, receiver) {
+    const body = bodyget;
+    const deleted_trans = 1;
+    const deleted_recived = '1';
+    // const  created_at=new Date() ;
+    const file = ['Ford', 'Bouzid', 'Fiat'];
     return axios
       .post(API_URL, {
         transmitter,
@@ -29,56 +20,38 @@ class ExperienceService {
         body,
         deleted_trans,
         deleted_recived,
-       // created_at,
-        file
+        // created_at,
+        file,
       })
-      .then(response => {
+      .then((response) => {
         return response.data;
       });
   }
 
   get(userid) {
-    var title = {}
-    return axios
-      .get(API_URL1+userid, {
-      })
-      .then(function(response) {
-       return response.data
-        });
+    var title = {};
+    return axios.get(API_URL1 + userid, {}).then(function (response) {
+      return response.data;
+    });
   }
 
   getAll() {
-
-    return axios
-      .get(API_URL2, {
-      })
-      .then(function(response) {
-        
-       return response.data
-        });
+    return axios.get(API_URL2, {}).then(function (response) {
+      return response.data;
+    });
   }
   getUser(userid) {
-
     return axios
-      .get(API_URL2+'/showUser/'+userid, {
-      })
-      .then(function(response) {
-       return response.data
-        });
+      .get(API_URL2 + '/showUser/' + userid, {})
+      .then(function (response) {
+        return response.data;
+      });
   }
   getAllUsers() {
-
-    return axios
-      .get(API_URL2+'/allUsers/', {
-      })
-      .then(function(response) {
-      
-       return response.data
-        });
+    return axios.get(API_URL2 + '/allUsers/', {}).then(function (response) {
+      return response.data;
+    });
   }
-
-
-
 }
 
 export default new ExperienceService();

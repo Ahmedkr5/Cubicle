@@ -114,4 +114,4 @@ class MarkerTool {
   }
 }
 
-module.exports = MarkerTool;
+export default MarkerTool;

@@ -19,6 +19,7 @@ import UpdatedBusinessHomeFeed from './components/Posts/BusinessFeed/UpdatedBusi
 import { useApi } from './hooks/useApi';
 import { useQuery, gql } from '@apollo/client';
 import SkeletonFeed from './components/Posts/skeletonFeed';
+import useDocumentTitle from './components/useDocumentTitle';
 
 const FEED_QUERY = gql`
   query groupPosts($businessid: [String!]) {
@@ -61,6 +62,7 @@ const FEED_QUERY = gql`
 
 var groupidd = [];
 function Business() {
+  useDocumentTitle('Business | Cubicle');
   const [state, setState] = useState('0');
   const [business, setBusiness] = useState(false);
   const [value, setValue] = React.useState(0);

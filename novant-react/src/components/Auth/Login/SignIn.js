@@ -66,7 +66,7 @@ export default class Login extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.email, this.state.password).then(
         () => {
-          history.push('/Home');
+          history.push('/');
           window.location.reload();
         },
         (error) => {
@@ -94,8 +94,6 @@ export default class Login extends Component {
     return (
       <div className='col-md-12'>
         <div className='card card-container'>
-          
-
           <Form
             onSubmit={this.handleLogin}
             ref={(c) => {

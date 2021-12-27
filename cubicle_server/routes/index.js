@@ -12,7 +12,7 @@ router.patch('/update/:id', IndexController.updateMessage);
 router.get('/show/:transmitter', IndexController.getSingle);
 router.post('/upload/:date', IndexController.uploada);
 
-router.post('/post/upload/:userId', PostController.uploada);
+// router.post('/post/upload/:userId', PostController.uploada);
 router.get('/allUsers', userController.getAll);
 router.get('/showUser/:id', userController.getSingle);
 

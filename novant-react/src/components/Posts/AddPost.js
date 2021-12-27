@@ -67,7 +67,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     height: '40px',
     width: '40px',
-    backgroundColor: red[500],
     cursor: 'pointer',
   },
   UserNameDate: {
@@ -251,9 +250,15 @@ export default function AddPost(props) {
             aria-label='recipe'
             variant='rounded'
             className={classes.rounded}
-          >
-            H
-          </Avatar>
+            name={props?.user?.firstname + ' ' + props?.user?.lastname}
+            src={
+              'https://mycubicle.herokuapp.com/uploads/' +
+              props?.user?.profileimage
+            }
+            onClick={() =>
+              window.location.replace(`/profile/${props?.user?.id}`)
+            }
+          />
         }
         action={
           <IconButton

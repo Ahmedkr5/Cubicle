@@ -185,7 +185,7 @@ export default function UpdatedGroupHomeFeed(props) {
   console.log(reacted);
   var delta = Math.round((+new Date() - props?.post?.created_at) / 1000);
   console.log(
-    'http://localhost:3001/uploads/' + props?.post?.user?.profileimage
+    'https://mycubicle.herokuapp.com/uploads/' + props?.post?.user?.profileimage
   );
 
   var minute = 60,
@@ -334,7 +334,17 @@ export default function UpdatedGroupHomeFeed(props) {
             variant='rounded'
             className={classes.rounded}
             src={
-              'http://localhost:3001/uploads/' + props?.post?.user?.profileimage
+              'https://mycubicle.herokuapp.com/uploads/' +
+              props?.post?.user?.profileimage
+            }
+            name={
+              props?.post?.user?.firstname + ' ' + props?.post?.user?.lastname
+            }
+            alt={
+              props?.post?.user?.firstname + ' ' + props?.post?.user?.lastname
+            }
+            onClick={() =>
+              window.location.replace(`/profile/${props?.post?.user?.id}`)
             }
           ></Avatar>
         }

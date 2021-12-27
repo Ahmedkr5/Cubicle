@@ -199,7 +199,11 @@ export default function BusinessGroupDialog(props) {
           aria-label='recipe'
           variant='rounded'
           className={classes.rounded}
-          src={'http://localhost:3001/uploads/' + props?.user?.profileimage}
+          onClick={() => window.location.replace(`/profile/${props?.user?.id}`)}
+          src={
+            'https://mycubicle.herokuapp.com/uploads/' +
+            props?.user?.profileimage
+          }
         ></Avatar>
         <Button
           className={classes.btn}

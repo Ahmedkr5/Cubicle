@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default class Friendsdiv extends Component {
   /*const users2 = axios
-  .get("http://localhost:3001/users/", {})
+  .get("https://mycubicle.herokuapp.com/users/", {})
   .then(response=> {
    
   });*/
@@ -59,7 +59,7 @@ export default class Friendsdiv extends Component {
   }
   componentDidMount() {
     let users2 = axios
-      .get('http://localhost:3001/users/', {})
+      .get('https://mycubicle.herokuapp.com/users/', {})
       .then(function (response) {
         return response.data;
       });
@@ -102,7 +102,10 @@ export default class Friendsdiv extends Component {
                     }}
                     aria-label='recipe'
                     variant='rounded'
-                    src={'http://localhost:3001/uploads/' + msg.profileimage}
+                    src={
+                      'https://mycubicle.herokuapp.com/uploads/' +
+                      msg.profileimage
+                    }
                   ></Avatar>
 
                   <Typography
@@ -137,7 +140,11 @@ export default class Friendsdiv extends Component {
                   <div>
                     <br></br>
 
-                    <MenuFr id={msg?._id} friends={msg?.friends} myfriends={this.props?.friends}></MenuFr>
+                    <MenuFr
+                      id={msg?._id}
+                      friends={msg?.friends}
+                      myfriends={this.props?.friends}
+                    ></MenuFr>
                   </div>
                 </ListItem>
               ))}

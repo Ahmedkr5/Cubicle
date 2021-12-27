@@ -29,6 +29,7 @@ import SkeletonFeed from './components/Posts/skeletonFeed';
 import SnackbarPost from './components/Posts/SnackbarPost';
 import UpdatedFeed from './components/Posts/updatedFeed/UpdatedFeed';
 import NewProblemDialog from './components/Posts/NewProblemDialog';
+import useDocumentTitle from './components/useDocumentTitle';
 
 const FEED_QUERY = gql`
   query postsByUser($userId: ID) {
@@ -108,7 +109,7 @@ function Profile(props) {
       console.log(tokens);
 
       axios
-        .post('http://localhost:3001/users/checkpayment', {
+        .post('https://mycubicle.herokuapp.com/users/checkpayment', {
           tokens,
           userid,
         })
@@ -116,16 +117,19 @@ function Profile(props) {
           if (response.status == 201) {
             console.log(response.data);
             swal('Error!', 'Payment already exist', 'error').then((value) => {
-              window.location = 'http://localhost:3000/profile/' + userid;
+              window.location =
+                'https://ourcubicle.netlify.app/profile/' + userid;
             });
           } else if (response.status == 202) {
             swal('Error!', 'Paymee Error', 'error').then((value) => {
-              window.location = 'http://localhost:3000/profile/' + userid;
+              window.location =
+                'https://ourcubicle.netlify.app/profile/' + userid;
             });
           } else {
             swal('Good job!', 'You clicked the button!', 'success').then(
               (value) => {
-                window.location = 'http://localhost:3000/profile/' + userid;
+                window.location =
+                  'https://ourcubicle.netlify.app/profile/' + userid;
               }
             );
           }
@@ -134,6 +138,13 @@ function Profile(props) {
   }, []);
 
   const [user2, err, reload] = useApi('users/' + userid);
+  var title =
+    'Cubicle - Learn problem solving, Share with others and find a job';
+  if (user2 != undefined) {
+    title = user2.firstname + ' ' + user2.lastname + ' | Cubicle';
+  }
+
+  useDocumentTitle(title);
   return (
     <div style={{ backgroundColor: '#F0F2F5' }}>
       <link rel='stylesheet' href='css/bootstrap.min.css' />

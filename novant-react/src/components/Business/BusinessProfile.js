@@ -34,6 +34,7 @@ import BusinessCard from './BusinessCard';
 import SettingsComp from './Settings';
 import BusinessAbout from './BusinessAbout';
 import UpdatedBusinessFeed from '../Posts/BusinessFeed/UpdatedBusinessFeed';
+import useDocumentTitle from '../useDocumentTitle';
 
 const FEED_QUERY = gql`
   query businessPosts($businessid: [String!]) {
@@ -89,6 +90,13 @@ function BusinessProfile(props) {
   const [value, setValue] = React.useState(0);
   const currentuser = authService.getCurrentUser();
   const [groupProf, err1, reload1] = useApi('business/business/' + groupid);
+  var title =
+    'Cubicle - Learn problem solving, Share with others and find a job';
+  if (groupProf != undefined) {
+    title = groupProf.name + ' | Cubicle';
+  }
+
+  useDocumentTitle(title);
 
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);

@@ -2,14 +2,11 @@ import React, { useEffect, useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import { createBrowserHistory } from "history";
-import axios from "axios";
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import { createBrowserHistory } from 'history';
+import axios from 'axios';
 
 export const history = createBrowserHistory();
-
-
-
 
 export default function MenuMem(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -26,41 +23,55 @@ export default function MenuMem(props) {
   return (
     <div>
       <IconButton
-        aria-label="more"
-        aria-controls="long-menu"
-        aria-haspopup="true"
+        aria-label='more'
+        aria-controls='long-menu'
+        aria-haspopup='true'
         onClick={handleClick}
       >
-        <MoreHorizIcon  />
+        <MoreHorizIcon />
       </IconButton>
       <Menu
-        id="long-menu"
+        id='long-menu'
         anchorEl={anchorEl}
         keepMounted
         open={open}
         onClose={handleClose}
         PaperProps={{
           style: {
-          
             width: '22ch',
           },
         }}
       >
-         <MenuItem onClick={()=>{ history.push('/Profile/'+props.id); window.location.reload();}}>Profile</MenuItem>
-       
-        <MenuItem onClick={()=>{  setMem(()=>{
-  const newmem = props?.member?.filter(i => i !== props?.id);
-  console.log(newmem);
-  axios.put("http://localhost:3001/groups/groupmem/" + props?.idgrp, {
-              members:newmem,
+        <MenuItem
+          onClick={() => {
+            history.push('/Profile/' + props.id);
+            window.location.reload();
+          }}
+        >
+          Profile
+        </MenuItem>
 
-})
-    .then(() => {
-      window.location.reload();
-    })
-   
-});
-}}>Remove from group</MenuItem>
+        <MenuItem
+          onClick={() => {
+            setMem(() => {
+              const newmem = props?.member?.filter((i) => i !== props?.id);
+              console.log(newmem);
+              axios
+                .put(
+                  'https://mycubicle.herokuapp.com/groups/groupmem/' +
+                    props?.idgrp,
+                  {
+                    members: newmem,
+                  }
+                )
+                .then(() => {
+                  window.location.reload();
+                });
+            });
+          }}
+        >
+          Remove from group
+        </MenuItem>
       </Menu>
     </div>
   );

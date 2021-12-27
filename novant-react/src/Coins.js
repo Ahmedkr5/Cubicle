@@ -17,8 +17,10 @@ import authService from './services/auth.service';
 import AchatCoins from './components/Coins/AchatCoins';
 import ExchangeCoins from './components/Coins/ExchangeCoins';
 import Transactions from './components/Coins/Transactions';
+import useDocumentTitle from './components/useDocumentTitle';
 
 function Coins() {
+  useDocumentTitle('Coins | Cubicle');
   const [state, setState] = useState('0');
   const [value, setValue] = React.useState(0);
   const user = authService.getCurrentUser();

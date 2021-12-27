@@ -1,29 +1,29 @@
-import React, { Component } from "react";
-import { Typography, Container } from "@material-ui/core";
-import Badge from "@material-ui/core/Badge";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import { green } from "@material-ui/core/colors";
-import axios from "axios";
-import List from "@material-ui/core/List";
-import Paper from "@material-ui/core/Paper";
-import ListItem from "@material-ui/core/ListItem";
-import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
-import authService from "../../services/auth.service";
+import React, { Component } from 'react';
+import { Typography, Container } from '@material-ui/core';
+import Badge from '@material-ui/core/Badge';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
+import { green } from '@material-ui/core/colors';
+import axios from 'axios';
+import List from '@material-ui/core/List';
+import Paper from '@material-ui/core/Paper';
+import ListItem from '@material-ui/core/ListItem';
+import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
+import authService from '../../services/auth.service';
 
 const preventDefault = (event) => event.preventDefault();
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    display: 'flex',
   },
 
   rounded: {
-    color: "#fff",
-    height: "40px",
-    width: "40px",
+    color: '#fff',
+    height: '40px',
+    width: '40px',
     backgroundColor: green[500],
-    cursor: "pointer",
+    cursor: 'pointer',
     width: theme.spacing(6),
     height: theme.spacing(6),
   },
@@ -37,13 +37,13 @@ const useStyles = makeStyles((theme) => ({
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
-    left: "190%",
-    top: "50%",
+    left: '190%',
+    top: '50%',
 
-    border: "3px solid",
-    borderColor: "#F8FAFB",
-    padding: "0px",
-    borderRadius: "15px",
+    border: '3px solid',
+    borderColor: '#F8FAFB',
+    padding: '0px',
+    borderRadius: '15px',
     width: theme.spacing(4),
     height: theme.spacing(4),
   },
@@ -56,12 +56,12 @@ export default class InvitationsList extends Component {
       users: [],
       requests: [],
       members: [],
-      idgroup: "",
+      idgroup: '',
     };
   }
   componentDidMount() {
     let users2 = axios
-      .get("http://localhost:3001/users/", {})
+      .get('https://mycubicle.herokuapp.com/users/', {})
       .then(function (response) {
         return response.data;
       });
@@ -72,18 +72,18 @@ export default class InvitationsList extends Component {
           users: users,
         },
         () => {
-          console.log("test1", this.state.users);
+          console.log('test1', this.state.users);
         }
       );
     });
     let reqs = axios
-      .get("http://localhost:3001/users/" + this.props.requests, {})
+      .get('https://mycubicle.herokuapp.com/users/' + this.props.requests, {})
       .then(function (response) {
         return response.data;
       });
     reqs.then((requests) => {
       this.setState({ requests: requests }, () => {
-        console.log("statereq:", this.state.requests.businessRequests);
+        console.log('statereq:', this.state.requests.businessRequests);
       });
     });
   }
@@ -99,63 +99,65 @@ export default class InvitationsList extends Component {
             <Paper
               elevation={0}
               style={{
-                marginTop: "15px",
-                background: "white",
-                borderRadius: "10px",
-                height: "150px",
+                marginTop: '15px',
+                background: 'white',
+                borderRadius: '10px',
+                height: '150px',
               }}
             >
-              <Container style={{ marginTop: "15px" }}>
+              <Container style={{ marginTop: '15px' }}>
                 <List>
                   <>
-                    <ListItem style={{ display: "flex", flexDirection: "row" }}>
+                    <ListItem style={{ display: 'flex', flexDirection: 'row' }}>
                       <Avatar
                         style={{
-                          marginRight: "10px",
-                          color: "#fff",
-                          height: "50px",
-                          width: "50px",
+                          marginRight: '10px',
+                          color: '#fff',
+                          height: '50px',
+                          width: '50px',
                         }}
-                        aria-label="recipe"
-                        variant="rounded"
+                        aria-label='recipe'
+                        variant='rounded'
                         src={
-                          "http://localhost:3001/uploads/" + msg.profileimage
+                          'https://mycubicle.herokuapp.com/uploads/' +
+                          msg.profileimage
                         }
                       ></Avatar>
-                      <Typography style={{ color: "primary" }}>
+                      <Typography style={{ color: 'primary' }}>
                         <Link
-                          href="#"
+                          href='#'
                           onClick={preventDefault}
-                          style={{ fontWeight: "bold" }}
+                          style={{ fontWeight: 'bold' }}
                         >
                           {msg.firstname} {msg.lastname}
-                        </Link>{" "}
+                        </Link>{' '}
                         wants to join your Business
                       </Typography>
                     </ListItem>
 
-                    <ListItem style={{ display: "flex", flexDirection: "row" }}>
+                    <ListItem style={{ display: 'flex', flexDirection: 'row' }}>
                       <Button
-                        variant="contained"
-                        color="primary"
-                        size="large"
-                        style={{ borderRadius: "12px" }}
+                        variant='contained'
+                        color='primary'
+                        size='large'
+                        style={{ borderRadius: '12px' }}
                         onClick={() => {
                           this.setState((state) => {
-                            const list = state.requests?.businessRequests?.filter(
-                              (i) => i !== msg._id
-                            );
+                            const list =
+                              state.requests?.businessRequests?.filter(
+                                (i) => i !== msg._id
+                              );
                             axios.put(
-                              "http://localhost:3001/users/businessput/" +
-                                currentuser["id"],
+                              'https://mycubicle.herokuapp.com/users/businessput/' +
+                                currentuser['id'],
                               {
                                 businessRequests: list,
                               }
                             );
                             let users3 = axios
                               .get(
-                                "http://localhost:3001/business/businessowned/" +
-                                  currentuser["id"],
+                                'https://mycubicle.herokuapp.com/business/businessowned/' +
+                                  currentuser['id'],
                                 {}
                               )
                               .then(function (response) {
@@ -169,8 +171,8 @@ export default class InvitationsList extends Component {
                                     idgroup: members[0]._id,
                                   },
                                   () => {
-                                    console.log("memberid", this.state.idgroup);
-                                    console.log("memberid", this.state.members);
+                                    console.log('memberid', this.state.idgroup);
+                                    console.log('memberid', this.state.members);
                                   }
                                 );
                               })
@@ -180,7 +182,7 @@ export default class InvitationsList extends Component {
                                   const member = [...state.members, msg._id];
                                   axios
                                     .put(
-                                      "http://localhost:3001/business/businessmem/" +
+                                      'https://mycubicle.herokuapp.com/business/businessmem/' +
                                         this.state.idgroup,
                                       {
                                         members: member,
@@ -197,18 +199,19 @@ export default class InvitationsList extends Component {
                         Accept
                       </Button>
                       <Button
-                        variant="outlined"
-                        size="large"
-                        style={{ marginLeft: "32px", borderRadius: "12px" }}
+                        variant='outlined'
+                        size='large'
+                        style={{ marginLeft: '32px', borderRadius: '12px' }}
                         onClick={() => {
                           this.setState((state) => {
-                            const list = state.requests?.businessRequests?.filter(
-                              (i) => i !== msg._id
-                            );
+                            const list =
+                              state.requests?.businessRequests?.filter(
+                                (i) => i !== msg._id
+                              );
                             axios
                               .put(
-                                "http://localhost:3001/users/businessput/" +
-                                  currentuser["id"],
+                                'https://mycubicle.herokuapp.com/users/businessput/' +
+                                  currentuser['id'],
                                 {
                                   businessRequests: list,
                                 }

@@ -9,6 +9,8 @@ const createError = require('http-errors');
 const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 require('dotenv').config(); //for video call
+const Formidable = require('formidable');
+const cloudinary = require('cloudinary');
 const app = express();
 var cors = require('cors');
 const indexRouter = require('./routes/index');
@@ -169,9 +171,35 @@ app.use('/', indexRouter);
 
 app.get('/image/:name', function (req, res) {
   // console.log(appDir.split(':')[1].split('bin')[0]);
-  res.sendFile(
-    appDir.split('bin')[0] + 'public/uploads/postImages/' + req.params.name
-  );
+  try {
+    res.sendFile(
+      'https://mycubicle.herokuapp.com/uploads/postImages/' + req.params.name
+    );
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+app.post('/post/upload/:userId', function (req, res) {
+  // console.log(appDir.split(':')[1].split('bin')[0]);
+  try {
+    form = new Formidable();
+
+    form.parse(req, (err, fields, files) => {
+      // console.log(files.image.path);
+      cloudinary.uploader.upload(files.image.path, (result) => {
+        return res.status(200).json({
+          success: 1,
+          file: {
+            url: result.url,
+            // ... and any additional fields you want to store, such as width, height, color, extension, etc
+          },
+        });
+      });
+    });
+  } catch (err) {
+    res.send(err);
+  }
 });
 
 app.get('/token/:identity', function (req, res) {

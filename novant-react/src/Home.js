@@ -24,6 +24,7 @@ import Editor from './components/Posts/Editor';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import SnackbarPost from './components/Posts/SnackbarPost';
 import StillEmtySVG from './components/Posts/updatedFeed/StillEmptySVG';
+import useDocumentTitle from './components/useDocumentTitle';
 
 const FEED_QUERY = gql`
   {
@@ -62,6 +63,9 @@ const FEED_QUERY = gql`
 `;
 
 function Home() {
+  useDocumentTitle(
+    'Cubicle - Learn problem solving, Share with others and find a job'
+  );
   const { data, loading, error, refetch } = useQuery(FEED_QUERY, {
     pollInterval: 5000,
   });
@@ -299,28 +303,17 @@ function Home() {
                       {data.posts
                         .filter((post) => post.type.includes('Offer'))
                         .map(
-                          (post) => {
+                          (post) => (
                             <UpdatedFeed
                               image='../../assets/images/users/2.jpg'
                               key={post.id}
                               post={post}
                               user={user}
-                            ></UpdatedFeed>;
-                          }
+                            ></UpdatedFeed>
+                          )
 
                           // <Link key={link.id} link={link} />
                         )}
-                      {data.posts.filter((post) => post.type.includes('Offer'))
-                        .length === 0 ? (
-                        <StillEmtySVG />
-                      ) : (
-                        console.log(
-                          data.posts.filter((post) =>
-                            post.type.includes('Offer')
-                          ).length
-                        )
-                      )}
-                      <SkeletonFeed></SkeletonFeed>
                     </>
                   )}
                 </>

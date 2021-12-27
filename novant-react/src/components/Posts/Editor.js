@@ -30,7 +30,7 @@ var EDITOR_JS_TOOLS = {
   linkTool: {
     class: LinkTool,
     config: {
-      endpoint: 'http://localhost:3001/post/link/', // Your backend endpoint for url data fetching
+      endpoint: 'https://mycubicle.herokuapp.com/post/link/', // Your backend endpoint for url data fetching
     },
   },
   header: {
@@ -54,7 +54,8 @@ export default function Editor(props) {
       class: ImageTool,
       config: {
         endpoints: {
-          byFile: 'http://localhost:3001/post/upload/' + props?.user?.id, // Your backend file uploader endpoint
+          byFile:
+            'https://mycubicle.herokuapp.com/post/upload/' + props?.user?.id, // Your backend file uploader endpoint
         },
       },
     },

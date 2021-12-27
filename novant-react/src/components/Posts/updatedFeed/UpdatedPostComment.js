@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Editor from '../Editor';
 import PostAddTwoToneIcon from '@material-ui/icons/PostAddTwoTone';
 import { useLazyQuery, useMutation, gql } from '@apollo/client';
+import authService from '../../../services/auth.service';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,31 +72,22 @@ const ADD_COMMENT = gql`
   }
 `;
 
-const COMMENT_QUERY = gql`
-  {
-    comment(id: $id) {
-      type
-      description
-      created_at
-    }
-  }
-`;
-
 export default function UpdatedPostComment(props) {
   const wrapper = React.createRef();
-
+  const user = authService.getCurrentUser();
   const [addComment, { data }] = useMutation(ADD_COMMENT);
 
   const classes = useStyles();
 
   const [descritption, setDescription] = useState({});
+  const [commented, setCommented] = useState(false);
 
   const handleDescription = (childData) => {
     setDescription(childData);
   };
 
-  const handleComment = () => {
-    addComment({
+  const handleComment = async () => {
+    await addComment({
       variables: {
         userId: props.user.id,
         postId: props.postId,
@@ -104,21 +96,38 @@ export default function UpdatedPostComment(props) {
       },
     });
     props.callbackComment();
+    // console.log('data', data);
+    setCommented(!commented);
   };
 
   console.log(props.user.id);
 
   return (
     <div className={classes.root}>
-      <Avatar aria-label='recipe' variant='rounded' className={classes.rounded}>
-        H
-      </Avatar>
+      <Avatar
+        aria-label='recipe'
+        variant='rounded'
+        className={classes.rounded}
+        name={user?.firstname + ' ' + user?.lastname}
+        alt={user?.firstname + ' ' + user?.lastname}
+        onClick={() => window.location.replace(`/profile/${user?.id}`)}
+        src={'https://mycubicle.herokuapp.com/uploads/' + user?.profileimage}
+      ></Avatar>
       <div className={classes.commentBody}>
-        <Editor
-          style={{ marginBottom: '10px' }}
-          parentCallbackDescription={handleDescription}
-          user={props?.user}
-        />
+        {commented && (
+          <Editor
+            style={{ marginBottom: '10px' }}
+            parentCallbackDescription={handleDescription}
+            user={props?.user}
+          />
+        )}
+        {!commented && (
+          <Editor
+            style={{ marginBottom: '10px' }}
+            parentCallbackDescription={handleDescription}
+            user={props?.user}
+          />
+        )}
         <IconButton
           type='submit'
           className={classes.iconButton}

@@ -1,19 +1,19 @@
-import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
-import { Avatar, Badge } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import Button from "@material-ui/core/Button";
-import authService from "../../services/auth.service";
-import React, { useState } from "react";
-import groupService from "../../services/group-service";
-import SettingsIcon from "@material-ui/icons/Settings";
-import { useApi } from "../../hooks/useApi";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import JoinButton from "./JoinButton";
+import axios from 'axios';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import { Avatar, Badge } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import Button from '@material-ui/core/Button';
+import authService from '../../services/auth.service';
+import React, { useState } from 'react';
+import groupService from '../../services/group-service';
+import SettingsIcon from '@material-ui/icons/Settings';
+import { useApi } from '../../hooks/useApi';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import JoinButton from './JoinButton';
 // import Groupbutton from "./groupbutton";
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -30,10 +30,9 @@ export default function BusinessCard(props) {
   const classes = useStyles();
   const currentuser = authService.getCurrentUser();
 
-  
-  const [userProf, reload1] = useApi("users/" + props.owner);
+  const [userProf, reload1] = useApi('users/' + props.owner);
   const [selectedCoverImage, setselectedCoverImage] = useState(null);
-  const userid = currentuser["id"];
+  const userid = currentuser['id'];
   const [groupreq, setGroupreq] = useState(null);
 
   /*const handleAdd= (userid) => {
@@ -47,22 +46,22 @@ export default function BusinessCard(props) {
 //const friends =groupreq
 //setGroupreq({ ...groupreq, list: newList });
   }*/
-//   const onChangeHandler = (event) => {
-//     setselectedCoverImage(event.target.files[0]);
-//     setCoverImage(event.target.files[0].name);
-//     console.log(event.target.files);
-//     const data = new FormData();
-//     data.append("file", event.target.files[0]);
-//     var randomstring = require("randomstring");
-//     var date = randomstring.generate();
-//     console.log(event.target.files[0]);
-//     axios.post("http://localhost:3001/upload/" + date, data, {});
-//     // groupService
-//     //   .editgroupimage(date + "-" + event.target.files[0].name, props.grpid)
-//     //   .then(() => {
-//     //     window.location.reload();
-//     //   });
-//   };
+  //   const onChangeHandler = (event) => {
+  //     setselectedCoverImage(event.target.files[0]);
+  //     setCoverImage(event.target.files[0].name);
+  //     console.log(event.target.files);
+  //     const data = new FormData();
+  //     data.append("file", event.target.files[0]);
+  //     var randomstring = require("randomstring");
+  //     var date = randomstring.generate();
+  //     console.log(event.target.files[0]);
+  //     axios.post("https://mycubicle.herokuapp.com/upload/" + date, data, {});
+  //     // groupService
+  //     //   .editgroupimage(date + "-" + event.target.files[0].name, props.grpid)
+  //     //   .then(() => {
+  //     //     window.location.reload();
+  //     //   });
+  //   };
 
   if (!props?.business_mem) return null;
 
@@ -71,29 +70,34 @@ export default function BusinessCard(props) {
       <Card
         elevation={0}
         style={{
-          borderRadius: "10px",
-          marginBottom: "10px",
-          marginTop: "15px",
+          borderRadius: '10px',
+          marginBottom: '10px',
+          marginTop: '15px',
         }}
       >
-        <CardMedia className={classes.media} image="../assets/images/groups/group.png" />
+        <CardMedia
+          className={classes.media}
+          image='../assets/images/groups/group.png'
+        />
 
         <CardContent
           style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
           }}
         >
           <Typography
-            variant="h4"
-            style={{ width: "100%", textAlign: "center" }}
+            variant='h4'
+            style={{ width: '100%', textAlign: 'center' }}
           >
             {props?.business_nom}
           </Typography>
-          <JoinButton  idgroup={props?.business_id} mem={props?.business_mem} owner={props?.business_owner}>  
-           
-          </JoinButton>
+          <JoinButton
+            idgroup={props?.business_id}
+            mem={props?.business_mem}
+            owner={props?.business_owner}
+          ></JoinButton>
 
           {/* <Groupbutton
             idgroup={props?.grpid}
@@ -128,7 +132,7 @@ export default function BusinessCard(props) {
           )} */}
         </CardContent>
       </Card>
-      <div className="container" id="global"></div>
+      <div className='container' id='global'></div>
     </>
   );
 }

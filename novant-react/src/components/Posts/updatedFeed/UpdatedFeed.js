@@ -61,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     height: '40px',
     width: '40px',
-    backgroundColor: red[500],
     cursor: 'pointer',
   },
   UserNameDate: {
@@ -113,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const COMMENT_QUERY = gql`
-  {
+  query postsComments($id: ID!) {
     comments(id: $id) {
       type
       description
@@ -157,7 +156,7 @@ export default function UpdatedFeed(props) {
     COMMENT_QUERY,
     {
       variables: {
-        $id: props?.post?.id,
+        id: props?.post?.id,
       },
       pollInterval: 100,
     }
@@ -166,6 +165,8 @@ export default function UpdatedFeed(props) {
   const [unLike, { unLikeData }] = useMutation(UNLIKE);
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [commented, setCommented] = React.useState(false);
+  const [freshComment, setFreshComment] = React.useState({});
   const [noComment, setNoComment] = React.useState(false);
   const [interaction, setInteraction] = React.useState('');
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -173,9 +174,13 @@ export default function UpdatedFeed(props) {
   const [reacted, setReacted] = React.useState(
     props?.post?.likesList.some((like) => like.id === props?.user?.id)
   );
+  const [reactNumber, setReactNumber] = React.useState(
+    props?.post?.likesList.length
+  );
   const [reactComponent, setReactComponent] = React.useState(
     <FavoriteBorderTwoToneIcon color='secondary' />
   );
+
   // if (reacted) {
   //   setReactComponent(<FavoriteBorderTwoToneIcon color='secondary' />);
   // } else {
@@ -185,7 +190,7 @@ export default function UpdatedFeed(props) {
 
   var delta = Math.round((+new Date() - props?.post?.created_at) / 1000);
   console.log(
-    'http://localhost:3001/uploads/' + props?.post?.user?.profileimage
+    'https://mycubicle.herokuapp.com/uploads/' + props?.post?.user?.profileimage
   );
 
   var minute = 60,
@@ -273,8 +278,12 @@ export default function UpdatedFeed(props) {
     }
   };
 
-  const handleNewComment = () => {
+  const handleNewComment = async (childData) => {
     getComments();
+    //   setCommented(!commented);
+    //   console.log('childData', childData.addComment.description);
+    //   await setFreshComment(childData.addComment.description);
+    //   await console.log('fresh Comment', freshComment);
   };
 
   const handleReact = () => {
@@ -331,10 +340,20 @@ export default function UpdatedFeed(props) {
         avatar={
           <Avatar
             aria-label='recipe'
+            name={
+              props?.post?.user?.firstname + ' ' + props?.post?.user?.lastname
+            }
+            alt={
+              props?.post?.user?.firstname + ' ' + props?.post?.user?.lastname
+            }
             variant='rounded'
             className={classes.rounded}
             src={
-              'http://localhost:3001/uploads/' + props?.post?.user?.profileimage
+              'https://mycubicle.herokuapp.com/uploads/' +
+              props?.post?.user?.profileimage
+            }
+            onClick={() =>
+              window.location.replace(`/profile/${props?.post?.user?.id}`)
             }
           ></Avatar>
         }
@@ -646,6 +665,12 @@ export default function UpdatedFeed(props) {
                 comment={comment}
               ></UpdatedComment>;
             })}
+          {/* {commented && (
+            <UpdatedComment
+              key={freshComment.id}
+              comment={freshComment}
+            ></UpdatedComment>
+          )} */}
           {interaction === 'comment' && (
             <UpdatedPostComment
               postId={props?.post?.id}

@@ -37,6 +37,7 @@ import MusicCover2 from './JohnWick.jpg';
 import Castle_Vania from './JohnWick.mp3';
 import Geazy from './geazy.mp3';
 import ReactJKMusicPlayer from 'react-jinke-music-player';
+import useDocumentTitle from '../useDocumentTitle';
 const FEED_QUERY = gql`
   query groupPosts($groupid: [String!]) {
     groupPosts(groupid: $groupid) {
@@ -91,6 +92,12 @@ function GroupProfile(props) {
   const [value, setValue] = React.useState(0);
   const currentuser = authService.getCurrentUser();
   const [groupProf, err1, reload1] = useApi('groups/group/' + groupid);
+  var title =
+    'Cubicle - Learn problem solving, Share with others and find a job';
+  if (groupProf != undefined) {
+    title = groupProf.groupname + ' | Cubicle';
+  }
+  useDocumentTitle(title);
   const [mem, setMem] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);

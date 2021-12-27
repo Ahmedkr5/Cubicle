@@ -31,6 +31,7 @@ import SnackbarPost from './components/Posts/SnackbarPost';
 import SkeletonFeed from './components/Posts/skeletonFeed';
 import UpdatedGroupFeed from './components/Posts/GroupsFeed/UpdatedGroupFeed';
 import UpdatedGroupHomeFeed from './components/Posts/GroupsFeed/UpdatedGroupHomeFeed';
+import useDocumentTitle from './components/useDocumentTitle';
 
 const FEED_QUERY = gql`
   query groupPosts($groupid: [String!]) {
@@ -72,6 +73,7 @@ const FEED_QUERY = gql`
 `;
 var groupidd = [];
 function Groupe() {
+  useDocumentTitle('Groups | Cubicle');
   const [state, setState] = useState('0');
   const [group, setGroup] = useState(false);
   const [value, setValue] = React.useState(0);

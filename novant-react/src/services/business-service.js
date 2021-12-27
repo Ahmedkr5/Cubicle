@@ -1,7 +1,7 @@
-import axios from "axios";
-import jwt_decode from "jwt-decode";
-import authService from "./auth.service";
-const API_URL = "http://localhost:3001/business";
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+import authService from './auth.service';
+const API_URL = 'https://mycubicle.herokuapp.com/business';
 
 class businessservice {
   /*addgroup(groupname,Owner) {
@@ -23,8 +23,8 @@ editgroupimage(groupimage,groupid) {
     });
 }*/
 
-  addbusiness(businessname, Owner,a) {
-    return axios.post(API_URL + "/" + a + "/newbusiness", {
+  addbusiness(businessname, Owner, a) {
+    return axios.post(API_URL + '/' + a + '/newbusiness', {
       businessname,
       Owner,
     });
@@ -32,37 +32,36 @@ editgroupimage(groupimage,groupid) {
 
   getAll() {
     return axios.get(API_URL, {}).then(function (response) {
-      console.log(response.data + "AAAAAAAAAAAAAAAAAAAAAAAAA");
+      console.log(response.data + 'AAAAAAAAAAAAAAAAAAAAAAAAA');
       return response.data;
     });
   }
   getBusinesses(userid) {
     return axios
-      .get(API_URL + "/businesslist/" + userid, {})
+      .get(API_URL + '/businesslist/' + userid, {})
       .then(function (response) {
         return response.data;
-    });
+      });
   }
 
   getBusiness(businessId) {
     return axios
-      .get(API_URL + "/business/" + businessId, {})
+      .get(API_URL + '/business/' + businessId, {})
       .then(function (response) {
         return response.data;
-    });
+      });
   }
 
-  edituser(businessRequests,userid) {
+  edituser(businessRequests, userid) {
     return axios
-      .put("http://localhost:3001/users/businessuser/"+userid, {
+      .put('https://mycubicle.herokuapp.com/users/businessuser/' + userid, {
         businessRequests,
       })
-      .then(response => {
+      .then((response) => {
         var token = response.data.token;
-            localStorage.setItem("token", token);
+        localStorage.setItem('token', token);
         return response.data;
       });
-  
   }
 }
 
