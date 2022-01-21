@@ -227,8 +227,8 @@ app.get('/token/:identity', function (req, res) {
   });
 });
 
-const server = app.listen(process.env.PORT || 3001, function () {
-  console.log('Programmable Video Chat token server listening on port 3001!');
+const server = app.listen(process.env.PORT || 8000, function () {
+  console.log('Programmable Video Chat token server listening on port 8000!');
 });
 var io = socket(server);
 const MsgIo = require('./controller/MsgIoController');
