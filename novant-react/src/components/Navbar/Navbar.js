@@ -170,7 +170,7 @@ export default function SearchAppBar(props) {
             variant='h6'
             noWrap
           >
-            Cubicle2
+            Cubicle
           </Typography>
           <div style={{ position: 'absolute', marginLeft: '70%' }}>
             <div className={classes.search} style={{ zIndex: 1 }}>
