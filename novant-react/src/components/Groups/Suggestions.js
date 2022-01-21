@@ -79,7 +79,7 @@ export default function Suggestions(props) {
             >
               <CardMedia
                 className={classes.media}
-                image={'https://mycubicle.herokuapp.com/uploads/' + props.image}
+                image={'https://the-cubicle.herokuapp.com/uploads/' + props.image}
                 style={{
                   width: '100%',
                   height: '400px',

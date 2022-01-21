@@ -252,7 +252,7 @@ export default function AddPost(props) {
             className={classes.rounded}
             name={props?.user?.firstname + ' ' + props?.user?.lastname}
             src={
-              'https://mycubicle.herokuapp.com/uploads/' +
+              'https://the-cubicle.herokuapp.com/uploads/' +
               props?.user?.profileimage
             }
             onClick={() =>

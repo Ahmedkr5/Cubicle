@@ -141,7 +141,7 @@ function SignUp() {
   return (
     <div
       style={{
-        backgroundImage: `url("https://mycubicle.herokuapp.com/uploads/loginimg.jpg")`,
+        backgroundImage: `url("https://the-cubicle.herokuapp.com/uploads/loginimg.jpg")`,
         height: '100%',
       }}
     >

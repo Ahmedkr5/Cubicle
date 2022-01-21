@@ -58,7 +58,7 @@ export default function MenuMem(props) {
               console.log(newmem);
               axios
                 .put(
-                  'https://mycubicle.herokuapp.com/groups/groupmem/' +
+                  'https://the-cubicle.herokuapp.com/groups/groupmem/' +
                     props?.idgrp,
                   {
                     members: newmem,

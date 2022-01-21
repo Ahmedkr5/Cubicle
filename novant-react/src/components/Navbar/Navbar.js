@@ -120,7 +120,7 @@ export default function SearchAppBar(props) {
     document.getElementById('result').innerHTML = '';
 
     var data = axios
-      .get('https://mycubicle.herokuapp.com/users/a/' + a, {})
+      .get('https://the-cubicle.herokuapp.com/users/a/' + a, {})
       .then(function (response) {
         return response.data;
       });
@@ -221,7 +221,7 @@ export default function SearchAppBar(props) {
             alt={name}
             variant='rounded'
             src={
-              'https://mycubicle.herokuapp.com/uploads/' + user?.profileimage
+              'https://the-cubicle.herokuapp.com/uploads/' + user?.profileimage
             }
             onClick={() => window.location.replace(`/profile/${user?.id}`)}
           />

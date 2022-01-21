@@ -110,7 +110,7 @@ function Profile(props) {
       console.log(tokens);
 
       axios
-        .post('https://mycubicle.herokuapp.com/users/checkpayment', {
+        .post('https://the-cubicle.herokuapp.com/users/checkpayment', {
           tokens,
           userid,
         })
@@ -140,7 +140,7 @@ function Profile(props) {
 
   useEffect(() => {
     axios
-      .get('https://mycubicle.herokuapp.com/users/')
+      .get('https://the-cubicle.herokuapp.com/users/')
 
       .then((res) => {
         setFriendcomp(

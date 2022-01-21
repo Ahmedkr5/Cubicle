@@ -120,7 +120,7 @@ router.get(
   '/google/callback',
   passport.authenticate('google'),
   (req, res, next) => {
-    res.redirect('https://mycubicle.herokuapp.com/' + req.user.id);
+    res.redirect('https://the-cubicle.herokuapp.com/' + req.user.id);
   }
 );
 router.use(function (user, req, res, next) {

@@ -185,7 +185,7 @@ export default function UpdatedGroupFeed(props) {
   //  console.log(reacted);
   var delta = Math.round((+new Date() - props?.post?.created_at) / 1000);
   console.log(
-    'https://mycubicle.herokuapp.com/uploads/' + props?.post?.user?.profileimage
+    'https://the-cubicle.herokuapp.com/uploads/' + props?.post?.user?.profileimage
   );
 
   var minute = 60,
@@ -333,7 +333,7 @@ export default function UpdatedGroupFeed(props) {
             variant='rounded'
             className={classes.rounded}
             src={
-              'https://mycubicle.herokuapp.com/uploads/' +
+              'https://the-cubicle.herokuapp.com/uploads/' +
               props?.post?.user?.profileimage
             }
             name={

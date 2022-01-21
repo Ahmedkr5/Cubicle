@@ -20,7 +20,7 @@ export default function ChatBoxItem(props) {
         <div className='authorthumb'>
           <Avatar
             variant='rounded'
-            src={'https://mycubicle.herokuapp.com/uploads/' + props.img}
+            src={'https://the-cubicle.herokuapp.com/uploads/' + props.img}
             className={classes.rad}
           />
         </div>
@@ -38,7 +38,7 @@ export default function ChatBoxItem(props) {
           <Avatar
             variant='rounded'
             src={
-              'https://mycubicle.herokuapp.com/uploads/' +
+              'https://the-cubicle.herokuapp.com/uploads/' +
               currentuser?.profileimage
             }
             className={classes.rad}

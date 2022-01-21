@@ -49,7 +49,7 @@ export default function TopSidebar() {
   const [user2, err, reload] = useApi('users/' + userid);
   const name = user2?.firstname + ' ' + user2?.lastname;
   var profileimage =
-    'https://mycubicle.herokuapp.com/uploads/' + user2?.profileimage;
+    'https://the-cubicle.herokuapp.com/uploads/' + user2?.profileimage;
 
   return (
     <div className={classes.root}>

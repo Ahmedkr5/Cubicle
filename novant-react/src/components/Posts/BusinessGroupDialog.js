@@ -199,7 +199,7 @@ export default function BusinessGroupDialog(props) {
           variant='rounded'
           className={classes.rounded}
           src={
-            'https://mycubicle.herokuapp.com/uploads/' +
+            'https://the-cubicle.herokuapp.com/uploads/' +
             props?.user?.profileimage
           }
           onClick={() => window.location.replace(`/profile/${props?.user?.id}`)}

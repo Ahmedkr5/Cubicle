@@ -173,7 +173,7 @@ app.get('/image/:name', function (req, res) {
   // console.log(appDir.split(':')[1].split('bin')[0]);
   try {
     res.sendFile(
-      'https://mycubicle.herokuapp.com/uploads/postImages/' + req.params.name
+      'https://the-cubicle.herokuapp.com/uploads/postImages/' + req.params.name
     );
   } catch (err) {
     res.send(err);

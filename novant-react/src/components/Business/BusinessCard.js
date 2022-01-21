@@ -55,7 +55,7 @@ export default function BusinessCard(props) {
   //     var randomstring = require("randomstring");
   //     var date = randomstring.generate();
   //     console.log(event.target.files[0]);
-  //     axios.post("https://mycubicle.herokuapp.com/upload/" + date, data, {});
+  //     axios.post("https://the-cubicle.herokuapp.com/upload/" + date, data, {});
   //     // groupService
   //     //   .editgroupimage(date + "-" + event.target.files[0].name, props.grpid)
   //     //   .then(() => {

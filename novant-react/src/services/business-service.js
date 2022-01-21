@@ -1,7 +1,7 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import authService from './auth.service';
-const API_URL = 'https://mycubicle.herokuapp.com/business';
+const API_URL = 'https://the-cubicle.herokuapp.com/business';
 
 class businessservice {
   /*addgroup(groupname,Owner) {
@@ -54,7 +54,7 @@ editgroupimage(groupimage,groupid) {
 
   edituser(businessRequests, userid) {
     return axios
-      .put('https://mycubicle.herokuapp.com/users/businessuser/' + userid, {
+      .put('https://the-cubicle.herokuapp.com/users/businessuser/' + userid, {
         businessRequests,
       })
       .then((response) => {

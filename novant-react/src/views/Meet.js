@@ -48,7 +48,7 @@ class Meet extends Component {
     this.setState({ roomName: receiver });
     // console.log(receiver+'hhhhhhhhhhhhhhhh')
     axios
-      .get('https://mycubicle.herokuapp.com/token/' + currentUserName)
+      .get('https://the-cubicle.herokuapp.com/token/' + currentUserName)
       .then((results) => {
         const { identity, jwt } = results.data;
         this.setState(

@@ -84,7 +84,7 @@ function Config(props) {
   };
   const handleDelete = () => {
     axios
-      .delete('https://mycubicle.herokuapp.com/groups/delete/' + props.id, {})
+      .delete('https://the-cubicle.herokuapp.com/groups/delete/' + props.id, {})
 
       .then(() => {
         history.push('/Groupe');

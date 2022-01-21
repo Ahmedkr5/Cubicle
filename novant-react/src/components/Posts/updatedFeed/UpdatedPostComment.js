@@ -111,7 +111,7 @@ export default function UpdatedPostComment(props) {
         name={user?.firstname + ' ' + user?.lastname}
         alt={user?.firstname + ' ' + user?.lastname}
         onClick={() => window.location.replace(`/profile/${user?.id}`)}
-        src={'https://mycubicle.herokuapp.com/uploads/' + user?.profileimage}
+        src={'https://the-cubicle.herokuapp.com/uploads/' + user?.profileimage}
       ></Avatar>
       <div className={classes.commentBody}>
         {commented && (
