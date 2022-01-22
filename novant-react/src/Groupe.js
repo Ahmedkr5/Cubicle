@@ -5,7 +5,7 @@ import {
   Divider,
   Hidden,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { FindInPage, Flag } from '@material-ui/icons';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -32,7 +32,7 @@ import SkeletonFeed from './components/Posts/skeletonFeed';
 import UpdatedGroupFeed from './components/Posts/GroupsFeed/UpdatedGroupFeed';
 import UpdatedGroupHomeFeed from './components/Posts/GroupsFeed/UpdatedGroupHomeFeed';
 import useDocumentTitle from './components/useDocumentTitle';
-
+import axios from 'axios';
 const FEED_QUERY = gql`
   query groupPosts($groupid: [String!]) {
     groupPosts(groupid: $groupid) {
@@ -76,6 +76,7 @@ function Groupe() {
   useDocumentTitle('Groups | Cubicle');
   const [state, setState] = useState('0');
   const [group, setGroup] = useState(false);
+  const [friendcomp, setFriendcomp] = React.useState([]);
   const [value, setValue] = React.useState(0);
   const currentuser = authService.getCurrentUser();
   const userid = currentuser['id'];
@@ -86,6 +87,17 @@ function Groupe() {
   // console.log(groupProf);
   // const tab = groupProf;
   // console.log(tab);
+  const user = authService.getCurrentUser();
+  useEffect(() => {
+    axios
+      .get('https://the-cubicle.herokuapp.com/users/')
+
+      .then((res) => {
+        setFriendcomp(
+          res.data?.filter((m) => currentuser?.friends.includes(m._id))
+        );
+      });
+  });
   if (groupProf && group === false) {
     setGroup(true);
     groupProf.map((group) => {
@@ -207,7 +219,8 @@ function Groupe() {
                 justifyContent: 'center',
               }}
             >
-              <RightSidebar style={{ marginRight: '0px' }}></RightSidebar>
+              <RightSidebar friends={friendcomp}
+              style={{ marginRight: '0px' }}></RightSidebar>
             </Col>
           </Hidden>
         </Row>

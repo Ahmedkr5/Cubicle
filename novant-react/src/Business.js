@@ -4,7 +4,7 @@ import {
   Container,
   Divider,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Sidebar from './components/Sidebar/Sidebar';
 import Feed from './components/Business/Feed';
@@ -20,7 +20,7 @@ import { useApi } from './hooks/useApi';
 import { useQuery, gql } from '@apollo/client';
 import SkeletonFeed from './components/Posts/skeletonFeed';
 import useDocumentTitle from './components/useDocumentTitle';
-
+import axios from 'axios';
 const FEED_QUERY = gql`
   query groupPosts($businessid: [String!]) {
     businessPosts(businessid: $businessid) {
@@ -65,6 +65,7 @@ function Business() {
   useDocumentTitle('Business | Cubicle');
   const [state, setState] = useState('0');
   const [business, setBusiness] = useState(false);
+  const [friendcomp, setFriendcomp] = React.useState([]);
   const [value, setValue] = React.useState(0);
   const user = authService.getCurrentUser();
   const userid = user['id'];
@@ -79,7 +80,16 @@ function Business() {
     });
     console.log('helloooo', groupidd);
   }
+  useEffect(() => {
+    axios
+      .get('https://the-cubicle.herokuapp.com/users/')
 
+      .then((res) => {
+        setFriendcomp(
+          res.data?.filter((m) => user?.friends.includes(m._id))
+        );
+      });
+  });
   const { data, loading, error, refetch } = useQuery(FEED_QUERY, {
     variables: {
       businessid: groupidd,
@@ -163,7 +173,8 @@ function Business() {
             </Container>
           </Col>
           <Col style={{ display: 'flex', justifyContent: 'center' }}>
-            <RightSidebar style={{ marginRight: '0px' }}></RightSidebar>
+            <RightSidebar friends={friendcomp}
+             style={{ marginRight: '0px' }}></RightSidebar>
           </Col>
         </Row>
       </Container>
