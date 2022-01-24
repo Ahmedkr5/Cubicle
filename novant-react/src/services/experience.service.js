@@ -2,7 +2,7 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 
-const API_URL = 'https://the-cubicle.herokuapp.com/experiences';
+const API_URL = 'http://localhost:3001/experiences';
 
 class ExperienceService {
   add(title, description, date, userid) {
@@ -30,7 +30,7 @@ class ExperienceService {
     userid
   ) {
     return axios
-      .put('https://the-cubicle.herokuapp.com/users/' + userid, {
+      .put('http://localhost:3001/users/' + userid, {
         firstname,
         lastname,
         birthday,
@@ -49,7 +49,7 @@ class ExperienceService {
 
   editprofileimage(profileimage, userid) {
     return axios
-      .put('https://the-cubicle.herokuapp.com/users/profile/' + userid, {
+      .put('http://localhost:3001/users/profile/' + userid, {
         profileimage,
       })
       .then((response) => {
@@ -61,7 +61,7 @@ class ExperienceService {
 
   editcoverimage(coverimage, userid) {
     return axios
-      .put('https://the-cubicle.herokuapp.com/users/cover/' + userid, {
+      .put('http://localhost:3001/users/cover/' + userid, {
         coverimage,
       })
       .then((response) => {
@@ -78,7 +78,7 @@ class ExperienceService {
   }
   async get(userid) {
     return await axios
-      .get('https://the-cubicle.herokuapp.com/users/' + userid, {})
+      .get('http://localhost:3001/users/' + userid, {})
       .then(function (response) {
         return response.data;
       });

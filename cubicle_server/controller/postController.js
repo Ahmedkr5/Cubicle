@@ -36,7 +36,7 @@ class App {
   //   success: 1,
   //   file: {
   //     url:
-  //       'https://the-cubicle.herokuapp.com/uploads/postImages/' +
+  //       'http://localhost:3001/uploads/postImages/' +
   //       req.params.userId +
   //       '-' +
   //       req.file.originalname +

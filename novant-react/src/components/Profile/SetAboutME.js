@@ -66,7 +66,7 @@ function SetAboutME(props) {
               var randomstring = require('randomstring');
               var date = randomstring.generate();
               axios.post(
-                'https://the-cubicle.herokuapp.com/upload/' + date,
+                'http://localhost:3001/upload/' + date,
                 data,
                 {}
               );
@@ -78,7 +78,7 @@ function SetAboutME(props) {
               var randomstring = require('randomstring');
               var date1 = randomstring.generate();
               axios.post(
-                'https://the-cubicle.herokuapp.com/upload/' + date1,
+                'http://localhost:3001/upload/' + date1,
                 data,
                 {}
               );

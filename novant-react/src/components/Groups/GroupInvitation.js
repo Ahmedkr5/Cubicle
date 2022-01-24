@@ -61,7 +61,7 @@ export default class GroupInvitation extends Component {
   }
   componentDidMount() {
     let users2 = axios
-      .get('https://the-cubicle.herokuapp.com/users/', {})
+      .get('http://localhost:3001/users/', {})
       .then(function (response) {
         return response.data;
       });
@@ -77,7 +77,7 @@ export default class GroupInvitation extends Component {
       );
     });
     let reqs = axios
-      .get('https://the-cubicle.herokuapp.com/users/' + this.props.requests, {})
+      .get('http://localhost:3001/users/' + this.props.requests, {})
       .then(function (response) {
         return response.data;
       });
@@ -119,7 +119,7 @@ export default class GroupInvitation extends Component {
                         aria-label='recipe'
                         variant='rounded'
                         src={
-                          'https://the-cubicle.herokuapp.com/uploads/' +
+                          'http://localhost:3001/uploads/' +
                           msg.profileimage
                         }
                       ></Avatar>
@@ -147,7 +147,7 @@ export default class GroupInvitation extends Component {
                               (i) => i !== msg._id
                             );
                             axios.put(
-                              'https://the-cubicle.herokuapp.com/users/grp/' +
+                              'http://localhost:3001/users/grp/' +
                                 currentuser['id'],
                               {
                                 groupRequests: list,
@@ -155,7 +155,7 @@ export default class GroupInvitation extends Component {
                             );
                             let users3 = axios
                               .get(
-                                'https://the-cubicle.herokuapp.com/groups/groupowned/' +
+                                'http://localhost:3001/groups/groupowned/' +
                                   currentuser['id'],
                                 {}
                               )
@@ -181,7 +181,7 @@ export default class GroupInvitation extends Component {
                                   const member = [...state.members, msg._id];
                                   axios
                                     .put(
-                                      'https://the-cubicle.herokuapp.com/groups/groupmem/' +
+                                      'http://localhost:3001/groups/groupmem/' +
                                         this.state.idgroup,
                                       {
                                         members: member,
@@ -208,7 +208,7 @@ export default class GroupInvitation extends Component {
                             );
                             axios
                               .put(
-                                'https://the-cubicle.herokuapp.com/users/grp/' +
+                                'http://localhost:3001/users/grp/' +
                                   currentuser['id'],
                                 {
                                   groupRequests: list,

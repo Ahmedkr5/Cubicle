@@ -194,7 +194,7 @@ export default function NewFeed(props) {
           variant='rounded'
           className={classes.rounded}
           src={
-            'https://the-cubicle.herokuapp.com/uploads/' +
+            'http://localhost:3001/uploads/' +
             props?.user?.profileimage
           }
           onClick={() => window.location.replace(`/profile/${props?.user?.id}`)}

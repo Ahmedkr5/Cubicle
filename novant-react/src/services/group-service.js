@@ -1,7 +1,7 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import authService from './auth.service';
-const API_URL = 'https://the-cubicle.herokuapp.com/groups/';
+const API_URL = 'http://localhost:3001/groups/';
 
 class groupservice {
   /*
@@ -74,7 +74,7 @@ const userid = user['id'];
   }
   edituser(groupRequests, userid) {
     return axios
-      .put('https://the-cubicle.herokuapp.com/users/grp/' + userid, {
+      .put('http://localhost:3001/users/grp/' + userid, {
         groupRequests,
       })
       .then((response) => {

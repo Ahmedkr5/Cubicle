@@ -61,7 +61,7 @@ export default class InvitationsList extends Component {
   }
   componentDidMount() {
     let users2 = axios
-      .get('https://the-cubicle.herokuapp.com/users/', {})
+      .get('http://localhost:3001/users/', {})
       .then(function (response) {
         return response.data;
       });
@@ -77,7 +77,7 @@ export default class InvitationsList extends Component {
       );
     });
     let reqs = axios
-      .get('https://the-cubicle.herokuapp.com/users/' + this.props.requests, {})
+      .get('http://localhost:3001/users/' + this.props.requests, {})
       .then(function (response) {
         return response.data;
       });
@@ -119,7 +119,7 @@ export default class InvitationsList extends Component {
                         aria-label='recipe'
                         variant='rounded'
                         src={
-                          'https://the-cubicle.herokuapp.com/uploads/' +
+                          'http://localhost:3001/uploads/' +
                           msg.profileimage
                         }
                       ></Avatar>
@@ -148,7 +148,7 @@ export default class InvitationsList extends Component {
                                 (i) => i !== msg._id
                               );
                             axios.put(
-                              'https://the-cubicle.herokuapp.com/users/businessput/' +
+                              'http://localhost:3001/users/businessput/' +
                                 currentuser['id'],
                               {
                                 businessRequests: list,
@@ -156,7 +156,7 @@ export default class InvitationsList extends Component {
                             );
                             let users3 = axios
                               .get(
-                                'https://the-cubicle.herokuapp.com/business/businessowned/' +
+                                'http://localhost:3001/business/businessowned/' +
                                   currentuser['id'],
                                 {}
                               )
@@ -182,7 +182,7 @@ export default class InvitationsList extends Component {
                                   const member = [...state.members, msg._id];
                                   axios
                                     .put(
-                                      'https://the-cubicle.herokuapp.com/business/businessmem/' +
+                                      'http://localhost:3001/business/businessmem/' +
                                         this.state.idgroup,
                                       {
                                         members: member,
@@ -210,7 +210,7 @@ export default class InvitationsList extends Component {
                               );
                             axios
                               .put(
-                                'https://the-cubicle.herokuapp.com/users/businessput/' +
+                                'http://localhost:3001/users/businessput/' +
                                   currentuser['id'],
                                 {
                                   businessRequests: list,

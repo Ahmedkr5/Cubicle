@@ -48,7 +48,7 @@ class VideoCall extends Component {
     this.setState({ roomName: receiver });
     // console.log(receiver+'hhhhhhhhhhhhhhhh')
     axios
-      .get('https://the-cubicle.herokuapp.com/token/' + currentUserName)
+      .get('http://localhost:3001/token/' + currentUserName)
       .then((results) => {
         const { identity, jwt } = results.data;
         this.setState(

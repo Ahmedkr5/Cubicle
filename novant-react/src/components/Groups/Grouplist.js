@@ -91,7 +91,7 @@ export default function Grouplist() {
     document.getElementById('result2').innerHTML = '';
 
     var data = axios
-      .get('https://the-cubicle.herokuapp.com/groups/a/' + a, {})
+      .get('http://localhost:3001/groups/a/' + a, {})
       .then(function (response) {
         return response.data;
       });

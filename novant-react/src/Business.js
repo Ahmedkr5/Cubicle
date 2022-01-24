@@ -82,7 +82,7 @@ function Business() {
   }
   useEffect(() => {
     axios
-      .get('https://the-cubicle.herokuapp.com/users/')
+      .get('http://localhost:3001/users/')
 
       .then((res) => {
         setFriendcomp(

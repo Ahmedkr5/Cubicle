@@ -10,7 +10,7 @@ passport.use(
       clientID:
         '253331416889-rfaiss32tgabqkuv7ci9b91duqam7sfg.apps.googleusercontent.com',
       clientSecret: '2E1aUyROykcUmRoWEKRhhaUj',
-      callbackURL: 'https://the-cubicle.herokuapp.com/api/auth/google/callback',
+      callbackURL: 'http://localhost:3001/api/auth/google/callback',
       passReqToCallback: true,
     },
     (accessToken, refreshToken, profile, done) => {

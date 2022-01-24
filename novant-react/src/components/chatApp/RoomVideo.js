@@ -37,7 +37,7 @@ export default function RoomVideo() {
   const [open, setOpen] = React.useState(false);
   const user = authService.getCurrentUser();
   const transmitter = user['id'];
-  const socket = socketClient('https://the-cubicle.herokuapp.com/');
+  const socket = socketClient('http://localhost:3001/');
 
   socket.on('typingMeetC', async (msg) => {
     msg.data.map((d) => {
@@ -52,7 +52,7 @@ export default function RoomVideo() {
             confirmButtonText: 'Answer',
             showCancelButton: true,
             cancelButtonText: 'Leave',
-            imageUrl: 'https://the-cubicle.herokuapp.com/uploads/' + msg[2],
+            imageUrl: 'http://localhost:3001/uploads/' + msg[2],
             preConfirm: () => {
               var x = document.getElementById('myaudiocall');
               x.pause();

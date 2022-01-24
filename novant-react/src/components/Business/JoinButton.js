@@ -38,7 +38,7 @@ export default class JoinButton extends Component {
   }
   componentDidMount() {
     let users2 = axios
-      .get('https://the-cubicle.herokuapp.com/users/' + this.props.owner, {})
+      .get('http://localhost:3001/users/' + this.props.owner, {})
       .then(function (response) {
         return response.data;
       });
@@ -93,7 +93,7 @@ export default class JoinButton extends Component {
                       );
                       axios
                         .put(
-                          'https://the-cubicle.herokuapp.com/business/businessmem/' +
+                          'http://localhost:3001/business/businessmem/' +
                             this.props?.idgroup,
                           {
                             members: newmem,
@@ -136,7 +136,7 @@ export default class JoinButton extends Component {
                 const requests = [...state.requests, currentuser['id']];
                 axios
                   .put(
-                    'https://the-cubicle.herokuapp.com/users/businessput/' +
+                    'http://localhost:3001/users/businessput/' +
                       this.props?.owner,
                     {
                       businessRequests: requests,

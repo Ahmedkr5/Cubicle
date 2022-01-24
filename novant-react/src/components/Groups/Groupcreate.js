@@ -53,7 +53,7 @@ export default class Groupcreate extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       axios
         .post(
-          'https://the-cubicle.herokuapp.com/groups/' + userid + '/newgroup',
+          'http://localhost:3001/groups/' + userid + '/newgroup',
           {
             groupname: this.state.groupname,
             description: this.state.description,

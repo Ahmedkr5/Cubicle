@@ -61,14 +61,14 @@ export default function MenuFr(props) {
               );
               const nofr2 = props?.myfriends?.filter((i) => i !== props?.id);
               axios.put(
-                'https://the-cubicle.herokuapp.com/users/fr/' + props?.id,
+                'http://localhost:3001/users/fr/' + props?.id,
                 {
                   friends: nofr,
                 }
               );
               axios
                 .put(
-                  'https://the-cubicle.herokuapp.com/users/fr/' +
+                  'http://localhost:3001/users/fr/' +
                     currentuser['id'],
                   {
                     friends: nofr2,

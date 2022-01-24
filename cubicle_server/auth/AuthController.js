@@ -44,70 +44,28 @@ router.get('/me', VerifyToken, function (req, res, next) {
   });
 });
 
-router.post('/login', function (req, res) {
+
+router.post('/login', function(req, res) {
+
   User.findOne({ email: req.body.email }, function (err, user) {
     if (err) return res.status(500).send('Error on the server.');
     if (!user) return res.status(404).send('No user found.');
-
-    User.findOne({ email: req.body.email }, function (err, user) {
-      if (err) return res.status(500).send('Error on the server.');
-      if (!user) return res.status(404).send('No user found.');
-
-      var passwordIsValid = bcrypt.compareSync(
-        req.body.password,
-        user.password
-      );
-      if (!passwordIsValid)
-        return res.status(401).send({ auth: false, token: null });
-
-      var token = jwt.sign(
-        {
-          id: user._id,
-          profileimage: user.profileimage,
-          firstname: user.firstname,
-          lastname: user.lastname,
-          email: user.email,
-          adresse: user.adresse,
-          phone: user.phone,
-          birthday: user.datenaissance,
-          description: user.description,
-          friends: user.friends,
-        },
-        config.secret,
-        {
-          expiresIn: 86400, // expires in 24 hours
-        }
-      );
-
-      res.status(200).send({ auth: true, token: token });
+    
+    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+    if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+    
+    var token = jwt.sign({ id: user._id ,profileimage:user.profileimage,firstname:user.firstname,lastname:user.lastname,email:user.email,adresse:user.adresse,phone:user.phone,birthday:user.datenaissance,description:user.description ,friends:user.friends}, config.secret, {
+      expiresIn: 86400 // expires in 24 hours
     });
+    
+    res.status(200).send({ auth: true, token: token });
   });
-
-  var token = jwt.sign(
-    {
-      id: user._id,
-      profileimage: user.profileimage,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      email: user.email,
-      adresse: user.adresse,
-      phone: user.phone,
-      birthday: user.datenaissance,
-      description: user.description,
-    },
-    config.secret,
-    {
-      expiresIn: 86400, // expires in 24 hours
-    }
-  );
-
-  res.status(200).send({ auth: true, token: token });
+  
 });
 
-router.get('/logout', function (req, res) {
+router.get('/logout', function(req, res) {
   res.status(200).send({ auth: false, token: null });
 });
-
 router.get(
   '/google',
   passport.authenticate('google', {
@@ -120,7 +78,7 @@ router.get(
   '/google/callback',
   passport.authenticate('google'),
   (req, res, next) => {
-    res.redirect('https://the-cubicle.herokuapp.com/' + req.user.id);
+    res.redirect('http://localhost:3001/' + req.user.id);
   }
 );
 router.use(function (user, req, res, next) {

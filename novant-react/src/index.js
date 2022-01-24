@@ -12,7 +12,7 @@ import {
 
 // 2
 const httpLink = createHttpLink({
-  uri: 'https://the-cubicle.herokuapp.com/graphqlTest',
+  uri: 'http://localhost:3001/graphqlTest',
 });
 
 // 3

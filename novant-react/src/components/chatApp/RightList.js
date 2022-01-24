@@ -140,7 +140,7 @@ export default function RecipeReviewCard(props) {
                             <Avatar
                               variant='rounded'
                               src={
-                                `https://the-cubicle.herokuapp.com/uploads/` +
+                                `http://localhost:3001/uploads/` +
                                 msg.profileimage
                               }
                               className={classes.rad}

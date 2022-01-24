@@ -60,7 +60,7 @@ export default class Reqfr2 extends Component {
   }
   componentDidMount() {
     let users2 = axios
-      .get('https://the-cubicle.herokuapp.com/users/', {})
+      .get('http://localhost:3001/users/', {})
       .then(function (response) {
         return response.data;
       });
@@ -76,7 +76,7 @@ export default class Reqfr2 extends Component {
       );
     });
     let reqs = axios
-      .get('https://the-cubicle.herokuapp.com/users/' + this.props.requests, {})
+      .get('http://localhost:3001/users/' + this.props.requests, {})
       .then(function (response) {
         return response.data;
       });
@@ -118,7 +118,7 @@ export default class Reqfr2 extends Component {
                         aria-label='recipe'
                         variant='rounded'
                         src={
-                          'https://the-cubicle.herokuapp.com/uploads/' +
+                          'http://localhost:3001/uploads/' +
                           msg.profileimage
                         }
                       ></Avatar>
@@ -147,7 +147,7 @@ export default class Reqfr2 extends Component {
                             );
                             axios
                               .put(
-                                'https://the-cubicle.herokuapp.com/users/frreq/' +
+                                'http://localhost:3001/users/frreq/' +
                                   currentuser['id'],
                                 {
                                   friendRequests: list,
@@ -163,7 +163,7 @@ export default class Reqfr2 extends Component {
 
                                   axios
                                     .put(
-                                      'https://the-cubicle.herokuapp.com/users/fr/' +
+                                      'http://localhost:3001/users/fr/' +
                                         currentuser['id'],
                                       {
                                         friends: friend,
@@ -177,7 +177,7 @@ export default class Reqfr2 extends Component {
                                         ];
                                         axios
                                           .put(
-                                            'https://the-cubicle.herokuapp.com/users/fr/' +
+                                            'http://localhost:3001/users/fr/' +
                                               msg._id,
                                             {
                                               friends: friend2,
@@ -206,7 +206,7 @@ export default class Reqfr2 extends Component {
                             );
                             axios
                               .put(
-                                'https://the-cubicle.herokuapp.com/users/frreq/' +
+                                'http://localhost:3001/users/frreq/' +
                                   currentuser['id'],
                                 {
                                   friendRequests: list,

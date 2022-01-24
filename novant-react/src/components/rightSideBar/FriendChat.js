@@ -102,7 +102,7 @@ export default function FriendChat(props) {
           >
             <Avatar
               variant='rounded'
-              src={'https://the-cubicle.herokuapp.com/uploads/' + props.img}
+              src={'http://localhost:3001/uploads/' + props.img}
               className={classes.rad}
             />
           </StyledBadge>

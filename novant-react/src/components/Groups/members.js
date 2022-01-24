@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default class members extends Component {
   /*const users2 = axios
-  .get("https://the-cubicle.herokuapp.com/users/", {})
+  .get("http://localhost:3001/users/", {})
   .then(response=> {
    
   });*/
@@ -59,7 +59,7 @@ export default class members extends Component {
   }
   componentDidMount() {
     let users2 = axios
-      .get('https://the-cubicle.herokuapp.com/users/', {})
+      .get('http://localhost:3001/users/', {})
       .then(function (response) {
         return response.data;
       });
@@ -102,7 +102,7 @@ export default class members extends Component {
                     aria-label='recipe'
                     variant='rounded'
                     src={
-                      'https://the-cubicle.herokuapp.com/uploads/' +
+                      'http://localhost:3001/uploads/' +
                       msg.profileimage
                     }
                   ></Avatar>

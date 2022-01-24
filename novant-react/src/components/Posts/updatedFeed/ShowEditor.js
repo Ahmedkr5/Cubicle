@@ -35,7 +35,7 @@ const EDITOR_JS_TOOLS = {
     class: ImageTool,
     config: {
       endpoints: {
-        byFile: 'https://the-cubicle.herokuapp.com/post/upload/Test.png', // Your backend file uploader endpoint
+        byFile: 'http://localhost:3001/post/upload/Test.png', // Your backend file uploader endpoint
       },
     },
   },

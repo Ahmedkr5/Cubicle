@@ -30,7 +30,7 @@ export default function GroupCard(props) {
   const currentuser = authService.getCurrentUser();
 
   var coverimage =
-    'https://the-cubicle.herokuapp.com/uploads/' + props.groupimage;
+    'http://localhost:3001/uploads/' + props.groupimage;
   const [CoverImage, setCoverImage] = useState('');
   const [userProf, reload1] = useApi('users/' + props.owner);
   const [selectedCoverImage, setselectedCoverImage] = useState(null);
@@ -57,7 +57,7 @@ export default function GroupCard(props) {
     var randomstring = require('randomstring');
     var date = randomstring.generate();
     console.log(event.target.files[0]);
-    axios.post('https://the-cubicle.herokuapp.com/upload/' + date, data, {});
+    axios.post('http://localhost:3001/upload/' + date, data, {});
     groupService
       .editgroupimage(date + '-' + event.target.files[0].name, props.grpid)
       .then(() => {
