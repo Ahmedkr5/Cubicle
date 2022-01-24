@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: fade('#E9EBF1', 1),
     },
     marginLeft: 0,
-    width: '100%',
+    width: '80%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(1),
       width: 'auto',
@@ -172,7 +172,7 @@ export default function SearchAppBar(props) {
           >
             Cubicle
           </Typography>
-          <div style={{ position: 'absolute', marginLeft: '70%' }}>
+          <div >
             <div className={classes.search} style={{ zIndex: 1 }}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
