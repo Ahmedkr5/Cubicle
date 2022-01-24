@@ -91,7 +91,7 @@ export default function Grouplist() {
     document.getElementById('result2').innerHTML = '';
 
     var data = axios
-      .get('http://localhost:3001/groups/a/' + a, {})
+      .get('https://the-cubicle.herokuapp.com/groups/a/' + a, {})
       .then(function (response) {
         return response.data;
       });
@@ -103,7 +103,7 @@ export default function Grouplist() {
           document.getElementById('result2').innerHTML +
           "<a class='MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button' tabindex='" +
           i +
-          "' aria-disabled='false' href='https://ourcubicle.netlify.app/GroupProfile/" +
+          "' aria-disabled='false' href='http://localhost:3000/GroupProfile/" +
           element._id +
           "'><div class='MuiListItemText-root'><span class='MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock'>" +
           element.groupname +
@@ -185,9 +185,7 @@ export default function Grouplist() {
                 className={classes.search}
                 style={{ display: 'flex', flexDirection: 'row' }}
               >
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
-                </div>
+             
                 <InputBase
                   style={{ width: 'auto' }}
                   placeholder='Search…'
@@ -219,11 +217,12 @@ export default function Grouplist() {
                   variant='contained'
                   color='primary'
                   size='small'
-                  className={classes.button}
+                  
                   startIcon={<AddBoxOutlinedIcon />}
                 >
                   Create a group
                 </Button>
+                </div>
                 <Modal
                   className={classes.modal}
                   open={open}
@@ -279,7 +278,7 @@ export default function Grouplist() {
                 <GroupInvitation requests={currentuser['id']}></GroupInvitation>
               )}
             </div>
-          </div>
+         
         </Container>
       </div>
     </>

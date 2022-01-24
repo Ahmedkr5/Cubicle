@@ -27,7 +27,7 @@ import StillEmtySVG from './components/Posts/updatedFeed/StillEmptySVG';
 import useDocumentTitle from './components/useDocumentTitle';
 
 import axios from 'axios';
-const API_URL = 'http://localhost:3001/';
+const API_URL = 'https://the-cubicle.herokuapp.com/';
 const FEED_QUERY = gql`
   {
     posts {

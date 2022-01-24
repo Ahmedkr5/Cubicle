@@ -131,7 +131,7 @@ export default function ChatBox(props) {
               >
                 <Avatar
                   variant='rounded'
-                  src={'http://localhost:3001/uploads/' + props.img}
+                  src={'https://the-cubicle.herokuapp.com/uploads/' + props.img}
                   className={classes.rad}
                 />
               </StyledBadge>

@@ -113,7 +113,7 @@ export default function RecipeReviewCard(props) {
   const [srcImage, setSrcImage] = useState('a');
   const user = authService.getCurrentUser();
   const transmitter = user['id'];
-  // const audiok = new Audio('http://localhost:3001/song/callsong.mp3') ;
+  // const audiok = new Audio('https://the-cubicle.herokuapp.com/song/callsong.mp3') ;
   // audiok.play() ; audiok.pause() ;
   const closeLightbox = () => {
     setOpen('none');
@@ -147,7 +147,7 @@ export default function RecipeReviewCard(props) {
   const { startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder(
     { audio: true }
   );
-  const socket = socketClient('http://localhost:3001/');
+  const socket = socketClient('https://the-cubicle.herokuapp.com/');
   socket.on('typingC', async (msg) => {
     if (msg[1] == transmitter) {
       var x = document.getElementById('myaudiocall');
@@ -158,7 +158,7 @@ export default function RecipeReviewCard(props) {
           confirmButtonText: 'Answer',
           showCancelButton: true,
           cancelButtonText: 'Leave',
-          imageUrl: 'http://localhost:3001/uploads/' + msg[2],
+          imageUrl: 'https://the-cubicle.herokuapp.com/uploads/' + msg[2],
           preConfirm: () => {
             var x = document.getElementById('myaudiocall');
             x.pause();
@@ -234,7 +234,7 @@ export default function RecipeReviewCard(props) {
       data.append('file', selectedFile);
       var randomstring = require('randomstring');
       var date = randomstring.generate();
-      axios.post('http://localhost:3001/upload/' + date, data, {});
+      axios.post('https://the-cubicle.herokuapp.com/upload/' + date, data, {});
       if (e.key === 'Enter') {
         socket.emit('msg', {
           transmitter: transmitter,
@@ -271,7 +271,7 @@ export default function RecipeReviewCard(props) {
     var randomstring = require('randomstring');
     var date = randomstring.generate();
 
-    axios.post('http://localhost:3001/upload/' + date, data, {});
+    axios.post('https://the-cubicle.herokuapp.com/upload/' + date, data, {});
   };
   return (
     <>
@@ -291,7 +291,7 @@ export default function RecipeReviewCard(props) {
                     <Avatar
                       variant='rounded'
                       src={
-                        `http://localhost:3001/uploads/` +
+                        `https://the-cubicle.herokuapp.com/uploads/` +
                         props?.person?.profileimage
                       }
                       className={classes.rad}
@@ -338,7 +338,7 @@ export default function RecipeReviewCard(props) {
                                 <Avatar
                                   variant='rounded'
                                   src={
-                                    `http://localhost:3001/uploads/` +
+                                    `https://the-cubicle.herokuapp.com/uploads/` +
                                     userProf[0].profileimage
                                   }
                                   className={classes.rad}
@@ -373,7 +373,7 @@ export default function RecipeReviewCard(props) {
                                 <Avatar
                                   variant='rounded'
                                   src={
-                                    `http://localhost:3001/uploads/` +
+                                    `https://the-cubicle.herokuapp.com/uploads/` +
                                     userProf[0].profileimage
                                   }
                                   className={classes.rad}
@@ -383,12 +383,12 @@ export default function RecipeReviewCard(props) {
                                 <img
                                   onClick={() =>
                                     showL(
-                                      'http://localhost:3001/uploads/' +
+                                      'https://the-cubicle.herokuapp.com/uploads/' +
                                         msg.file[0]
                                     )
                                   }
                                   src={
-                                    'http://localhost:3001/uploads/' +
+                                    'https://the-cubicle.herokuapp.com/uploads/' +
                                     msg.file[0]
                                   }
                                   style={{
@@ -426,7 +426,7 @@ export default function RecipeReviewCard(props) {
                                 <Avatar
                                   variant='rounded'
                                   src={
-                                    `http://localhost:3001/uploads/` +
+                                    `https://the-cubicle.herokuapp.com/uploads/` +
                                     userProf[0].profileimage
                                   }
                                   className={classes.rad}
@@ -435,7 +435,7 @@ export default function RecipeReviewCard(props) {
                               <span className='chatmessageitem spanMessage'>
                                 <a
                                   href={
-                                    'http://localhost:3001/uploads/' +
+                                    'https://the-cubicle.herokuapp.com/uploads/' +
                                     msg.file[0]
                                   }
                                   target={'_blank'}
@@ -471,7 +471,7 @@ export default function RecipeReviewCard(props) {
                                   <Avatar
                                     variant='rounded'
                                     src={
-                                      `http://localhost:3001/uploads/` +
+                                      `https://the-cubicle.herokuapp.com/uploads/` +
                                       userProf[0].profileimage
                                     }
                                     className={classes.rad}
@@ -495,7 +495,7 @@ export default function RecipeReviewCard(props) {
                                   <Avatar
                                     variant='rounded'
                                     src={
-                                      `http://localhost:3001/uploads/` +
+                                      `https://the-cubicle.herokuapp.com/uploads/` +
                                       userProf[0].profileimage
                                     }
                                     className={classes.rad}
@@ -505,12 +505,12 @@ export default function RecipeReviewCard(props) {
                                   <img
                                     onClick={() =>
                                       showL(
-                                        'http://localhost:3001/uploads/' +
+                                        'https://the-cubicle.herokuapp.com/uploads/' +
                                           msg.file[0]
                                       )
                                     }
                                     src={
-                                      'http://localhost:3001/uploads/' +
+                                      'https://the-cubicle.herokuapp.com/uploads/' +
                                       msg.file[0]
                                     }
                                     style={{
@@ -549,7 +549,7 @@ export default function RecipeReviewCard(props) {
                                   <Avatar
                                     variant='rounded'
                                     src={
-                                      `http://localhost:3001/uploads/` +
+                                      `https://the-cubicle.herokuapp.com/uploads/` +
                                       userProf[0].profileimage
                                     }
                                     className={classes.rad}
@@ -573,7 +573,7 @@ export default function RecipeReviewCard(props) {
                                   <Avatar
                                     variant='rounded'
                                     src={
-                                      `http://localhost:3001/uploads/` +
+                                      `https://the-cubicle.herokuapp.com/uploads/` +
                                       userProf[0].profileimage
                                     }
                                     className={classes.rad}
@@ -582,7 +582,7 @@ export default function RecipeReviewCard(props) {
                                 <span className='chatmessageitem spanMessage'>
                                   <a
                                     href={
-                                      'http://localhost:3001/uploads/' +
+                                      'https://the-cubicle.herokuapp.com/uploads/' +
                                       msg.file[0]
                                     }
                                     target={'_blank'}
@@ -611,7 +611,7 @@ export default function RecipeReviewCard(props) {
                                 <Avatar
                                   variant='rounded'
                                   src={
-                                    `http://localhost:3001/uploads/` +
+                                    `https://the-cubicle.herokuapp.com/uploads/` +
                                     props?.person?.profileimage
                                   }
                                   className={classes.rad}
@@ -647,7 +647,7 @@ export default function RecipeReviewCard(props) {
                                 <Avatar
                                   variant='rounded'
                                   src={
-                                    `http://localhost:3001/uploads/` +
+                                    `https://the-cubicle.herokuapp.com/uploads/` +
                                     props?.person?.profileimage
                                   }
                                   className={classes.rad}
@@ -657,12 +657,12 @@ export default function RecipeReviewCard(props) {
                                 <img
                                   onClick={() =>
                                     showL(
-                                      'http://localhost:3001/uploads/' +
+                                      'https://the-cubicle.herokuapp.com/uploads/' +
                                         msg.file[0]
                                     )
                                   }
                                   src={
-                                    'http://localhost:3001/uploads/' +
+                                    'https://the-cubicle.herokuapp.com/uploads/' +
                                     msg.file[0]
                                   }
                                   style={{
@@ -699,7 +699,7 @@ export default function RecipeReviewCard(props) {
                                 <Avatar
                                   variant='rounded'
                                   src={
-                                    `http://localhost:3001/uploads/` +
+                                    `https://the-cubicle.herokuapp.com/uploads/` +
                                     props?.person?.profileimage
                                   }
                                   className={classes.rad}
@@ -708,7 +708,7 @@ export default function RecipeReviewCard(props) {
                               <span className='chatmessageitemrecept spanMessagerecept'>
                                 <a
                                   href={
-                                    'http://localhost:3001/uploads/' +
+                                    'https://the-cubicle.herokuapp.com/uploads/' +
                                     msg.file[0]
                                   }
                                   target={'_blank'}
@@ -743,7 +743,7 @@ export default function RecipeReviewCard(props) {
                                   <Avatar
                                     variant='rounded'
                                     src={
-                                      `http://localhost:3001/uploads/` +
+                                      `https://the-cubicle.herokuapp.com/uploads/` +
                                       props?.person?.profileimage
                                     }
                                     className={classes.rad}
@@ -768,7 +768,7 @@ export default function RecipeReviewCard(props) {
                                   <Avatar
                                     variant='rounded'
                                     src={
-                                      `http://localhost:3001/uploads/` +
+                                      `https://the-cubicle.herokuapp.com/uploads/` +
                                       props?.person?.profileimage
                                     }
                                     className={classes.rad}
@@ -778,12 +778,12 @@ export default function RecipeReviewCard(props) {
                                   <img
                                     onClick={() =>
                                       showL(
-                                        'http://localhost:3001/uploads/' +
+                                        'https://the-cubicle.herokuapp.com/uploads/' +
                                           msg.file[0]
                                       )
                                     }
                                     src={
-                                      'http://localhost:3001/uploads/' +
+                                      'https://the-cubicle.herokuapp.com/uploads/' +
                                       msg.file[0]
                                     }
                                     style={{
@@ -822,7 +822,7 @@ export default function RecipeReviewCard(props) {
                                   <Avatar
                                     variant='rounded'
                                     src={
-                                      `http://localhost:3001/uploads/` +
+                                      `https://the-cubicle.herokuapp.com/uploads/` +
                                       props?.person?.profileimage
                                     }
                                     className={classes.rad}
@@ -847,7 +847,7 @@ export default function RecipeReviewCard(props) {
                                   <Avatar
                                     variant='rounded'
                                     src={
-                                      `http://localhost:3001/uploads/` +
+                                      `https://the-cubicle.herokuapp.com/uploads/` +
                                       props?.person?.profileimage
                                     }
                                     className={classes.rad}
@@ -856,7 +856,7 @@ export default function RecipeReviewCard(props) {
                                 <span className='chatmessageitemrecept spanMessagerecept'>
                                   <a
                                     href={
-                                      'http://localhost:3001/uploads/' +
+                                      'https://the-cubicle.herokuapp.com/uploads/' +
                                       msg.file[0]
                                     }
                                     target={'_blank'}
@@ -886,7 +886,7 @@ export default function RecipeReviewCard(props) {
                     <div className='authorthumb'>
                       <Avatar
                         variant='rounded'
-                        src={`http://localhost:3001/uploads/`}
+                        src={`https://the-cubicle.herokuapp.com/uploads/`}
                         className={classes.rad}
                       />
                     </div>
@@ -1001,7 +1001,7 @@ export default function RecipeReviewCard(props) {
         </audio>
         <audio
           id='myaudiocall'
-          src={`https://ourcubicle.netlify.app/song/callsong.mp3`}
+          src={`http://localhost:3000/song/callsong.mp3`}
           style={{ display: 'none' }}
         >
           {' '}

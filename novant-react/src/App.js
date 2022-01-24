@@ -30,7 +30,7 @@ function App() {
           name='description'
           content='Cubicle is the sweet spot between social networking and collaboration you can easily find a job , learn problem solving and share with others- accomplish it all with Cubicle'
         />
-        <link rel='canonical' href='https://ourcubicle.netlify.app/' />
+        <link rel='canonical' href='http://localhost:3000/' />
       </Helmet>
       <Router>
         <Switch>

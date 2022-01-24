@@ -145,7 +145,7 @@ export default function OutlinedCard(props) {
               >
                 <Avatar
                   variant='rounded'
-                  src={`http://localhost:3001/uploads/` + photo}
+                  src={`https://the-cubicle.herokuapp.com/uploads/` + photo}
                   className={classes.rad}
                 />
               </Typography>
@@ -196,7 +196,7 @@ export default function OutlinedCard(props) {
                           <Typography>
                             <a
                               href={
-                                'http://localhost:3001/uploads/' +
+                                'https://the-cubicle.herokuapp.com/uploads/' +
                                 msg.file[0]
                               }
                               target={'_blank'}
@@ -249,12 +249,12 @@ export default function OutlinedCard(props) {
                                 >
                                   <img
                                     src={
-                                      'http://localhost:3001/uploads/' +
+                                      'https://the-cubicle.herokuapp.com/uploads/' +
                                       msg.file[0]
                                     }
                                     onClick={() =>
                                       showL(
-                                        'http://localhost:3001/uploads/' +
+                                        'https://the-cubicle.herokuapp.com/uploads/' +
                                           msg.file[0]
                                       )
                                     }

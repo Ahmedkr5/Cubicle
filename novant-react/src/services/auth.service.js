@@ -3,7 +3,7 @@ import jwt_decode from 'jwt-decode';
 import { createBrowserHistory } from 'history';
 export const history = createBrowserHistory();
 
-const API_URL = 'http://localhost:3001/api/auth/';
+const API_URL = 'https://the-cubicle.herokuapp.com/api/auth/';
 
 class AuthService {
   login(email, password) {

@@ -53,7 +53,7 @@ export default function Groups() {
               aria-label='recipe'
               variant='rounded'
               className={classes.rounded}
-              src={'http://localhost:3001/uploads/' + msg.groupimage}
+              src={'https://the-cubicle.herokuapp.com/uploads/' + msg.groupimage}
             ></Avatar>
 
             <Typography className={classes.margin}>

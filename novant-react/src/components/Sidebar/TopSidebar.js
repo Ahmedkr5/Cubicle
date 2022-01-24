@@ -46,10 +46,10 @@ export default function TopSidebar() {
   const classes = useStyles();
   const user = authService.getCurrentUser();
   const userid = user['id'];
-  const [user2, err, reload] = useApi('users/' + userid);
-  const name = user2?.firstname + ' ' + user2?.lastname;
+ 
+  const name = user?.firstname + ' ' + user?.lastname;
   var profileimage =
-    'http://localhost:3001/uploads/' + user2?.profileimage;
+    'https://the-cubicle.herokuapp.com/uploads/' + user?.profileimage;
 
   return (
     <div className={classes.root}>
@@ -72,14 +72,14 @@ export default function TopSidebar() {
             style={{ display: 'flex', flexDirection: 'row' }}
           >
             <ListItemIcon style={{ marginLeft: '10px' }}>
-              {user2?.profileimage == 'default profile image' && (
+              {user?.profileimage == 'default profile image' && (
                 <UIAvatar
                   name={name}
                   style={{ borderRadius: '10px' }}
                   color='#551a8b'
                 ></UIAvatar>
               )}
-              {user2?.profileimage !== 'default profile image' && (
+              {user?.profileimage !== 'default profile image' && (
                 <Avatar
                   src={profileimage}
                   style={{ borderRadius: '10px' }}
@@ -97,7 +97,7 @@ export default function TopSidebar() {
             >
               <ListItemText>
                 <Typography variant='h6'>
-                  {user2?.firstname} {user2?.lastname}{' '}
+                  {user?.firstname} {user?.lastname}{' '}
                 </Typography>
               </ListItemText>
             </div>

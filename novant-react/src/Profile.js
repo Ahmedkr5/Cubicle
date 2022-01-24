@@ -110,7 +110,7 @@ function Profile(props) {
       console.log(tokens);
 
       axios
-        .post('http://localhost:3001/users/checkpayment', {
+        .post('https://the-cubicle.herokuapp.com/users/checkpayment', {
           tokens,
           userid,
         })
@@ -119,18 +119,18 @@ function Profile(props) {
             console.log(response.data);
             swal('Error!', 'Payment already exist', 'error').then((value) => {
               window.location =
-                'https://ourcubicle.netlify.app/profile/' + userid;
+                'http://localhost:3000/profile/' + userid;
             });
           } else if (response.status == 202) {
             swal('Error!', 'Paymee Error', 'error').then((value) => {
               window.location =
-                'https://ourcubicle.netlify.app/profile/' + userid;
+                'http://localhost:3000/profile/' + userid;
             });
           } else {
             swal('Good job!', 'You clicked the button!', 'success').then(
               (value) => {
                 window.location =
-                  'https://ourcubicle.netlify.app/profile/' + userid;
+                  'http://localhost:3000/profile/' + userid;
               }
             );
           }
@@ -140,7 +140,7 @@ function Profile(props) {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/users/')
+      .get('https://the-cubicle.herokuapp.com/users/')
 
       .then((res) => {
         setFriendcomp(
@@ -149,6 +149,7 @@ function Profile(props) {
       });
   });
   const [user2, err, reload] = useApi('users/' + userid);
+  console.log(user2);
   var title =
     'Cubicle - Learn problem solving, Share with others and find a job';
   if (user2 != undefined) {

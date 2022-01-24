@@ -49,9 +49,9 @@ export default function ProfileCard(props) {
 
   const [selectedCoverImage, setselectedCoverImage] = useState(null);
   var profileimage =
-    'http://localhost:3001/uploads/' + props.profileimage;
+    'https://the-cubicle.herokuapp.com/uploads/' + props.profileimage;
   var coverimage =
-    'http://localhost:3001/uploads/' + props.coverimage;
+    'https://the-cubicle.herokuapp.com/uploads/' + props.coverimage;
   var name = props.firstname + ' ' + props.lastname;
   const onChangeHandler = (event) => {
     setselectedCoverImage(event.target.files[0]);
@@ -63,7 +63,7 @@ export default function ProfileCard(props) {
     var randomstring = require('randomstring');
     var date = randomstring.generate();
     console.log(event.target.files[0]);
-    axios.post('http://localhost:3001/upload/' + date, data, {});
+    axios.post('https://the-cubicle.herokuapp.com/upload/' + date, data, {});
     experienceService
       .editcoverimage(date + '-' + event.target.files[0].name, props.userid)
       .then(() => {
@@ -81,7 +81,7 @@ export default function ProfileCard(props) {
     var randomstring = require('randomstring');
     var date = randomstring.generate();
     console.log(event.target.files[0]);
-    axios.post('http://localhost:3001/upload/' + date, data, {});
+    axios.post('https://the-cubicle.herokuapp.com/upload/' + date, data, {});
     experienceService
       .editprofileimage(date + '-' + event.target.files[0].name, props.userid)
       .then(() => {
@@ -103,7 +103,7 @@ export default function ProfileCard(props) {
           className={classes.media}
           image={coverimage}
           onClick={() =>
-            showL('http://localhost:3001/uploads/' + props.coverimage)
+            showL('https://the-cubicle.herokuapp.com/uploads/' + props.coverimage)
           }
           style={{ maxHeight: '100%', maxWidth: '100%', cursor: 'pointer' }}
         />
@@ -178,7 +178,7 @@ export default function ProfileCard(props) {
               <Avatar
                 onClick={() =>
                   showL(
-                    'http://localhost:3001/uploads/' +
+                    'https://the-cubicle.herokuapp.com/uploads/' +
                       props.profileimage
                   )
                 }

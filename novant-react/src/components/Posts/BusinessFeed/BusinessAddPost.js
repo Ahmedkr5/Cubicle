@@ -228,7 +228,7 @@ export default function BusinessAddPost(props) {
             className={classes.rounded}
             name={props?.user?.firstname + ' ' + props?.user?.lastname}
             src={
-              'http://localhost:3001/uploads/' +
+              'https://the-cubicle.herokuapp.com/uploads/' +
               props?.user?.profileimage
             }
             onClick={() =>

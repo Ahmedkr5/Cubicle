@@ -190,7 +190,7 @@ export default function UpdatedFeed(props) {
 
   var delta = Math.round((+new Date() - props?.post?.created_at) / 1000);
   console.log(
-    'http://localhost:3001/uploads/' + props?.post?.user?.profileimage
+    'https://the-cubicle.herokuapp.com/uploads/' + props?.post?.user?.profileimage
   );
 
   var minute = 60,
@@ -349,7 +349,7 @@ export default function UpdatedFeed(props) {
             variant='rounded'
             className={classes.rounded}
             src={
-              'http://localhost:3001/uploads/' +
+              'https://the-cubicle.herokuapp.com/uploads/' +
               props?.post?.user?.profileimage
             }
             onClick={() =>

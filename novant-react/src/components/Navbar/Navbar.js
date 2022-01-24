@@ -120,7 +120,7 @@ export default function SearchAppBar(props) {
     document.getElementById('result').innerHTML = '';
 
     var data = axios
-      .get('http://localhost:3001/users/a/' + a, {})
+      .get('https://the-cubicle.herokuapp.com/users/a/' + a, {})
       .then(function (response) {
         return response.data;
       });
@@ -132,7 +132,7 @@ export default function SearchAppBar(props) {
           document.getElementById('result').innerHTML +
           "<a class='MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button' tabindex='" +
           i +
-          "' aria-disabled='false' href='https://ourcubicle.netlify.app/profile/" +
+          "' aria-disabled='false' href='http://localhost:3000/profile/" +
           element._id +
           "'><div class='MuiListItemText-root'><span class='MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock'>" +
           element.firstname +
@@ -221,7 +221,7 @@ export default function SearchAppBar(props) {
             alt={name}
             variant='rounded'
             src={
-              'http://localhost:3001/uploads/' + user?.profileimage
+              'https://the-cubicle.herokuapp.com/uploads/' + user?.profileimage
             }
             onClick={() => window.location.replace(`/profile/${user?.id}`)}
           />

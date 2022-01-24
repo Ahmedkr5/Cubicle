@@ -2,9 +2,9 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import authService from './auth.service';
 
-const API_URL = 'http://localhost:3001/create';
-const API_URL1 = 'http://localhost:3001/show/';
-const API_URL2 = 'http://localhost:3001';
+const API_URL = 'https://the-cubicle.herokuapp.com/create';
+const API_URL1 = 'https://the-cubicle.herokuapp.com/show/';
+const API_URL2 = 'https://the-cubicle.herokuapp.com/';
 
 class ExperienceService {
   add(bodyget, transmitter, receiver) {

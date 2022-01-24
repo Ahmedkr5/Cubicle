@@ -61,7 +61,7 @@ export default class Req extends Component {
   }
   componentDidMount() {
     let users2 = axios
-      .get('http://localhost:3001/users/', {})
+      .get('https://the-cubicle.herokuapp.com/users/', {})
       .then(function (response) {
         return response.data;
       });
@@ -77,7 +77,7 @@ export default class Req extends Component {
       );
     });
     let reqs = axios
-      .get('http://localhost:3001/users/' + this.props.requests, {})
+      .get('https://the-cubicle.herokuapp.com/users/' + this.props.requests, {})
       .then(function (response) {
         return response.data;
       });
@@ -142,7 +142,7 @@ export default class Req extends Component {
                         aria-label='recipe'
                         variant='rounded'
                         src={
-                          'http://localhost:3001/uploads/' +
+                          'https://the-cubicle.herokuapp.com/uploads/' +
                           msg.profileimage
                         }
                       ></Avatar>
@@ -170,7 +170,7 @@ export default class Req extends Component {
                               (i) => i !== msg._id
                             );
                             axios.put(
-                              'http://localhost:3001/users/grp/' +
+                              'https://the-cubicle.herokuapp.com/users/grp/' +
                                 currentuser['id'],
                               {
                                 groupRequests: list,
@@ -178,7 +178,7 @@ export default class Req extends Component {
                             );
                             let users3 = axios
                               .get(
-                                'http://localhost:3001/groups/groupowned/' +
+                                'https://the-cubicle.herokuapp.com/groups/groupowned/' +
                                   currentuser['id'],
                                 {}
                               )
@@ -204,7 +204,7 @@ export default class Req extends Component {
                                   const member = [...state.members, msg._id];
                                   axios
                                     .put(
-                                      'http://localhost:3001/groups/groupmem/' +
+                                      'https://the-cubicle.herokuapp.com/groups/groupmem/' +
                                         this.state.idgroup,
                                       {
                                         members: member,
@@ -231,7 +231,7 @@ export default class Req extends Component {
                             );
                             axios
                               .put(
-                                'http://localhost:3001/users/grp/' +
+                                'https://the-cubicle.herokuapp.com/users/grp/' +
                                   currentuser['id'],
                                 {
                                   groupRequests: list,

@@ -38,7 +38,7 @@ export default class grouppbutton extends Component {
   }
   componentDidMount() {
     let users2 = axios
-      .get('http://localhost:3001/users/' + this.props.owner, {})
+      .get('https://the-cubicle.herokuapp.com/users/' + this.props.owner, {})
       .then(function (response) {
         return response.data;
       });
@@ -93,7 +93,7 @@ export default class grouppbutton extends Component {
                       );
                       axios
                         .put(
-                          'http://localhost:3001/groups/groupmem/' +
+                          'https://the-cubicle.herokuapp.com/groups/groupmem/' +
                             this.props?.idgroup,
                           {
                             members: newmem,
@@ -136,7 +136,7 @@ export default class grouppbutton extends Component {
                 const requests = [...state.requests, currentuser['id']];
                 axios
                   .put(
-                    'http://localhost:3001/users/grp/' +
+                    'https://the-cubicle.herokuapp.com/users/grp/' +
                       this.props?.owner,
                     {
                       groupRequests: requests,

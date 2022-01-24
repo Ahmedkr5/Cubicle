@@ -41,7 +41,7 @@ export default class Frbutton extends Component {
 
   /*  componentDidMount() {
             let users2 = axios
-              .get('http://localhost:3001/users/', {})
+              .get('https://the-cubicle.herokuapp.com/users/', {})
               .then(function (response) {
                 return response.data;
               });
@@ -95,7 +95,7 @@ export default class Frbutton extends Component {
                     (i) => i !== this.props?.id
                   );
                   axios.put(
-                    'http://localhost:3001/users/fr/' +
+                    'https://the-cubicle.herokuapp.com/users/fr/' +
                       this.props?.id,
                     {
                       friends: nofr,
@@ -103,7 +103,7 @@ export default class Frbutton extends Component {
                   );
                   axios
                     .put(
-                      'http://localhost:3001/users/fr/' +
+                      'https://the-cubicle.herokuapp.com/users/fr/' +
                         currentuser['id'],
                       {
                         friends: nofr2,
@@ -146,7 +146,7 @@ export default class Frbutton extends Component {
                 const frrequests = [...state.request, currentuser['id']];
                 axios
                   .put(
-                    'http://localhost:3001/users/frreq/' +
+                    'https://the-cubicle.herokuapp.com/users/frreq/' +
                       this.props?.id,
                     {
                       friendRequests: frrequests,
