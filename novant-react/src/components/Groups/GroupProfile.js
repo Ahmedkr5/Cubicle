@@ -5,7 +5,7 @@ import {
   Divider,
 } from '@material-ui/core';
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { FindInPage, Flag } from '@material-ui/icons';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -38,6 +38,7 @@ import Castle_Vania from './JohnWick.mp3';
 import Geazy from './geazy.mp3';
 import ReactJKMusicPlayer from 'react-jinke-music-player';
 import useDocumentTitle from '../useDocumentTitle';
+import axios from 'axios';
 const FEED_QUERY = gql`
   query groupPosts($groupid: [String!]) {
     groupPosts(groupid: $groupid) {
@@ -90,6 +91,7 @@ function GroupProfile(props) {
   });
   const [state, setState] = useState('0');
   const [value, setValue] = React.useState(0);
+  const [friendcomp, setFriendcomp] = React.useState([]);
   const currentuser = authService.getCurrentUser();
   const [groupProf, err1, reload1] = useApi('groups/group/' + groupid);
   var title =
@@ -120,7 +122,16 @@ function GroupProfile(props) {
   const handleCallbackAddedPost = (childDatat) => {
     refetch();
   };
+  useEffect(() => {
+    axios
+      .get('https://the-cubicle.herokuapp.com/users/')
 
+      .then((res) => {
+        setFriendcomp(
+          res.data?.filter((m) => currentuser?.friends.includes(m._id))
+        );
+      });
+  });
   const handleRefetch = () => {
     refetch();
   };
@@ -295,7 +306,8 @@ function GroupProfile(props) {
             </Container>
           </Col>
           <Col style={{ display: 'flex', justifyContent: 'center' }}>
-            <RightSidebar style={{ marginRight: '0px' }}></RightSidebar>
+            <RightSidebar friends={friendcomp}
+            style={{ marginRight: '0px' }}></RightSidebar>
           </Col>
         </Row>
       </Container>
